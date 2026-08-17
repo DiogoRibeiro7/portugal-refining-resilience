@@ -5,7 +5,6 @@ from pathlib import Path
 import nbformat
 from nbclient import NotebookClient
 
-
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOKS = sorted((ROOT / "notebooks").glob("[0-9][0-9]_*.ipynb"))
 

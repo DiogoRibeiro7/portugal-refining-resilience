@@ -1,4 +1,4 @@
-.PHONY: install test lint notebooks report-inputs clean
+.PHONY: install test lint format check notebooks report-inputs clean
 
 install:
 	poetry install
@@ -9,6 +9,16 @@ test:
 lint:
 	poetry run ruff check src tests scripts
 	poetry run mypy src
+
+format:
+	poetry run ruff format src tests scripts
+	poetry run ruff check src tests scripts --fix
+
+check:
+	poetry run ruff format --check src tests scripts
+	poetry run ruff check src tests scripts
+	poetry run mypy src
+	poetry run pytest
 
 notebooks:
 	poetry run python scripts/run_notebooks.py

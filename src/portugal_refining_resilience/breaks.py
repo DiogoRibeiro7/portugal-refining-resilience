@@ -4,8 +4,8 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from scipy.stats import f
 import statsmodels.api as sm
+from scipy.stats import f
 
 
 @dataclass(frozen=True)

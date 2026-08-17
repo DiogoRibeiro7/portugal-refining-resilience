@@ -1,5 +1,9 @@
 # Portugal Refining Resilience
 
+[![CI](https://github.com/DiogoRibeiro7/portugal-refining-resilience/actions/workflows/ci.yml/badge.svg)](https://github.com/DiogoRibeiro7/portugal-refining-resilience/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 A notebook-first data-analysis repository studying how Portugal's petroleum-product system changed around two major refining events:
 
 1. the Sines hydrocracker entering commercial production in **2013**, which materially increased diesel-producing capability; and
@@ -20,6 +24,34 @@ The repository does **not** assume that refinery closure caused higher retail fu
 The empirical question is:
 
 > **Did the loss of refining capacity increase Portugal's dependence on imported finished petroleum products and reduce supply resilience, and did international price transmission change after the closure?**
+
+## Repository status
+
+This project is public research software. The committed code, notebooks, seed data, and
+provenance files are structured for transparent review, but the empirical results should be
+treated as work in progress until the acquisition notebooks have replaced or cross-validated
+the provisional seed series.
+
+## Quick start
+
+Requirements:
+
+- Python 3.11, 3.12, or 3.13
+- Poetry 2.x
+- Git
+
+```bash
+git clone git@github.com:DiogoRibeiro7/portugal-refining-resilience.git
+cd portugal-refining-resilience
+poetry install
+poetry run pytest
+```
+
+Run the full local quality gate with:
+
+```bash
+make check
+```
 
 ## Why notebooks are the main product
 
@@ -91,6 +123,10 @@ This repository intentionally stores transformed outputs. Do not make the final 
 
 CSV is always written for human inspection. Parquet is written where available for typed reuse.
 
+Raw downloaded files are excluded from version control by default because they are reproducible
+downloads and may be large. Commit transformed datasets only when they are intentionally part of
+the reviewable analysis surface.
+
 ## Preliminary seed series
 
 `data/processed/jodi_portugal_fuel_exports_2005_2024_seed.csv` contains the 20-year export series already pulled during the project scoping discussion. It exists so the descriptive notebooks have an auditable starting point. It is marked **seed / provisional** and should be replaced or cross-validated by the acquisition notebooks before publication.
@@ -130,14 +166,37 @@ The report must distinguish:
 
 A break near 2021/2022 does not, by itself, prove the Matosinhos closure caused the change. COVID recovery, the invasion of Ukraine, Russian VGO disruption, Sines maintenance, demand changes and common European price shocks are competing explanations that must be modelled or discussed.
 
-## Environment
+## Development
 
-Python 3.11+, Poetry, JupyterLab.
+Install the development environment:
 
 ```bash
 poetry install
-poetry run pytest
-poetry run python scripts/run_notebooks.py
+poetry run pre-commit install
+```
+
+Useful commands:
+
+```bash
+make test       # run tests
+make lint       # run Ruff and mypy
+make format     # format code and apply safe Ruff fixes
+make check      # run format check, lint, type check, and tests
+make notebooks  # execute notebooks in sequence
 ```
 
 Run notebooks individually while developing. The sequential runner is primarily for reproducibility checks.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow, notebook expectations,
+and data provenance rules. Security-sensitive reports should follow [SECURITY.md](SECURITY.md).
+
+## Citation
+
+If you use this repository, cite it using the metadata in [CITATION.cff](CITATION.cff).
+
+## License
+
+Code and documentation are released under the [MIT License](LICENSE). Data files may be derived
+from third-party public sources; check source-specific terms before reuse.
