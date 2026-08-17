@@ -45,7 +45,7 @@ packages = [{ include = "portugal_refining_resilience", from = "src" }]
 pytest = ">=9.0.3,<10.0"
 ruff = "^0.16"
 mypy = "^2.3"
-pandas-stubs = "^2.2"
+pandas-stubs = "^3.0"
 types-PyYAML = "^6.0"
 types-requests = "^2.32"
 pre-commit = "^4.0"
