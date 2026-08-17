@@ -44,7 +44,7 @@ packages = [{ include = "portugal_refining_resilience", from = "src" }]
 [tool.poetry.group.dev.dependencies]
 pytest = ">=9.0.3,<10.0"
 ruff = "^0.8"
-mypy = "^1.13"
+mypy = "^2.3"
 pandas-stubs = "^2.2"
 types-PyYAML = "^6.0"
 types-requests = "^2.32"
