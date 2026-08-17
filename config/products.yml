@@ -1,0 +1,21 @@
+products:
+  diesel:
+    canonical_label: diesel_gasoil
+    aliases:
+      - gas/diesel oil
+      - gas oil and diesel oil
+      - gasóleo
+      - gasoleo
+      - automotive gas oil
+      - diesel
+    jodi_codes: [GASDIES, GASDIESEL, GAS_DIESEL]
+  gasoline:
+    canonical_label: gasoline
+    aliases:
+      - motor/aviation gasoline
+      - motor gasoline
+      - gasolina
+      - eurosuper 95
+      - euro-super 95
+      - gasoline
+    jodi_codes: [GASOLINE, MOGAS]

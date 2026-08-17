@@ -1,0 +1,22 @@
+analysis:
+  start_year: 2005
+  end_year: 2024
+  products:
+    - diesel
+    - gasoline
+  event_years:
+    sines_hydrocracker: 2013
+    matosinhos_transition: 2021
+    energy_stress: 2022
+  comparison_country: ES
+  primary_country: PT
+  price_analysis:
+    primary_measure: without_taxes
+    secondary_measure: with_taxes
+    frequency: weekly
+  annual_break_tests:
+    minimum_segment_years: 5
+    candidate_break_years: [2013, 2021, 2022]
+  reporting:
+    causal_language_requires_control_design: true
+    seed_data_is_publication_ready: false

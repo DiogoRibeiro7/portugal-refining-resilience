@@ -1,0 +1,11 @@
+metric,product,value,unit,status
+export_total_2005_2024_kt,diesel,16979,kt,seed_provisional
+export_mean_annual_kt,diesel,848.95,kt/year,seed_provisional
+export_peak_kt,diesel,2286,kt,seed_provisional
+export_peak_year,diesel,2015,year,seed_provisional
+export_total_2005_2024_kt,gasoline,24980,kt,seed_provisional
+export_mean_annual_kt,gasoline,1249.0,kt/year,seed_provisional
+export_peak_kt,gasoline,1871,kt,seed_provisional
+export_peak_year,gasoline,2017,year,seed_provisional
+diesel_export_change_2021_2022_pct,diesel,-75.98,percent,seed_provisional
+combined_export_total_2005_2024_kt,combined,41959,kt,seed_provisional

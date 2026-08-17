@@ -1,0 +1,8 @@
+{
+  "dataset": "jodi_portugal_fuel_exports_2005_2024_seed.csv",
+  "created_on": "2026-08-17",
+  "status": "seed_provisional",
+  "source": "JODI Oil World Database, secondary products, monthly exports summed to annual thousand metric tonnes",
+  "source_landing_page": "https://www.jodidata.org/oil/database/data-downloads.aspx",
+  "warning": "This seed is retained for reproducible scoping. Re-run and cross-check source acquisition before publication."
+}
