@@ -1,0 +1,24 @@
+name: Data source update
+description: Propose a new source, source correction, or provenance update.
+title: "[Data]: "
+labels: ["data"]
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Name and URL or citation for the data source.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Proposed change
+      description: Explain the series, coverage, method, or provenance detail to add or correct.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Validation checks
+      description: Note any cross-checks, hashes, units, or caveats.

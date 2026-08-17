@@ -51,9 +51,12 @@ def event_window_summary(
     records: list[dict[str, float | int | str]] = []
     for product_name, group in df.groupby("product"):
         pre = group.loc[group["year"].between(event_year - pre_years, event_year - 1), value_column]
-        post = group.loc[group["year"].between(event_year + 1, event_year + post_years), value_column]
+        post = group.loc[
+            group["year"].between(event_year + 1, event_year + post_years), value_column
+        ]
         pre_mean = float(pre.mean()) if not pre.empty else float("nan")
         post_mean = float(post.mean()) if not post.empty else float("nan")
+        pct_difference = 100 * (post_mean / pre_mean - 1) if pre_mean != 0 else float("nan")
         records.append(
             {
                 "product": str(product_name),
@@ -62,7 +65,7 @@ def event_window_summary(
                 "pre_mean": pre_mean,
                 "post_mean": post_mean,
                 "difference": post_mean - pre_mean,
-                "pct_difference": 100 * (post_mean / pre_mean - 1) if pre_mean != 0 else float("nan"),
+                "pct_difference": pct_difference,
             }
         )
     return pd.DataFrame(records)

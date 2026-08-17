@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import io
 import zipfile
 from pathlib import Path
 
 import pandas as pd
-
 
 _COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
     "country": ("country", "ref_area", "area", "country_name"),
@@ -91,7 +89,9 @@ def filter_portugal_fuels(
         "demand": {"DEMAND", "TOTDEMO"},
     }
     requested = {flow.strip().lower() for flow in flows}
-    accepted_codes = set().union(*(flow_aliases[name] for name in requested if name in flow_aliases))
+    accepted_codes = set().union(
+        *(flow_aliases[name] for name in requested if name in flow_aliases)
+    )
     flow_mask = out["_flow"].isin(accepted_codes)
     for flow in requested:
         token = flow.upper().replace(" ", ".*")
@@ -126,7 +126,7 @@ def annualise(
     if missing:
         raise ValueError(f"Missing columns for annualisation: {sorted(missing)}")
     grouped = (
-        df.groupby(["year", "product_canonical", "flow_canonical"], as_index=False)[value_column]
+        df.groupby(["year", "product_canonical", "flow_canonical"], as_index=False)[[value_column]]
         .sum(min_count=1)
         .rename(columns={value_column: "value_kt"})
     )

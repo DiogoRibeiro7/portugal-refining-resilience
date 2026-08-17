@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from typing import Any, cast
 from urllib.parse import urljoin
 
 import requests
@@ -11,10 +12,13 @@ from bs4 import BeautifulSoup
 
 def load_source_manifest(path: Path) -> dict[str, dict[str, str]]:
     """Load and type-check the source manifest."""
-    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict) or not isinstance(payload.get("sources"), dict):
+    payload: Any = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
         raise ValueError("sources.yml must contain a top-level 'sources' mapping")
-    return payload["sources"]
+    sources = payload.get("sources")
+    if not isinstance(sources, dict):
+        raise ValueError("sources.yml must contain a top-level 'sources' mapping")
+    return cast("dict[str, dict[str, str]]", sources)
 
 
 def download_file(url: str, destination: Path, *, timeout: int = 120) -> Path:
