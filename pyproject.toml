@@ -42,7 +42,7 @@ Issues = "https://github.com/DiogoRibeiro7/portugal-refining-resilience/issues"
 packages = [{ include = "portugal_refining_resilience", from = "src" }]
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3"
+pytest = "^9.1"
 ruff = "^0.8"
 mypy = "^1.13"
 pandas-stubs = "^2.2"
