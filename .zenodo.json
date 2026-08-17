@@ -1,0 +1,28 @@
+{
+  "title": "Portugal Refining Resilience",
+  "description": "Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience, and price transmission.",
+  "creators": [
+    {
+      "name": "Ribeiro, Diogo"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Portugal",
+    "refining",
+    "petroleum products",
+    "energy resilience",
+    "price transmission",
+    "fuel trade",
+    "notebooks"
+  ],
+  "upload_type": "software",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DiogoRibeiro7/portugal-refining-resilience",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
