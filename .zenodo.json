@@ -1,28 +1,50 @@
 {
   "title": "Portugal Refining Resilience",
-  "description": "Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience, and price transmission.",
-  "creators": [
-    {
-      "name": "Ribeiro, Diogo"
-    }
-  ],
-  "license": "MIT",
-  "keywords": [
-    "Portugal",
-    "refining",
-    "petroleum products",
-    "energy resilience",
-    "price transmission",
-    "fuel trade",
-    "notebooks"
-  ],
+  "version": "0.1.0",
+  "publication_date": "2026-08-17",
   "upload_type": "software",
   "access_right": "open",
+  "license": "mit",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Ribeiro, Diogo",
+      "type": "ProjectLeader"
+    }
+  ],
+  "description": "Portugal Refining Resilience is a notebook-first research software repository for analysing how Portugal's petroleum-product system changed around the 2013 Sines hydrocracker expansion and the 2021 discontinuation of refining at Matosinhos. The repository combines auditable data-provenance files, a sequential notebook pipeline, reusable Python helpers, and report-readiness checks to separate documented refining-capacity events from trade-balance, import-dependence, supply-resilience, and price-transmission evidence. This initial release is structured for transparent review and reproducibility; the committed seed series is provisional and should be replaced or cross-validated by the acquisition notebooks before empirical results are treated as publication-ready.",
+  "keywords": [
+    "Portugal",
+    "energy economics",
+    "petroleum products",
+    "refining capacity",
+    "fuel trade",
+    "import dependence",
+    "supply resilience",
+    "price transmission",
+    "reproducible research",
+    "Jupyter notebooks"
+  ],
   "related_identifiers": [
     {
       "identifier": "https://github.com/DiogoRibeiro7/portugal-refining-resilience",
       "relation": "isSupplementTo",
-      "scheme": "url"
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/DiogoRibeiro7/portugal-refining-resilience/releases/tag/v0.1.0",
+      "relation": "isIdenticalTo",
+      "scheme": "url",
+      "resource_type": "software"
     }
-  ]
+  ],
+  "references": [
+    "Direcao-Geral de Energia e Geologia (DGEG), petroleum-product imports, exports, sales, energy balances, and fuel-price statistics.",
+    "Joint Organisations Data Initiative (JODI), Oil World Database, monthly secondary-product supply and demand series.",
+    "Eurostat nrg_cb_oil, annual oil supply, transformation, and consumption data.",
+    "European Commission Weekly Oil Bulletin, weekly consumer fuel prices with and without taxes.",
+    "Galp official disclosures, refinery event metadata for Sines and Matosinhos."
+  ],
+  "notes": "Research software release. Raw downloaded source files are excluded from version control by default; transformed, reviewable seed data and provenance files are included where they are part of the auditable analysis surface."
 }
