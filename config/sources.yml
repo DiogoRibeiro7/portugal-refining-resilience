@@ -1,0 +1,43 @@
+sources:
+  dgeg_trade:
+    organisation: DGEG
+    role: primary_portugal_trade_crosscheck
+    landing_page: https://www.dgeg.gov.pt/pt/estatistica/energia/petroleo-e-derivados/importacoes-exportacoes/
+    current_2024_xlsx: https://www.dgeg.gov.pt/media/50hhvvxj/dgeg-oie-2024.xlsx
+    coverage: "2000-2024p annual workbooks"
+    notes: "Crude imports and petroleum-product imports/exports. Scrape annual xlsx links from landing page rather than assuming stable media IDs."
+  dgeg_sales:
+    organisation: DGEG
+    role: primary_portugal_domestic_sales_crosscheck
+    landing_page: https://www.dgeg.gov.pt/pt/estatistica/energia/petroleo-e-derivados/vendas-anuais/
+    current_long_xlsx: https://www.dgeg.gov.pt/media/jm4opgll/dgeg-osl-1970-2024.xlsx
+    coverage: "1970-2024 long annual series"
+  dgeg_energy_balance:
+    organisation: DGEG
+    role: primary_portugal_energy_balance_crosscheck
+    landing_page: https://www.dgeg.gov.pt/pt/estatistica/energia/balancos-energeticos/balancos-energeticos-nacionais/
+  dgeg_fuel_prices:
+    organisation: DGEG
+    role: portugal_price_crosscheck
+    landing_page: https://www.dgeg.gov.pt/pt/estatistica/energia/precos-de-energia/precos-de-combustiveis-em-portugal-continental/
+    coverage: "weekly road-fuel prices from 2004"
+  jodi_secondary:
+    organisation: Joint Organisations Data Initiative
+    role: main_monthly_physical_flow_source
+    landing_page: https://www.jodidata.org/oil/database/data-downloads.aspx
+    download_url: https://www.jodidata.org/_resources/files/downloads/oil-data/world_secondary_csv.zip
+    coverage: "monthly secondary oil products from 2002"
+    notes: "Filter Portugal, tonnes, gasoline and gas/diesel oil. Retain assessment codes."
+  eurostat_oil_balance:
+    organisation: Eurostat
+    role: annual_balance_and_spain_comparison
+    dataset: nrg_cb_oil
+    api_url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_cb_oil
+    browser_url: https://ec.europa.eu/eurostat/databrowser/view/nrg_cb_oil/default/table
+    coverage: "annual supply, transformation and consumption of oil and petroleum products"
+  ec_weekly_oil_bulletin:
+    organisation: European Commission DG Energy
+    role: main_price_source
+    landing_page: https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en
+    history_xlsx: https://energy.ec.europa.eu/document/download/906e60ca-8b6a-44e7-8589-652854d2fd3f_en?filename=Weekly_Oil_Bulletin_Prices_History_maticni_4web.xlsx
+    coverage: "weekly EU consumer prices, taxes, and prices without taxes from 2005"

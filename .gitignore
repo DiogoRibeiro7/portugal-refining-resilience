@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.DS_Store
+.env
+
+# Raw source files are reproducible downloads and can be large.
+data/raw/**/*
+!data/raw/.gitkeep
+
+# Keep transformed tables, metrics, report inputs and reference data versioned.

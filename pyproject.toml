@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "portugal-refining-resilience"
+version = "0.1.0"
+description = "Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience and price transmission."
+authors = ["Diogo Ribeiro"]
+readme = "README.md"
+packages = [{ include = "portugal_refining_resilience", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.14"
+pandas = "^2.2"
+numpy = "^2.0"
+scipy = "^1.14"
+statsmodels = "^0.14"
+matplotlib = "^3.9"
+requests = "^2.32"
+beautifulsoup4 = "^4.12"
+lxml = "^5.3"
+openpyxl = "^3.1"
+pyarrow = "^18.0"
+pyyaml = "^6.0"
+jupyterlab = "^4.3"
+nbclient = "^0.10"
+nbformat = "^5.10"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3"
+ruff = "^0.8"
+mypy = "^1.13"
+pandas-stubs = "^2.2"
+types-PyYAML = "^6.0"
+types-requests = "^2.32"
+pre-commit = "^4.0"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+packages = ["portugal_refining_resilience"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
