@@ -3,6 +3,17 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+#: Share metrics produced by :func:`add_supply_metrics`. Their differences are
+#: ratio differences, not already-scaled percentage points.
+SUPPLY_RATIO_COLUMNS: frozenset[str] = frozenset(
+    {
+        "gross_import_dependence",
+        "net_import_to_demand_ratio",
+        "export_to_demand",
+        "refinery_output_to_demand_ratio",
+    }
+)
+
 
 def safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
     """Divide two numeric series and return NaN for zero/invalid denominators."""
@@ -116,8 +127,14 @@ def event_window_summary(
     pre_years: int = 5,
     post_years: int = 3,
     percent_change_columns: set[str] | None = None,
+    ratio_columns: set[str] | frozenset[str] | None = None,
 ) -> pd.DataFrame:
-    """Summarise mean levels around an event without assigning causality."""
+    """Summarise mean levels around an event without assigning causality.
+
+    ``difference`` is always expressed in the units of ``value_column``. For share
+    metrics that means a ratio difference, so ``difference_percentage_points`` is
+    reported alongside it to remove any ambiguity about scaling.
+    """
     if pre_years < 1 or post_years < 1:
         raise ValueError("pre_years and post_years must be positive")
     records: list[dict[str, float | int | str]] = []
@@ -127,6 +144,8 @@ def event_window_summary(
         "demand_kt",
         "refinery_output_kt",
     }
+    ratio_columns = SUPPLY_RATIO_COLUMNS if ratio_columns is None else ratio_columns
+    is_ratio = value_column in ratio_columns or value_column.endswith("_ratio")
     for product_name, group in df.groupby("product"):
         pre = group.loc[group["year"].between(event_year - pre_years, event_year - 1), value_column]
         post = group.loc[
@@ -139,7 +158,7 @@ def event_window_summary(
             if value_column in percent_change_columns and pre_mean > 0
             else float("nan")
         )
-        difference_unit = "percent_points" if value_column.endswith("_ratio") else "level"
+        difference = post_mean - pre_mean
         records.append(
             {
                 "product": str(product_name),
@@ -147,8 +166,9 @@ def event_window_summary(
                 "value_column": value_column,
                 "pre_mean": pre_mean,
                 "post_mean": post_mean,
-                "difference": post_mean - pre_mean,
-                "difference_unit": difference_unit,
+                "difference": difference,
+                "difference_unit": "ratio" if is_ratio else "level",
+                "difference_percentage_points": difference * 100.0 if is_ratio else float("nan"),
                 "pct_difference": pct_difference,
             }
         )
