@@ -15,8 +15,8 @@ The required empirical report bundle is absent:
 - no DGEG trade reconciliation output is available.
 
 Consequently, this report does not state measured changes in imports, exports,
-demand, refinery output, import dependence, domestic refinery-output coverage,
-structural breaks, price transmission, or Portugal-Spain spreads.
+demand, refinery output, import dependence, refinery-output-to-demand ratios,
+structural breaks, price co-movement, or Portugal-Spain spreads.
 
 ## 1. Executive Summary
 
@@ -38,7 +38,7 @@ claim.
 
 The intended research question is whether Portugal's refining-capacity changes
 altered dependence on imported finished petroleum products and affected supply
-resilience or price transmission.
+resilience or price co-movement.
 
 The intended hypotheses remain testable but untested from the current reporting
 evidence:
@@ -88,14 +88,14 @@ The intended physical-balance metrics are:
 \]
 
 \[
-\text{DomesticOutputCoverage}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}.
+\text{RefineryOutputToDemandRatio}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}.
 \]
 
 Here \(M\) is imports, \(X\) exports, \(D\) domestic demand or sales, and
 \(Q^{refinery}\) refinery output for product \(j\) in year \(t\).
 
 The current report does not estimate these metrics because the stored report
-inputs are missing. It also does not estimate price pass-through, structural
+inputs are missing. It also does not estimate price co-movement, structural
 breaks, or event-window sensitivity.
 
 ## 6. Physical-Balance Evidence
@@ -112,7 +112,7 @@ refinery output. Therefore:
 This is a deliberate evidentiary restriction, not an absence of analytical
 interest.
 
-## 7. Price Transmission and Portugal-Spain Comparison
+## 7. Price Co-Movement and Portugal-Spain Comparison
 
 No stored pre-tax price model output is available. The report therefore cannot
 establish a price effect.
@@ -152,7 +152,7 @@ outcomes.
 
 Portugal's refining timeline is documented in the repository, but the current
 stored evidence is insufficient for a substantive 2005-2024 empirical report on
-import dependence or price transmission.
+import dependence or price co-movement.
 
 The next required step is to generate the report input bundle, including
 `report_manifest.json`, DGEG reconciliation, physical-balance metrics,

@@ -12,7 +12,7 @@ def safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
 
 
 def add_supply_metrics(panel: pd.DataFrame) -> pd.DataFrame:
-    """Add transparent trade/dependence metrics to an annual product panel."""
+    """Add transparent trade and physical-balance ratios to an annual product panel."""
     required = {"imports_kt", "exports_kt", "demand_kt"}
     missing = required - set(panel.columns)
     if missing:
@@ -20,21 +20,92 @@ def add_supply_metrics(panel: pd.DataFrame) -> pd.DataFrame:
     out = panel.copy()
     out["net_imports_kt"] = out["imports_kt"] - out["exports_kt"]
     out["gross_import_dependence"] = safe_ratio(out["imports_kt"], out["demand_kt"])
-    out["net_import_dependence"] = safe_ratio(out["net_imports_kt"], out["demand_kt"])
+    out["net_import_to_demand_ratio"] = safe_ratio(out["net_imports_kt"], out["demand_kt"])
     out["export_to_demand"] = safe_ratio(out["exports_kt"], out["demand_kt"])
     if "refinery_output_kt" in out.columns:
-        out["domestic_output_coverage"] = safe_ratio(out["refinery_output_kt"], out["demand_kt"])
+        out["refinery_output_to_demand_ratio"] = safe_ratio(
+            out["refinery_output_kt"], out["demand_kt"]
+        )
     return out
 
 
-def add_yoy(df: pd.DataFrame, value_columns: list[str], *, group: str = "product") -> pd.DataFrame:
-    """Add year-over-year percentage changes within product."""
+def add_yoy(
+    df: pd.DataFrame,
+    value_columns: list[str],
+    *,
+    group: str = "product",
+    allow_signed_percentage: bool = False,
+) -> pd.DataFrame:
+    """Add year-over-year changes within product.
+
+    Percentage changes are skipped for signed series unless explicitly allowed,
+    because crossings around zero do not have a stable percentage interpretation.
+    """
     out = df.sort_values([group, "year"]).copy()
     for column in value_columns:
         if column not in out.columns:
             continue
-        out[f"{column}_yoy_pct"] = out.groupby(group)[column].pct_change(fill_method=None) * 100.0
+        lag = out.groupby(group)[column].shift(1)
+        out[f"{column}_yoy_change"] = out[column] - lag
+        has_nonpositive = pd.to_numeric(lag, errors="coerce").le(0).any()
+        has_negative_current = pd.to_numeric(out[column], errors="coerce").lt(0).any()
+        if allow_signed_percentage or not (has_nonpositive or has_negative_current):
+            out[f"{column}_yoy_pct"] = (
+                out.groupby(group)[column].pct_change(fill_method=None) * 100.0
+            )
     return out
+
+
+def benchmark_deviation(
+    df: pd.DataFrame,
+    *,
+    value_column: str,
+    target_year: int,
+    baseline_start: int,
+    baseline_end: int,
+    group: str = "product",
+) -> pd.DataFrame:
+    """Compare a target year with an explicit baseline using robust diagnostics."""
+    records: list[dict[str, float | int | str]] = []
+    for group_name, group_df in df.groupby(group):
+        baseline = pd.to_numeric(
+            group_df.loc[group_df["year"].between(baseline_start, baseline_end), value_column],
+            errors="coerce",
+        ).dropna()
+        target = pd.to_numeric(
+            group_df.loc[group_df["year"] == target_year, value_column], errors="coerce"
+        ).dropna()
+        target_value = float(target.iloc[0]) if len(target) == 1 else float("nan")
+        mean = float(baseline.mean()) if not baseline.empty else float("nan")
+        std = float(baseline.std(ddof=1)) if len(baseline) > 1 else float("nan")
+        median = float(baseline.median()) if not baseline.empty else float("nan")
+        mad = float((baseline - median).abs().median()) if not baseline.empty else float("nan")
+        percentile = (
+            float((baseline.le(target_value).sum() / len(baseline)) * 100)
+            if len(baseline) and pd.notna(target_value)
+            else float("nan")
+        )
+        records.append(
+            {
+                group: str(group_name),
+                "value_column": value_column,
+                "target_year": target_year,
+                "target_value": target_value,
+                "baseline_start": baseline_start,
+                "baseline_end": baseline_end,
+                "baseline_n": int(len(baseline)),
+                "baseline_mean": mean,
+                "baseline_std": std,
+                "z_score": (target_value - mean) / std if std > 0 else float("nan"),
+                "baseline_median": median,
+                "baseline_mad": mad,
+                "robust_z_score": (target_value - median) / (1.4826 * mad)
+                if mad > 0
+                else float("nan"),
+                "empirical_percentile": percentile,
+            }
+        )
+    return pd.DataFrame(records)
 
 
 def event_window_summary(

@@ -14,9 +14,11 @@ analysis:
     primary_measure: without_taxes
     secondary_measure: with_taxes
     frequency: weekly
+    model_family: portugal_spain_price_comovement
   annual_break_tests:
     minimum_segment_years: 5
-    candidate_break_years: [2013, 2021, 2022]
+    candidate_break_years: [2013, 2022]
+    transition_years: [2021]
   reporting:
     causal_language_requires_control_design: true
     seed_data_is_publication_ready: false

@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, cast
 from urllib.parse import urljoin
@@ -21,14 +24,61 @@ def load_source_manifest(path: Path) -> dict[str, dict[str, str]]:
     return cast("dict[str, dict[str, str]]", sources)
 
 
-def download_file(url: str, destination: Path, *, timeout: int = 120) -> Path:
-    """Download a source file without silently overwriting a different payload."""
+def _sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _write_download_metadata(
+    destination: Path,
+    *,
+    url: str,
+    payload_sha256: str,
+    status: str,
+) -> None:
+    metadata = {
+        "retrieved_at_utc": datetime.now(UTC).isoformat(),
+        "url": url,
+        "sha256": payload_sha256,
+        "bytes": destination.stat().st_size,
+        "source_vintage_status": status,
+    }
+    sidecar = destination.with_suffix(destination.suffix + ".metadata.json")
+    sidecar.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+
+
+def download_file(
+    url: str,
+    destination: Path,
+    *,
+    timeout: int = 120,
+    overwrite: bool = False,
+    record_metadata: bool = True,
+) -> Path:
+    """Download a source file and prevent silent raw-source mutation.
+
+    Existing destinations are preserved by default. If the newly retrieved
+    payload differs, callers must pass ``overwrite=True`` intentionally.
+    """
     if not isinstance(url, str) or not url.startswith(("http://", "https://")):
         raise ValueError(f"Invalid URL: {url!r}")
     destination.parent.mkdir(parents=True, exist_ok=True)
     response = requests.get(url, timeout=timeout)
     response.raise_for_status()
-    destination.write_bytes(response.content)
+    payload = response.content
+    payload_sha256 = _sha256_bytes(payload)
+    status = "new_snapshot"
+    if destination.exists():
+        existing_sha256 = _sha256_bytes(destination.read_bytes())
+        if existing_sha256 != payload_sha256 and not overwrite:
+            raise FileExistsError(
+                f"{destination} already exists with a different SHA-256. "
+                "Pass overwrite=True only for an intentional new source vintage."
+            )
+        status = "unchanged_snapshot" if existing_sha256 == payload_sha256 else "overwritten"
+    if not destination.exists() or overwrite:
+        destination.write_bytes(payload)
+    if record_metadata:
+        _write_download_metadata(destination, url=url, payload_sha256=payload_sha256, status=status)
     return destination
 
 
