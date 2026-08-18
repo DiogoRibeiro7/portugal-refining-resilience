@@ -31,7 +31,9 @@ Audit every substantive conclusion for:
 10. invalid causal use of Spain;
 11. price co-movement mislabelled as international pass-through;
 12. missing DGEG reconciliation;
-13. missing JODI annual-completeness diagnostics;
-14. claims stronger than stored metrics.
+13. missing Eurostat product-balance cross-checks;
+14. missing price stationarity diagnostics;
+15. missing JODI annual-completeness diagnostics;
+16. claims stronger than stored metrics.
 
 Classify findings as `MAJOR`, `MINOR` or `OK`. For every `MAJOR`, give the exact revision needed.

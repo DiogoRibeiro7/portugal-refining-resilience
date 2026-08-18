@@ -12,7 +12,9 @@ The required empirical report bundle is absent:
 - `artifacts/report_inputs/report_manifest.json` is missing;
 - `artifacts/report_inputs/` contains no empirical CSV or JSON files;
 - `data/metrics/report_readiness.csv` is missing;
-- no DGEG trade reconciliation output is available.
+- no DGEG trade reconciliation output is available;
+- no Eurostat physical-balance panel is available;
+- no price stationarity diagnostics are available.
 
 Consequently, this report does not state measured changes in imports, exports,
 demand, refinery output, import dependence, refinery-output-to-demand ratios,
@@ -32,7 +34,8 @@ The repository does not yet support publication-ready quantitative findings
 about physical import dependence or price effects. The missing DGEG
 reconciliation is especially important: without it, the trade series cannot be
 treated as independently cross-checked for a substantive import-dependence
-claim.
+claim. The missing Eurostat balance panel also prevents a full product-balance
+cross-check of production, imports, exports and domestic use.
 
 ## 2. Research Question and Hypotheses
 
@@ -114,8 +117,8 @@ interest.
 
 ## 7. Price Co-Movement and Portugal-Spain Comparison
 
-No stored pre-tax price model output is available. The report therefore cannot
-establish a price effect.
+No stored pre-tax price model output or price stationarity diagnostic is
+available. The report therefore cannot establish a price effect.
 
 Spain is an intended comparison country, but the current evidence does not
 support using Spain as a causal control. Any future causal interpretation would
@@ -140,8 +143,9 @@ The limitations are fundamental:
 - missing readiness file;
 - seed/provisional data not replaced or cross-validated;
 - missing DGEG reconciliation;
+- missing Eurostat physical-balance output;
 - missing structural-break outputs;
-- missing price-model outputs;
+- missing price-model outputs and stationarity diagnostics;
 - missing event-window sensitivity results.
 
 The report therefore supports documented-event claims only. It does not support
@@ -155,10 +159,10 @@ stored evidence is insufficient for a substantive 2005-2024 empirical report on
 import dependence or price co-movement.
 
 The next required step is to generate the report input bundle, including
-`report_manifest.json`, DGEG reconciliation, physical-balance metrics,
-structural-break outputs, price-model outputs, and readiness checks. Once those
-files exist, the report can be revised from an evidence-limited document into a
-quantitative analysis.
+`report_manifest.json`, DGEG reconciliation, Eurostat physical-balance metrics,
+structural-break outputs, price-model outputs, price stationarity diagnostics
+and readiness checks. Once those files exist, the report can be revised from an
+evidence-limited document into a quantitative analysis.
 
 ## Claim-Evidence Matrix
 
@@ -173,6 +177,6 @@ quantitative analysis.
 | DGEG trade reconciliation is missing. | `reports/data_audit.md`; `reports/peer_review.md` | reconciliation availability audit | descriptive | Blocks publication-ready trade-dependence claims. |
 | No measured import-dependence change can be reported. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable metric | descriptive | Requires stored imports, exports, demand, and reconciliation outputs. |
 | No domestic-output-coverage change can be reported. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable metric | descriptive | Requires stored refinery-output and demand series. |
-| No price effect can be established. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable price model | descriptive | Requires stored pre-tax price-model outputs and diagnostics. |
+| No price effect can be established. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable price model | descriptive | Requires stored pre-tax price-model outputs and stationarity diagnostics. |
 | Spain cannot currently be used as a causal control. | `reports/interpretation_memo.md`; `reports/peer_review.md` | unavailable comparison diagnostics | descriptive | Requires stored pre-trend and model diagnostics. |
 | No causal claim is supported. | `reports/data_audit.md`; `reports/interpretation_memo.md`; `reports/peer_review.md` | evidence-level audit | descriptive | The design may support future causal language only after stored evidence exists. |

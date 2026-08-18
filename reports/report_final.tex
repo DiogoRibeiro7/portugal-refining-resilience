@@ -44,7 +44,9 @@ The required empirical report bundle is absent:
   \item \texttt{artifacts/report\_inputs/report\_manifest.json} is missing;
   \item \texttt{artifacts/report\_inputs/} contains no empirical CSV or JSON files;
   \item \texttt{data/metrics/report\_readiness.csv} is missing;
-  \item no DGEG trade reconciliation output is available.
+  \item no DGEG trade reconciliation output is available;
+  \item no Eurostat physical-balance panel is available;
+  \item no price stationarity diagnostics are available.
 \end{itemize}
 
 Consequently, this report does not state measured changes in imports, exports, demand,
@@ -65,7 +67,8 @@ The repository currently supports a documented institutional timeline:
 The repository does not yet support publication-ready quantitative findings about physical
 import dependence or price effects. The missing DGEG reconciliation is especially important:
 without it, the trade series cannot be treated as independently cross-checked for a
-substantive import-dependence claim.
+substantive import-dependence claim. The missing Eurostat balance panel also prevents a
+full product-balance cross-check of production, imports, exports and domestic use.
 
 \section{Research Question and Hypotheses}
 
@@ -154,8 +157,8 @@ This is a deliberate evidentiary restriction, not an absence of analytical inter
 
 \section{Price Co-Movement and Portugal--Spain Comparison}
 
-No stored pre-tax price model output is available. The report therefore cannot establish a
-price effect.
+No stored pre-tax price model output or price stationarity diagnostic is available. The
+report therefore cannot establish a price effect.
 
 Spain is an intended comparison country, but the current evidence does not support using
 Spain as a causal control. Any future causal interpretation would require stored diagnostics
@@ -181,8 +184,9 @@ The limitations are fundamental:
   \item missing readiness file;
   \item seed/provisional data not replaced or cross-validated;
   \item missing DGEG reconciliation;
+  \item missing Eurostat physical-balance output;
   \item missing structural-break outputs;
-  \item missing price-model outputs;
+  \item missing price-model outputs and stationarity diagnostics;
   \item missing event-window sensitivity results.
 \end{itemize}
 
@@ -196,9 +200,10 @@ is insufficient for a substantive 2005--2024 empirical report on import dependen
 transmission.
 
 The next required step is to generate the report input bundle, including
-\texttt{report\_manifest.json}, DGEG reconciliation, physical-balance metrics,
-structural-break outputs, price-model outputs, and readiness checks. Once those files exist,
-the report can be revised from an evidence-limited document into a quantitative analysis.
+\texttt{report\_manifest.json}, DGEG reconciliation, Eurostat physical-balance metrics,
+structural-break outputs, price-model outputs, price stationarity diagnostics and readiness
+checks. Once those files exist, the report can be revised from an evidence-limited document
+into a quantitative analysis.
 
 \section{Claim--Evidence Matrix}
 
@@ -268,7 +273,7 @@ No price effect can be established. &
 \path{reports/data_audit.md}; \path{reports/interpretation_memo.md} &
 unavailable price model &
 descriptive &
-Requires stored pre-tax price-model outputs and diagnostics. \\
+Requires stored pre-tax price-model outputs and stationarity diagnostics. \\
 
 Spain cannot currently be used as a causal control. &
 \path{reports/interpretation_memo.md}; \path{reports/peer_review.md} &
