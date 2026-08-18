@@ -65,6 +65,13 @@ The fitted design must include month fixed effects, a linear time trend, phase i
 Claims that isolate the Matosinhos transition from the 2022 energy shock must cite these saved
 coefficients rather than informal visual inspection.
 
+The time trend is measured in elapsed calendar months, so a gap in the monthly series does not
+rescale it. Each phase-trend interaction is centred on that phase's first observed month. A phase
+indicator is therefore the level shift at that phase boundary, measured against the extrapolated
+pre-closure trend, and its `*_trend` companion is the change in slope within the phase. Both terms
+must be quoted together: neither is the whole effect on its own, and the level term is not a
+cumulative post-event average.
+
 ## `eurostat_physical_balance_panel.csv`
 
 Key: `year, country, product`.

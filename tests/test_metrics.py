@@ -2,6 +2,7 @@ import pandas as pd
 import pytest
 
 from portugal_refining_resilience.metrics import (
+    SUPPLY_RATIO_COLUMNS,
     add_supply_metrics,
     add_yoy,
     benchmark_deviation,
@@ -71,5 +72,35 @@ def test_event_window_summary_avoids_pct_change_for_ratios() -> None:
     )
 
     assert out.loc[0, "difference"] == pytest.approx(0.25)
-    assert out.loc[0, "difference_unit"] == "percent_points"
+    assert out.loc[0, "difference_unit"] == "ratio"
+    assert out.loc[0, "difference_percentage_points"] == pytest.approx(25.0)
     assert pd.isna(out.loc[0, "pct_difference"])
+
+
+def test_event_window_summary_labels_every_supply_ratio_consistently() -> None:
+    """All four share metrics describe the same kind of quantity, so they must agree."""
+    panel = pd.DataFrame({"product": ["diesel"] * 10, "year": range(2016, 2026)})
+    for column in SUPPLY_RATIO_COLUMNS:
+        panel[column] = [0.30] * 5 + [0.45] * 5
+
+    for column in SUPPLY_RATIO_COLUMNS:
+        out = event_window_summary(panel, value_column=column, event_year=2021)
+        assert out.loc[0, "difference_unit"] == "ratio", column
+        assert out.loc[0, "difference"] == pytest.approx(0.15), column
+        assert out.loc[0, "difference_percentage_points"] == pytest.approx(15.0), column
+
+
+def test_event_window_summary_level_metric_has_no_percentage_points() -> None:
+    panel = pd.DataFrame(
+        {
+            "product": ["diesel"] * 10,
+            "year": range(2016, 2026),
+            "imports_kt": [100.0] * 5 + [150.0] * 5,
+        }
+    )
+
+    out = event_window_summary(panel, value_column="imports_kt", event_year=2021)
+
+    assert out.loc[0, "difference_unit"] == "level"
+    assert pd.isna(out.loc[0, "difference_percentage_points"])
+    assert out.loc[0, "pct_difference"] == pytest.approx(50.0)

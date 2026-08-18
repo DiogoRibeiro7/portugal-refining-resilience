@@ -90,6 +90,68 @@ def test_validate_monthly_event_outputs_require_phase_terms(tmp_path: Path) -> N
     assert "missing phase terms" in detail
 
 
+def test_validate_monthly_event_outputs_requires_phase_trend_terms(tmp_path: Path) -> None:
+    """A level term without its slope companion cannot be read as the whole effect."""
+    pd.DataFrame(
+        {
+            "product": ["diesel"],
+            "outcome": ["imports_kt"],
+            "event_phase": ["pre_matosinhos_closure"],
+            "n_months": [24],
+            "mean_value": [100.0],
+            "std_value": [5.0],
+        }
+    ).to_csv(tmp_path / "monthly_event_phase_summary.csv", index=False)
+    terms = ["matosinhos_transition", "energy_stress_2022", "post_stress"]
+    pd.DataFrame(
+        {
+            "product": ["diesel"] * len(terms),
+            "outcome": ["imports_kt"] * len(terms),
+            "term": terms,
+            "estimate": [1.0] * len(terms),
+            "std_error": [0.1] * len(terms),
+            "p_value": [0.05] * len(terms),
+            "n_obs": [48] * len(terms),
+        }
+    ).to_csv(tmp_path / "monthly_event_models.csv", index=False)
+
+    passed, detail = validate_monthly_event_outputs(tmp_path)
+
+    assert passed is False
+    assert "matosinhos_transition_trend" in detail
+
+
+def test_validate_monthly_event_outputs_accepts_level_and_slope_terms(tmp_path: Path) -> None:
+    pd.DataFrame(
+        {
+            "product": ["diesel"],
+            "outcome": ["imports_kt"],
+            "event_phase": ["pre_matosinhos_closure"],
+            "n_months": [24],
+            "mean_value": [100.0],
+            "std_value": [5.0],
+        }
+    ).to_csv(tmp_path / "monthly_event_phase_summary.csv", index=False)
+    phases = ["matosinhos_transition", "energy_stress_2022", "post_stress"]
+    terms = phases + [f"{phase}_trend" for phase in phases]
+    pd.DataFrame(
+        {
+            "product": ["diesel"] * len(terms),
+            "outcome": ["imports_kt"] * len(terms),
+            "term": terms,
+            "estimate": [1.0] * len(terms),
+            "std_error": [0.1] * len(terms),
+            "p_value": [0.05] * len(terms),
+            "n_obs": [48] * len(terms),
+        }
+    ).to_csv(tmp_path / "monthly_event_models.csv", index=False)
+
+    passed, detail = validate_monthly_event_outputs(tmp_path)
+
+    assert passed is True
+    assert "1 outcomes" in detail
+
+
 def test_validate_price_outputs_requires_model_choice(tmp_path: Path) -> None:
     pd.DataFrame({"product": ["diesel"]}).to_csv(
         tmp_path / "price_stationarity_diagnostics.csv", index=False

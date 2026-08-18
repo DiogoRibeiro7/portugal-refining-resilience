@@ -3,6 +3,12 @@ from __future__ import annotations
 import pandas as pd
 import statsmodels.api as sm
 
+EVENT_PHASES: tuple[str, ...] = (
+    "matosinhos_transition",
+    "energy_stress_2022",
+    "post_stress",
+)
+
 
 def assign_monthly_event_phase(
     dates: pd.Series,
@@ -51,17 +57,10 @@ def monthly_phase_summary(
     values = pd.to_numeric(df[value_column], errors="coerce")
     frame = df.loc[values.notna()].copy()
     frame[value_column] = values.loc[values.notna()]
-    return (
-        frame.groupby(group_columns, as_index=False)[value_column]
-        .agg(["count", "mean", "std"])
-        .reset_index()
-        .rename(
-            columns={
-                "count": "n_months",
-                "mean": "mean_value",
-                "std": "std_value",
-            }
-        )
+    return frame.groupby(group_columns, as_index=False).agg(
+        n_months=(value_column, "count"),
+        mean_value=(value_column, "mean"),
+        std_value=(value_column, "std"),
     )
 
 
@@ -71,7 +70,16 @@ def fit_monthly_event_model(
     value_column: str,
     min_observations: int = 24,
 ) -> object:
-    """Fit a segmented monthly event model with month fixed effects and HAC errors."""
+    """Fit a segmented monthly event model with month fixed effects and HAC errors.
+
+    ``trend`` counts elapsed calendar months from the first observation, so gaps in the
+    monthly series do not compress the time axis.
+
+    Each phase-trend interaction is centred on that phase's first observed month. The
+    phase indicator is therefore the level shift at the phase boundary, measured against
+    the extrapolated pre-closure trend, rather than an intercept at ``trend == 0``. Read
+    together with its ``*_trend`` term it gives the level and slope change for the phase.
+    """
     required = {"date", "month", "event_phase", value_column}
     missing = required - set(df.columns)
     if missing:
@@ -81,29 +89,17 @@ def fit_monthly_event_model(
         raise ValueError(f"Need at least {min_observations} monthly observations")
     frame["date"] = pd.to_datetime(frame["date"])
     frame = frame.sort_values("date")
-    frame["trend"] = range(len(frame))
-    frame["matosinhos_transition"] = frame["event_phase"].eq("matosinhos_transition").astype(int)
-    frame["energy_stress_2022"] = frame["event_phase"].eq("energy_stress_2022").astype(int)
-    frame["post_stress"] = frame["event_phase"].eq("post_stress").astype(int)
-    for phase in ["matosinhos_transition", "energy_stress_2022", "post_stress"]:
-        frame[f"{phase}_trend"] = frame[phase] * frame["trend"]
+    elapsed_months = frame["date"].dt.year * 12 + frame["date"].dt.month
+    frame["trend"] = (elapsed_months - elapsed_months.min()).astype(float)
+    for phase in EVENT_PHASES:
+        indicator = frame["event_phase"].eq(phase)
+        frame[phase] = indicator.astype(int)
+        boundary = float(frame.loc[indicator, "trend"].min()) if indicator.any() else 0.0
+        frame[f"{phase}_trend"] = frame[phase] * (frame["trend"] - boundary)
     month_dummies = pd.get_dummies(frame["month"].astype(int), prefix="month", drop_first=True)
-    x = pd.concat(
-        [
-            frame[
-                [
-                    "trend",
-                    "matosinhos_transition",
-                    "matosinhos_transition_trend",
-                    "energy_stress_2022",
-                    "energy_stress_2022_trend",
-                    "post_stress",
-                    "post_stress_trend",
-                ]
-            ],
-            month_dummies,
-        ],
-        axis=1,
-    ).astype(float)
+    design_columns = ["trend"]
+    for phase in EVENT_PHASES:
+        design_columns.extend([phase, f"{phase}_trend"])
+    x = pd.concat([frame[design_columns], month_dummies], axis=1).astype(float)
     x = sm.add_constant(x, has_constant="add")
     return sm.OLS(frame[value_column].astype(float), x).fit(cov_type="HAC", cov_kwds={"maxlags": 3})

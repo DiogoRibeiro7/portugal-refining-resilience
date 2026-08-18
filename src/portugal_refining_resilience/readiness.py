@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from .config import ProjectPaths
+from .events import EVENT_PHASES
 
 
 def _check_record(check: str, passed: bool, detail: str) -> dict[str, object]:
@@ -120,7 +121,10 @@ def validate_monthly_event_outputs(metrics_dir: Path) -> tuple[bool, str]:
     missing_models = model_required - set(models.columns)
     if missing_models:
         return False, f"monthly_event_models.csv missing columns: {sorted(missing_models)}"
-    expected_terms = {"matosinhos_transition", "energy_stress_2022", "post_stress"}
+    # Both terms are required: the phase indicator alone is the level shift at the
+    # boundary only when the phase trend is also reported, so a bundle carrying just
+    # the indicators invites it to be quoted as the whole effect.
+    expected_terms = set(EVENT_PHASES) | {f"{phase}_trend" for phase in EVENT_PHASES}
     terms = set(models["term"].dropna().astype(str))
     missing_terms = sorted(expected_terms - terms)
     if missing_terms:
