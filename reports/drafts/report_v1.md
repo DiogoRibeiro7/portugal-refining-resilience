@@ -74,7 +74,7 @@ The intended physical-balance analysis uses transparent accounting metrics:
 \]
 
 \[
-\text{NetImportDependence}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
+\text{NetImportToDemandRatio}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
 \]
 
 \[
@@ -163,6 +163,7 @@ files are not the approved source of truth for report writing.
 Because the data bundle is absent, this draft cannot assess:
 
 - annual coverage or missing years;
+- monthly event timing around May 2021 and March 2022;
 - compatibility of trade, demand, and refinery-output concepts;
 - source reconciliation against DGEG;
 - Eurostat physical-balance ratios and residuals;

@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from portugal_refining_resilience.jodi import annualise, filter_portugal_fuels
+from portugal_refining_resilience.jodi import annualise, build_monthly_panel, filter_portugal_fuels
 
 
 def _monthly_frame(months: range) -> pd.DataFrame:
@@ -46,3 +46,20 @@ def test_annualise_keeps_complete_year_value() -> None:
     out = annualise(_monthly_frame(range(1, 13)))
     assert bool(out.loc[0, "complete_year"]) is True
     assert out.loc[0, "value_kt"] == pytest.approx(12.0)
+
+
+def test_build_monthly_panel_preserves_event_timing() -> None:
+    df = pd.DataFrame(
+        {
+            "time": pd.to_datetime(["2021-04-01", "2021-04-01", "2021-05-01", "2021-05-01"]),
+            "product_canonical": ["diesel"] * 4,
+            "flow_canonical": ["imports", "exports", "imports", "exports"],
+            "value": [10.0, 3.0, 12.0, 2.0],
+        }
+    )
+
+    out = build_monthly_panel(df)
+
+    assert out.loc[0, "event_phase"] == "pre_matosinhos_closure"
+    assert out.loc[1, "event_phase"] == "matosinhos_transition"
+    assert out.loc[1, "net_imports_kt"] == pytest.approx(10.0)

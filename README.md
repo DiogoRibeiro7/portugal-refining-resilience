@@ -87,7 +87,7 @@ artifacts/report_inputs/
 | 07 | `07_process_trade_data.ipynb` | annual diesel/gasoline trade |
 | 08 | `08_process_domestic_demand.ipynb` | annual domestic demand/sales |
 | 09 | `09_process_refinery_output.ipynb` | annual refinery output / system regime |
-| 10 | `10_build_analytical_panel.ipynb` | canonical annual fuel panel |
+| 10 | `10_build_analytical_panel.ipynb` | canonical annual and monthly fuel panels |
 | 11 | `11_descriptive_trade_and_supply.ipynb` | long-run descriptive figures/metrics |
 | 12 | `12_import_dependence_and_refinery_output_ratio.ipynb` | dependency and refinery-output ratios |
 | 13 | `13_structural_breaks.ipynb` | event-aligned break tests |
@@ -131,6 +131,10 @@ reviewable analysis surface.
 
 Report-writing prompts live in `prompts/` and must use the checksum-protected
 `artifacts/report_inputs/` bundle rather than notebook display state or chat history.
+
+Monthly event-timing claims must use `data/processed/fuel_monthly_analytical_panel.csv`,
+which separates the May 2021 Matosinhos closure period from the March 2022 energy-stress
+period.
 
 ## Preliminary seed series
 
