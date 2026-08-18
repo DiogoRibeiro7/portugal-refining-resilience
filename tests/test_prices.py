@@ -1,7 +1,12 @@
 import numpy as np
 import pandas as pd
 
-from portugal_refining_resilience.prices import price_comovement_design, stationarity_diagnostics
+from portugal_refining_resilience.prices import (
+    choose_price_model,
+    price_comovement_design,
+    spread_stationarity,
+    stationarity_diagnostics,
+)
 
 
 def test_price_comovement_design_adds_interaction_and_differences() -> None:
@@ -32,3 +37,20 @@ def test_stationarity_diagnostics_handles_short_series() -> None:
 
     assert out.loc[0, "status"] == "insufficient_observations"
     assert bool(out.loc[0, "stationary_5pct"]) is False
+
+
+def test_spread_stationarity_handles_short_design() -> None:
+    design = pd.DataFrame({"PT": [1.0, 2.0], "ES": [1.0, 1.5]})
+
+    out = spread_stationarity(design)
+
+    assert out["status"] == "insufficient_observations"
+
+
+def test_choose_price_model_handles_short_design() -> None:
+    design = pd.DataFrame({"PT": [1.0, 2.0], "ES": [1.0, 1.5]})
+
+    out = choose_price_model(design, product="diesel")
+
+    assert out["model_family"] == "insufficient_observations"
+    assert out["n_obs"] == 2

@@ -45,7 +45,7 @@ The required empirical report bundle is absent:
   \item \texttt{artifacts/report\_inputs/} contains no empirical CSV or JSON files;
   \item \texttt{data/metrics/report\_readiness.csv} is missing;
   \item no DGEG trade reconciliation output is available;
-  \item no monthly event-timing panel is available;
+  \item no monthly event-timing panel or monthly event-model output is available;
   \item no Eurostat physical-balance panel is available;
   \item no price stationarity diagnostics are available.
 \end{itemize}
@@ -69,7 +69,8 @@ The repository does not yet support publication-ready quantitative findings abou
 import dependence or price effects. The missing DGEG reconciliation is especially important:
 without it, the trade series cannot be treated as independently cross-checked for a
 substantive import-dependence claim. The missing monthly event-timing panel prevents the
-report from distinguishing the May 2021 closure period from the March 2022 energy shock.
+report from distinguishing the May 2021 closure period from the March 2022 energy shock
+with saved monthly phase summaries and model coefficients.
 The missing Eurostat balance panel also prevents a full product-balance cross-check of
 production, imports, exports and domestic use.
 
@@ -187,7 +188,7 @@ The limitations are fundamental:
   \item missing readiness file;
   \item seed/provisional data not replaced or cross-validated;
   \item missing DGEG reconciliation;
-  \item missing monthly event-timing panel;
+  \item missing monthly event-timing panel and monthly event-model outputs;
   \item missing Eurostat physical-balance output;
   \item missing structural-break outputs;
   \item missing price-model outputs and stationarity diagnostics;
@@ -206,7 +207,7 @@ co-movement.
 The next required step is to generate the report input bundle, including:
 \begin{itemize}
   \item \texttt{report\_manifest.json};
-  \item DGEG reconciliation and monthly event-timing metrics;
+  \item DGEG reconciliation and monthly event-model outputs;
   \item Eurostat physical-balance metrics and structural-break outputs;
   \item price-model outputs, price stationarity diagnostics and readiness checks.
 \end{itemize}

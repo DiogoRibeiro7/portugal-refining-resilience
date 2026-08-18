@@ -48,6 +48,14 @@ def test_annualise_keeps_complete_year_value() -> None:
     assert out.loc[0, "value_kt"] == pytest.approx(12.0)
 
 
+def test_annualise_marks_duplicate_month_incomplete() -> None:
+    df = pd.concat([_monthly_frame(range(1, 13)), _monthly_frame(range(1, 2))])
+    out = annualise(df)
+    assert bool(out.loc[0, "complete_year"]) is False
+    assert out.loc[0, "duplicate_months"] == "1"
+    assert pd.isna(out.loc[0, "value_kt"])
+
+
 def test_build_monthly_panel_preserves_event_timing() -> None:
     df = pd.DataFrame(
         {
