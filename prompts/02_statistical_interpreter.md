@@ -23,9 +23,10 @@ Write `reports/interpretation_memo.md` answering:
 4. Did gross import dependence and net-import-to-demand ratios change materially?
 5. Did refinery-output-to-demand ratios change?
 6. Do break diagnostics align with predeclared event dates after transition-year exclusions?
-7. What do price co-movement models show about the `ES_x_post` interaction?
-8. Did Portugal-Spain pre-tax spreads change, and do diagnostics support stronger interpretation?
-9. Which results survive sensitivity checks?
-10. Which tempting claims are not supported?
+7. What model family did `price_model_choice.csv` select for each product, and why?
+8. What do price co-movement or short-run models show about the post interaction?
+9. Did Portugal-Spain pre-tax spreads change, and are spread/stationarity diagnostics credible?
+10. Which results survive sensitivity checks?
+11. Which tempting claims are not supported?
 
 Use only these evidence levels: `documented event`, `descriptive change`, `statistical association / structural-break evidence`, `causal evidence`.

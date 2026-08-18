@@ -6,7 +6,7 @@ Revise the report after peer review.
 
 Read:
 
-- `reports/drafts/report_v1.md`
+- `reports/drafts/report_v1.tex`
 - `reports/peer_review.md`
 - `reports/data_audit.md`
 - `reports/interpretation_memo.md`

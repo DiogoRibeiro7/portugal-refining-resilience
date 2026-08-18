@@ -6,7 +6,7 @@ Act as a skeptical reviewer with expertise in energy economics, time-series anal
 
 Read:
 
-- `reports/drafts/report_v1.md`
+- `reports/drafts/report_v1.tex`
 - `reports/data_audit.md`
 - `artifacts/report_inputs/report_manifest.json`
 - all machine-readable empirical files in the report bundle
@@ -25,7 +25,7 @@ Audit every substantive conclusion for:
 4. gross imports versus net imports confusion;
 5. domestic sales versus final consumption confusion;
 6. 2021 treated as a full post-closure year;
-7. missing monthly evidence separating May 2021 closure from March 2022 energy stress;
+7. missing monthly model evidence separating May 2021 closure from March 2022 energy stress;
 8. small-sample structural-break overinterpretation;
 9. multiple-testing risk without predeclaration or FDR adjustment;
 10. 2022 Ukraine/VGO/common-European-shock confounding;

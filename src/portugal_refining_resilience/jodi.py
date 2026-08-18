@@ -188,8 +188,13 @@ def annualise(
         values = pd.to_numeric(group[value_column], errors="coerce")
         valid = group.loc[values.notna()].copy()
         months = sorted({int(month) for month in valid["month"].dropna()})
+        duplicate_months = sorted(
+            int(cast("int | float | str", month))
+            for month, count in valid["month"].dropna().astype(int).value_counts().items()
+            if count > 1
+        )
         missing_months = [month for month in range(1, 13) if month not in months]
-        complete_year = len(months) == 12
+        complete_year = len(months) == 12 and not duplicate_months
         raw_total = float(values.sum(min_count=1)) if values.notna().any() else np.nan
         if "assessment" in group.columns:
             assessments = sorted(
@@ -207,6 +212,7 @@ def annualise(
                 "raw_month_sum_kt": raw_total,
                 "n_months": len(months),
                 "missing_months": ",".join(str(month) for month in missing_months),
+                "duplicate_months": ",".join(str(month) for month in duplicate_months),
                 "complete_year": complete_year,
                 "assessment_status": assessment_status,
                 "country": "PT",

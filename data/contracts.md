@@ -6,6 +6,9 @@ Key: `year, product, flow`
 
 Required: `year`, `product ∈ {diesel, gasoline}`, `flow ∈ {imports, exports}`, `value_kt`, `source`, `status`.
 
+Numerical reconciliation across sources must use only product definitions marked comparable in
+`data/reference/product_definition_crosswalk.csv`.
+
 ## `fuel_demand_annual.csv`
 
 Key: `year, product`
@@ -45,6 +48,23 @@ Required: `date`, `year`, `month`, `product`, `event_phase`, and the available m
 
 Monthly event-timing claims about Matosinhos versus the 2022 energy shock must use this table or a stricter saved model artifact.
 
+## `monthly_event_phase_summary.csv`
+
+Key: `product, outcome, event_phase`.
+
+Required: `product`, `outcome`, `event_phase`, `n_months`, `mean_value`, and `std_value`.
+
+## `monthly_event_models.csv`
+
+Key: `product, outcome, term`.
+
+Required: `product`, `outcome`, `term`, `estimate`, `std_error`, `p_value`, and `n_obs`.
+
+The fitted design must include month fixed effects, a linear time trend, phase indicators for
+`matosinhos_transition`, `energy_stress_2022`, and `post_stress`, and phase-trend interactions.
+Claims that isolate the Matosinhos transition from the 2022 energy shock must cite these saved
+coefficients rather than informal visual inspection.
+
 ## `eurostat_physical_balance_panel.csv`
 
 Key: `year, country, product`.
@@ -56,3 +76,12 @@ Required where available: imports, exports, demand, refinery output, balance res
 Key: `country, product, value_column`.
 
 Required before interpreting weekly price-level co-movement regressions.
+
+## `price_model_choice.csv`
+
+Key: `product`.
+
+Required: `product`, `model_family`, and `reason`.
+
+The model family must record whether the price analysis is using stationary levels, requires an
+ECM because levels appear cointegrated, or falls back to short-run log differences.

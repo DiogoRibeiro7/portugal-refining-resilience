@@ -91,7 +91,8 @@ artifacts/report_inputs/
 | 11 | `11_descriptive_trade_and_supply.ipynb` | long-run descriptive figures/metrics |
 | 12 | `12_import_dependence_and_refinery_output_ratio.ipynb` | dependency and refinery-output ratios |
 | 13 | `13_structural_breaks.ipynb` | event-aligned break tests |
-| 14 | `14_2022_stress_test.ipynb` | 2022 stress metrics |
+| 14a | `14_2022_stress_test.ipynb` | 2022 stress metrics |
+| 14b | `14_monthly_event_analysis.ipynb` | monthly event-timing models |
 | 15 | `15_price_comovement.ipynb` | PT-ES price co-movement models |
 | 16 | `16_spain_comparison.ipynb` | PT-ES price spreads and physical-balance comparisons |
 | 17 | `17_robustness_and_sensitivity.ipynb` | alternative definitions and windows |
@@ -132,9 +133,15 @@ reviewable analysis surface.
 Report-writing prompts live in `prompts/` and must use the checksum-protected
 `artifacts/report_inputs/` bundle rather than notebook display state or chat history.
 
-Monthly event-timing claims must use `data/processed/fuel_monthly_analytical_panel.csv`,
-which separates the May 2021 Matosinhos closure period from the March 2022 energy-stress
-period.
+Monthly event-timing claims must use `data/processed/fuel_monthly_analytical_panel.csv` and
+the persisted `data/metrics/monthly_event_models.csv` / `monthly_event_phase_summary.csv`
+outputs, which separate the May 2021 Matosinhos transition from the March 2022 energy-stress
+period with monthly seasonality controls.
+
+Cross-source comparisons must pass the tested readiness checks in
+`portugal_refining_resilience.readiness`; file existence alone is not enough. Product definitions
+are audited through `data/reference/product_definition_crosswalk.csv` before DGEG/JODI/Eurostat
+values are interpreted as comparable.
 
 ## Preliminary seed series
 

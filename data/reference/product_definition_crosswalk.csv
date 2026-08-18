@@ -1,0 +1,8 @@
+source,source_code,source_label,canonical_product,scope,includes_biofuel,includes_aviation,road_only,comparable_to_jodi,notes
+JODI,GASDIES,Gas/diesel oil,diesel,secondary petroleum product,unknown,no,no,yes,JODI diesel/gasoil benchmark category for physical-flow analysis
+JODI,GASOLINE,Motor gasoline,gasoline,secondary petroleum product,unknown,no,no,yes,JODI gasoline benchmark category for physical-flow analysis
+DGEG,,Gasoleo,diesel,Portuguese petroleum-product trade label,unknown,no,unknown,review,DGEG workbook label must be confirmed against source metadata before numerical reconciliation
+DGEG,,Gasoleo rodoviario,diesel,Portuguese road-fuel sales label,unknown,no,yes,no,Road-only sales are not automatically comparable with JODI total product demand
+DGEG,,Gasolina,gasoline,Portuguese petroleum-product trade label,unknown,unknown,unknown,review,DGEG workbook label must be confirmed against source metadata before numerical reconciliation
+Eurostat,,Gas oil and diesel oil,diesel,Eurostat SIEC product,unknown,no,no,yes,Comparable only when paired with selected balance code and unit
+Eurostat,,Motor gasoline,gasoline,Eurostat SIEC product,unknown,no,no,yes,Comparable only when paired with selected balance code and unit

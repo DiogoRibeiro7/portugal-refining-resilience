@@ -115,11 +115,18 @@ def event_window_summary(
     event_year: int,
     pre_years: int = 5,
     post_years: int = 3,
+    percent_change_columns: set[str] | None = None,
 ) -> pd.DataFrame:
     """Summarise mean levels around an event without assigning causality."""
     if pre_years < 1 or post_years < 1:
         raise ValueError("pre_years and post_years must be positive")
     records: list[dict[str, float | int | str]] = []
+    percent_change_columns = percent_change_columns or {
+        "exports_kt",
+        "imports_kt",
+        "demand_kt",
+        "refinery_output_kt",
+    }
     for product_name, group in df.groupby("product"):
         pre = group.loc[group["year"].between(event_year - pre_years, event_year - 1), value_column]
         post = group.loc[
@@ -127,7 +134,12 @@ def event_window_summary(
         ]
         pre_mean = float(pre.mean()) if not pre.empty else float("nan")
         post_mean = float(post.mean()) if not post.empty else float("nan")
-        pct_difference = 100 * (post_mean / pre_mean - 1) if pre_mean != 0 else float("nan")
+        pct_difference = (
+            100 * (post_mean / pre_mean - 1)
+            if value_column in percent_change_columns and pre_mean > 0
+            else float("nan")
+        )
+        difference_unit = "percent_points" if value_column.endswith("_ratio") else "level"
         records.append(
             {
                 "product": str(product_name),
@@ -136,6 +148,7 @@ def event_window_summary(
                 "pre_mean": pre_mean,
                 "post_mean": post_mean,
                 "difference": post_mean - pre_mean,
+                "difference_unit": difference_unit,
                 "pct_difference": pct_difference,
             }
         )

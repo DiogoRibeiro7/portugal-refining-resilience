@@ -5,6 +5,7 @@ from portugal_refining_resilience.metrics import (
     add_supply_metrics,
     add_yoy,
     benchmark_deviation,
+    event_window_summary,
     safe_ratio,
 )
 
@@ -54,3 +55,21 @@ def test_benchmark_deviation_reports_robust_statistics() -> None:
     assert out.loc[0, "baseline_n"] == 4
     assert out.loc[0, "baseline_median"] == pytest.approx(11.5)
     assert out.loc[0, "robust_z_score"] > 0
+
+
+def test_event_window_summary_avoids_pct_change_for_ratios() -> None:
+    df = pd.DataFrame(
+        {
+            "product": ["diesel"] * 4,
+            "year": [2019, 2020, 2022, 2023],
+            "net_import_to_demand_ratio": [-0.1, 0.1, 0.2, 0.3],
+        }
+    )
+
+    out = event_window_summary(
+        df, value_column="net_import_to_demand_ratio", event_year=2021, pre_years=2, post_years=2
+    )
+
+    assert out.loc[0, "difference"] == pytest.approx(0.25)
+    assert out.loc[0, "difference_unit"] == "percent_points"
+    assert pd.isna(out.loc[0, "pct_difference"])
