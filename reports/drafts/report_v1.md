@@ -136,15 +136,19 @@ exports, demand, and refinery output.
 The intended primary price outcome is pre-tax fuel prices. This design choice is
 important because tax changes can contaminate after-tax retail price comparisons.
 
-The current evidence does not include price-model outputs or Portugal-Spain
-spread diagnostics. Therefore, the physical-dependence analysis cannot establish
-a price effect. It also cannot use Spain as a causal control. Spain can only be
-described as a planned comparison series until saved diagnostics show otherwise.
+The current evidence does not include price-model outputs, price stationarity
+diagnostics, or Portugal-Spain spread diagnostics. Therefore, the
+physical-dependence analysis cannot establish a price effect. It also cannot use
+Spain as a causal control. Spain can only be described as a planned comparison
+series until saved diagnostics show otherwise.
 
 ## 12. Robustness and Source Reconciliation
 
 The audit identifies DGEG as a required cross-check for Portuguese trade data,
 but no stored reconciliation output is present in the reporting bundle.
+Eurostat physical-balance outputs are also absent, so production, imports,
+exports and domestic use cannot yet be reconciled in a full product-balance
+framework.
 
 No event-window sensitivity table, source-reconciliation table, or robustness
 metric is available for this draft.
@@ -161,9 +165,10 @@ Because the data bundle is absent, this draft cannot assess:
 - annual coverage or missing years;
 - compatibility of trade, demand, and refinery-output concepts;
 - source reconciliation against DGEG;
+- Eurostat physical-balance ratios and residuals;
 - structural-break sample sizes or estimates;
 - event-window sensitivity;
-- price co-movement estimates;
+- price co-movement estimates and stationarity diagnostics;
 - Portugal-Spain pre-tax spreads.
 
 ## 14. Conclusions

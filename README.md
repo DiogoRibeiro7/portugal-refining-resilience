@@ -79,9 +79,9 @@ artifacts/report_inputs/
 |---:|---|---|
 | 00 | `00_research_questions_and_design.ipynb` | estimands, hypotheses, causal guardrails |
 | 01 | `01_source_audit_and_manifest.ipynb` | frozen source manifest |
-| 02 | `02_acquire_dgeg_trade_and_sales.ipynb` | DGEG raw workbooks |
+| 02 | `02_acquire_dgeg_trade_and_sales.ipynb` | DGEG raw workbooks and canonical trade extraction |
 | 03 | `03_acquire_jodi_oil.ipynb` | JODI secondary-products database |
-| 04 | `04_acquire_eurostat_oil_balance.ipynb` | Eurostat PT/ES oil balance |
+| 04 | `04_acquire_eurostat_oil_balance.ipynb` | Eurostat PT/ES oil balance panel |
 | 05 | `05_acquire_weekly_oil_prices.ipynb` | EC Weekly Oil Bulletin history |
 | 06 | `06_refinery_events_and_capacity.ipynb` | event/capacity reference tables |
 | 07 | `07_process_trade_data.ipynb` | annual diesel/gasoline trade |
@@ -93,7 +93,7 @@ artifacts/report_inputs/
 | 13 | `13_structural_breaks.ipynb` | event-aligned break tests |
 | 14 | `14_2022_stress_test.ipynb` | 2022 stress metrics |
 | 15 | `15_price_comovement.ipynb` | PT-ES price co-movement models |
-| 16 | `16_spain_comparison.ipynb` | PT–ES spreads / controlled ITS |
+| 16 | `16_spain_comparison.ipynb` | PT-ES price spreads and physical-balance comparisons |
 | 17 | `17_robustness_and_sensitivity.ipynb` | alternative definitions and windows |
 | 18 | `18_final_tables_figures_metrics.ipynb` | report-ready outputs |
 | 19 | `19_export_report_inputs.ipynb` | compact evidence bundle |
@@ -158,7 +158,13 @@ For fuel \(j\) in year \(t\):
 
 where \(M\) is imports, \(X\) exports, \(D\) domestic demand/sales and \(Q^{refinery}\) refinery output.
 
-The refinery-output-to-demand ratio is not interpreted as self-sufficiency: Portuguese refinery output may be exported while Portugal imports a different product stream. Price analysis is conducted primarily **before taxes**, with after-tax prices reported separately. Spain is used as a comparison series, not automatically as a causal counterfactual.
+The refinery-output-to-demand ratio is not interpreted as self-sufficiency: Portuguese
+refinery output may be exported while Portugal imports a different product stream. Price
+analysis is conducted primarily **before taxes**, with after-tax prices reported separately.
+Spain is used as a comparison series, not automatically as a causal counterfactual. Weekly
+price-level models require stationarity diagnostics, and persistent levels should be
+interpreted as co-movement rather than causal international pass-through unless stronger
+time-series evidence is added.
 
 ## Identification guardrails
 
