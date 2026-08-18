@@ -18,12 +18,12 @@ The repository does **not** assume that refinery closure caused higher retail fu
 \rightarrow
 \text{physical import dependence}
 \rightarrow
-\text{price transmission and resilience}.
+\text{price co-movement and resilience}.
 \]
 
 The empirical question is:
 
-> **Did the loss of refining capacity increase Portugal's dependence on imported finished petroleum products and reduce supply resilience, and did international price transmission change after the closure?**
+> **Did the loss of refining capacity increase Portugal's dependence on imported finished petroleum products and reduce supply resilience, and did Portugal-Spain price co-movement change after the closure?**
 
 ## Repository status
 
@@ -89,10 +89,10 @@ artifacts/report_inputs/
 | 09 | `09_process_refinery_output.ipynb` | annual refinery output / system regime |
 | 10 | `10_build_analytical_panel.ipynb` | canonical annual fuel panel |
 | 11 | `11_descriptive_trade_and_supply.ipynb` | long-run descriptive figures/metrics |
-| 12 | `12_import_dependence_and_self_sufficiency.ipynb` | dependency metrics |
+| 12 | `12_import_dependence_and_refinery_output_ratio.ipynb` | dependency and refinery-output ratios |
 | 13 | `13_structural_breaks.ipynb` | event-aligned break tests |
 | 14 | `14_2022_stress_test.ipynb` | 2022 stress metrics |
-| 15 | `15_price_pass_through.ipynb` | PT price transmission models |
+| 15 | `15_price_comovement.ipynb` | PT-ES price co-movement models |
 | 16 | `16_spain_comparison.ipynb` | PT–ES spreads / controlled ITS |
 | 17 | `17_robustness_and_sensitivity.ipynb` | alternative definitions and windows |
 | 18 | `18_final_tables_figures_metrics.ipynb` | report-ready outputs |
@@ -117,15 +117,20 @@ This repository intentionally stores transformed outputs. Do not make the final 
 
 - `data/interim/`: source-normalised observations.
 - `data/processed/`: canonical panels that can be reviewed independently of code.
-- `data/metrics/`: descriptive, structural-break, stress-test, pass-through, and robustness metrics.
+- `data/metrics/`: descriptive, structural-break, stress-test, price co-movement, and robustness metrics.
 - `data/provenance/`: source snapshots, hashes, extraction timestamps and processing metadata.
 - `artifacts/report_inputs/`: only the files the report-writing prompts are allowed to treat as empirical evidence.
 
 CSV is always written for human inspection. Parquet is written where available for typed reuse.
 
-Raw downloaded files are excluded from version control by default because they are reproducible
-downloads and may be large. Commit transformed datasets only when they are intentionally part of
-the reviewable analysis surface.
+Raw downloaded files are excluded from version control by default because they can be large or
+license-sensitive. The downloader refuses to overwrite an existing raw file unless a new source
+vintage is requested explicitly, and writes metadata sidecars with retrieval time, URL, SHA-256 and
+snapshot status. Commit transformed datasets only when they are intentionally part of the
+reviewable analysis surface.
+
+Report-writing prompts live in `prompts/` and must use the checksum-protected
+`artifacts/report_inputs/` bundle rather than notebook display state or chat history.
 
 ## Preliminary seed series
 
@@ -144,16 +149,16 @@ For fuel \(j\) in year \(t\):
 \]
 
 \[
-\text{NetImportDependence}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
+\text{NetImportToDemandRatio}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
 \]
 
 \[
-\text{DomesticOutputCoverage}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}
+\text{RefineryOutputToDemandRatio}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}
 \]
 
 where \(M\) is imports, \(X\) exports, \(D\) domestic demand/sales and \(Q^{refinery}\) refinery output.
 
-Price analysis is conducted primarily **before taxes**, with after-tax prices reported separately. Spain is used as a comparison series, not automatically as a causal counterfactual.
+The refinery-output-to-demand ratio is not interpreted as self-sufficiency: Portuguese refinery output may be exported while Portugal imports a different product stream. Price analysis is conducted primarily **before taxes**, with after-tax prices reported separately. Spain is used as a comparison series, not automatically as a causal counterfactual.
 
 ## Identification guardrails
 

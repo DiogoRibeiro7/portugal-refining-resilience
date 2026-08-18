@@ -21,7 +21,7 @@ diagnostics, and sensitivity checks are unavailable from the permitted evidence.
 | Galp announced concentration of refining at Sines in December 2020 | documented event | Event metadata records the announcement date and warns not to use it as the physical closure date. |
 | Matosinhos refining activities ceased during 2021 | documented event | Event metadata records May 2021 as the closure timing and states that annual 2021 should be treated as a transition year. |
 | 2022 Russian oil-product/VGO disruption | documented event | Event metadata records a competing mechanism and stress shock relevant to diesel manufacturing at Sines. |
-| Diesel/gasoline exports, imports, demand, output, import dependence, price transmission, Portugal-Spain spread | unavailable | The empirical bundle needed for numerical interpretation is absent. |
+| Diesel/gasoline exports, imports, demand, output, import dependence, price co-movement, Portugal-Spain spread | unavailable | The empirical bundle needed for numerical interpretation is absent. |
 
 ## Answers to the Analytical Questions
 
@@ -68,7 +68,7 @@ evidence.
 Unavailable. The audit notes that break-test settings exist in configuration,
 but no stored break-model outputs are present in the report bundle.
 
-### 7. What do the price models show about pre-tax price transmission?
+### 7. What do the price models show about pre-tax price co-movement?
 
 Unavailable. The audit records that configuration identifies pre-tax prices as
 the primary measure, but no stored price-model output is available.

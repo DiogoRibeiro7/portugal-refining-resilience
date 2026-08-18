@@ -10,8 +10,8 @@ refining activities ceased during 2021, and 2022 included a documented
 feedstock shock relevant to diesel manufacturing.
 
 The current evidence does not support numerical conclusions about exports,
-imports, demand, refinery output, import dependence, domestic output coverage,
-structural breaks, price transmission, or Portugal-Spain spreads. The required
+imports, demand, refinery output, import dependence, refinery-output-to-demand ratios,
+structural breaks, price co-movement, or Portugal-Spain spreads. The required
 report input manifest is absent, and `artifacts/report_inputs/` contains no
 machine-readable empirical bundle. This report therefore treats quantitative
 results as unavailable rather than inferring them from notebook state or memory.
@@ -24,7 +24,7 @@ physical dependence, resilience, or prices can be made.
 
 The motivating question is whether the loss or concentration of refining
 capacity changed Portugal's dependence on imported finished petroleum products
-and reduced supply resilience, and whether price transmission changed after the
+and reduced supply resilience, and whether price co-movement changed after the
 Matosinhos transition.
 
 The intended hypotheses are:
@@ -34,7 +34,7 @@ The intended hypotheses are:
 - the 2021 Matosinhos transition may have changed import dependence and domestic
   output coverage;
 - 2022 may represent a supply-system stress episode;
-- price transmission may have changed after 2021, but domestic refining does not
+- price co-movement may have changed after 2021, but domestic refining does not
   imply insulation from international crude or input prices.
 
 These hypotheses cannot be evaluated quantitatively from the current reporting
@@ -78,7 +78,7 @@ The intended physical-balance analysis uses transparent accounting metrics:
 \]
 
 \[
-\text{DomesticOutputCoverage}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}.
+\text{RefineryOutputToDemandRatio}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}.
 \]
 
 Here \(M\) is imports, \(X\) exports, \(D\) domestic demand or sales, and
@@ -131,7 +131,7 @@ Unavailable. Gross import dependence, net import dependence, and domestic
 refinery-output coverage cannot be reported without stored values for imports,
 exports, demand, and refinery output.
 
-## 11. Price Transmission and Portugal-Spain Comparison
+## 11. Price Co-Movement and Portugal-Spain Comparison
 
 The intended primary price outcome is pre-tax fuel prices. This design choice is
 important because tax changes can contaminate after-tax retail price comparisons.
@@ -163,7 +163,7 @@ Because the data bundle is absent, this draft cannot assess:
 - source reconciliation against DGEG;
 - structural-break sample sizes or estimates;
 - event-window sensitivity;
-- price pass-through estimates;
+- price co-movement estimates;
 - Portugal-Spain pre-tax spreads.
 
 ## 14. Conclusions

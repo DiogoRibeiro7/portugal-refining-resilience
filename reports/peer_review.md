@@ -38,7 +38,7 @@ avoid readers mistaking the document for a completed 2005-2024 analysis.
 | 7 | Small-sample structural-break overinterpretation | OK | No structural-break estimate is interpreted. | None. |
 | 8 | 2022 Ukraine/VGO/common-European-shock confounding | OK | The draft identifies 2022 as a competing stress mechanism and does not attribute it to Matosinhos. | None. |
 | 9 | Invalid causal use of Spain | OK | The draft states that Spain cannot be used as a causal control without stored diagnostics. | None. |
-| 10 | Taxes contaminating price-pass-through results | OK | The draft distinguishes pre-tax analysis from after-tax retail prices and reports no price estimate. | None. |
+| 10 | Taxes contaminating price co-movement results | OK | The draft distinguishes pre-tax analysis from after-tax retail prices and reports no price estimate. | None. |
 | 11 | Nominal capacity treated as actual output | OK | The draft does not treat capacity metadata as refinery output. | None. |
 | 12 | Galp corporate claims treated as independent outcome evidence | OK | Galp disclosures are used only as event metadata. | None. |
 | 13 | Missing source reconciliation | MAJOR | The draft correctly says DGEG reconciliation is missing, but this prevents a substantive trade-dependence report. | In the final version, state in the executive summary and conclusion that source reconciliation is absent and that no trade-dependence finding is publication-ready. |
@@ -47,7 +47,7 @@ avoid readers mistaking the document for a completed 2005-2024 analysis.
 ## Required Revisions
 
 1. Strengthen the executive-summary caveat: this is not yet a completed
-   empirical assessment of import dependence or price transmission.
+   empirical assessment of import dependence or price co-movement.
 2. State that missing DGEG reconciliation blocks publication-ready trade claims.
 3. Keep all post-2013, post-2021, 2022, and price statements at documented-event
    or unavailable-evidence level unless a stored report bundle is added.

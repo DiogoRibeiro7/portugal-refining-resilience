@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import zipfile
 from pathlib import Path
+from typing import cast
 
+import numpy as np
 import pandas as pd
 
 _COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
@@ -15,9 +17,44 @@ _COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
     "assessment": ("assessment", "assessment_code", "colour_code", "color_code"),
 }
 
+_PRODUCT_CODES: dict[str, set[str]] = {
+    "diesel": {"GASDIES", "GASDIESEL", "GAS_DIESEL"},
+    "gasoline": {"GASOLINE", "MOGAS"},
+}
+_PRODUCT_LABEL_ALIASES: dict[str, set[str]] = {
+    "diesel": {
+        "AUTOMOTIVE GAS OIL",
+        "DIESEL",
+        "GAS OIL AND DIESEL OIL",
+        "GAS/DIESEL OIL",
+        "GASOLEO",
+        "GASÓLEO",
+    },
+    "gasoline": {
+        "EURO-SUPER 95",
+        "EUROSUPER 95",
+        "GASOLINA",
+        "GASOLINE",
+        "MOTOR GASOLINE",
+        "MOTOR/AVIATION GASOLINE",
+    },
+}
+_TONNE_UNIT_CODES = {
+    "KT",
+    "KTON",
+    "1000 TONNES",
+    "1000 TONS",
+    "THOUSAND TONNES",
+    "THOUSAND TONS",
+}
+
 
 def _normalise_name(name: object) -> str:
     return str(name).strip().lower().replace(" ", "_").replace("-", "_")
+
+
+def _normalise_code(value: object) -> str:
+    return str(value).strip().upper().replace("\u00a0", " ")
 
 
 def _resolve_columns(columns: pd.Index) -> dict[str, str]:
@@ -67,18 +104,26 @@ def filter_portugal_fuels(
     df: pd.DataFrame,
     *,
     flows: tuple[str, ...] = ("exports", "imports", "refinery output", "demand"),
+    allow_label_fallback: bool = True,
 ) -> pd.DataFrame:
-    """Select Portugal, gasoline/diesel, and tonne observations using label/code aliases."""
+    """Select Portugal, gasoline/diesel, and tonne observations using audited aliases.
+
+    Exact JODI codes are preferred. Human-readable labels are accepted only when
+    they match the explicit alias lists above.
+    """
     out = df.copy()
     for column in ("country", "product", "flow", "unit"):
         if column not in out.columns:
             raise ValueError(f"Missing canonical JODI column: {column}")
-        out[f"_{column}"] = out[column].astype(str).str.strip().str.upper()
+        out[f"_{column}"] = out[column].map(_normalise_code)
 
     country_ok = out["_country"].isin({"PT", "PORTUGAL"})
-    diesel_ok = out["_product"].str.contains("DIESEL|GAS/DIESEL|GAS OIL|GASDIES", regex=True)
-    gasoline_ok = out["_product"].str.contains("GASOLINE|MOGAS", regex=True)
-    tonne_ok = out["_unit"].str.contains("KTON|THOUSAND.*TON|1000.*TON|KT", regex=True)
+    diesel_ok = out["_product"].isin(_PRODUCT_CODES["diesel"])
+    gasoline_ok = out["_product"].isin(_PRODUCT_CODES["gasoline"])
+    if allow_label_fallback:
+        diesel_ok |= out["_product"].isin(_PRODUCT_LABEL_ALIASES["diesel"])
+        gasoline_ok |= out["_product"].isin(_PRODUCT_LABEL_ALIASES["gasoline"])
+    tonne_ok = out["_unit"].isin(_TONNE_UNIT_CODES)
 
     # JODI CSVs use short flow codes (for example TOTEXPSB) while some exports
     # expose human-readable labels. Support both explicitly.
@@ -119,17 +164,50 @@ def annualise(
     df: pd.DataFrame,
     *,
     value_column: str = "value",
+    require_complete_months: bool = True,
 ) -> pd.DataFrame:
-    """Sum monthly physical quantities to annual fuel/flow totals."""
-    required = {"year", "product_canonical", "flow_canonical", value_column}
+    """Sum monthly physical quantities to annual fuel/flow totals.
+
+    The output always includes completeness diagnostics. By default, annual
+    values with fewer than 12 observed months are marked incomplete and their
+    analytical ``value_kt`` is set to NaN.
+    """
+    required = {"year", "month", "product_canonical", "flow_canonical", value_column}
     missing = required - set(df.columns)
     if missing:
         raise ValueError(f"Missing columns for annualisation: {sorted(missing)}")
-    grouped = (
-        df.groupby(["year", "product_canonical", "flow_canonical"], as_index=False)[[value_column]]
-        .sum(min_count=1)
-        .rename(columns={value_column: "value_kt"})
-    )
-    grouped["country"] = "PT"
-    grouped["source"] = "JODI"
-    return grouped
+
+    records: list[dict[str, object]] = []
+    group_columns = ["year", "product_canonical", "flow_canonical"]
+    for keys, group in df.groupby(group_columns, dropna=False):
+        year, product, flow = keys
+        year_int = int(cast("int | float | str", year))
+        values = pd.to_numeric(group[value_column], errors="coerce")
+        valid = group.loc[values.notna()].copy()
+        months = sorted({int(month) for month in valid["month"].dropna()})
+        missing_months = [month for month in range(1, 13) if month not in months]
+        complete_year = len(months) == 12
+        raw_total = float(values.sum(min_count=1)) if values.notna().any() else np.nan
+        if "assessment" in group.columns:
+            assessments = sorted(
+                {str(value).strip() for value in group["assessment"].dropna() if str(value).strip()}
+            )
+            assessment_status = ";".join(assessments) if assessments else "not_available"
+        else:
+            assessment_status = "not_available"
+        records.append(
+            {
+                "year": year_int,
+                "product_canonical": str(product),
+                "flow_canonical": str(flow),
+                "value_kt": raw_total if complete_year or not require_complete_months else np.nan,
+                "raw_month_sum_kt": raw_total,
+                "n_months": len(months),
+                "missing_months": ",".join(str(month) for month in missing_months),
+                "complete_year": complete_year,
+                "assessment_status": assessment_status,
+                "country": "PT",
+                "source": "JODI",
+            }
+        )
+    return pd.DataFrame(records)
