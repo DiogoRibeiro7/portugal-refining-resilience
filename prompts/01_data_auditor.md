@@ -22,14 +22,15 @@ Audit:
 
 1. units and product definitions for diesel/gasoil and gasoline;
 2. annual coverage, `n_months`, `missing_months` and assessment status;
-3. whether 2021 is treated as a transition year in annual analysis;
-4. compatibility of trade, demand and refinery-output concepts;
-5. DGEG reconciliation status;
-6. whether any report input is marked seed or provisional;
-7. whether Eurostat balance ratios and residuals are available for Portugal and Spain;
-8. whether price results use pre-tax prices and include stationarity diagnostics;
-9. whether Spain is used only as a comparison unless a valid control design exists;
-10. structural-break sample sizes, transition exclusions and FDR adjustment;
-11. whether every numerical claim needed for the report is in the evidence bundle.
+3. whether monthly event timing separates May 2021 closure from March 2022 energy stress;
+4. whether 2021 is treated as a transition year in annual analysis;
+5. compatibility of trade, demand and refinery-output concepts;
+6. DGEG reconciliation status;
+7. whether any report input is marked seed or provisional;
+8. whether Eurostat balance ratios and residuals are available for Portugal and Spain;
+9. whether price results use pre-tax prices and include stationarity diagnostics;
+10. whether Spain is used only as a comparison unless a valid control design exists;
+11. structural-break sample sizes, transition exclusions and FDR adjustment;
+12. whether every numerical claim needed for the report is in the evidence bundle.
 
 Classify each issue as `PASS`, `WARNING` or `BLOCKER` and cite the exact file and column.

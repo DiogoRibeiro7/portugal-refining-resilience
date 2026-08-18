@@ -25,15 +25,16 @@ Audit every substantive conclusion for:
 4. gross imports versus net imports confusion;
 5. domestic sales versus final consumption confusion;
 6. 2021 treated as a full post-closure year;
-7. small-sample structural-break overinterpretation;
-8. multiple-testing risk without predeclaration or FDR adjustment;
-9. 2022 Ukraine/VGO/common-European-shock confounding;
-10. invalid causal use of Spain;
-11. price co-movement mislabelled as international pass-through;
-12. missing DGEG reconciliation;
-13. missing Eurostat product-balance cross-checks;
-14. missing price stationarity diagnostics;
-15. missing JODI annual-completeness diagnostics;
-16. claims stronger than stored metrics.
+7. missing monthly evidence separating May 2021 closure from March 2022 energy stress;
+8. small-sample structural-break overinterpretation;
+9. multiple-testing risk without predeclaration or FDR adjustment;
+10. 2022 Ukraine/VGO/common-European-shock confounding;
+11. invalid causal use of Spain;
+12. price co-movement mislabelled as international pass-through;
+13. missing DGEG reconciliation;
+14. missing Eurostat product-balance cross-checks;
+15. missing price stationarity diagnostics;
+16. missing JODI annual-completeness diagnostics;
+17. claims stronger than stored metrics.
 
 Classify findings as `MAJOR`, `MINOR` or `OK`. For every `MAJOR`, give the exact revision needed.

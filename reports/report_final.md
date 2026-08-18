@@ -13,6 +13,7 @@ The required empirical report bundle is absent:
 - `artifacts/report_inputs/` contains no empirical CSV or JSON files;
 - `data/metrics/report_readiness.csv` is missing;
 - no DGEG trade reconciliation output is available;
+- no monthly event-timing panel is available;
 - no Eurostat physical-balance panel is available;
 - no price stationarity diagnostics are available.
 
@@ -34,7 +35,9 @@ The repository does not yet support publication-ready quantitative findings
 about physical import dependence or price effects. The missing DGEG
 reconciliation is especially important: without it, the trade series cannot be
 treated as independently cross-checked for a substantive import-dependence
-claim. The missing Eurostat balance panel also prevents a full product-balance
+claim. The missing monthly event-timing panel prevents the report from
+distinguishing the May 2021 closure period from the March 2022 energy shock.
+The missing Eurostat balance panel also prevents a full product-balance
 cross-check of production, imports, exports and domestic use.
 
 ## 2. Research Question and Hypotheses
@@ -87,7 +90,7 @@ The intended physical-balance metrics are:
 \]
 
 \[
-\text{NetImportDependence}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
+\text{NetImportToDemandRatio}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
 \]
 
 \[
@@ -143,6 +146,7 @@ The limitations are fundamental:
 - missing readiness file;
 - seed/provisional data not replaced or cross-validated;
 - missing DGEG reconciliation;
+- missing monthly event-timing panel;
 - missing Eurostat physical-balance output;
 - missing structural-break outputs;
 - missing price-model outputs and stationarity diagnostics;
@@ -159,10 +163,11 @@ stored evidence is insufficient for a substantive 2005-2024 empirical report on
 import dependence or price co-movement.
 
 The next required step is to generate the report input bundle, including
-`report_manifest.json`, DGEG reconciliation, Eurostat physical-balance metrics,
-structural-break outputs, price-model outputs, price stationarity diagnostics
-and readiness checks. Once those files exist, the report can be revised from an
-evidence-limited document into a quantitative analysis.
+`report_manifest.json`, DGEG reconciliation, monthly event-timing metrics,
+Eurostat physical-balance metrics, structural-break outputs, price-model
+outputs, price stationarity diagnostics and readiness checks. Once those files
+exist, the report can be revised from an evidence-limited document into a
+quantitative analysis.
 
 ## Claim-Evidence Matrix
 

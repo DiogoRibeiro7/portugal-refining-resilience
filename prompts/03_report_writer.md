@@ -28,6 +28,8 @@ RefineryOutputToDemandRatio[j,t] = Q_refinery[j,t] / D[j,t]
 
 Do not call `RefineryOutputToDemandRatio` self-sufficiency. Portuguese refinery output may be exported while domestic demand is met partly by imports.
 
-Treat annual 2021 as a transition year unless a saved monthly model explicitly handles timing.
+Treat annual 2021 as a transition year. Use `fuel_monthly_analytical_panel.csv` or a
+stricter saved monthly model to distinguish May 2021 closure timing from the March 2022
+energy shock.
 
 Price analysis is Portugal-Spain retail price co-movement unless an actual international wholesale benchmark is included.

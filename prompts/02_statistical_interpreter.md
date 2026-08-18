@@ -18,8 +18,8 @@ Do not recover numbers from chat, notebook prose, notebook display output, exter
 Write `reports/interpretation_memo.md` answering:
 
 1. What changed in exports, imports, refinery output and demand around 2013?
-2. What changed around the 2021 Matosinhos transition?
-3. Is 2022 exceptional under the explicit benchmark windows?
+2. What changed around the 2021 Matosinhos transition in monthly data?
+3. Is 2022 exceptional under the explicit benchmark windows and monthly event phases?
 4. Did gross import dependence and net-import-to-demand ratios change materially?
 5. Did refinery-output-to-demand ratios change?
 6. Do break diagnostics align with predeclared event dates after transition-year exclusions?

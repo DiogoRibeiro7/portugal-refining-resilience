@@ -7,6 +7,9 @@ from typing import cast
 import numpy as np
 import pandas as pd
 
+from .events import assign_monthly_event_phase
+from .metrics import add_supply_metrics
+
 _COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
     "country": ("country", "ref_area", "area", "country_name"),
     "product": ("product", "energy_product", "product_name"),
@@ -211,3 +214,42 @@ def annualise(
             }
         )
     return pd.DataFrame(records)
+
+
+def build_monthly_panel(df: pd.DataFrame, *, value_column: str = "value") -> pd.DataFrame:
+    """Build a monthly product panel from canonical JODI fuel observations."""
+    required = {"time", "product_canonical", "flow_canonical", value_column}
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"Missing columns for monthly panel: {sorted(missing)}")
+    frame = df.copy()
+    frame["time"] = pd.to_datetime(frame["time"])
+    frame["date"] = frame["time"].dt.to_period("M").dt.to_timestamp()
+    frame["value_kt"] = pd.to_numeric(frame[value_column], errors="coerce")
+    panel = (
+        frame.pivot_table(
+            index=["date", "product_canonical"],
+            columns="flow_canonical",
+            values="value_kt",
+            aggfunc="sum",
+        )
+        .rename(
+            columns={
+                "imports": "imports_kt",
+                "exports": "exports_kt",
+                "demand": "demand_kt",
+                "refinery output": "refinery_output_kt",
+            }
+        )
+        .reset_index()
+        .rename(columns={"product_canonical": "product"})
+    )
+    panel.columns.name = None
+    panel["year"] = panel["date"].dt.year.astype(int)
+    panel["month"] = panel["date"].dt.month.astype(int)
+    panel["event_phase"] = assign_monthly_event_phase(panel["date"])
+    if {"imports_kt", "exports_kt"}.issubset(panel.columns):
+        panel["net_imports_kt"] = panel["imports_kt"] - panel["exports_kt"]
+    if {"imports_kt", "exports_kt", "demand_kt"}.issubset(panel.columns):
+        panel = add_supply_metrics(panel)
+    return panel

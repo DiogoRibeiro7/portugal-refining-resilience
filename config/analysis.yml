@@ -8,6 +8,10 @@ analysis:
     sines_hydrocracker: 2013
     matosinhos_transition: 2021
     energy_stress: 2022
+  event_dates:
+    matosinhos_closure_start: "2021-05-01"
+    energy_stress_start: "2022-03-01"
+    post_stress_start: "2023-01-01"
   comparison_country: ES
   primary_country: PT
   price_analysis:
