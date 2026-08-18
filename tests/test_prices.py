@@ -1,8 +1,12 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
+import pytest
 
 from portugal_refining_resilience.prices import (
     choose_price_model,
+    extract_weekly_prices,
     price_comovement_design,
     spread_stationarity,
     stationarity_diagnostics,
@@ -54,3 +58,65 @@ def test_choose_price_model_handles_short_design() -> None:
 
     assert out["model_family"] == "insufficient_observations"
     assert out["n_obs"] == 2
+
+
+def _write_bulletin(
+    path: Path, *, unit: str = "1000 l", countries: tuple[str, ...] = ("PT", "ES")
+) -> Path:
+    """Build a miniature Weekly Oil Bulletin workbook with the real layout."""
+    dates = pd.date_range("2021-04-05", periods=4, freq="7D")
+    sheets = {"wo": "Prices wo taxes", "with": "Prices with taxes"}
+    with pd.ExcelWriter(path) as writer:
+        for basis, sheet in sheets.items():
+            headers: list[object] = ["Consumer prices"]
+            units: list[object] = ["Date"]
+            columns: list[list[object]] = [list(dates)]
+            for country in countries:
+                for token in ("euro95", "diesel"):
+                    headers.append(f"{country}_price_{basis}_tax_{token}")
+                    units.append(unit)
+                    base = 1000.0 if basis == "wo" else 1600.0
+                    columns.append([base + i for i in range(len(dates))])
+            frame = pd.DataFrame(
+                [
+                    headers,
+                    [None] * len(headers),
+                    units,
+                    *[list(row) for row in zip(*columns, strict=True)],
+                ]
+            )
+            frame.to_excel(writer, sheet_name=sheet, header=False, index=False)
+    return path
+
+
+def test_extract_weekly_prices_returns_the_tidy_contract(tmp_path: Path) -> None:
+    workbook = _write_bulletin(tmp_path / "bulletin.xlsx")
+
+    tidy = extract_weekly_prices(workbook)
+
+    assert list(tidy.columns) == [
+        "date",
+        "country",
+        "product",
+        "price_with_tax_eur_per_1000l",
+        "price_without_tax_eur_per_1000l",
+    ]
+    assert set(tidy["country"]) == {"PT", "ES"}
+    assert set(tidy["product"]) == {"diesel", "gasoline"}
+    assert not tidy.duplicated(["date", "country", "product"]).any()
+    assert tidy["price_without_tax_eur_per_1000l"].notna().all()
+
+
+def test_extract_weekly_prices_rejects_an_unexpected_unit(tmp_path: Path) -> None:
+    """A silently rebadged unit would feed the price models directly."""
+    workbook = _write_bulletin(tmp_path / "bulletin.xlsx", unit="litre")
+
+    with pytest.raises(ValueError, match="expected '1000 l'"):
+        extract_weekly_prices(workbook)
+
+
+def test_extract_weekly_prices_rejects_a_missing_country(tmp_path: Path) -> None:
+    workbook = _write_bulletin(tmp_path / "bulletin.xlsx", countries=("PT",))
+
+    with pytest.raises(ValueError, match="missing price columns"):
+        extract_weekly_prices(workbook)

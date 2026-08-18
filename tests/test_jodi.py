@@ -71,3 +71,44 @@ def test_build_monthly_panel_preserves_event_timing() -> None:
     assert out.loc[0, "event_phase"] == "pre_matosinhos_closure"
     assert out.loc[1, "event_phase"] == "matosinhos_transition"
     assert out.loc[1, "net_imports_kt"] == pytest.approx(10.0)
+
+
+def test_ktons_is_accepted_as_a_tonne_unit() -> None:
+    """The world secondary CSV ships ``KTONS``; ``KTON`` alone dropped every row."""
+    frame = pd.DataFrame(
+        {
+            "country": ["PT", "PT"],
+            "product": ["GASDIES", "GASOLINE"],
+            "flow": ["TOTIMPSB", "TOTEXPSB"],
+            "unit": ["KTONS", "KTONS"],
+            "time": pd.to_datetime(["2021-05-01", "2021-05-01"]),
+            "value": [120.0, 80.0],
+        }
+    )
+
+    out = filter_portugal_fuels(frame)
+
+    assert len(out) == 2
+    assert set(out["flow_canonical"]) == {"imports", "exports"}
+    assert set(out["product_canonical"]) == {"diesel", "gasoline"}
+
+
+def test_filter_portugal_fuels_reports_which_predicate_emptied_the_panel() -> None:
+    """A vocabulary change must fail loudly rather than yield an empty frame."""
+    frame = pd.DataFrame(
+        {
+            "country": ["PT"],
+            "product": ["GASDIES"],
+            "flow": ["TOTIMPSB"],
+            "unit": ["SOME_NEW_UNIT"],
+            "time": pd.to_datetime(["2021-05-01"]),
+            "value": [120.0],
+        }
+    )
+
+    with pytest.raises(ValueError, match="No JODI observations matched") as excinfo:
+        filter_portugal_fuels(frame)
+
+    message = str(excinfo.value)
+    assert "unit=0" in message
+    assert "SOME_NEW_UNIT" in message

@@ -146,7 +146,27 @@ def validate_price_outputs(metrics_dir: Path) -> tuple[bool, str]:
         return False, f"price_model_choice.csv missing columns: {sorted(missing_columns)}"
     if choices.empty:
         return False, "price_model_choice.csv has no rows"
-    return True, f"Price model choices recorded for {len(choices)} products"
+
+    # A levels regression on weekly fuel prices is only admissible when the
+    # diagnostics say so, so the coefficient table must carry that verdict rather
+    # than leaving a report writer to assume it.
+    models_path = metrics_dir / "price_comovement_models.csv"
+    if models_path.exists():
+        models = pd.read_csv(models_path)
+        verdict_columns = {"model_family", "levels_model_valid"}
+        missing_verdict = verdict_columns - set(models.columns)
+        if missing_verdict:
+            return (
+                False,
+                f"price_comovement_models.csv missing model-choice verdict columns: "
+                f"{sorted(missing_verdict)}",
+            )
+        unverdicted = models.loc[models["model_family"].isna(), "product"].unique()
+        if len(unverdicted):
+            return False, f"price_comovement_models.csv rows without a verdict: {list(unverdicted)}"
+
+    families = sorted(set(choices["model_family"].dropna().astype(str)))
+    return True, f"Price model choices recorded for {len(choices)} products: {families}"
 
 
 def build_readiness_checks(

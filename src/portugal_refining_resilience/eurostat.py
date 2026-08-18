@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from itertools import product
 from math import prod
 from typing import Any
 
@@ -35,6 +34,8 @@ _BALANCE_ALIASES: dict[str, set[str]] = {
         "refinery output",
         "production",
         "transformation output - oil refineries",
+        # nrg_bal code TO_RPI_RO, the label Eurostat actually ships.
+        "transformation output - refineries and petrochemical industry - refinery output",
     },
 }
 
@@ -61,10 +62,14 @@ def _first_existing(columns: pd.Index, candidates: tuple[str, ...]) -> str:
 def fetch_jsonstat(
     dataset: str,
     *,
-    params: dict[str, str] | None = None,
+    params: dict[str, str | list[str]] | None = None,
     timeout: int = 120,
 ) -> dict[str, Any]:
-    """Fetch a Eurostat dissemination API dataset in JSON-stat format."""
+    """Fetch a Eurostat dissemination API dataset in JSON-stat format.
+
+    A parameter may carry a list, which the dissemination API reads as a repeated
+    key, so a single request can select several countries, products or balances.
+    """
     if not dataset.replace("_", "").isalnum():
         raise ValueError(f"Unsafe Eurostat dataset code: {dataset}")
     url = f"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}"
@@ -99,20 +104,31 @@ def jsonstat_to_frame(payload: dict[str, Any]) -> pd.DataFrame:
         labels[dim] = category.get("label", {})
 
     values = payload.get("value", {})
-    rows: list[dict[str, Any]] = []
     total = prod(sizes)
-    for flat_index, coordinates in enumerate(product(*[range(size) for size in sizes])):
-        if flat_index >= total:
-            break
-        if isinstance(values, list):
-            value = values[flat_index] if flat_index < len(values) else None
-        else:
-            value = values.get(str(flat_index))
-        if value is None:
-            continue
+
+    # Row-major strides let a flat index be decoded directly, so the work scales with
+    # the number of observations rather than the size of the full dimension grid. The
+    # nrg_cb_oil grid runs to tens of millions of cells for a handful of real series.
+    strides: list[int] = [1] * len(sizes)
+    for axis in range(len(sizes) - 2, -1, -1):
+        strides[axis] = strides[axis + 1] * sizes[axis + 1]
+
+    if isinstance(values, list):
+        observations: list[tuple[int, Any]] = [
+            (index, value) for index, value in enumerate(values) if value is not None
+        ]
+    else:
+        observations = sorted(
+            (int(index), value) for index, value in values.items() if value is not None
+        )
+
+    rows: list[dict[str, Any]] = []
+    for flat_index, value in observations:
+        if not 0 <= flat_index < total:
+            raise ValueError(f"JSON-stat index {flat_index} outside the declared grid of {total}")
         row: dict[str, Any] = {"value": value}
-        for dim, coord, codes in zip(ids, coordinates, ordered_codes, strict=True):
-            code = codes[coord]
+        for dim, stride, size, codes in zip(ids, strides, sizes, ordered_codes, strict=True):
+            code = codes[(flat_index // stride) % size]
             row[dim] = code
             row[f"{dim}_label"] = labels[dim].get(code, code)
         rows.append(row)
