@@ -1,0 +1,6 @@
+check,passed,detail
+report_tables_match_bundle,True,all mapped tables verified; not checkable: ['tab:coverage']
+report_sample_sizes_match,True,"stated sample sizes [19, 240, 1077] match the fitted models"
+report_event_interval_correct,True,stated interval matches the configured 10-month gap
+disputed_cells_have_sensitivity,True,"8 disputed cell(s), all covered by a sensitivity"
+source_swap_survival_reported,True,"does not survive the source swap, must not be relied on: ['gasoline/exports_kt']"

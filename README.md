@@ -130,6 +130,10 @@ vintage is requested explicitly, and writes metadata sidecars with retrieval tim
 snapshot status. Commit transformed datasets only when they are intentionally part of the
 reviewable analysis surface.
 
+The report's tables and figures are mapped to their sources in
+[reports/data_provenance.md](reports/data_provenance.md), which records where each one
+comes from and which notebook produced it.
+
 Report writing is driven by prompts kept outside version control. Whatever drives it must use
 the checksum-protected `artifacts/report_inputs/` bundle rather than notebook display state or
 chat history, which is why the bundle carries a manifest that accounts for every file in it.

@@ -1,0 +1,293 @@
+"""Verify that the written report agrees with the evidence bundle.
+
+The readiness gate establishes that evidence exists, is complete and reconciles. It
+cannot establish that the prose uses it correctly, and three separate defects reached a
+finished draft through that gap: a table quoting a coefficient the pipeline no longer
+produced, a stated sample size belonging to an earlier window, and a headline statistic
+computed from the one trade cell the reconciliation had flagged as an outlier.
+
+The checks here close that gap by reading the report and comparing it against the
+bundle it claims to be based on. They are deliberately mechanical: every number in a
+labelled table must be reproducible from the file that table is declared to come from,
+the sample sizes quoted in the prose must match the fitted models, an interval stated
+in words must match the configured event dates, and any cell the reconciliation flags
+must have a sensitivity computed for it.
+"""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+
+#: Numbers appear as ``1{,}597``, ``$-$0.24``, ``$-105.21$`` or ``0.66``.
+_NUMBER = re.compile(r"-?\d[\d,]*(?:\.\d+)?")
+
+_MONTH_WORDS: dict[str, int] = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    "eleven": 11,
+    "twelve": 12,
+    "thirteen": 13,
+    "fourteen": 14,
+    "fifteen": 15,
+    "sixteen": 16,
+    "seventeen": 17,
+    "eighteen": 18,
+    "nineteen": 19,
+    "twenty": 20,
+}
+
+
+def _strip_latex(cell: str) -> str:
+    """Reduce a table cell to the text a reader sees.
+
+    Commands that take arguments are removed with their arguments. ``\\multicolumn``
+    matters most: leaving its column count behind would make a spanning header assert
+    that the number 3 appears in the data.
+    """
+    cell = re.sub(r"\\rlap\{[^{}]*\}", "", cell)
+    cell = re.sub(r"\\multicolumn\{[^{}]*\}\{[^{}]*\}\{([^{}]*)\}", r"\1", cell)
+    cell = re.sub(r"\\cmidrule(?:\([^)]*\))?\{[^{}]*\}", " ", cell)
+    cell = re.sub(r"\\(?:texttt|textbf|emph|quad)\s*", " ", cell)
+    cell = cell.replace("{,}", "").replace("$", "").replace("\\", " ")
+    return cell.strip()
+
+
+def parse_latex_tables(tex: str) -> dict[str, list[str]]:
+    """Return the body rows of every labelled table, keyed by its label.
+
+    Floats are matched as whole environments so that a table's rows are attributed to
+    the label declared inside it, rather than to whatever label happened to appear
+    earlier in the document.
+    """
+    tables: dict[str, list[str]] = {}
+    float_pattern = re.compile(
+        r"\\begin\{(table|longtable)\}(?:\[[^\]]*\])?(.*?)\\end\{\1\}", re.DOTALL
+    )
+    for block in float_pattern.finditer(tex):
+        body = block.group(2)
+        label = re.search(r"\\label\{([^{}]+)\}", body)
+        if label is None:
+            continue
+        inner = body
+        tabular = re.search(r"\\begin\{tabular\}.*?\\end\{tabular\}", body, re.DOTALL)
+        if tabular is not None:
+            inner = tabular.group(0)
+        # Rules are stripped from each segment rather than used to discard it: a rule
+        # and the row after it share a segment, so discarding would silently drop the
+        # first body row of every table.
+        rows = []
+        for segment in inner.split("\\\\"):
+            cleaned = re.sub(
+                r"\\(?:top|mid|bottom)rule|\\cmidrule(?:\([^)]*\))?\{[^{}]*\}|\\endhead",
+                " ",
+                segment,
+            )
+            if "&" in cleaned and "caption" not in cleaned:
+                rows.append(cleaned)
+        tables[label.group(1)] = rows
+    return tables
+
+
+def table_numbers(rows: list[str]) -> list[float]:
+    """Extract every number a reader would see in the given table rows."""
+    values: list[float] = []
+    for row in rows:
+        for cell in _strip_latex(row).split("&"):
+            for token in _NUMBER.findall(cell.replace(",", "")):
+                try:
+                    values.append(float(token))
+                except ValueError:  # pragma: no cover - regex guarantees a number
+                    continue
+    return values
+
+
+def _reproducible(value: float, frames: list[pd.DataFrame]) -> bool:
+    """Is ``value`` a rounded form of something in one of the source frames?
+
+    The report rounds, so a match means some source value agrees to the precision the
+    report chose to print. Small integers are treated as labels rather than data,
+    because years, counts and column headings are not claims about magnitudes.
+    """
+    decimals = 0
+    text = f"{value}"
+    if "." in text:
+        decimals = len(text.split(".")[1])
+    # A printed number matches when some source value lies within half a unit of the
+    # last printed digit. Comparing re-rounded values instead would make matching
+    # depend on tie-breaking, so 122.75 printed as 122.8 would fail.
+    tolerance = 0.5 * (10.0**-decimals) + 1e-9
+    for frame in frames:
+        numeric = frame.select_dtypes("number")
+        for column in numeric.columns:
+            series = numeric[column].dropna()
+            if series.empty:
+                continue
+            if ((series - value).abs() <= tolerance).any():
+                return True
+            # ratios are sometimes printed as percentage points
+            if ((series - value / 100.0).abs() <= tolerance / 100.0).any():
+                return True
+    return False
+
+
+def verify_table_values(
+    label: str,
+    rows: list[str],
+    frames: list[pd.DataFrame],
+    *,
+    ignore_below: float = 1900.0,
+    ignore_above: float | None = None,
+) -> list[float]:
+    """Return the numbers in a table that no source frame reproduces.
+
+    Values that look like years are skipped: they index the data rather than assert
+    anything about it.
+    """
+    unmatched: list[float] = []
+    for value in table_numbers(rows):
+        if 1900.0 <= value <= 2100.0 and float(value).is_integer():
+            continue
+        if abs(value) < 1e-9:
+            continue
+        if ignore_above is not None and abs(value) > ignore_above:
+            continue
+        if not _reproducible(value, frames):
+            unmatched.append(value)
+    _ = (label, ignore_below)
+    return unmatched
+
+
+def check_stated_sample_sizes(
+    tex: str, models: pd.DataFrame | list[pd.DataFrame]
+) -> tuple[bool, str]:
+    """Every ``$n=...$`` in the report must match some fitted model's observation count.
+
+    The report quotes several: the monthly event models, the annual interrupted trends
+    and the weekly price models each have their own. A stated size that matches none of
+    them is either stale or invented.
+    """
+    frames = models if isinstance(models, list) else [models]
+    actual: set[int] = set()
+    for frame in frames:
+        if frame.empty:
+            continue
+        for column in ("n_obs", "nobs"):
+            if column in frame.columns:
+                actual |= {int(value) for value in frame[column].dropna().unique()}
+    if not actual:
+        return False, "no model table carries n_obs or nobs"
+
+    stated = {
+        int(match.replace(",", "").replace("{", "").replace("}", ""))
+        for match in re.findall(r"\$n=([\d{},]+)\$", tex)
+    }
+    if not stated:
+        return True, "no sample size stated in the report"
+    wrong = sorted(stated - actual)
+    if wrong:
+        return False, f"report states n={wrong} but the fitted models report {sorted(actual)}"
+    return True, f"stated sample sizes {sorted(stated)} match the fitted models"
+
+
+def check_event_interval(tex: str, event_dates: dict[str, Any]) -> tuple[bool, str]:
+    """An interval written in words must match the configured event dates."""
+    start = event_dates.get("matosinhos_closure_start")
+    end = event_dates.get("energy_stress_start")
+    if not start or not end:
+        return True, "event dates not configured; interval not checked"
+    first, second = pd.Timestamp(str(start)), pd.Timestamp(str(end))
+    months = (second.year - first.year) * 12 + (second.month - first.month)
+
+    written = re.findall(r"fall\s+(?:within\s+)?([a-z]+)\s+months", tex.lower())
+    if not written:
+        return True, f"no interval stated; configured gap is {months} months"
+    wrong = sorted({w for w in written if _MONTH_WORDS.get(w) != months})
+    if wrong:
+        return (
+            False,
+            f"report says {wrong} months between the closure and the stress start; "
+            f"the configured dates are {months} months apart",
+        )
+    return True, f"stated interval matches the configured {months}-month gap"
+
+
+def check_flagged_cells_have_sensitivity(
+    reconciliation: pd.DataFrame, sensitivities: list[pd.DataFrame]
+) -> tuple[bool, str]:
+    """Every disputed trade cell must have had a sensitivity computed.
+
+    A cell the reconciliation flags cannot be quoted as though the sources agreed. This
+    does not check the prose; it checks that the alternative was calculated at all, so
+    the writer has something to quote.
+    """
+    if "reconciliation_status" not in reconciliation.columns:
+        return False, "reconciliation table missing reconciliation_status"
+    flagged = reconciliation.loc[reconciliation["reconciliation_status"].ne("within_tolerance")]
+    if flagged.empty:
+        return True, "no disputed trade cells"
+
+    covered: set[tuple[int, str]] = set()
+    for frame in sensitivities:
+        if frame.empty or "product" not in frame.columns:
+            continue
+        years = frame["year"] if "year" in frame.columns else frame.get("event_year")
+        if years is None:
+            continue
+        covered |= {
+            (int(year), str(product)) for year, product in zip(years, frame["product"], strict=True)
+        }
+
+    flagged_keys = set(
+        zip(
+            flagged["year"].astype(int),
+            flagged["product"].astype(str),
+            strict=True,
+        )
+    )
+    missing = sorted(flagged_keys - covered)
+    if missing:
+        return False, f"disputed cells with no sensitivity computed: {missing}"
+    return True, f"{len(flagged)} disputed cell(s), all covered by a sensitivity"
+
+
+def check_sensitivity_survival(sensitivity: pd.DataFrame) -> tuple[bool, str]:
+    """Report which results change significance when the source is swapped.
+
+    This never fails the gate. A result that does not survive is a fact about the data,
+    not a defect; the point is that it must be visible rather than discovered by a
+    reviewer.
+    """
+    required = {"product", "outcome", "trade_source", "p_value"}
+    if sensitivity.empty or not required.issubset(sensitivity.columns):
+        return True, "no annual source sensitivity to assess"
+    flips: list[str] = []
+    keys = ["product", "outcome"]
+    for key, group in sensitivity.groupby(keys):
+        significant = pd.to_numeric(group["p_value"], errors="coerce").lt(0.05)
+        if significant.nunique() > 1:
+            flips.append("/".join(str(part) for part in key))
+    if flips:
+        return True, f"does not survive the source swap, must not be relied on: {sorted(flips)}"
+    return True, "every result keeps its significance under the source swap"
+
+
+def load_table_sources(path: Path) -> dict[str, list[str]]:
+    """Load the mapping from report table label to the files behind it."""
+    import yaml
+
+    payload: Any = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or not isinstance(payload.get("tables"), dict):
+        raise ValueError("report_tables.yml must contain a top-level 'tables' mapping")
+    return {str(k): [str(v) for v in vs] for k, vs in payload["tables"].items()}

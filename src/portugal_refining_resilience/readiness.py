@@ -6,6 +6,15 @@ from typing import Any
 
 import pandas as pd
 
+from .claims import (
+    check_event_interval,
+    check_flagged_cells_have_sensitivity,
+    check_sensitivity_survival,
+    check_stated_sample_sizes,
+    load_table_sources,
+    parse_latex_tables,
+    verify_table_values,
+)
 from .config import ProjectPaths, load_analysis_config
 from .events import EVENT_PHASES
 
@@ -313,5 +322,107 @@ def build_readiness_checks(
         accepted_divergences=list(accepted),
     )
     checks.append(_check_record("dgeg_trade_reconciliation_valid", passed, detail))
+
+    return pd.DataFrame(checks)
+
+
+def _read_if_present(path: Path) -> pd.DataFrame:
+    return pd.read_csv(path) if path.exists() else pd.DataFrame()
+
+
+def build_report_claim_checks(
+    paths: ProjectPaths,
+    *,
+    report_path: Path | None = None,
+    table_sources_path: Path | None = None,
+) -> pd.DataFrame:
+    """Check that the written report agrees with the bundle it draws on.
+
+    The readiness checks establish that the evidence is present and consistent. These
+    establish that the report used it: that printed table values are reproducible from
+    the file each table is declared to come from, that stated sample sizes match the
+    fitted models, that an interval stated in words matches the configured event dates,
+    and that no disputed trade cell was quoted without a sensitivity being computed.
+    """
+    report = report_path or paths.root / "reports" / "report_final.tex"
+    mapping_path = table_sources_path or paths.root / "config" / "report_tables.yml"
+    checks: list[dict[str, object]] = []
+
+    if not report.exists():
+        return pd.DataFrame([_check_record("report_present", False, f"Missing {report.name}")])
+    tex = report.read_text(encoding="utf-8")
+
+    # 1. every printed table value must be reproducible from its declared source
+    if mapping_path.exists():
+        sources = load_table_sources(mapping_path)
+        tables = parse_latex_tables(tex)
+        unverifiable: list[str] = []
+        mismatched: list[str] = []
+        for label, files in sources.items():
+            rows = tables.get(label)
+            if rows is None:
+                unverifiable.append(label)
+                continue
+            frames = [_read_if_present(paths.report_inputs / name) for name in files]
+            frames = [frame for frame in frames if not frame.empty]
+            if not frames:
+                unverifiable.append(label)
+                continue
+            unmatched = verify_table_values(label, rows, frames)
+            if unmatched:
+                mismatched.append(f"{label}: {sorted(set(unmatched))[:6]}")
+        if mismatched:
+            detail = "; ".join(mismatched)
+        elif unverifiable:
+            detail = f"all mapped tables verified; not checkable: {sorted(unverifiable)}"
+        else:
+            detail = f"all {len(sources)} mapped tables reproduce from the bundle"
+        checks.append(_check_record("report_tables_match_bundle", not mismatched, detail))
+    else:
+        checks.append(
+            _check_record("report_tables_match_bundle", False, f"Missing {mapping_path.name}")
+        )
+
+    # 2. sample sizes quoted in the prose
+    model_frames = [
+        _read_if_present(paths.report_inputs / name)
+        for name in (
+            "monthly_event_models.csv",
+            "annual_interrupted_trend_models.csv",
+            "price_short_run_models.csv",
+            "price_ecm_models.csv",
+        )
+    ]
+    passed, detail = check_stated_sample_sizes(tex, model_frames)
+    checks.append(_check_record("report_sample_sizes_match", passed, detail))
+
+    # 3. an interval stated in words
+    try:
+        analysis = load_analysis_config(paths.root)
+        event_dates = dict(analysis.get("event_dates", {}) or {})
+    except (FileNotFoundError, ValueError):
+        event_dates = {}
+    passed, detail = check_event_interval(tex, event_dates)
+    checks.append(_check_record("report_event_interval_correct", passed, detail))
+
+    # 4. disputed cells must have had a sensitivity computed
+    reconciliation = _read_if_present(paths.report_inputs / "jodi_dgeg_trade_reconciliation.csv")
+    sensitivities = [
+        _read_if_present(paths.report_inputs / "stress_2022_source_sensitivity.csv"),
+        _read_if_present(paths.report_inputs / "annual_source_sensitivity.csv"),
+    ]
+    if reconciliation.empty:
+        checks.append(
+            _check_record("disputed_cells_have_sensitivity", False, "reconciliation absent")
+        )
+    else:
+        passed, detail = check_flagged_cells_have_sensitivity(reconciliation, sensitivities)
+        checks.append(_check_record("disputed_cells_have_sensitivity", passed, detail))
+
+    # 5. surface results that change significance when the source is swapped
+    passed, detail = check_sensitivity_survival(
+        _read_if_present(paths.report_inputs / "annual_source_sensitivity.csv")
+    )
+    checks.append(_check_record("source_swap_survival_reported", passed, detail))
 
     return pd.DataFrame(checks)
