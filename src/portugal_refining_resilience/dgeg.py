@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
@@ -209,6 +210,88 @@ def read_trade_workbook(path: Path, *, year: int) -> pd.DataFrame:
         raise ValueError(
             f"{path.name} contained no import/export sheet. Sheets: {workbook.sheet_names}"
         )
+    return pd.DataFrame(records)
+
+
+#: Domestic-market sales rows that reconstruct each canonical product.
+#:
+#: ``gasolinas`` is the gasoline total; ``gas. auto`` is a small sub-line, not the
+#: aggregate. Diesel needs coloured and marked gasoil added to road gasoil, since
+#: ``gasoleo`` alone sits about 10% below the JODI and Eurostat demand concept.
+#: The workbook's own note records that ``gasoleo`` has included biodiesel since 2006.
+_SALES_PRODUCT_ROWS: dict[str, tuple[str, ...]] = {
+    "gasoline": ("gasolinas",),
+    "diesel": ("gasoleo", "gasoleo colorido e marcado"),
+}
+
+_SALES_SECTION = "mercado interno"
+_SALES_TONNES_TO_KT = 0.001
+
+
+def read_sales_workbook(path: Path, *, sheet: str = "DGEG") -> pd.DataFrame:
+    """Extract annual domestic petroleum-product sales from the DGEG long workbook.
+
+    The workbook lays products down the first column and years across the header, in
+    tonnes, with several market sections stacked vertically. Only the domestic-market
+    section is read, and only until the next section heading, so bunker and aviation
+    rows are never folded into road-fuel demand.
+    """
+    if not path.exists():
+        raise FileNotFoundError(path)
+    raw = pd.read_excel(path, sheet_name=sheet, header=None)
+    labels = raw.iloc[:, 0].map(_fold)
+
+    section_rows = labels[labels.eq(_SALES_SECTION)].index
+    if section_rows.empty:
+        raise ValueError(f"{path.name} has no {_SALES_SECTION!r} section")
+    header_row = int(section_rows[0])
+
+    year_columns: dict[int, int] = {}
+    for position, value in enumerate(raw.iloc[header_row]):
+        match = re.match(r"^(\d{4})", str(value).strip())
+        if match:
+            year_columns[int(match.group(1))] = position
+    if not year_columns:
+        raise ValueError(f"{path.name}:{sheet} row {header_row} carries no year header")
+
+    # Stop before the next section so that bunkers and aviation are excluded.
+    later_sections = [
+        int(index)
+        for index, label in labels.items()
+        if int(index) > header_row and label in {"memo fuel", "mercado de bancas maritimas"}
+    ]
+    section_end = min(later_sections) if later_sections else len(raw)
+
+    records: list[dict[str, object]] = []
+    for product, wanted in _SALES_PRODUCT_ROWS.items():
+        rows = [
+            int(index)
+            for index, label in labels.items()
+            if header_row < int(index) < section_end and label in wanted
+        ]
+        missing = set(wanted) - {labels[index] for index in rows}
+        if missing:
+            raise ValueError(
+                f"{path.name} domestic-market section is missing sales rows {sorted(missing)} "
+                f"for {product}. Found: {[labels[i] for i in rows]}"
+            )
+        for year, column in sorted(year_columns.items()):
+            values = pd.to_numeric(
+                pd.Series([raw.iloc[index, column] for index in rows]), errors="coerce"
+            )
+            if values.isna().all():
+                continue
+            records.append(
+                {
+                    "year": year,
+                    "country": "PT",
+                    "product": product,
+                    "demand_kt": float(values.sum()) * _SALES_TONNES_TO_KT,
+                    "source": "DGEG",
+                    "concept": "domestic market sales",
+                    "component_rows": "+".join(wanted),
+                }
+            )
     return pd.DataFrame(records)
 
 

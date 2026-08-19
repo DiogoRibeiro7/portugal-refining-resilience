@@ -6,6 +6,7 @@ import pytest
 from portugal_refining_resilience.dgeg import (
     canonicalise_trade_long,
     compare_trade_sources,
+    read_sales_workbook,
     read_trade_workbook,
 )
 
@@ -171,3 +172,54 @@ def test_reconciliation_flags_a_row_breaching_both_limits() -> None:
     out = compare_trade_sources(primary, comparison, primary_name="JODI", comparison_name="DGEG")
 
     assert out.loc[0, "reconciliation_status"] == "review"
+
+
+def _write_sales_workbook(path: Path) -> Path:
+    """DGEG long sales layout: products down, years across, sections stacked."""
+    rows: list[list[object]] = [[None] * 4 for _ in range(7)]
+    rows.append(["Mercado Interno", 2023, "2024p", None])
+    rows.append(["GPL", 100_000, 110_000, None])
+    rows.append(["Gas. auto", 43_000, 56_000, None])
+    rows.append(["Gasolinas", 1_194_000, 1_269_000, None])
+    rows.append(["Gasóleo", 4_658_000, 4_538_000, None])
+    rows.append(["Gasóleo colorido e marcado", 326_000, 331_000, None])
+    rows.append(["Mercado de bancas marítimas", None, None, None])
+    rows.append(["Gasóleo", 9_000_000, 9_000_000, None])  # must never be counted
+    with pd.ExcelWriter(path) as writer:
+        pd.DataFrame(rows).to_excel(writer, sheet_name="DGEG", header=False, index=False)
+    return path
+
+
+def test_read_sales_workbook_sums_the_diesel_components(tmp_path: Path) -> None:
+    """Road gasoil alone runs ~10% below the JODI and Eurostat demand concept."""
+    out = read_sales_workbook(_write_sales_workbook(tmp_path / "sales.xlsx"))
+
+    diesel = out.loc[out["product"].eq("diesel") & out["year"].eq(2024), "demand_kt"]
+    assert float(diesel.iloc[0]) == pytest.approx(4538.0 + 331.0)
+
+
+def test_read_sales_workbook_uses_gasolinas_not_the_gas_auto_subline(tmp_path: Path) -> None:
+    out = read_sales_workbook(_write_sales_workbook(tmp_path / "sales.xlsx"))
+
+    gasoline = out.loc[out["product"].eq("gasoline") & out["year"].eq(2024), "demand_kt"]
+    assert float(gasoline.iloc[0]) == pytest.approx(1269.0)
+
+
+def test_read_sales_workbook_excludes_bunker_sales(tmp_path: Path) -> None:
+    """Marine bunker gasoil sits in a later section and is not domestic demand."""
+    out = read_sales_workbook(_write_sales_workbook(tmp_path / "sales.xlsx"))
+
+    assert float(out["demand_kt"].max()) < 9000.0
+
+
+def test_read_sales_workbook_rejects_a_missing_component_row(tmp_path: Path) -> None:
+    path = tmp_path / "sales.xlsx"
+    rows: list[list[object]] = [[None] * 3 for _ in range(7)]
+    rows.append(["Mercado Interno", 2023, "2024p"])
+    rows.append(["Gasolinas", 1_194_000, 1_269_000])
+    rows.append(["Gasóleo", 4_658_000, 4_538_000])
+    with pd.ExcelWriter(path) as writer:
+        pd.DataFrame(rows).to_excel(writer, sheet_name="DGEG", header=False, index=False)
+
+    with pytest.raises(ValueError, match="missing sales rows"):
+        read_sales_workbook(path)
