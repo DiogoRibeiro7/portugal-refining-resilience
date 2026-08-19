@@ -1,0 +1,39 @@
+# Which bundle file backs each table in the report.
+#
+# The paper does not name internal files, so this is where the mapping lives. It is
+# machine-read by the claim checks: every number printed in a labelled table must be
+# reproducible from the files listed for that label, at the precision the report prints.
+#
+# reports/data_provenance.md is the human-readable version of the same mapping.
+tables:
+  # Narrative table: its cells are sentences about coverage, including dates and
+  # week counts drawn from sources outside the bundle, so cell-level verification
+  # would compare prose against a numeric frame. Declared empty to record that it is
+  # deliberately unverified rather than overlooked.
+  tab:coverage: []
+  tab:diesel:
+    - fuel_annual_analytical_panel.csv
+  tab:gasoline:
+    - fuel_annual_analytical_panel.csv
+  tab:headline:
+    - headline_event_years.csv
+  tab:breaks:
+    - structural_break_tests.csv
+  tab:its:
+    - annual_interrupted_trend_models.csv
+  tab:phases:
+    - monthly_event_phase_summary.csv
+  tab:monthly:
+    - monthly_event_models.csv
+  tab:stresssens:
+    - stress_2022_source_sensitivity.csv
+  tab:price:
+    - price_short_run_models.csv
+  tab:ecm:
+    - price_ecm_models.csv
+  tab:spain:
+    - pt_es_physical_balance_comparison.csv
+  tab:sourcesens:
+    - annual_source_sensitivity.csv
+  tab:windows:
+    - event_window_sensitivity.csv

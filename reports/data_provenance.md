@@ -76,6 +76,23 @@ retrieval time, URL, SHA-256 and vintage status.
 | Pre-specified hypotheses | `research_design.csv` |
 | Product comparability judgements | `data/reference/product_definition_crosswalk.csv` |
 
+## How this mapping is enforced
+
+The table-to-file mapping above is not documentation alone. `config/report_tables.yml`
+carries the machine-readable version, and notebook 20 blocks the report unless:
+
+- every number printed in a mapped table is reproducible from that table's declared file,
+  at the precision the report prints;
+- every sample size stated as `n=...` matches a fitted model;
+- an interval stated in words matches the configured event dates;
+- every trade cell the reconciliation flags has a sensitivity computed for it.
+
+Results that change significance when the trade source is swapped are reported rather than
+blocked, so they cannot pass unnoticed. Results are in `data/metrics/report_claim_checks.csv`.
+
+`tab:coverage` is declared narrative: its cells are sentences, so cell-level verification
+would compare prose against a numeric frame.
+
 ## Reproducing the analysis
 
 ```bash
