@@ -53,20 +53,20 @@ Two annual designs disagree about 2022, and the disagreement is diagnostic rathe
 troubling. Chow tests detect nothing on three post-event observations; interrupted-trend models
 on the same series detect a level shift of $-1{,}783$~kt in diesel exports ($p<0.001$). A monthly
 segmented model with month fixed effects separates the May 2021 closure from the March 2022
-energy shock and finds both: diesel refinery output falls $105$~kt per month at the closure
-boundary and a further $152$~kt per month during the stress period, with the
-net-import-to-demand ratio rising $0.20$ and $0.38$ respectively.
+energy shock and finds both: diesel refinery output falls $106$~kt per month at the closure
+boundary and a further $155$~kt per month during the stress period, with the
+net-import-to-demand ratio rising $0.22$ and $0.40$ respectively.
 
 Spanish diesel output covered $0.85$--$0.93$ of Spanish demand throughout, with no trend, while
-Portugal's fell to $0.68$. A shock common to both countries cannot account for a divergence that
-appears in only one. On prices, short-run pass-through from Spanish to Portuguese pre-tax diesel
+Portugal's fell to $0.68$. That weakens a purely common-shock account, though the two systems
+differ on margins this paper does not measure. On prices, short-run pass-through from Spanish to Portuguese pre-tax diesel
 prices rises from $0.73$ to approximately $1.01$; gasoline contemporaneous pass-through does not
 move, but its error-correction speed roughly triples, so both fuels became more tightly linked
 to Spain through different channels.
 
 The paper reports associations around documented events. It does not claim a causal effect of
-the closure: the transition and the largest European energy shock in decades fall fourteen
-months apart, and no design here separates their contributions.
+the closure: the transition and the largest European energy shock in decades fall ten months
+apart, and no design here separates their contributions.
 \end{abstract}
 
 \tableofcontents
@@ -78,7 +78,7 @@ months apart, and no design here separates their contributions.
 Portugal operated two refineries for most of the study period. Sines, the larger, received a
 hydrocracker that entered commercial production in January 2013 and was intended to raise diesel
 yield relative to fuel oil. Matosinhos ceased refining in May 2021 following a December 2020
-announcement, concentrating Portuguese refining at Sines. Fourteen months later, in March 2022,
+announcement, concentrating Portuguese refining at Sines. Ten months later, in March 2022,
 the invasion of Ukraine and the subsequent withdrawal from Russian oil products disturbed
 European product supply generally, and vacuum gas oil, a diesel feedstock at Sines, in
 particular.
@@ -157,7 +157,9 @@ observations per product, 2005-01-03 to 2024-12-30 \\
 \end{tabular}
 \end{table}
 
-The monthly panel spans 2002-01 to 2026-05 for both products, of which 293 months per product fall inside the modelling window.
+The monthly source extends from 2002-01 to 2026-05. It is restricted to the declared study
+window before modelling, leaving 240 months per product, so the monthly evidence covers the same
+years as the annual work and this paper.
 
 \subsection{The one material coverage gap}
 
@@ -228,8 +230,8 @@ adjustment across all sixteen tests.
 level term and a post-event slope term, HAC(1) covariance, 2021 again excluded. This design
 retains all nineteen observations rather than splitting the series.
 
-\textbf{Monthly event timing.} A segmented regression on 293 monthly observations with month
-fixed effects, a calendar-month trend and HAC(3) errors. Each phase-trend interaction is centred
+\textbf{Monthly event timing.} A segmented regression on 240 monthly observations, 2005--2024,
+with month fixed effects, a calendar-month trend and HAC(3) errors. Each phase-trend interaction is centred
 on its phase boundary, so a phase coefficient is the level shift at that boundary against the
 extrapolated pre-closure trend, and the companion trend term is the change in slope within the
 phase. The two must be quoted together.
@@ -381,7 +383,8 @@ refining regime in force. The 2021 row is a transition year and is excluded from
 
 \begin{table}[htbp]
 \centering
-\caption{Balance at the event years.}
+\caption{Balance at the event years. $^{\dagger}$The two independent trade sources disagree on
+2022 diesel exports; the national figure is 622.2~kt. See Section~\ref{sec:stress}.}
 \label{tab:headline}
 \small
 \begin{tabular}{rlrrrrrl}
@@ -392,7 +395,7 @@ Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regim
 2013 & diesel & 1{,}692 & 581 & 4{,}535 & 5{,}687 & $-0.245$ & two refineries \\
 2020 & diesel & 1{,}304 & 875 & 4{,}403 & 4{,}606 & $-0.097$ & two refineries \\
 2021 & diesel & 1{,}378 & 1{,}491 & 4{,}728 & 4{,}199 & $+0.024$ & transition \\
-2022 & diesel & 331 & 1{,}275 & 4{,}962 & 3{,}941 & $+0.190$ & Sines only \\
+2022 & diesel & 331\rlap{$^{\dagger}$} & 1{,}275 & 4{,}962 & 3{,}941 & $+0.190$ & Sines only \\
 2023 & diesel & 285 & 1{,}597 & 5{,}084 & 3{,}348 & $+0.258$ & Sines only \\
 2024 & diesel & 731 & 1{,}222 & 4{,}868 & 4{,}133 & $+0.101$ & Sines only \\
 \midrule
@@ -487,17 +490,17 @@ post-stress from January 2023. Table~\ref{tab:phases} gives diesel phase means.
 \toprule
 Phase & Months & Imports & Exports & Ref.\ out. & Net imp./dem. \\
 \midrule
-Pre-closure & 232 & 75.4 & 65.4 & 411.5 & 0.013 \\
+Pre-closure & 196 & 77.2 & 76.8 & 413.0 & $-$0.010 \\
 Matosinhos transition & 10 & 133.3 & 63.0 & 321.9 & 0.162 \\
 Energy stress 2022 & 10 & 111.1 & 27.7 & 324.6 & 0.193 \\
-Post-stress & 41 & 120.1 & 35.1 & 300.8 & 0.210 \\
+Post-stress & 24 & 117.5 & 42.3 & 311.7 & 0.181 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Mean monthly diesel imports rise by roughly three quarters between the pre-closure phase and
-every subsequent phase, refinery output falls by a fifth and then a quarter, and the
-net-import-to-demand ratio moves from approximately zero to $0.21$. The phase means are
+Mean monthly diesel imports rise by roughly a half to three quarters between the pre-closure
+phase and every subsequent phase, refinery output falls by a fifth and then a quarter, and the
+net-import-to-demand ratio moves from approximately zero to $0.18$. The phase means are
 descriptive and take no account of seasonality or trend; the model below does both.
 
 \subsection{Segmented model}
@@ -512,7 +515,8 @@ phase boundaries marked.}
 
 \begin{table}[htbp]
 \centering
-\caption{Segmented monthly event model, diesel, $n=293$ months, month fixed effects, HAC(3).
+\caption{Segmented monthly event model, diesel, $n=240$ months (2005--2024), month fixed
+effects, HAC(3).
 A phase coefficient is the level shift at that phase boundary against the extrapolated
 pre-closure trend.}
 \label{tab:monthly}
@@ -520,30 +524,30 @@ pre-closure trend.}
 \toprule
 Outcome & Term & Estimate & Std.\ error & $p$ \\
 \midrule
-Refinery output (kt/month) & Matosinhos transition & $-105.21$ & 36.02 & 0.004 \\
-                           & \quad phase trend     & $-3.47$   & 6.62  & 0.601 \\
-                           & Energy stress 2022    & $-151.77$ & 23.31 & $<0.001$ \\
-                           & \quad phase trend     & $+5.88$   & 3.51  & 0.094 \\
+Refinery output (kt/month) & Matosinhos transition & $-106.00$ & 37.98 & 0.005 \\
+                           & \quad phase trend     & $-5.09$   & 6.74  & 0.450 \\
+                           & Energy stress 2022    & $-154.90$ & 25.66 & $<0.001$ \\
+                           & \quad phase trend     & $+4.81$   & 3.48  & 0.167 \\
 \midrule
-Imports (kt/month)         & Matosinhos transition & $+42.23$  & 23.40 & 0.071 \\
-                           & \quad phase trend     & $+2.75$   & 6.17  & 0.656 \\
-                           & Energy stress 2022    & $+28.36$  & 11.22 & 0.012 \\
-                           & \quad phase trend     & $+1.08$   & 2.53  & 0.670 \\
+Imports (kt/month)         & Matosinhos transition & $+44.26$  & 22.98 & 0.054 \\
+                           & \quad phase trend     & $+3.25$   & 5.99  & 0.588 \\
+                           & Energy stress 2022    & $+31.54$  & 10.97 & 0.004 \\
+                           & \quad phase trend     & $+1.27$   & 2.44  & 0.602 \\
 \midrule
-Net imports / demand       & Matosinhos transition & $+0.2005$ & 0.0713 & 0.005 \\
-                           & \quad phase trend     & $+0.0360$ & 0.0153 & 0.019 \\
-                           & Energy stress 2022    & $+0.3755$ & 0.0554 & $<0.001$ \\
-                           & \quad phase trend     & $+0.0083$ & 0.0071 & 0.244 \\
+Net imports / demand       & Matosinhos transition & $+0.2171$ & 0.0746 & 0.004 \\
+                           & \quad phase trend     & $+0.0386$ & 0.0149 & 0.010 \\
+                           & Energy stress 2022    & $+0.3982$ & 0.0598 & $<0.001$ \\
+                           & \quad phase trend     & $+0.0092$ & 0.0077 & 0.231 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Both phases carry independent, statistically distinguishable effects, which is the reason a
 monthly design was required at all: annual data cannot separate a May 2021 event from a March
-2022 one. Diesel refinery output falls by roughly $105$~kt per month at the closure boundary and
-by a further $152$~kt per month in the stress period. The net-import-to-demand ratio rises by
-$0.20$ at the closure and by $0.38$ during the stress phase, and the closure phase also carries a
-significant upward slope of $0.036$ per month, meaning dependence continued to widen within that
+2022 one. Diesel refinery output falls by roughly $106$~kt per month at the closure boundary and
+by a further $155$~kt per month in the stress period. The net-import-to-demand ratio rises by
+$0.22$ at the closure and by $0.40$ during the stress phase, and the closure phase also carries a
+significant upward slope of $0.039$ per month, meaning dependence continued to widen within that
 phase rather than stepping once and holding.
 
 \begin{figure}[htbp]
@@ -575,10 +579,30 @@ consistent with the annual picture of a persistent export surplus.}
 \section{The 2022 Stress Episode}
 \label{sec:stress}
 
-Against a 2013--2019 baseline, 2022 diesel exports of
-$331$~kt sit $2.44$ standard deviations below the mean and at the zeroth percentile of the
-baseline distribution, while diesel imports of $1{,}275$~kt sit $2.74$ standard deviations above
-and at the hundredth percentile. Robust statistics agree: the robust $z$-score for diesel imports
+Against a 2013--2019 baseline, 2022 diesel exports sit at the zeroth percentile of the baseline
+distribution and diesel imports of $1{,}275$~kt sit $2.74$ standard deviations above the mean and
+at the hundredth percentile.
+
+The export figure needs care, because 2022 diesel exports is the single largest disagreement
+between the two independent trade sources, and the reconciliation identifies the monthly source
+as the outlier for that cell. Table~\ref{tab:stresssens} therefore reports the statistic on both
+values. The qualitative result is unchanged, since every baseline year exceeds either figure, but
+the magnitude is not: the standardised deviation is $-2.44$ on the monthly source and $-1.90$ on
+the corroborated national figure. The weaker of the two is the one this paper relies on.
+
+\begin{table}[htbp]
+\centering
+\caption{2022 diesel exports against the 2013--2019 baseline, computed on each source.}
+\label{tab:stresssens}
+\begin{tabular}{lrrr}
+\toprule
+Source for the 2022 cell & Value (kt) & $z$ & Baseline percentile \\
+\midrule
+Monthly source, flagged as the outlier & 331.0 & $-2.44$ & 0 \\
+National statistics, corroborated & 622.2 & $-1.90$ & 0 \\
+\bottomrule
+\end{tabular}
+\end{table} Robust statistics agree: the robust $z$-score for diesel imports
 is $2.63$ against the baseline median and median absolute deviation.
 
 Gasoline exports in the same year are unremarkable, at $z=-0.46$ and the 29th percentile, while
@@ -704,9 +728,9 @@ disequilibrium measure.
 
 \subsection{The physical divergence is Portugal-specific}
 
-Spain refines the same products, buys the same crude grades and was exposed to the same European
-energy shock in 2022. Its diesel balance therefore bounds how much of Portugal's change a common
-shock can explain. Table~\ref{tab:spain} shows that it explains very little.
+Spain refines the same products and was exposed to the same European energy shock in 2022, so
+its diesel balance is a useful, if imperfect, reference for what a shock common to the Iberian
+market did to a neighbouring system. Table~\ref{tab:spain} sets the two side by side.
 
 \begin{table}[htbp]
 \centering
@@ -735,11 +759,15 @@ more of its own diesel demand than Spain did in 2018, 2020 and 2021, and less fr
 to $0.678$ in 2023 while Spain sat at $0.923$. Spanish net imports stay within $\pm 0.05$ of
 balance throughout; Portugal reaches $0.262$ in 2023.
 
-This does not identify a causal effect, and Spain is not used as a control. What it does is
-constrain one competing explanation: a shock common to both countries cannot account for a
-divergence that appears in only one of them. Demand recovery, Sines maintenance and the Russian
-VGO disruption remain live alternatives, and the VGO disruption in particular was not common to
-Spain in the same degree.
+This does not identify a causal effect, and Spain is not used as a control. It weakens the
+common-shock explanation without disposing of it: a divergence appearing in one country and not
+the other is not by itself sufficient evidence that a shared shock was unimportant, because the
+two systems differ in ways this paper has not measured. Crude slate, refinery maintenance
+schedules, inventory positions, demand composition and product-market exposure all differ, and
+the Russian VGO disruption in particular did not fall on the two countries equally. Establishing
+that the common shock was second-order would require diagnostics on each of those margins, none
+of which are estimated here. Demand recovery, Sines maintenance and the VGO disruption remain
+live alternatives.
 
 \subsection{Balance residuals}
 \label{sec:residuals}
@@ -795,7 +823,7 @@ twelve terms reported.
 
 \begin{enumerate}
 \item \textbf{2022 confounds the post-closure window.} The Matosinhos transition and the European
-energy shock fall fourteen months apart. The monthly model separates them statistically, but
+energy shock fall ten months apart. The monthly model separates them statistically, but
 COVID-recovery demand, Sines maintenance schedules and the Russian VGO disruption are competing
 explanations that are not separately identified.
 \item \textbf{No causal design.} No control group, instrument or counterfactual is used. Every
@@ -835,7 +863,8 @@ the closure from the 2022 energy shock and finds both independently associated w
 refinery output and higher net import dependence, the 2022 effect being the larger.
 
 Spain, refining the same products under the same European shock, shows no comparable movement.
-That constrains but does not eliminate the common-shock explanation.
+That weakens the common-shock explanation without disposing of it, since the two systems differ
+on margins this paper does not measure.
 
 On prices, short-run pass-through from Spanish to Portuguese pre-tax diesel prices rises from
 $0.73$ to approximately $1.01$. Gasoline contemporaneous pass-through is unchanged, but its
@@ -844,11 +873,13 @@ through different channels. That contrast is only visible because the model fami
 from diagnostics rather than assumed.
 
 This is an association, not a demonstrated causal effect. The closure and the largest European
-energy shock in decades fall within fourteen months of one another, and this design cannot
+energy shock in decades fall ten months apart, and this design cannot
 separate their contributions to the post-2021 level. What the evidence supports is that
 Portugal's diesel system moved from surplus to deficit over the study window, that the movement
 is concentrated around two documented events, that it is not shared by Spain, and that Portuguese
-fuel prices now track Spanish prices considerably more closely than before.
+retail pre-tax fuel prices now co-move with Spanish retail pre-tax prices considerably more
+closely than before. Nothing here speaks to refinery-gate or wholesale prices, which are not
+observed.
 
 \section*{Claim--Evidence Matrix}
 \addcontentsline{toc}{section}{Claim--Evidence Matrix}
@@ -871,10 +902,10 @@ Diesel net-import ratio breaks at 2013 & Table~\ref{tab:breaks} & structural bre
 No Chow break detected at 2022 & Table~\ref{tab:breaks} & structural break & Three post-event years; low power \\
 Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes a common trend \\
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
-Refinery output falls 105 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
-2022 stress adds a further $-152$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
-Monthly panel spans 293 modelled months & Section~\ref{sec:coverage} & descriptive & Panel extends beyond the window \\
-2022 diesel exports at the 0th baseline percentile & Section~\ref{sec:stress} & descriptive & Baseline windows chosen ex ante \\
+Refinery output falls 106 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
+2022 stress adds a further $-155$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
+Monthly models cover 240 months, 2005--2024 & Section~\ref{sec:coverage} & descriptive & Source extends beyond the window and is trimmed \\
+2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
 All four price levels are non-stationary & Section~\ref{sec:pricediag} & descriptive & ADF only; no break-robust unit-root test \\
 Diesel not cointegrated, gasoline cointegrated & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification \\
 Levels model gives the opposite sign and is not used & Section~\ref{sec:levels} & --- & Retained as a specification warning only \\
@@ -883,7 +914,7 @@ Gasoline short-run pass-through unchanged & Table~\ref{tab:price} & association 
 Gasoline adjustment speed triples & Table~\ref{tab:ecm} & association & Generated-regressor standard errors \\
 PT--ES diesel spread moves $-30.8$ EUR/1000L & Section~\ref{sec:spreads} & descriptive & Spread is non-stationary \\
 Neither spread is mean-reverting & Section~\ref{sec:spreads} & descriptive & Gasoline marginal at $p=0.066$ \\
-Spanish diesel balance is flat while Portugal's falls & Table~\ref{tab:spain} & descriptive & Constrains, does not exclude, common shocks \\
+Spanish diesel balance is flat while Portugal's falls & Table~\ref{tab:spain} & descriptive & Weakens but does not dispose of the common-shock account \\
 Eurostat balance residuals are not closed & Section~\ref{sec:residuals} & descriptive & Stock changes not modelled \\
 Pre/post differences hold across three windows & Table~\ref{tab:windows} & descriptive & Magnitudes vary with baseline length \\
 Headline pre/post dependence change & Section~\ref{sec:windows} & descriptive & Not an effect estimate \\

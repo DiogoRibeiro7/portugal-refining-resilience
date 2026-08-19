@@ -34,12 +34,13 @@ retrieval time, URL, SHA-256 and vintage status.
 | 4 | Balance at the event years | `headline_event_years.csv`, `refining_regime_annual.csv` | `18`, `06` |
 | 5 | Chow tests | `structural_break_tests.csv` | `13_structural_breaks.ipynb` |
 | 6 | Interrupted-trend models | `annual_interrupted_trend_models.csv` | `13_structural_breaks.ipynb` |
-| 7 | Diesel monthly phase means | `monthly_event_phase_summary.csv` | `14_monthly_event_analysis.ipynb` |
-| 8 | Segmented monthly event model | `monthly_event_models.csv` | `14_monthly_event_analysis.ipynb` |
+| 7 | Diesel monthly phase means (2005-2024) | `monthly_event_phase_summary.csv` | `14_monthly_event_analysis.ipynb` |
+| 8 | Segmented monthly event model (n=240) | `monthly_event_models.csv` | `14_monthly_event_analysis.ipynb` |
 | 9 | Short-run pass-through | `price_short_run_models.csv` | `15_price_comovement.ipynb` |
 | 10 | Gasoline error-correction model | `price_ecm_models.csv` | `15_price_comovement.ipynb` |
 | 11 | Diesel balance, Portugal against Spain | `pt_es_physical_balance_comparison.csv` | `16_spain_comparison.ipynb` |
-| 12 | Pre/post difference by window | `event_window_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
+| 12 | 2022 diesel exports by source | `stress_2022_source_sensitivity.csv` | `14_2022_stress_test.ipynb` |
+| 13 | Pre/post difference by window | `event_window_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
 
 ## Figures
 
@@ -62,6 +63,7 @@ retrieval time, URL, SHA-256 and vintage status.
 | Window means and peaks for both products | `descriptive_metrics.csv` |
 | Monthly panel span and modelled months | `fuel_monthly_analytical_panel.csv` |
 | 2022 z-scores, robust z-scores and baseline percentiles | `stress_2022_metrics.csv` |
+| 2022 diesel exports computed on each trade source | `stress_2022_source_sensitivity.csv` |
 | ADF results for the four price levels | `price_stationarity_diagnostics.csv` |
 | Cointegration verdicts and selected model family | `price_model_choice.csv` |
 | Levels regression, flagged not valid for inference | `price_comovement_models.csv` |
