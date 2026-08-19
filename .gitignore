@@ -14,3 +14,12 @@ data/raw/**/*
 !data/raw/.gitkeep
 
 # Keep transformed tables, metrics, report inputs and reference data versioned.
+
+# LaTeX build products, wherever latexmk drops them.
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+reports/*.log
+reports/*.pdf
