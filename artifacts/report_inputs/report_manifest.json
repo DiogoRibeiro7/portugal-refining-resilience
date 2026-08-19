@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T11:31:45.167211+00:00",
+  "created_at_utc": "2026-08-19T11:39:51.633123+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -140,6 +140,13 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_short_run_models.csv",
       "sha256": "22892a0df588a8ec9f744542a417f4b5acaf8efb90601a9a5509ab74a5648e33",
       "bytes": 1752
+    },
+    {
+      "file": "price_ecm_models.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_models.csv",
+      "sha256": "87228633b2f8cacb6840112b3b24eb5b566b75b8d7cb37c00f702a58b6972f69",
+      "bytes": 1304
     },
     {
       "file": "pt_es_spread_stationarity.csv",

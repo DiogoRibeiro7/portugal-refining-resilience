@@ -30,11 +30,17 @@ detect nothing, but they have only three post-event observations. A segmented mo
 sit at the 0th percentile (*z* = −2.44) and imports at the 100th (*z* = +2.74). Gasoline exports
 are unremarkable (*z* = −0.46).
 
-**Diesel price exposure to Spain increased; gasoline's did not.** Short-run pass-through from
-Spanish to Portuguese pre-tax diesel prices rises from 0.73 to approximately 1.01 across the
-transition (interaction +0.2719, *p* < 0.001). The gasoline interaction is +0.0352 (*p* = 0.798),
-indistinguishable from no change. Diesel is the product whose domestic manufacturing fell;
-gasoline remained in domestic surplus throughout.
+**Both fuels became more tightly linked to Spain, through different channels.** Short-run
+pass-through from Spanish to Portuguese pre-tax diesel prices rises from 0.73 to approximately
+1.01 across the transition (interaction +0.2719, *p* < 0.001). Gasoline short-run pass-through
+does not move (+0.1970, *p* = 0.232) — but gasoline is the cointegrated pair, so the
+error-correction model is the licensed specification, and it shows the adjustment speed roughly
+tripling from −0.091 to −0.299 per week (*p* = 0.004). The half-life of a price gap against the
+long-run relation falls from about eight weeks to a little over two.
+
+A difference-only model cannot see that channel by construction. An earlier reading of this
+analysis concluded that only diesel changed; that was an artefact of applying the wrong
+specification to a cointegrated pair.
 
 ## What this does not claim
 

@@ -1,0 +1,7 @@
+product,term,estimate,std_error,p_value,nobs,cointegrating_constant,cointegrating_slope,covariance,model_family,model
+gasoline,const,0.00029520239930891194,0.0007254377942168004,0.6840594036472898,1077.0,0.1468117657506064,0.9741338449686527,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+gasoline,disequilibrium_lag,-0.09074159435287325,0.03539737327010663,0.010361909185764505,1077.0,0.1468117657506064,0.9741338449686527,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+gasoline,disequilibrium_lag_x_post,-0.20796899895547694,0.07202018923947014,0.003881332141639114,1077.0,0.1468117657506064,0.9741338449686527,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+gasoline,diff_log_ES,0.7888829255220872,0.07200451547776623,6.217381000075862e-28,1077.0,0.1468117657506064,0.9741338449686527,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+gasoline,diff_log_ES_x_post,0.19704027872690372,0.16477015148561375,0.23175535325883978,1077.0,0.1468117657506064,0.9741338449686527,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+gasoline,post,-0.001866672876731372,0.001392057967255756,0.17993837897567655,1077.0,0.1468117657506064,0.9741338449686527,HAC(8),ecm_required,two-step Engle-Granger error-correction model

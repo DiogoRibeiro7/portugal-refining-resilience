@@ -296,3 +296,66 @@ def fit_short_run_price_transmission(design: pd.DataFrame) -> object:
     frame["diff_log_ES_x_post"] = frame["diff_log_ES"] * frame["post"]
     x = sm.add_constant(frame[["diff_log_ES", "diff_log_ES_x_post", "post"]], has_constant="add")
     return sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": 8})
+
+
+def fit_error_correction_model(design: pd.DataFrame, *, maxlags: int = 8) -> dict[str, object]:
+    """Fit a two-step Engle-Granger ECM for cointegrated PT-ES price levels.
+
+    When ``choose_price_model`` returns ``ecm_required`` the levels are non-stationary
+    but move together, so neither a levels regression nor a pure difference model is
+    right: the first is spurious, the second discards the long-run relationship.
+
+    Step one estimates the cointegrating regression ``log PT = a + b log ES`` and keeps
+    its residual as the disequilibrium term. Step two regresses the weekly change in
+    the Portuguese price on the lagged disequilibrium, the contemporaneous Spanish
+    change, and interactions of both with the post-transition indicator, so the
+    adjustment speed and the short-run pass-through are each allowed to change.
+
+    The error-correction coefficient is expected to be negative: a Portuguese price
+    above its long-run relationship with Spain is pulled back down. Its magnitude is
+    the share of the gap closed each week.
+
+    The disequilibrium term is a generated regressor, so the second-stage standard
+    errors are conditional on the first stage; HAC covariance mitigates but does not
+    remove this.
+    """
+    required = {"log_PT", "log_ES", "diff_log_PT", "diff_log_ES", "post"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    if len(levels) < 20:
+        raise ValueError("Need at least 20 paired price levels to estimate a cointegrating vector")
+    long_run = sm.OLS(
+        levels["log_PT"], sm.add_constant(levels[["log_ES"]], has_constant="add")
+    ).fit()
+
+    frame = design.copy()
+    frame["disequilibrium"] = np.nan
+    frame.loc[levels.index, "disequilibrium"] = np.asarray(long_run.resid, dtype=float)
+    frame["disequilibrium_lag"] = frame["disequilibrium"].shift(1)
+
+    frame = frame.dropna(subset=["diff_log_PT", "diff_log_ES", "disequilibrium_lag", "post"]).copy()
+    frame["diff_log_ES_x_post"] = frame["diff_log_ES"] * frame["post"]
+    frame["disequilibrium_lag_x_post"] = frame["disequilibrium_lag"] * frame["post"]
+
+    x = sm.add_constant(
+        frame[
+            [
+                "disequilibrium_lag",
+                "disequilibrium_lag_x_post",
+                "diff_log_ES",
+                "diff_log_ES_x_post",
+                "post",
+            ]
+        ],
+        has_constant="add",
+    )
+    model = sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": maxlags})
+    return {
+        "model": model,
+        "cointegrating_constant": float(long_run.params.iloc[0]),
+        "cointegrating_slope": float(long_run.params.iloc[1]),
+        "n_obs": int(model.nobs),
+    }

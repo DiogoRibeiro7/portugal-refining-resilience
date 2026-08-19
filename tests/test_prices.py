@@ -7,6 +7,7 @@ import pytest
 from portugal_refining_resilience.prices import (
     choose_price_model,
     extract_weekly_prices,
+    fit_error_correction_model,
     price_comovement_design,
     spread_stationarity,
     stationarity_diagnostics,
@@ -120,3 +121,65 @@ def test_extract_weekly_prices_rejects_a_missing_country(tmp_path: Path) -> None
 
     with pytest.raises(ValueError, match="missing price columns"):
         extract_weekly_prices(workbook)
+
+
+def _cointegrated_design(
+    *, beta: float = 0.9, gamma: float = -0.25, theta: float = 0.6, n: int = 600
+) -> pd.DataFrame:
+    """A PT series that error-corrects toward a known long-run relation with ES."""
+    rng = np.random.default_rng(7)
+    log_es = np.cumsum(rng.normal(0, 0.02, n)) + np.log(1000.0)
+    alpha = 0.5
+    log_pt = np.empty(n)
+    log_pt[0] = alpha + beta * log_es[0]
+    for t in range(1, n):
+        gap = log_pt[t - 1] - (alpha + beta * log_es[t - 1])
+        log_pt[t] = (
+            log_pt[t - 1] + gamma * gap + theta * (log_es[t] - log_es[t - 1]) + rng.normal(0, 0.004)
+        )
+    frame = pd.DataFrame({"date": pd.date_range("2015-01-04", periods=n, freq="7D")})
+    frame["log_ES"] = log_es
+    frame["log_PT"] = log_pt
+    frame["diff_log_ES"] = frame["log_ES"].diff()
+    frame["diff_log_PT"] = frame["log_PT"].diff()
+    frame["post"] = (frame["date"] >= "2021-05-01").astype(int)
+    return frame
+
+
+def test_error_correction_model_recovers_the_cointegrating_vector() -> None:
+    result = fit_error_correction_model(_cointegrated_design(beta=0.9))
+
+    assert result["cointegrating_slope"] == pytest.approx(0.9, abs=0.03)
+
+
+def test_error_correction_model_recovers_adjustment_and_pass_through() -> None:
+    result = fit_error_correction_model(_cointegrated_design(gamma=-0.25, theta=0.6))
+    model = result["model"]
+
+    assert model.params["disequilibrium_lag"] == pytest.approx(-0.25, abs=0.06)
+    assert model.params["disequilibrium_lag"] < 0  # a gap above the relation is pulled back
+    assert model.pvalues["disequilibrium_lag"] < 0.01
+    assert model.params["diff_log_ES"] == pytest.approx(0.6, abs=0.05)
+
+
+def test_error_correction_model_finds_no_regime_change_when_there_is_none() -> None:
+    """Both interactions must be flat when the process is stable across the cutoff."""
+    result = fit_error_correction_model(_cointegrated_design())
+    model = result["model"]
+
+    assert model.pvalues["disequilibrium_lag_x_post"] > 0.05
+    assert model.pvalues["diff_log_ES_x_post"] > 0.05
+
+
+def test_error_correction_model_requires_the_design_columns() -> None:
+    frame = pd.DataFrame({"log_PT": [1.0] * 30, "log_ES": [1.0] * 30})
+
+    with pytest.raises(ValueError, match="Price design missing columns"):
+        fit_error_correction_model(frame)
+
+
+def test_error_correction_model_requires_enough_levels() -> None:
+    frame = _cointegrated_design(n=600).head(15)
+
+    with pytest.raises(ValueError, match="at least 20 paired price levels"):
+        fit_error_correction_model(frame)

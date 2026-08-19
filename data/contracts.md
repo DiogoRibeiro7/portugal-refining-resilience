@@ -101,6 +101,22 @@ a new data vintage cannot quietly widen the gap. Separately, at least
 `min_within_tolerance_share` of all rows must agree without invoking an exception, so the
 exception list can never grow until it carries the comparison.
 
+## `price_ecm_models.csv`
+
+Key: `product, term`.
+
+Required: `product`, `term`, `estimate`, `std_error`, `p_value`, `nobs`,
+`cointegrating_constant`, `cointegrating_slope`.
+
+Written only for products whose `price_model_choice.model_family` is `ecm_required`. Where
+cointegration is rejected the disequilibrium term is not a valid long-run residual, so fitting
+an error-correction model anyway would contradict the recorded model choice.
+
+`disequilibrium_lag` is the weekly speed of adjustment toward the long-run relation and is
+expected to be negative. Its `_x_post` companion is the change in that speed after the
+transition; quote the two together. The disequilibrium term is a generated regressor, so the
+second-stage standard errors are conditional on the first stage.
+
 ## `eurostat_physical_balance_panel.csv`
 
 Key: `year, country, product`.
