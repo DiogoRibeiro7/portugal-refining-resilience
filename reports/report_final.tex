@@ -43,7 +43,8 @@ at Matosinhos in May 2021. Using monthly JODI physical flows, the Eurostat oil b
 Portugal and Spain, DGEG national statistics and the European Commission Weekly Oil Bulletin,
 this paper measures how the product balance and price exposure changed over 2005--2024.
 
-The 2013 upgrade produced an unambiguous structural break. Diesel refinery output, exports and
+The 2013 upgrade coincides with an unambiguous structural break. Diesel refinery output,
+exports and
 the net-import-to-demand ratio all break at 2013 and survive Benjamini--Hochberg adjustment
 across sixteen tests, and Portugal moved from net diesel importer to net diesel exporter. After
 May 2021 the direction reverses: by 2023 domestic manufacturing covered $0.66$ of diesel demand,
@@ -51,7 +52,9 @@ the lowest value in the twenty-year window, while imports reached a series high 
 
 Two annual designs disagree about 2022, and the disagreement is diagnostic rather than
 troubling. Chow tests detect nothing on three post-event observations; interrupted-trend models
-on the same series detect a level shift of $-1{,}783$~kt in diesel exports ($p<0.001$). A monthly
+on the same series detect a level shift in diesel exports of $-1{,}783$~kt ($p<0.001$), or
+$-1{,}540$~kt ($p=0.001$) when the one trade cell the two sources dispute is taken at its
+corroborated value. A monthly
 segmented model with month fixed effects separates the May 2021 closure from the March 2022
 energy shock and finds both: diesel refinery output falls $106$~kt per month at the closure
 boundary and a further $155$~kt per month during the stress period, with the
@@ -384,7 +387,8 @@ refining regime in force. The 2021 row is a transition year and is excluded from
 \begin{table}[htbp]
 \centering
 \caption{Balance at the event years. $^{\dagger}$The two independent trade sources disagree on
-2022 diesel exports; the national figure is 622.2~kt. See Section~\ref{sec:stress}.}
+2022 diesel exports; the national figure is 622.2~kt, which puts net imports over demand at
+$+0.132$ rather than $+0.190$. See Table~\ref{tab:sourcesens}.}
 \label{tab:headline}
 \small
 \begin{tabular}{rlrrrrrl}
@@ -395,7 +399,7 @@ Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regim
 2013 & diesel & 1{,}692 & 581 & 4{,}535 & 5{,}687 & $-0.245$ & two refineries \\
 2020 & diesel & 1{,}304 & 875 & 4{,}403 & 4{,}606 & $-0.097$ & two refineries \\
 2021 & diesel & 1{,}378 & 1{,}491 & 4{,}728 & 4{,}199 & $+0.024$ & transition \\
-2022 & diesel & 331\rlap{$^{\dagger}$} & 1{,}275 & 4{,}962 & 3{,}941 & $+0.190$ & Sines only \\
+2022 & diesel & 331\rlap{$^{\dagger}$} & 1{,}275 & 4{,}962 & 3{,}941 & $+0.190$\rlap{$^{\dagger}$} & Sines only \\
 2023 & diesel & 285 & 1{,}597 & 5{,}084 & 3{,}348 & $+0.258$ & Sines only \\
 2024 & diesel & 731 & 1{,}222 & 4{,}868 & 4{,}133 & $+0.101$ & Sines only \\
 \midrule
@@ -414,8 +418,9 @@ Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regim
 
 \subsection{Chow tests}
 
-Table~\ref{tab:breaks} reports the Chow tests that reach nominal significance; the remaining eleven of sixteen have $p>0.11$. Three survive
-Benjamini--Hochberg adjustment comfortably. All three are diesel outcomes at 2013, and all move
+Table~\ref{tab:breaks} reports the Chow tests that reach nominal significance. None of the
+remaining eleven of sixteen survives multiplicity adjustment; the smallest unadjusted $p$ among
+them is $0.084$. Three of the five listed survive Benjamini--Hochberg adjustment comfortably. All three are diesel outcomes at 2013, and all move
 in the direction the engineering implies: more diesel manufactured, more exported, and a
 net-import position that turns negative.
 
@@ -449,7 +454,8 @@ reported in Table~\ref{tab:its}, 2022 is large and precisely estimated for both 
 
 \begin{table}[htbp]
 \centering
-\caption{Interrupted-trend models, annual series, HAC(1), $n=19$, 2021 excluded.}
+\caption{Interrupted-trend models, annual series, HAC(1), $n=19$, 2021 excluded. The 2022 rows
+depend on a disputed trade cell; see Table~\ref{tab:sourcesens}.}
 \label{tab:its}
 \begin{tabular}{llrrrr}
 \toprule
@@ -462,12 +468,16 @@ diesel & exports, 2022 & $-1{,}782.9$ & $<0.001$ & $+79.9$ & 0.206 \\
 diesel & net imp./dem., 2013 & $-0.520$ & $<0.001$ & $+0.030$ & 0.004 \\
 diesel & net imp./dem., 2022 & $+0.457$ & $<0.001$ & $-0.021$ & 0.441 \\
 gasoline & exports, 2013 & $+537.8$ & 0.001 & $+31.5$ & 0.271 \\
-gasoline & exports, 2022 & $-447.5$ & 0.020 & $+122.8$ & 0.049 \\
+gasoline & exports, 2022\rlap{$^{\ddagger}$} & $-447.5$ & 0.020 & $+122.8$ & 0.049 \\
 gasoline & net imp./dem., 2013 & $-0.676$ & 0.001 & $+0.027$ & 0.328 \\
 gasoline & net imp./dem., 2022 & $+0.732$ & $<0.001$ & $+0.024$ & 0.728 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+The $\ddagger$ marks the one result that does not survive the source sensitivity in
+Section~\ref{sec:sourcesens}: on the corroborated trade value the 2022 gasoline export shift is
+$-254.9$~kt and not significant. It is not relied on in the conclusions.
 
 The two designs are not in conflict about the world; they are in conflict about what three annual
 observations can support. Any statement that annual evidence detects no 2022 break should
@@ -811,13 +821,50 @@ $0.274$, a change of $8.4$ percentage points; the diesel net-import-to-demand ra
 $-0.119$ to $0.183$, a change of $30.2$ percentage points; and diesel refinery output coverage
 falls from $1.088$ to $0.767$. These are descriptive pre/post differences, not effect estimates.
 
+\subsection{Sensitivity to the disputed trade cell}
+\label{sec:sourcesens}
+
+One 2022 trade cell is disputed between the two independent sources, and several annual results
+depend on it. Table~\ref{tab:sourcesens} recomputes each of them on the corroborated national
+value.
+
+\begin{table}[htbp]
+\centering
+\caption{2022 interrupted-trend level changes, computed on each trade source.}
+\label{tab:sourcesens}
+\begin{tabular}{llrrrr}
+\toprule
+& & \multicolumn{2}{c}{Primary source} & \multicolumn{2}{c}{Corroborated} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Product & Outcome & Estimate & $p$ & Estimate & $p$ \\
+\midrule
+diesel & exports & $-1{,}782.9$ & $<0.001$ & $-1{,}540.3$ & 0.001 \\
+diesel & net imp./dem. & $+0.457$ & $<0.001$ & $+0.396$ & $<0.001$ \\
+gasoline & exports & $-447.5$ & 0.020 & $-254.9$ & 0.146 \\
+gasoline & net imp./dem. & $+0.732$ & $<0.001$ & $+0.557$ & 0.002 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The diesel results are robust. Both the export level change and the net-import-ratio shift keep
+their sign, remain significant at conventional levels, and lose roughly a tenth to a seventh of
+their magnitude. The diesel conclusions in this paper hold on either source.
+
+The gasoline export result is not robust. Its level change falls from $-447.5$~kt to
+$-254.9$~kt and ceases to be significant at five per cent. That result is therefore not relied
+on anywhere in this paper, and the gasoline evidence for 2022 rests on the net-import ratio,
+which does survive. Where the text reports a 2022 gasoline export shift it should be read as
+conditional on the primary source.
+
 \subsection{Multiplicity}
 
 Sixteen Chow tests are reported and Benjamini--Hochberg adjustment is applied across all of them,
 not to a selected subset. Three survive at conventional levels. The monthly models are not
 included in that adjustment and their $p$-values should be read as unadjusted; the phase terms
-that carry the conclusions have $p<0.005$, comfortably inside any reasonable correction for the
-twelve terms reported.
+that carry the conclusions, on refinery output and on the net-import ratio, have $p\le 0.006$,
+inside any reasonable correction for the twelve terms reported. The import-level terms are
+weaker and are not relied on: the Matosinhos import shift is significant only at the ten per
+cent level.
 
 \section{Limitations}
 
@@ -849,8 +896,8 @@ stock changes are not modelled.
 
 \section{Conclusions}
 
-The 2013 Sines hydrocracker produced an unambiguous structural change. Diesel refinery output and
-exports broke upward at 2013 and Portugal moved from net diesel importer to net diesel exporter,
+The 2013 Sines hydrocracker coincides with an unambiguous structural change. Diesel refinery
+output and exports broke upward at 2013 and Portugal moved from net diesel importer to net diesel exporter,
 a result that survives multiplicity adjustment across sixteen tests and is corroborated by
 interrupted-trend models with level shifts of $+1{,}900$~kt in exports and $-0.52$ in the
 net-import ratio.
@@ -900,7 +947,8 @@ Balance at each event year & Table~\ref{tab:headline} & descriptive & 2021 marke
 Refining regime by year & Table~\ref{tab:headline} & documented & Regime label, not capacity \\
 Diesel net-import ratio breaks at 2013 & Table~\ref{tab:breaks} & structural break & Diagnostic, not a causal estimator \\
 No Chow break detected at 2022 & Table~\ref{tab:breaks} & structural break & Three post-event years; low power \\
-Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes a common trend \\
+Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes a common trend; 2022 rows depend on a disputed cell \\
+Diesel 2022 results survive the source sensitivity & Table~\ref{tab:sourcesens} & association & Gasoline exports does not survive \\
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
 Refinery output falls 106 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
 2022 stress adds a further $-155$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\

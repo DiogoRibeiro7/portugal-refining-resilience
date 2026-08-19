@@ -40,7 +40,8 @@ retrieval time, URL, SHA-256 and vintage status.
 | 10 | Gasoline error-correction model | `price_ecm_models.csv` | `15_price_comovement.ipynb` |
 | 11 | Diesel balance, Portugal against Spain | `pt_es_physical_balance_comparison.csv` | `16_spain_comparison.ipynb` |
 | 12 | 2022 diesel exports by source | `stress_2022_source_sensitivity.csv` | `14_2022_stress_test.ipynb` |
-| 13 | Pre/post difference by window | `event_window_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
+| 13 | 2022 interrupted-trend level changes by source | `annual_source_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
+| 14 | Pre/post difference by window | `event_window_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
 
 ## Figures
 

@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T14:59:19.189868+00:00",
+  "created_at_utc": "2026-08-19T15:21:06.665759+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -56,6 +56,13 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_source_sensitivity.csv",
       "sha256": "7898d6c7901770543afed120427f2bc5f5e521155e4ba9730770778c387ac689",
       "bytes": 1946
+    },
+    {
+      "file": "annual_source_sensitivity.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_source_sensitivity.csv",
+      "sha256": "dd114b285a696fbd3bf33c997f7be46b683eae6c738d1341bada9311cd2543ce",
+      "bytes": 931
     },
     {
       "file": "monthly_event_phase_summary.csv",
