@@ -249,13 +249,14 @@ def check_flagged_cells_have_sensitivity(
             (int(year), str(product)) for year, product in zip(years, frame["product"], strict=True)
         }
 
-    missing = sorted(
-        {
-            (int(row.year), str(row.product))
-            for row in flagged.itertuples()
-            if (int(row.year), str(row.product)) not in covered
-        }
+    flagged_keys = set(
+        zip(
+            flagged["year"].astype(int),
+            flagged["product"].astype(str),
+            strict=True,
+        )
     )
+    missing = sorted(flagged_keys - covered)
     if missing:
         return False, f"disputed cells with no sensitivity computed: {missing}"
     return True, f"{len(flagged)} disputed cell(s), all covered by a sensitivity"
@@ -274,8 +275,8 @@ def check_sensitivity_survival(sensitivity: pd.DataFrame) -> tuple[bool, str]:
     flips: list[str] = []
     keys = ["product", "outcome"]
     for key, group in sensitivity.groupby(keys):
-        verdicts = {str(row.trade_source): float(row.p_value) < 0.05 for row in group.itertuples()}
-        if len(set(verdicts.values())) > 1:
+        significant = pd.to_numeric(group["p_value"], errors="coerce").lt(0.05)
+        if significant.nunique() > 1:
             flips.append("/".join(str(part) for part in key))
     if flips:
         return True, f"does not survive the source swap, must not be relied on: {sorted(flips)}"
