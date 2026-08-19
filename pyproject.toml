@@ -1,6 +1,6 @@
 [project]
 name = "portugal-refining-resilience"
-version = "0.2.0"
+version = "0.3.0"
 description = "Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience and price transmission."
 authors = [{ name = "Diogo Ribeiro" }]
 readme = "README.md"
