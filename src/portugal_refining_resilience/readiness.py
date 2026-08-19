@@ -10,6 +10,18 @@ from .config import ProjectPaths, load_analysis_config
 from .events import EVENT_PHASES
 
 
+def _bundle_first(paths: ProjectPaths, working: Path) -> Path:
+    """Prefer the bundled copy of a file over the working copy.
+
+    Report-writing prompts read ``artifacts/report_inputs/``. Validating the working
+    file instead would certify a table that is not the one the report was written
+    from, which is the opposite of what a checksum-protected bundle is for. The
+    working path is used only when the file has not been bundled yet.
+    """
+    bundled = paths.report_inputs / working.name
+    return bundled if bundled.exists() else working
+
+
 def _check_record(check: str, passed: bool, detail: str) -> dict[str, object]:
     return {"check": check, "passed": bool(passed), "detail": detail}
 
@@ -235,7 +247,7 @@ def build_readiness_checks(
         _check_record("core_report_bundle_complete", bundle_complete, bundle_detail)
     ]
 
-    trade_path = paths.processed / "fuel_trade_annual.csv"
+    trade_path = _bundle_first(paths, paths.processed / "fuel_trade_annual.csv")
     if trade_path.exists():
         trade = pd.read_csv(trade_path)
         seed_only = "status" in trade.columns and set(trade["status"].dropna()) == {
@@ -254,20 +266,27 @@ def build_readiness_checks(
         checks.append(_check_record("trade_not_seed_only", False, "Missing fuel_trade_annual.csv"))
 
     completeness_files = [
-        paths.metrics / "jodi_trade_annual_completeness.csv",
-        paths.metrics / "jodi_demand_annual_completeness.csv",
-        paths.metrics / "jodi_refinery_output_annual_completeness.csv",
+        _bundle_first(paths, paths.metrics / name)
+        for name in (
+            "jodi_trade_annual_completeness.csv",
+            "jodi_demand_annual_completeness.csv",
+            "jodi_refinery_output_annual_completeness.csv",
+        )
     ]
     passed, detail = validate_jodi_completeness(completeness_files)
     checks.append(_check_record("jodi_annual_completeness_valid", passed, detail))
 
-    passed, detail = validate_monthly_panel(paths.processed / "fuel_monthly_analytical_panel.csv")
+    passed, detail = validate_monthly_panel(
+        _bundle_first(paths, paths.processed / "fuel_monthly_analytical_panel.csv")
+    )
     checks.append(_check_record("monthly_event_panel_valid", passed, detail))
 
-    passed, detail = validate_monthly_event_outputs(paths.metrics)
+    # These validators take a directory, so point them at the bundle once it exists.
+    evidence_dir = paths.report_inputs if paths.report_inputs.exists() else paths.metrics
+    passed, detail = validate_monthly_event_outputs(evidence_dir)
     checks.append(_check_record("monthly_event_outputs_valid", passed, detail))
 
-    eurostat_panel = paths.processed / "eurostat_physical_balance_panel.csv"
+    eurostat_panel = _bundle_first(paths, paths.processed / "eurostat_physical_balance_panel.csv")
     checks.append(
         _check_record(
             "eurostat_balance_available",
@@ -276,7 +295,7 @@ def build_readiness_checks(
         )
     )
 
-    passed, detail = validate_price_outputs(paths.metrics)
+    passed, detail = validate_price_outputs(evidence_dir)
     checks.append(_check_record("price_outputs_valid", passed, detail))
 
     reconciliation_config: dict[str, Any] = {}
@@ -289,7 +308,7 @@ def build_readiness_checks(
     accepted = reconciliation_config.get("accepted_divergences") or []
     share = float(reconciliation_config.get("min_within_tolerance_share", 0.9))
     passed, detail = validate_reconciliation(
-        paths.metrics / "jodi_dgeg_trade_reconciliation.csv",
+        _bundle_first(paths, paths.metrics / "jodi_dgeg_trade_reconciliation.csv"),
         min_within_tolerance_share=share,
         accepted_divergences=list(accepted),
     )
