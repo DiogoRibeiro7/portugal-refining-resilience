@@ -55,7 +55,15 @@ _UNIT_TO_KT: dict[str, float] = {
 
 @dataclass(frozen=True)
 class ReconciliationThresholds:
-    """Default tolerances for source cross-check summaries."""
+    """Tolerances for source cross-check summaries.
+
+    A row is flagged only when it breaches **both** limits. Treating them as
+    alternatives made the absolute floor bind on every large series: 25 kt against
+    Portuguese diesel imports of roughly 1,600 kt is an effective tolerance of 1.6%,
+    which contradicts the 5% the percentage limit advertises and flagged agreement
+    as good as 2.1% as a failure. The absolute limit exists to stop small series
+    producing alarming percentages, not to override the percentage on large ones.
+    """
 
     warning_abs_kt: float = 25.0
     warning_pct: float = 5.0
@@ -260,10 +268,12 @@ def compare_trade_sources(
     joined["difference_pct_comparison"] = (
         100 * joined["difference_kt"] / comparison_value.replace(0, np.nan)
     )
+    breaches_absolute = joined["difference_kt"].abs() > thresholds.warning_abs_kt
+    breaches_relative = joined["difference_pct_comparison"].abs() > thresholds.warning_pct
+    # A missing percentage means the comparison value was zero, where the absolute
+    # difference is the only meaningful signal.
+    breaches_relative = breaches_relative | joined["difference_pct_comparison"].isna()
     joined["reconciliation_status"] = np.where(
-        (joined["difference_kt"].abs() > thresholds.warning_abs_kt)
-        | (joined["difference_pct_comparison"].abs() > thresholds.warning_pct),
-        "review",
-        "within_tolerance",
+        breaches_absolute & breaches_relative, "review", "within_tolerance"
     )
     return joined

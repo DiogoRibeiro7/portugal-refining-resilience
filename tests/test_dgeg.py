@@ -46,7 +46,7 @@ def test_canonicalise_trade_long_rejects_unknown_product() -> None:
 
 def test_compare_trade_sources_flags_large_differences() -> None:
     primary = pd.DataFrame(
-        {"year": [2022], "product": ["diesel"], "flow": ["imports"], "value_kt": [125.0]}
+        {"year": [2022], "product": ["diesel"], "flow": ["imports"], "value_kt": [200.0]}
     )
     comparison = pd.DataFrame(
         {"year": [2022], "product": ["diesel"], "flow": ["imports"], "value_kt": [100.0]}
@@ -54,9 +54,24 @@ def test_compare_trade_sources_flags_large_differences() -> None:
 
     out = compare_trade_sources(primary, comparison)
 
-    assert out.loc[0, "difference_kt"] == pytest.approx(25.0)
-    assert out.loc[0, "difference_pct_comparison"] == pytest.approx(25.0)
+    assert out.loc[0, "difference_kt"] == pytest.approx(100.0)
+    assert out.loc[0, "difference_pct_comparison"] == pytest.approx(100.0)
     assert out.loc[0, "reconciliation_status"] == "review"
+
+
+def test_compare_trade_sources_tolerates_a_small_absolute_difference() -> None:
+    """A big percentage on a small series is not material when the tonnage is not."""
+    primary = pd.DataFrame(
+        {"year": [2022], "product": ["diesel"], "flow": ["imports"], "value_kt": [120.0]}
+    )
+    comparison = pd.DataFrame(
+        {"year": [2022], "product": ["diesel"], "flow": ["imports"], "value_kt": [100.0]}
+    )
+
+    out = compare_trade_sources(primary, comparison)
+
+    assert out.loc[0, "difference_pct_comparison"] == pytest.approx(20.0)
+    assert out.loc[0, "reconciliation_status"] == "within_tolerance"
 
 
 def _write_dgeg_workbook(path: Path, *, total_label: str | None) -> Path:
@@ -127,3 +142,32 @@ def test_read_trade_workbook_rejects_a_shifted_column_block(tmp_path: Path) -> N
 
     with pytest.raises(ValueError, match="probably shifted"):
         read_trade_workbook(path, year=2023)
+
+
+def test_reconciliation_does_not_flag_a_large_series_on_the_absolute_floor() -> None:
+    """25 kt against a 1600 kt series is 1.6%, not the 5% the percentage limit states."""
+    primary = pd.DataFrame(
+        {"year": [2023], "product": ["diesel"], "flow": ["imports"], "value_kt": [1597.0]}
+    )
+    comparison = pd.DataFrame(
+        {"year": [2023], "product": ["diesel"], "flow": ["imports"], "value_kt": [1631.6]}
+    )
+
+    out = compare_trade_sources(primary, comparison, primary_name="JODI", comparison_name="DGEG")
+
+    assert abs(float(out.loc[0, "difference_kt"])) > 25.0
+    assert abs(float(out.loc[0, "difference_pct_comparison"])) < 5.0
+    assert out.loc[0, "reconciliation_status"] == "within_tolerance"
+
+
+def test_reconciliation_flags_a_row_breaching_both_limits() -> None:
+    primary = pd.DataFrame(
+        {"year": [2022], "product": ["diesel"], "flow": ["exports"], "value_kt": [331.0]}
+    )
+    comparison = pd.DataFrame(
+        {"year": [2022], "product": ["diesel"], "flow": ["exports"], "value_kt": [622.2]}
+    )
+
+    out = compare_trade_sources(primary, comparison, primary_name="JODI", comparison_name="DGEG")
+
+    assert out.loc[0, "reconciliation_status"] == "review"

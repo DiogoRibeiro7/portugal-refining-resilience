@@ -23,6 +23,35 @@ analysis:
     minimum_segment_years: 5
     candidate_break_years: [2013, 2022]
     transition_years: [2021]
+  source_reconciliation:
+    primary_source: JODI
+    comparison_source: DGEG
+    # A row is flagged only when it breaches both limits; see ReconciliationThresholds.
+    warning_abs_kt: 25.0
+    warning_pct: 5.0
+    # 67% of 2019-2024 cells agree outright under the tolerances above. Requiring
+    # 0.6 keeps that majority load-bearing: the named exceptions below may explain
+    # the residual, but they may never become the bulk of the comparison.
+    min_within_tolerance_share: 0.6
+    rationale: >
+      JODI and DGEG are the only independent pair. Eurostat nrg_cb_oil for Portugal is
+      compiled from the DGEG national submission and agrees with it to a median of
+      0.00% across 2019-2024 trade cells, so Eurostat corroborates DGEG rather than
+      providing a third opinion. Product definitions are not the source of the residual
+      gap: the Eurostat blended-biofuel wedge (O4671 less O4671XR5220B) is 0.0 kt on
+      exports in every year and at most 4.5% on imports. The remaining divergences are
+      therefore reporting-vintage differences in individual cells, and each one is
+      enumerated below with the series Eurostat identifies as out of line. Any
+      divergence not listed here fails the readiness gate.
+    accepted_divergences:
+      - {year: 2019, product: diesel,   flow: imports, outlier: JODI, note: "Eurostat 1257.7 matches DGEG; JODI reports 1075.0"}
+      - {year: 2019, product: gasoline, flow: imports, outlier: JODI, note: "Eurostat 261.2 matches DGEG; JODI reports 232.0"}
+      - {year: 2020, product: diesel,   flow: imports, outlier: JODI, note: "Eurostat 929.4 matches DGEG; JODI reports 875.0"}
+      - {year: 2021, product: gasoline, flow: exports, outlier: DGEG, note: "Eurostat 1423.9 matches JODI; DGEG workbook reports 1055.9"}
+      - {year: 2021, product: gasoline, flow: imports, outlier: JODI, note: "Eurostat 202.5 matches DGEG; JODI reports 255.0"}
+      - {year: 2022, product: diesel,   flow: exports, outlier: JODI, note: "Eurostat 622.2 matches DGEG; JODI reports 331.0, the largest single gap"}
+      - {year: 2022, product: gasoline, flow: exports, outlier: JODI, note: "Eurostat 1501.7 matches DGEG; JODI reports 1346.0"}
+      - {year: 2024, product: gasoline, flow: exports, outlier: DGEG, note: "Eurostat 1728.1 matches JODI; DGEG workbook reports 1319.8"}
   reporting:
     causal_language_requires_control_design: true
     seed_data_is_publication_ready: false
