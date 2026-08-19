@@ -6,8 +6,8 @@ authors:
     given-names: "Diogo"
     affiliation: "ESMAD - Instituto Politécnico do Porto"
     orcid: "https://orcid.org/0009-0001-2022-7072"
-version: "0.2.0"
-date-released: "2026-08-18"
+version: "0.3.0"
+date-released: "2026-08-19"
 license: MIT
 repository-code: "https://github.com/DiogoRibeiro7/portugal-refining-resilience"
 abstract: "Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience, and price transmission."
