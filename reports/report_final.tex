@@ -73,6 +73,7 @@ months apart, and no design here separates their contributions.
 \newpage
 
 \section{Introduction and Research Question}
+\label{sec:intro}
 
 Portugal operated two refineries for most of the study period. Sines, the larger, received a
 hydrocracker that entered commercial production in January 2013 and was intended to raise diesel
@@ -93,7 +94,7 @@ each in turn:
 \text{physical import dependence} \rightarrow \text{price co-movement}.
 \]
 
-Four hypotheses are pre-specified in \texttt{research\_design.csv}:
+Four hypotheses were pre-specified before estimation:
 
 \begin{enumerate}
 \item the 2013 hydrocracker changed diesel-producing capability and the trade balance;
@@ -110,9 +111,10 @@ Throughout, four evidence levels are kept distinct: a \emph{documented event}, a
 \section{Data}
 
 \subsection{Sources}
+\label{sec:sources}
 
 Four independent bodies publish the series used here. Their identifiers, roles and retrieval
-points are frozen in \texttt{source\_manifest\_snapshot.csv}; full URLs appear in the References.
+points were frozen at the time of extraction; full URLs appear in the References.
 
 \begin{itemize}
 \item \textbf{JODI Oil World Database}: monthly secondary-product imports, exports, refinery
@@ -126,11 +128,12 @@ workbooks and a long domestic-sales series.
 taxes from 2005.
 \end{itemize}
 
-Galp corporate disclosures supply dated refinery events in \texttt{refinery\_events.csv}. They
+Galp corporate disclosures supply dated refinery events. They
 are used as event metadata only, never as outcome data, and the announcement date of December
 2020 is deliberately not treated as the physical closure date.
 
 \subsection{Coverage}
+\label{sec:coverage}
 
 Table~\ref{tab:coverage} states what each source covers over the study window.
 
@@ -143,12 +146,8 @@ Table~\ref{tab:coverage} states what each source covers over the study window.
 \textbf{Source} & \textbf{Role} & \textbf{Coverage} \\
 \midrule
 JODI & Monthly physical flows & Complete. 160 of 160 annual product-flow cells; every year
-carries 12 observed months and assessment code 1
-(\texttt{jodi\_trade\_annual\_completeness.csv},
-\texttt{jodi\_demand\_annual\_completeness.csv},
-\texttt{jodi\_refinery\_output\_annual\_completeness.csv}) \\
-Eurostat & Annual balance, PT and ES & Complete for both countries, 160 of 160 cells each
-(\texttt{eurostat\_physical\_balance\_panel.csv}) \\
+carries 12 observed months and assessment code 1 \\
+Eurostat & Annual balance, PT and ES & Complete for both countries, 160 of 160 cells each \\
 DGEG trade & National trade statistics & \textbf{2019--2024 only.} Earlier annual workbooks are
 not published in this series \\
 DGEG sales & Domestic market sales & Complete, 1970--2024 \\
@@ -158,8 +157,7 @@ observations per product, 2005-01-03 to 2024-12-30 \\
 \end{tabular}
 \end{table}
 
-The monthly panel, \texttt{fuel\_monthly\_analytical\_panel.csv}, spans 2002-01 to 2026-05 for
-both products, of which 293 months per product fall inside the modelling window.
+The monthly panel spans 2002-01 to 2026-05 for both products, of which 293 months per product fall inside the modelling window.
 
 \subsection{The one material coverage gap}
 
@@ -179,9 +177,8 @@ Diesel is JODI \texttt{GASDIES} and Eurostat \texttt{O4671}, gas oil and diesel 
 JODI \texttt{GASOLINE} and Eurostat \texttt{O4652}, motor gasoline. Aviation gasoline is excluded
 from both. In the DGEG sales workbook, gasoline is the \emph{Gasolinas} total, and diesel
 requires coloured and marked gasoil to be added to road gasoil; road gasoil alone sits about ten
-per cent below the JODI and Eurostat demand concept. Comparability is audited in
-\texttt{product\_definition\_crosswalk.csv}, which flags the DGEG trade labels as requiring
-review before numerical reconciliation.
+per cent below the JODI and Eurostat demand concept. Comparability is audited against a published product crosswalk, which flags the DGEG
+trade labels as requiring review before numerical reconciliation.
 
 Differing biofuel treatment does not drive residual differences between sources. The Eurostat
 blended-biofuel wedge, \texttt{O4671} less \texttt{O4671XR5220B}, is $0.0$~kt on exports in every
@@ -189,17 +186,18 @@ year of the window and at most $4.5\%$ on imports, so blending cannot explain an
 divergence at all.
 
 \subsection{Source reconciliation}
+\label{sec:recon}
 
 JODI and DGEG are the only genuinely independent pair. Across the 24 overlapping 2019--2024 trade
-cells in \texttt{jodi\_dgeg\_trade\_reconciliation.csv}, $66.7\%$ agree within tolerance. Over the
+cells, $66.7\%$ agree within tolerance. Over the
 full window, JODI and Eurostat agree on $89\%$ of 80 cells, with only three of the nine
 divergences occurring before 2019.
 
 A cell is flagged only when it breaches both the absolute and the percentage tolerance. Applying
 them as alternatives makes a 25~kt floor bind on series of roughly $1{,}600$~kt, an effective
 tolerance of $1.6\%$, which would flag agreement as close as $2.1\%$ as failure. Each of the
-eight remaining divergent cells is enumerated in \texttt{config/analysis.yml} together with the
-series Eurostat identifies as the outlier: six where JODI is out of line, two where the DGEG
+eight remaining divergent cells is enumerated in the analysis configuration, together
+with the series Eurostat identifies as the outlier: six where JODI is out of line, two where the DGEG
 workbook is. An unlisted divergence fails the readiness gate however few cells it touches.
 
 \section{Methods}
@@ -242,8 +240,9 @@ than assumed. HAC(8) covariance throughout. Pre-tax prices are the primary measu
 \section{Descriptive Evidence}
 
 \subsection{Summary statistics}
+\label{sec:summary}
 
-Over 2005--2024 (\texttt{descriptive\_metrics.csv}), Portuguese diesel demand averaged
+Over 2005--2024, Portuguese diesel demand averaged
 $5{,}064$~kt against average refinery output of $4{,}745$~kt, average imports of $1{,}020$~kt and
 average exports of $849$~kt. Gasoline averaged demand of $1{,}230$~kt against output of
 $2{,}272$~kt, imports of $178$~kt and exports of $1{,}249$~kt. The asymmetry is structural:
@@ -264,8 +263,7 @@ window.
 \label{fig:dieselbalance}
 \end{figure}
 
-Table~\ref{tab:diesel} gives the annual diesel panel from
-\texttt{fuel\_annual\_analytical\_panel.csv}. Three regimes are visible. From 2005 to 2012
+Table~\ref{tab:diesel} gives the annual diesel panel. Three regimes are visible. From 2005 to 2012
 Portugal is a net diesel importer with output covering 73--92 per cent of demand. From 2013 the
 ratio exceeds one and the net-import-to-demand ratio turns negative: Portugal manufactures more
 diesel than it consumes and exports the surplus. From 2021 the system returns to net import
@@ -273,8 +271,7 @@ dependence, and by 2023 output covers only 66 per cent of demand.
 
 \begin{table}[htbp]
 \centering
-\caption{Portugal diesel annual balance, kt and ratios.
-Source: \texttt{fuel\_annual\_analytical\_panel.csv}.}
+\caption{Portugal diesel annual balance, kt and ratios.}
 \label{tab:diesel}
 \small
 \begin{tabular}{rrrrrrrr}
@@ -325,8 +322,7 @@ reading the ratio as self-sufficiency would obscure that.
 
 \begin{table}[htbp]
 \centering
-\caption{Portugal gasoline annual balance, kt and ratios.
-Source: \texttt{fuel\_annual\_analytical\_panel.csv}.}
+\caption{Portugal gasoline annual balance, kt and ratios.}
 \label{tab:gasoline}
 \small
 \begin{tabular}{rrrrrrrr}
@@ -381,12 +377,11 @@ regime change comparable to diesel occurs.}
 \subsection{Event years}
 
 Table~\ref{tab:headline} extracts the years that bracket each documented event, together with the
-refining regime recorded in \texttt{refining\_regime\_annual.csv}. The 2021 row is labelled
-\texttt{transition} and is excluded from the annual before/after designs.
+refining regime in force. The 2021 row is a transition year and is excluded from the annual before/after designs.
 
 \begin{table}[htbp]
 \centering
-\caption{Balance at the event years. Source: \texttt{headline\_event\_years.csv}.}
+\caption{Balance at the event years.}
 \label{tab:headline}
 \small
 \begin{tabular}{rlrrrrrl}
@@ -416,16 +411,14 @@ Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regim
 
 \subsection{Chow tests}
 
-Table~\ref{tab:breaks} reports the Chow tests from \texttt{structural\_break\_tests.csv} that
-reach nominal significance; the remaining eleven of sixteen have $p>0.11$. Three survive
+Table~\ref{tab:breaks} reports the Chow tests that reach nominal significance; the remaining eleven of sixteen have $p>0.11$. Three survive
 Benjamini--Hochberg adjustment comfortably. All three are diesel outcomes at 2013, and all move
 in the direction the engineering implies: more diesel manufactured, more exported, and a
 net-import position that turns negative.
 
 \begin{table}[htbp]
 \centering
-\caption{Chow tests at pre-specified break years, 2021 excluded as a transition year.
-Source: \texttt{structural\_break\_tests.csv}.}
+\caption{Chow tests at pre-specified break years, 2021 excluded as a transition year.}
 \label{tab:breaks}
 \begin{tabular}{llrrrrr}
 \toprule
@@ -453,8 +446,7 @@ reported in Table~\ref{tab:its}, 2022 is large and precisely estimated for both 
 
 \begin{table}[htbp]
 \centering
-\caption{Interrupted-trend models, annual series, HAC(1), $n=19$, 2021 excluded.
-Source: \texttt{annual\_interrupted\_trend\_models.csv}.}
+\caption{Interrupted-trend models, annual series, HAC(1), $n=19$, 2021 excluded.}
 \label{tab:its}
 \begin{tabular}{llrrrr}
 \toprule
@@ -485,13 +477,11 @@ monthly design of Section~6 agree with each other in sign and rough magnitude.
 
 The monthly panel is partitioned into four phases: before May 2021, the Matosinhos transition
 from May 2021 to February 2022, the energy-stress period from March 2022 to December 2022, and
-post-stress from January 2023. Table~\ref{tab:phases} gives diesel phase means from
-\texttt{monthly\_event\_phase\_summary.csv}.
+post-stress from January 2023. Table~\ref{tab:phases} gives diesel phase means.
 
 \begin{table}[htbp]
 \centering
-\caption{Diesel monthly means by event phase, kt per month unless noted.
-Source: \texttt{monthly\_event\_phase\_summary.csv}.}
+\caption{Diesel monthly means by event phase, kt per month unless noted.}
 \label{tab:phases}
 \begin{tabular}{lrrrrr}
 \toprule
@@ -524,7 +514,7 @@ phase boundaries marked.}
 \centering
 \caption{Segmented monthly event model, diesel, $n=293$ months, month fixed effects, HAC(3).
 A phase coefficient is the level shift at that phase boundary against the extrapolated
-pre-closure trend. Source: \texttt{monthly\_event\_models.csv}.}
+pre-closure trend.}
 \label{tab:monthly}
 \begin{tabular}{llrrr}
 \toprule
@@ -583,8 +573,9 @@ consistent with the annual picture of a persistent export surplus.}
 \end{figure}
 
 \section{The 2022 Stress Episode}
+\label{sec:stress}
 
-Against a 2013--2019 baseline (\texttt{stress\_2022\_metrics.csv}), 2022 diesel exports of
+Against a 2013--2019 baseline, 2022 diesel exports of
 $331$~kt sit $2.44$ standard deviations below the mean and at the zeroth percentile of the
 baseline distribution, while diesel imports of $1{,}275$~kt sit $2.74$ standard deviations above
 and at the hundredth percentile. Robust statistics agree: the robust $z$-score for diesel imports
@@ -603,21 +594,22 @@ unchanged in each.
 \section{Prices}
 
 \subsection{Diagnostics and model choice}
+\label{sec:pricediag}
 
-Weekly pre-tax prices are the primary measure. Augmented Dickey--Fuller tests on the levels
-(\texttt{price\_stationarity\_diagnostics.csv}) fail to reject a unit root for all four series:
+Weekly pre-tax prices are the primary measure. Augmented Dickey--Fuller tests on the levels fail to reject a unit root for all four series:
 Portuguese diesel $p=0.124$, Spanish diesel $p=0.242$, Portuguese gasoline $p=0.119$, Spanish
 gasoline $p=0.113$. A regression in levels is therefore at risk of being spurious for both
-products, and the model family is selected accordingly (\texttt{price\_model\_choice.csv}).
+products, and the model family is selected accordingly.
 
 For diesel the pair is \emph{not} cointegrated (Engle--Granger $p=0.240$), so the short-run
 log-difference model carries the inference. For gasoline the pair \emph{is} cointegrated
 ($p=0.000026$), so an error-correction model is indicated and estimated.
 
 \subsection{The levels model, and why it is not used}
+\label{sec:levels}
 
-The levels regression was estimated and is retained in \texttt{price\_comovement\_models.csv}
-with \texttt{levels\_model\_valid} set to false for both products. It is reported here because
+The levels regression was estimated and is retained in the results archive, flagged as
+not valid for inference for both products. It is reported here because
 discarding it silently would hide how much specification choice matters, not because it supports
 any claim.
 
@@ -632,8 +624,7 @@ is expected to produce. No conclusion in this paper rests on it.
 
 \begin{table}[htbp]
 \centering
-\caption{Short-run pass-through, $\Delta \log$ pre-tax price, HAC(8), $n=1{,}077$ weeks.
-Source: \texttt{price\_short\_run\_models.csv}.}
+\caption{Short-run pass-through, $\Delta \log$ pre-tax price, HAC(8), $n=1{,}077$ weeks.}
 \label{tab:price}
 \begin{tabular}{llrrr}
 \toprule
@@ -664,8 +655,7 @@ about eight weeks to a little over two.
 
 \begin{table}[htbp]
 \centering
-\caption{Gasoline error-correction model, two-step Engle--Granger, HAC(8), $n=1{,}077$ weeks.
-Source: \texttt{price\_ecm\_models.csv}.}
+\caption{Gasoline error-correction model, two-step Engle--Granger, HAC(8), $n=1{,}077$ weeks.}
 \label{tab:ecm}
 \begin{tabular}{lrrr}
 \toprule
@@ -690,6 +680,7 @@ conditional on the first-stage cointegrating estimate. HAC covariance mitigates 
 remove this.
 
 \subsection{Price spreads}
+\label{sec:spreads}
 
 \begin{figure}[htbp]
 \centering
@@ -702,10 +693,9 @@ gasoline (right).}
 \end{figure}
 
 The mean Portugal-minus-Spain pre-tax diesel spread moves from $+4.12$ to $-26.66$ EUR per
-1000~litres across the transition, a change of $-30.78$; the gasoline spread moves by $-18.80$
-(\texttt{pt\_es\_price\_spread\_summary.csv}). These are descriptive.
+1000~litres across the transition, a change of $-30.78$; the gasoline spread moves by $-18.80$. These are descriptive.
 
-Neither spread is stationary (\texttt{pt\_es\_spread\_stationarity.csv}): diesel ADF $p=0.605$,
+Neither spread is stationary: diesel ADF $p=0.605$,
 gasoline $p=0.066$, both on $1{,}078$ observations. Neither can therefore be treated as
 mean-reverting around a stable equilibrium, and spread levels must not be read as a
 disequilibrium measure.
@@ -720,9 +710,7 @@ shock can explain. Table~\ref{tab:spain} shows that it explains very little.
 
 \begin{table}[htbp]
 \centering
-\caption{Diesel balance ratios, Portugal against Spain.
-Source: \texttt{pt\_es\_physical\_balance\_comparison.csv}, derived from
-\texttt{eurostat\_physical\_balance\_panel.csv}.}
+\caption{Diesel balance ratios, Portugal against Spain.}
 \label{tab:spain}
 \begin{tabular}{rrrrrrr}
 \toprule
@@ -754,6 +742,7 @@ VGO disruption remain live alternatives, and the VGO disruption in particular wa
 Spain in the same degree.
 
 \subsection{Balance residuals}
+\label{sec:residuals}
 
 The Eurostat panel permits an internal consistency check absent from JODI. Defining the residual
 as $Q^{\text{refinery}} + M - X - D$, Spanish gasoline residuals run at 6--15 per cent of demand,
@@ -764,15 +753,13 @@ in this paper is derived from a residual.
 \section{Robustness}
 
 \subsection{Event windows}
+\label{sec:windows}
 
-The pre/post comparisons in \texttt{dependence\_pre\_post\_summary.csv} use five pre-event and
-three post-event years. Repeating them over three window pairs
-(\texttt{event\_window\_sensitivity.csv}) leaves every conclusion unchanged.
+The pre/post comparisons use five pre-event and three post-event years. Repeating them over three window pairs leaves every conclusion unchanged.
 
 \begin{table}[htbp]
 \centering
-\caption{Pre/post difference around 2021 by window, 2021 excluded.
-Source: \texttt{event\_window\_sensitivity.csv}.}
+\caption{Pre/post difference around 2021 by window, 2021 excluded.}
 \label{tab:windows}
 \begin{tabular}{llrrr}
 \toprule
@@ -869,41 +856,41 @@ fuel prices now track Spanish prices considerably more closely than before.
 \small
 \begin{longtable}{L{4.1cm}L{3.5cm}L{2.2cm}L{4.4cm}}
 \toprule
-\textbf{Claim} & \textbf{Evidence file} & \textbf{Level} & \textbf{Remaining caveat} \\
+\textbf{Claim} & \textbf{Where shown} & \textbf{Level} & \textbf{Remaining caveat} \\
 \midrule
 \endhead
-Sines hydrocracker entered commercial production in 2013 & \texttt{refinery\_events.csv} & documented event & Corporate disclosure, not outcome data \\
-Matosinhos refining ceased May 2021 & \texttt{refinery\_events.csv} & documented event & Announcement date differs from closure date \\
-2022 Russian product and VGO disruption & \texttt{refinery\_events.csv} & documented event & Establishes timing, not magnitude \\
-Diesel demand averaged 5{,}064 kt, output 4{,}745 kt & \texttt{descriptive\_metrics.csv} & descriptive & Window means, not a model \\
-Portugal was a net diesel exporter 2013--2020 & \texttt{fuel\_annual\_analytical\_panel.csv} & descriptive & Ratio is not self-sufficiency \\
-Gasoline is a net export product in every year & \texttt{fuel\_annual\_analytical\_panel.csv} & descriptive & Same caveat \\
-Balance at each event year & \texttt{headline\_event\_years.csv} & descriptive & 2021 marked transition \\
-Refining regime by year & \texttt{refining\_regime\_annual.csv} & documented & Regime label, not capacity \\
-Diesel net-import ratio breaks at 2013 & \texttt{structural\_break\_tests.csv} & structural break & Diagnostic, not a causal estimator \\
-No Chow break detected at 2022 & \texttt{structural\_break\_tests.csv} & structural break & Three post-event years; low power \\
-Interrupted trends do detect 2022 & \texttt{annual\_interrupted\_trend\_models.csv} & association & Imposes a common trend \\
-Monthly phase means shift after May 2021 & \texttt{monthly\_event\_phase\_summary.csv} & descriptive & No seasonality control \\
-Refinery output falls 105 kt/month at the closure boundary & \texttt{monthly\_event\_models.csv} & association & Quote with its phase-trend term \\
-2022 stress adds a further $-152$ kt/month & \texttt{monthly\_event\_models.csv} & association & Confounded with demand recovery \\
-Monthly panel spans 293 modelled months & \texttt{fuel\_monthly\_analytical\_panel.csv} & descriptive & Panel extends beyond the window \\
-2022 diesel exports at the 0th baseline percentile & \texttt{stress\_2022\_metrics.csv} & descriptive & Baseline windows chosen ex ante \\
-All four price levels are non-stationary & \texttt{price\_stationarity\_diagnostics.csv} & descriptive & ADF only; no break-robust unit-root test \\
-Diesel not cointegrated, gasoline cointegrated & \texttt{price\_model\_choice.csv} & descriptive & Engle--Granger, single specification \\
-Levels model gives the opposite sign and is not used & \texttt{price\_comovement\_models.csv} & --- & Retained as a specification warning only \\
-Diesel pass-through rises 0.73 to 1.01 & \texttt{price\_short\_run\_models.csv} & association & Retail, not wholesale, prices \\
-Gasoline short-run pass-through unchanged & \texttt{price\_short\_run\_models.csv} & association & Not the whole picture; see the ECM \\
-Gasoline adjustment speed triples & \texttt{price\_ecm\_models.csv} & association & Generated-regressor standard errors \\
-PT--ES diesel spread moves $-30.8$ EUR/1000L & \texttt{pt\_es\_price\_spread\_summary.csv} & descriptive & Spread is non-stationary \\
-Neither spread is mean-reverting & \texttt{pt\_es\_spread\_stationarity.csv} & descriptive & Gasoline marginal at $p=0.066$ \\
-Spanish diesel balance is flat while Portugal's falls & \texttt{pt\_es\_physical\_balance\_comparison.csv} & descriptive & Constrains, does not exclude, common shocks \\
-Eurostat balance residuals are not closed & \texttt{eurostat\_physical\_balance\_panel.csv} & descriptive & Stock changes not modelled \\
-Pre/post differences hold across three windows & \texttt{event\_window\_sensitivity.csv} & descriptive & Magnitudes vary with baseline length \\
-Headline pre/post dependence change & \texttt{dependence\_pre\_post\_summary.csv} & descriptive & Not an effect estimate \\
-JODI coverage is complete for every year & \texttt{jodi\_trade\_annual\_completeness.csv} and companions & descriptive & Assessment-code semantics unverified \\
-Sources agree on 89\% of full-window trade cells & \texttt{jodi\_dgeg\_trade\_reconciliation.csv} & descriptive & Eurostat is DGEG-derived \\
-Sources and retrieval points are frozen & \texttt{source\_manifest\_snapshot.csv} & documented & Snapshot of one vintage \\
-Hypotheses were pre-specified & \texttt{research\_design.csv} & documented & Recorded before estimation \\
+Sines hydrocracker entered commercial production in 2013 & Section~\ref{sec:intro} & documented event & Corporate disclosure, not outcome data \\
+Matosinhos refining ceased May 2021 & Section~\ref{sec:intro} & documented event & Announcement date differs from closure date \\
+2022 Russian product and VGO disruption & Section~\ref{sec:intro} & documented event & Establishes timing, not magnitude \\
+Diesel demand averaged 5{,}064 kt, output 4{,}745 kt & Section~\ref{sec:summary} & descriptive & Window means, not a model \\
+Portugal was a net diesel exporter 2013--2020 & Tables~\ref{tab:diesel}, \ref{tab:gasoline} & descriptive & Ratio is not self-sufficiency \\
+Gasoline is a net export product in every year & Tables~\ref{tab:diesel}, \ref{tab:gasoline} & descriptive & Same caveat \\
+Balance at each event year & Table~\ref{tab:headline} & descriptive & 2021 marked transition \\
+Refining regime by year & Table~\ref{tab:headline} & documented & Regime label, not capacity \\
+Diesel net-import ratio breaks at 2013 & Table~\ref{tab:breaks} & structural break & Diagnostic, not a causal estimator \\
+No Chow break detected at 2022 & Table~\ref{tab:breaks} & structural break & Three post-event years; low power \\
+Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes a common trend \\
+Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
+Refinery output falls 105 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
+2022 stress adds a further $-152$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
+Monthly panel spans 293 modelled months & Section~\ref{sec:coverage} & descriptive & Panel extends beyond the window \\
+2022 diesel exports at the 0th baseline percentile & Section~\ref{sec:stress} & descriptive & Baseline windows chosen ex ante \\
+All four price levels are non-stationary & Section~\ref{sec:pricediag} & descriptive & ADF only; no break-robust unit-root test \\
+Diesel not cointegrated, gasoline cointegrated & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification \\
+Levels model gives the opposite sign and is not used & Section~\ref{sec:levels} & --- & Retained as a specification warning only \\
+Diesel pass-through rises 0.73 to 1.01 & Table~\ref{tab:price} & association & Retail, not wholesale, prices \\
+Gasoline short-run pass-through unchanged & Table~\ref{tab:price} & association & Not the whole picture; see the ECM \\
+Gasoline adjustment speed triples & Table~\ref{tab:ecm} & association & Generated-regressor standard errors \\
+PT--ES diesel spread moves $-30.8$ EUR/1000L & Section~\ref{sec:spreads} & descriptive & Spread is non-stationary \\
+Neither spread is mean-reverting & Section~\ref{sec:spreads} & descriptive & Gasoline marginal at $p=0.066$ \\
+Spanish diesel balance is flat while Portugal's falls & Table~\ref{tab:spain} & descriptive & Constrains, does not exclude, common shocks \\
+Eurostat balance residuals are not closed & Section~\ref{sec:residuals} & descriptive & Stock changes not modelled \\
+Pre/post differences hold across three windows & Table~\ref{tab:windows} & descriptive & Magnitudes vary with baseline length \\
+Headline pre/post dependence change & Section~\ref{sec:windows} & descriptive & Not an effect estimate \\
+JODI coverage is complete for every year & Table~\ref{tab:coverage} & descriptive & Assessment-code semantics unverified \\
+Sources agree on 89\% of full-window trade cells & Section~\ref{sec:recon} & descriptive & Eurostat is DGEG-derived \\
+Sources and retrieval points are frozen & Section~\ref{sec:sources} & documented & Snapshot of one vintage \\
+Hypotheses were pre-specified & Section~\ref{sec:intro} & documented & Recorded before estimation \\
 No causal effect of the closure is claimed & --- & --- & 2022 is not separable by this design \\
 \bottomrule
 \end{longtable}
@@ -943,28 +930,27 @@ Sines}, 21 December 2020.
 
 \item Galp Energia. \emph{Investor announcement on Russian oil-product purchases}, 2 March 2022.
 \url{https://www.galp.com/corp/pt/investidores/publicacoes-e-comunicados/comunicados-investidor/comunicado/id/1322}.
+
+\item Ribeiro, D. \emph{Portugal Refining Resilience: analysis code, derived data and
+provenance documentation.}
+\url{https://github.com/DiogoRibeiro7/portugal-refining-resilience}.
 \end{enumerate}
 
-\section*{Appendix A. Evidence Bundle and Reproducibility}
-\addcontentsline{toc}{section}{Appendix A. Evidence Bundle and Reproducibility}
+\section*{Appendix A. Data and Code Availability}
+\addcontentsline{toc}{section}{Appendix A. Data and Code Availability}
 
-Every number in this paper comes from the checksum-protected bundle at
-\texttt{artifacts/report\_inputs/}, whose manifest records a SHA-256 for each file and accounts
-for every file in the directory: anything present but unmanifested is removed when the bundle is
-rebuilt. The bundle holds 26 machine-readable tables and 12 figures, and all 26 tables are cited
-in this paper.
+All data underlying this paper are public and are listed in the References. The analysis
+code, the derived tables behind every figure and table above, and a document recording the
+provenance of each one are available in the project repository, reference~[9].
 
-Readiness is enforced programmatically rather than by inspection. The eight checks in
-\texttt{data/metrics/report\_readiness.csv} verify bundle completeness, that trade is not
-seed-only, JODI annual completeness, monthly panel and monthly model validity, Eurostat
-availability, price-diagnostic completeness including the recorded model-family verdict, and
-source reconciliation. All eight pass for this paper. The reconciliation check additionally
-requires every out-of-tolerance cell to be named with a reason, so a future data vintage cannot
-widen the gap between sources silently.
-
-The pipeline is reproducible from the four public sources with \texttt{make notebooks}, which
-executes notebooks 00--20 in order. Raw downloads are excluded from version control; the
-transformed panels, metrics, figures and the report bundle are committed as the reviewable
-surface.
+Derived results are archived with a checksum manifest that accounts for every file in the
+archive, so the tables and figures reproduced here can be verified against the exact inputs
+used to produce them. Eight automated readiness checks are applied before any figure is
+reported: they verify archive completeness, annual coverage of the monthly source, validity
+of the monthly panel and its models, availability of the cross-country balance, completeness
+of the price diagnostics including the recorded model-family verdict, and source
+reconciliation. The reconciliation check additionally requires every out-of-tolerance cell to
+be named with a reason, so a later data vintage cannot widen the gap between sources
+silently. All eight pass for this paper.
 
 \end{document}
