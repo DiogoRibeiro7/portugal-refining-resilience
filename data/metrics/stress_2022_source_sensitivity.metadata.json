@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T14:58:41.155497+00:00",
+  "created_at_utc": "2026-08-19T23:12:38.431534+00:00",
   "rows": 16,
   "columns": [
     "year",
@@ -15,7 +15,7 @@
     "baseline_end"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_source_sensitivity.csv",
-  "csv_sha256": "7898d6c7901770543afed120427f2bc5f5e521155e4ba9730770778c387ac689",
+  "csv_sha256": "a0a48de727ddab75b36cfc4fd1a82ef147458794c8d7222ebdbb7cc6088d7c97",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_source_sensitivity.parquet",
   "parquet_error": null,
   "metadata": {}

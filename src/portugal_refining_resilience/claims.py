@@ -100,30 +100,37 @@ def parse_latex_tables(tex: str) -> dict[str, list[str]]:
     return tables
 
 
-def table_numbers(rows: list[str]) -> list[float]:
-    """Extract every number a reader would see in the given table rows."""
-    values: list[float] = []
+def printed_numbers(rows: list[str]) -> list[tuple[float, int]]:
+    """Extract each number with the number of decimals it was printed to.
+
+    The printed precision has to come from the text, not from the parsed float: a
+    table showing ``622`` is asserting agreement to the nearest unit, whereas Python
+    renders that same value as ``622.0`` and would imply a claim ten times tighter.
+    """
+    found: list[tuple[float, int]] = []
     for row in rows:
         for cell in _strip_latex(row).split("&"):
             for token in _NUMBER.findall(cell.replace(",", "")):
                 try:
-                    values.append(float(token))
+                    value = float(token)
                 except ValueError:  # pragma: no cover - regex guarantees a number
                     continue
-    return values
+                decimals = len(token.split(".")[1]) if "." in token else 0
+                found.append((value, decimals))
+    return found
 
 
-def _reproducible(value: float, frames: list[pd.DataFrame]) -> bool:
+def table_numbers(rows: list[str]) -> list[float]:
+    """Extract every number a reader would see in the given table rows."""
+    return [value for value, _ in printed_numbers(rows)]
+
+
+def _reproducible(value: float, decimals: int, frames: list[pd.DataFrame]) -> bool:
     """Is ``value`` a rounded form of something in one of the source frames?
 
-    The report rounds, so a match means some source value agrees to the precision the
-    report chose to print. Small integers are treated as labels rather than data,
-    because years, counts and column headings are not claims about magnitudes.
+    ``decimals`` is the precision the report printed, which sets how close a source
+    value has to be. A table showing 622 asserts agreement to the nearest unit.
     """
-    decimals = 0
-    text = f"{value}"
-    if "." in text:
-        decimals = len(text.split(".")[1])
     # A printed number matches when some source value lies within half a unit of the
     # last printed digit. Comparing re-rounded values instead would make matching
     # depend on tie-breaking, so 122.75 printed as 122.8 would fail.
@@ -156,14 +163,14 @@ def verify_table_values(
     anything about it.
     """
     unmatched: list[float] = []
-    for value in table_numbers(rows):
+    for value, decimals in printed_numbers(rows):
         if 1900.0 <= value <= 2100.0 and float(value).is_integer():
             continue
         if abs(value) < 1e-9:
             continue
         if ignore_above is not None and abs(value) > ignore_above:
             continue
-        if not _reproducible(value, frames):
+        if not _reproducible(value, decimals, frames):
             unmatched.append(value)
     _ = (label, ignore_below)
     return unmatched

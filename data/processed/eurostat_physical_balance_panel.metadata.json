@@ -1,6 +1,6 @@
 {
-  "created_at_utc": "2026-08-19T08:27:57.798320+00:00",
-  "rows": 84,
+  "created_at_utc": "2026-08-19T23:08:22.856179+00:00",
+  "rows": 144,
   "columns": [
     "year",
     "country",
@@ -18,7 +18,7 @@
     "balance_residual_to_demand_ratio"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\eurostat_physical_balance_panel.csv",
-  "csv_sha256": "da5066a89a9e92f90021e22b1577688d1ab5b8a510b131c623651c0593e43bf3",
+  "csv_sha256": "c6d5ba99d613ead17ad230b9f07c80abe8db4f9027c3707c05bc540e3425ece1",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\eurostat_physical_balance_panel.parquet",
   "parquet_error": null,
   "metadata": {}

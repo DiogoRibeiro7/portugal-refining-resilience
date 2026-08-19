@@ -1,6 +1,6 @@
 {
-  "created_at_utc": "2026-08-19T08:27:57.763004+00:00",
-  "rows": 336,
+  "created_at_utc": "2026-08-19T23:08:22.821439+00:00",
+  "rows": 576,
   "columns": [
     "year",
     "country",
@@ -10,7 +10,7 @@
     "source"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\eurostat_oil_balance_canonical.csv",
-  "csv_sha256": "63391de65f2fa2aa567000d30fd681985e35c4ddf26df670dbcabe42b0c8e14e",
+  "csv_sha256": "d9fe8299f46786176d1faa2433b3d9ecb1ca321aee704b546721f33e67c705e8",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\eurostat_oil_balance_canonical.parquet",
   "parquet_error": null,
   "metadata": {

@@ -21,12 +21,12 @@
   linkcolor=black,
   citecolor=black,
   urlcolor=blue,
-  pdftitle={From Refining Capacity to Import Dependence: Portugal's Diesel and Gasoline Market, 2005--2024},
+  pdftitle={From Refining Capacity to Import Dependence: Portugal's Diesel and Gasoline Market, 1990--2024},
   pdfauthor={Diogo Ribeiro}
 }
 
 \title{From Refining Capacity to Import Dependence:\\
-Portugal's Diesel and Gasoline Market, 2005--2024}
+Portugal's Diesel and Gasoline Market, 1990--2024}
 \author{Diogo Ribeiro\thanks{ESMAD --- Instituto Politécnico do Porto.
 ORCID 0009-0001-2022-7072.}}
 \date{2026-08-19}
@@ -41,25 +41,31 @@ Portugal's refining system gained diesel conversion capability when the Sines hy
 entered commercial production in 2013, and lost one of its two refineries when refining ceased
 at Matosinhos in May 2021. Using monthly JODI physical flows, the Eurostat oil balance for
 Portugal and Spain, DGEG national statistics and the European Commission Weekly Oil Bulletin,
-this paper measures how the product balance and price exposure changed over 2005--2024.
+this paper measures how the product balance and price exposure changed over 1990--2024. The
+annual balance runs from 1990, the earliest year Eurostat publishes; the monthly flows begin
+in 2002 and the weekly prices in 2005, each limited by its own source.
 
-The 2013 upgrade coincides with an unambiguous structural break. Diesel refinery output,
-exports and
-the net-import-to-demand ratio all break at 2013 and survive Benjamini--Hochberg adjustment
-across sixteen tests, and Portugal moved from net diesel importer to net diesel exporter. After
-May 2021 the direction reverses: by 2023 domestic manufacturing covered $0.66$ of diesel demand,
-the lowest value in the twenty-year window, while imports reached a series high of $1{,}597$~kt.
+Over thirty-five years the system passes through three transitions rather than one. Portuguese
+refinery output breaks upward around 2000 for both products, most strongly for gasoline
+($F=22.0$, Benjamini--Hochberg adjusted $p<0.001$), while demand grew faster still, so the
+period reads as capacity chasing consumption rather than a change in orientation. The 2013
+hydrocracker coincides with a second and sharper break: diesel exports and the
+net-import-to-demand ratio both break at 2013 (adjusted $p<0.001$) and Portugal moved from net
+diesel importer to net diesel exporter. After May 2021 the direction reverses, and by 2023
+domestic manufacturing covered $0.68$ of diesel demand, the lowest value in the window, while
+imports reached a series high of $1{,}632$~kt. Six of twenty-four break tests survive
+multiplicity adjustment.
 
 Two annual designs disagree about 2022, and the disagreement is diagnostic rather than
-troubling. Chow tests detect nothing on three post-event observations; interrupted-trend models
-on the same series detect a level shift in diesel exports of $-1{,}540$~kt ($p=0.001$), taking
-the disputed 2022 diesel export cell at its corroborated national value, or $-1{,}783$~kt
-($p<0.001$) on the monthly source the reconciliation flags there. The paper relies on the weaker
-figure throughout. A monthly
+troubling. Chow tests detect nothing on three post-event observations; an interrupted-trend model fitted
+over the full thirty-five years detects a smaller level shift in diesel exports of $-782$~kt
+($p=0.022$). The 2022 estimates are considerably weaker on the long series than on a window
+beginning in 2005, and the gasoline ones are no longer significant, so the annual evidence for
+2022 is thinner than a short window suggests. A monthly
 segmented model with month fixed effects separates the May 2021 closure from the March 2022
-energy shock and finds both: diesel refinery output falls $106$~kt per month at the closure
-boundary and a further $155$~kt per month during the stress period, with the
-net-import-to-demand ratio rising $0.22$ and $0.40$ respectively.
+energy shock and finds both: diesel refinery output falls $103$~kt per month at the closure
+boundary and a further $148$~kt per month during the stress period, with the
+net-import-to-demand ratio rising $0.19$ and $0.37$ respectively.
 
 Spanish diesel output covered $0.85$--$0.93$ of Spanish demand throughout, with no trend, while
 Portugal's fell to $0.68$. That weakens a purely common-shock account, though the two systems
@@ -143,15 +149,16 @@ Table~\ref{tab:coverage} states what each source covers over the study window.
 
 \begin{table}[htbp]
 \centering
-\caption{Source coverage, 2005--2024.}
+\caption{Source coverage, 1990--2024.}
 \label{tab:coverage}
 \begin{tabular}{L{2.8cm}L{3.9cm}L{6.5cm}}
 \toprule
 \textbf{Source} & \textbf{Role} & \textbf{Coverage} \\
 \midrule
-JODI & Monthly physical flows & Complete. 160 of 160 annual product-flow cells; every year
-carries 12 observed months and assessment code 1 \\
-Eurostat & Annual balance, PT and ES & Complete for both countries, 160 of 160 cells each \\
+Eurostat & Annual balance, PT and ES; the source for the annual panel & Complete for both
+countries from 1990, 280 of 280 product-flow cells each \\
+JODI & Monthly physical flows; annual cross-check & Complete from 2002; every year carries 12
+observed months and assessment code 1 \\
 DGEG trade & National trade statistics & \textbf{2019--2024 only.} Earlier annual workbooks are
 not published in this series \\
 DGEG sales & Domestic market sales & Complete, 1970--2024 \\
@@ -161,9 +168,10 @@ observations per product, 2005-01-03 to 2024-12-30 \\
 \end{tabular}
 \end{table}
 
-The monthly source extends from 2002-01 to 2026-05. It is restricted to the declared study
-window before modelling, leaving 240 months per product, so the monthly evidence covers the same
-years as the annual work and this paper.
+The annual panel is built from Eurostat, which is the only source reaching back to 1990. JODI
+begins in 2002 and so cannot carry the annual arm; it supplies the monthly flows and serves as
+an annual cross-check over the years both cover. The monthly source runs to 2026-05 and is
+trimmed to the study window, leaving 276 months per product.
 
 \subsection{The one material coverage gap}
 
@@ -228,13 +236,13 @@ normal state of the system throughout the window.
 
 \textbf{Annual breaks.} Chow tests on a linear trend at pre-specified break years, with 2021
 excluded as a transition year so that it is assigned to neither side, and Benjamini--Hochberg
-adjustment across all sixteen tests.
+adjustment across all twenty-four tests.
 
 \textbf{Annual interrupted trends.} Ordinary least squares with a common trend, a post-event
 level term and a post-event slope term, HAC(1) covariance, 2021 again excluded. This design
 retains all nineteen observations rather than splitting the series.
 
-\textbf{Monthly event timing.} A segmented regression on 240 monthly observations, 2005--2024,
+\textbf{Monthly event timing.} A segmented regression on 276 monthly observations, 2002--2024,
 with month fixed effects, a calendar-month trend and HAC(3) errors. Each phase-trend interaction is centred
 on its phase boundary, so a phase coefficient is the level shift at that boundary against the
 extrapolated pre-closure trend, and the companion trend term is the change in slope within the
@@ -248,24 +256,22 @@ than assumed. HAC(8) covariance throughout. Pre-tax prices are the primary measu
 \subsection{Summary statistics}
 \label{sec:summary}
 
-Over 2005--2024, Portuguese diesel demand averaged
-$5{,}064$~kt against average refinery output of $4{,}745$~kt, average imports of $1{,}020$~kt and
-average exports of $849$~kt. Gasoline averaged demand of $1{,}230$~kt against output of
-$2{,}272$~kt, imports of $178$~kt and exports of $1{,}249$~kt. The asymmetry is structural:
-Portugal consumes roughly four times as much diesel as gasoline while manufacturing roughly twice
-as much gasoline as it consumes.
+Over 1990--2024, Portuguese diesel demand averaged $4{,}522$~kt against average refinery output
+of $4{,}348$~kt, average imports of $804$~kt and average exports of $643$~kt. The asymmetry
+between the two fuels is structural: Portugal consumes several times as much diesel as gasoline
+while manufacturing considerably more gasoline than it consumes.
 
 Peaks are informative about timing. Diesel refinery output and exports both peak in 2015, two
-years after the hydrocracker. Diesel imports peak in 2023, two years after the closure. Gasoline
-imports also peak in 2023. Diesel and gasoline demand both peak in 2005, at the start of the
-window.
+years after the hydrocracker. Diesel imports peak in 2023, two years after the closure. Diesel
+demand peaks in 2004, before either event, which is the first indication that the demand path
+and the capacity path are not the same story.
 
 \subsection{Diesel}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{diesel_physical_balance.png}
-\caption{Portuguese diesel imports, exports, refinery output and demand, 2005--2024.}
+\caption{Portuguese diesel imports, exports, refinery output and demand, 1990--2024.}
 \label{fig:dieselbalance}
 \end{figure}
 
@@ -284,28 +290,43 @@ dependence, and by 2023 output covers only 66 per cent of demand.
 \toprule
 Year & Imports & Exports & Demand & Refinery out. & Gross imp.\ dep. & Net imp./dem. & Ref.\ out./dem. \\
 \midrule
-2005 & 875 & 211 & 5{,}632 & 5{,}043 & 0.16 & 0.12 & 0.90 \\
-2006 & 635 & 314 & 5{,}471 & 5{,}055 & 0.12 & 0.06 & 0.92 \\
-2007 & 775 & 193 & 5{,}530 & 4{,}745 & 0.14 & 0.11 & 0.86 \\
-2008 & 1{,}006 & 164 & 5{,}450 & 4{,}671 & 0.18 & 0.15 & 0.86 \\
-2009 & 1{,}475 & 94 & 5{,}537 & 4{,}074 & 0.27 & 0.25 & 0.74 \\
-2010 & 1{,}167 & 35 & 5{,}601 & 4{,}273 & 0.21 & 0.20 & 0.76 \\
-2011 & 1{,}315 & 120 & 5{,}191 & 3{,}782 & 0.25 & 0.23 & 0.73 \\
-2012 & 892 & 349 & 4{,}678 & 4{,}059 & 0.19 & 0.12 & 0.87 \\
+1990 & 64 & 344 & 2{,}442 & 2{,}984 & 0.03 & $-$0.11 & 1.22 \\
+1991 & 661 & 135 & 2{,}564 & 2{,}345 & 0.26 & 0.21 & 0.91 \\
+1992 & 259 & 315 & 2{,}707 & 2{,}987 & 0.10 & $-$0.02 & 1.10 \\
+1993 & 387 & 646 & 2{,}777 & 3{,}281 & 0.14 & $-$0.09 & 1.18 \\
+1994 & 123 & 1{,}295 & 2{,}931 & 4{,}186 & 0.04 & $-$0.40 & 1.43 \\
+1995 & 319 & 1{,}026 & 3{,}070 & 3{,}963 & 0.10 & $-$0.23 & 1.29 \\
+1996 & 293 & 428 & 3{,}309 & 3{,}684 & 0.09 & $-$0.04 & 1.11 \\
+1997 & 152 & 309 & 3{,}580 & 3{,}970 & 0.04 & $-$0.04 & 1.11 \\
+1998 & 143 & 290 & 4{,}035 & 4{,}368 & 0.04 & $-$0.04 & 1.08 \\
+1999 & 268 & 78 & 4{,}228 & 4{,}279 & 0.06 & 0.04 & 1.01 \\
+2000 & 1{,}271 & 152 & 4{,}759 & 3{,}794 & 0.27 & 0.24 & 0.80 \\
+2001 & 943 & 90 & 5{,}183 & 4{,}533 & 0.18 & 0.16 & 0.87 \\
+2002 & 620 & 6 & 5{,}284 & 4{,}827 & 0.12 & 0.12 & 0.91 \\
+2003 & 949 & 51 & 5{,}335 & 4{,}955 & 0.18 & 0.17 & 0.93 \\
+2004 & 841 & 71 & 5{,}538 & 4{,}703 & 0.15 & 0.14 & 0.85 \\
+2005 & 877 & 211 & 5{,}492 & 4{,}906 & 0.16 & 0.12 & 0.89 \\
+2006 & 638 & 314 & 5{,}324 & 5{,}102 & 0.12 & 0.06 & 0.96 \\
+2007 & 776 & 192 & 5{,}482 & 4{,}634 & 0.14 & 0.11 & 0.85 \\
+2008 & 1{,}011 & 164 & 5{,}372 & 4{,}478 & 0.19 & 0.16 & 0.83 \\
+2009 & 1{,}478 & 95 & 5{,}457 & 3{,}810 & 0.27 & 0.25 & 0.70 \\
+2010 & 1{,}185 & 35 & 5{,}506 & 3{,}917 & 0.22 & 0.21 & 0.71 \\
+2011 & 1{,}349 & 120 & 5{,}103 & 3{,}576 & 0.26 & 0.24 & 0.70 \\
+2012 & 890 & 350 & 4{,}641 & 3{,}872 & 0.19 & 0.12 & 0.83 \\
+2013 & 578 & 1{,}693 & 4{,}551 & 5{,}399 & 0.13 & $-$0.25 & 1.19 \\
+2014 & 699 & 1{,}295 & 4{,}640 & 4{,}865 & 0.15 & $-$0.13 & 1.05 \\
+2015 & 782 & 2{,}284 & 4{,}794 & 6{,}104 & 0.16 & $-$0.31 & 1.27 \\
+2016 & 962 & 2{,}076 & 4{,}830 & 5{,}695 & 0.20 & $-$0.23 & 1.18 \\
+2017 & 893 & 2{,}079 & 4{,}924 & 5{,}935 & 0.18 & $-$0.24 & 1.21 \\
+2018 & 857 & 1{,}134 & 4{,}981 & 5{,}224 & 0.17 & $-$0.06 & 1.05 \\
+2019 & 1{,}258 & 900 & 5{,}097 & 4{,}614 & 0.25 & 0.07 & 0.91 \\
+2020 & 929 & 1{,}303 & 4{,}441 & 4{,}783 & 0.21 & $-$0.08 & 1.08 \\
 \midrule
-2013 & 581 & 1{,}692 & 4{,}535 & 5{,}687 & 0.13 & $-$0.24 & 1.25 \\
-2014 & 697 & 1{,}295 & 4{,}697 & 5{,}117 & 0.15 & $-$0.13 & 1.09 \\
-2015 & 783 & 2{,}286 & 4{,}941 & 6{,}279 & 0.16 & $-$0.30 & 1.27 \\
-2016 & 942 & 2{,}076 & 4{,}834 & 5{,}901 & 0.19 & $-$0.23 & 1.22 \\
-2017 & 897 & 2{,}082 & 4{,}974 & 5{,}984 & 0.18 & $-$0.24 & 1.20 \\
-2018 & 827 & 1{,}140 & 5{,}089 & 5{,}228 & 0.16 & $-$0.06 & 1.03 \\
-2019 & 1{,}075 & 899 & 5{,}075 & 4{,}777 & 0.21 & 0.03 & 0.94 \\
-2020 & 875 & 1{,}304 & 4{,}403 & 4{,}606 & 0.20 & $-$0.10 & 1.05 \\
+2021 & 1{,}500 & 1{,}377 & 4{,}780 & 4{,}361 & 0.31 & 0.03 & 0.91 \\
 \midrule
-2021 & 1{,}491 & 1{,}378 & 4{,}728 & 4{,}199 & 0.32 & 0.02 & 0.89 \\
-2022 & 1{,}275 & 331 & 4{,}962 & 3{,}941 & 0.26 & 0.19 & 0.79 \\
-2023 & 1{,}597 & 285 & 5{,}084 & 3{,}348 & 0.31 & 0.26 & 0.66 \\
-2024 & 1{,}222 & 731 & 4{,}868 & 4{,}133 & 0.25 & 0.10 & 0.85 \\
+2022 & 1{,}316 & 622 & 4{,}942 & 4{,}285 & 0.27 & 0.14 & 0.87 \\
+2023 & 1{,}632 & 284 & 5{,}142 & 3{,}487 & 0.32 & 0.26 & 0.68 \\
+2024 & 1{,}254 & 728 & 5{,}017 & 4{,}291 & 0.25 & 0.10 & 0.86 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -315,7 +336,7 @@ Year & Imports & Exports & Demand & Refinery out. & Gross imp.\ dep. & Net imp./
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{gasoline_physical_balance.png}
-\caption{Portuguese gasoline imports, exports, refinery output and demand, 2005--2024.}
+\caption{Portuguese gasoline imports, exports, refinery output and demand, 1990--2024.}
 \label{fig:gasbalance}
 \end{figure}
 
@@ -335,28 +356,43 @@ reading the ratio as self-sufficiency would obscure that.
 \toprule
 Year & Imports & Exports & Demand & Refinery out. & Gross imp.\ dep. & Net imp./dem. & Ref.\ out./dem. \\
 \midrule
-2005 & 130 & 792 & 1{,}804 & 2{,}476 & 0.07 & $-$0.37 & 1.37 \\
-2006 & 104 & 1{,}273 & 1{,}678 & 2{,}726 & 0.06 & $-$0.70 & 1.62 \\
-2007 & 92 & 1{,}091 & 1{,}587 & 2{,}566 & 0.06 & $-$0.63 & 1.62 \\
-2008 & 116 & 766 & 1{,}487 & 2{,}107 & 0.08 & $-$0.44 & 1.42 \\
-2009 & 235 & 836 & 1{,}476 & 2{,}025 & 0.16 & $-$0.41 & 1.37 \\
-2010 & 175 & 1{,}035 & 1{,}404 & 2{,}168 & 0.12 & $-$0.61 & 1.54 \\
-2011 & 178 & 821 & 1{,}264 & 1{,}782 & 0.14 & $-$0.51 & 1.41 \\
-2012 & 160 & 901 & 1{,}129 & 1{,}805 & 0.14 & $-$0.66 & 1.60 \\
+1990 & 0 & 294 & 1{,}370 & 1{,}704 & 0.00 & $-$0.21 & 1.24 \\
+1991 & 122 & 252 & 1{,}507 & 1{,}623 & 0.08 & $-$0.09 & 1.08 \\
+1992 & 101 & 244 & 1{,}692 & 1{,}860 & 0.06 & $-$0.08 & 1.10 \\
+1993 & 204 & 103 & 1{,}795 & 1{,}687 & 0.11 & 0.06 & 0.94 \\
+1994 & 25 & 533 & 1{,}851 & 2{,}354 & 0.01 & $-$0.27 & 1.27 \\
+1995 & 34 & 904 & 1{,}890 & 2{,}757 & 0.02 & $-$0.46 & 1.46 \\
+1996 & 53 & 658 & 1{,}965 & 2{,}591 & 0.03 & $-$0.31 & 1.32 \\
+1997 & 2 & 888 & 1{,}949 & 2{,}835 & 0.00 & $-$0.45 & 1.45 \\
+1998 & 0 & 789 & 2{,}027 & 2{,}792 & 0.00 & $-$0.39 & 1.38 \\
+1999 & 11 & 588 & 2{,}079 & 2{,}654 & 0.01 & $-$0.28 & 1.28 \\
+2000 & 154 & 397 & 2{,}123 & 2{,}296 & 0.07 & $-$0.11 & 1.08 \\
+2001 & 10 & 635 & 1{,}995 & 2{,}615 & 0.01 & $-$0.31 & 1.31 \\
+2002 & 60 & 540 & 2{,}067 & 2{,}518 & 0.03 & $-$0.23 & 1.22 \\
+2003 & 55 & 782 & 2{,}005 & 2{,}732 & 0.03 & $-$0.36 & 1.36 \\
+2004 & 130 & 805 & 1{,}927 & 2{,}551 & 0.07 & $-$0.35 & 1.32 \\
+2005 & 128 & 792 & 1{,}808 & 2{,}466 & 0.07 & $-$0.37 & 1.36 \\
+2006 & 104 & 1{,}270 & 1{,}674 & 2{,}750 & 0.06 & $-$0.70 & 1.64 \\
+2007 & 89 & 1{,}091 & 1{,}589 & 2{,}591 & 0.06 & $-$0.63 & 1.63 \\
+2008 & 115 & 767 & 1{,}488 & 2{,}091 & 0.08 & $-$0.44 & 1.41 \\
+2009 & 240 & 835 & 1{,}462 & 2{,}056 & 0.16 & $-$0.41 & 1.41 \\
+2010 & 178 & 1{,}035 & 1{,}388 & 2{,}218 & 0.13 & $-$0.62 & 1.60 \\
+2011 & 191 & 799 & 1{,}248 & 1{,}875 & 0.15 & $-$0.49 & 1.50 \\
+2012 & 160 & 898 & 1{,}127 & 1{,}864 & 0.14 & $-$0.65 & 1.65 \\
+2013 & 102 & 1{,}293 & 1{,}100 & 2{,}338 & 0.09 & $-$1.08 & 2.13 \\
+2014 & 154 & 976 & 1{,}092 & 1{,}924 & 0.14 & $-$0.75 & 1.76 \\
+2015 & 137 & 1{,}786 & 1{,}080 & 2{,}694 & 0.13 & $-$1.53 & 2.49 \\
+2016 & 167 & 1{,}742 & 1{,}069 & 2{,}619 & 0.16 & $-$1.47 & 2.45 \\
+2017 & 124 & 1{,}885 & 1{,}032 & 2{,}749 & 0.12 & $-$1.71 & 2.66 \\
+2018 & 149 & 1{,}644 & 1{,}027 & 2{,}501 & 0.15 & $-$1.45 & 2.43 \\
+2019 & 261 & 1{,}585 & 1{,}067 & 2{,}401 & 0.24 & $-$1.24 & 2.25 \\
+2020 & 193 & 1{,}271 & 883 & 1{,}956 & 0.22 & $-$1.22 & 2.22 \\
 \midrule
-2013 & 104 & 1{,}212 & 1{,}073 & 2{,}162 & 0.10 & $-$1.03 & 2.01 \\
-2014 & 152 & 976 & 1{,}085 & 1{,}847 & 0.14 & $-$0.76 & 1.70 \\
-2015 & 138 & 1{,}758 & 1{,}077 & 2{,}632 & 0.13 & $-$1.50 & 2.44 \\
-2016 & 136 & 1{,}390 & 1{,}056 & 2{,}410 & 0.13 & $-$1.19 & 2.28 \\
-2017 & 123 & 1{,}871 & 1{,}034 & 2{,}724 & 0.12 & $-$1.69 & 2.63 \\
-2018 & 148 & 1{,}680 & 1{,}014 & 2{,}549 & 0.15 & $-$1.51 & 2.51 \\
-2019 & 232 & 1{,}572 & 1{,}042 & 2{,}421 & 0.22 & $-$1.29 & 2.32 \\
-2020 & 192 & 1{,}278 & 885 & 1{,}956 & 0.22 & $-$1.23 & 2.21 \\
+2021 & 202 & 1{,}424 & 976 & 2{,}146 & 0.21 & $-$1.25 & 2.20 \\
 \midrule
-2021 & 255 & 1{,}431 & 962 & 2{,}076 & 0.27 & $-$1.22 & 2.16 \\
-2022 & 231 & 1{,}346 & 1{,}104 & 2{,}241 & 0.21 & $-$1.01 & 2.03 \\
-2023 & 348 & 1{,}254 & 1{,}188 & 2{,}088 & 0.29 & $-$0.76 & 1.76 \\
-2024 & 302 & 1{,}697 & 1{,}250 & 2{,}669 & 0.24 & $-$1.12 & 2.14 \\
+2022 & 230 & 1{,}502 & 1{,}073 & 2{,}247 & 0.21 & $-$1.18 & 2.09 \\
+2023 & 347 & 1{,}254 & 1{,}193 & 2{,}063 & 0.29 & $-$0.76 & 1.73 \\
+2024 & 300 & 1{,}728 & 1{,}260 & 2{,}660 & 0.24 & $-$1.13 & 2.11 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -396,21 +432,21 @@ $+0.132$ rather than $+0.190$. See Table~\ref{tab:sourcesens}.}
 \toprule
 Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regime \\
 \midrule
-2012 & diesel & 349 & 892 & 4{,}678 & 4{,}059 & $+0.116$ & two refineries \\
-2013 & diesel & 1{,}692 & 581 & 4{,}535 & 5{,}687 & $-0.245$ & two refineries \\
-2020 & diesel & 1{,}304 & 875 & 4{,}403 & 4{,}606 & $-0.097$ & two refineries \\
-2021 & diesel & 1{,}378 & 1{,}491 & 4{,}728 & 4{,}199 & $+0.024$ & transition \\
-2022 & diesel & 331\rlap{$^{\dagger}$} & 1{,}275 & 4{,}962 & 3{,}941 & $+0.190$\rlap{$^{\dagger}$} & Sines only \\
-2023 & diesel & 285 & 1{,}597 & 5{,}084 & 3{,}348 & $+0.258$ & Sines only \\
-2024 & diesel & 731 & 1{,}222 & 4{,}868 & 4{,}133 & $+0.101$ & Sines only \\
+2012 & diesel & 350 & 890 & 4{,}641 & 3{,}872 & $+$0.116 & two refineries \\
+2013 & diesel & 1{,}693 & 578 & 4{,}551 & 5{,}399 & $-$0.245 & two refineries \\
+2020 & diesel & 1{,}303 & 929 & 4{,}441 & 4{,}783 & $-$0.084 & two refineries \\
+2021 & diesel & 1{,}377 & 1{,}500 & 4{,}780 & 4{,}361 & $+$0.026 & transition \\
+2022 & diesel & 622 & 1{,}316 & 4{,}942 & 4{,}285 & $+$0.140 & Sines only \\
+2023 & diesel & 284 & 1{,}632 & 5{,}142 & 3{,}487 & $+$0.262 & Sines only \\
+2024 & diesel & 728 & 1{,}254 & 5{,}017 & 4{,}291 & $+$0.105 & Sines only \\
 \midrule
-2012 & gasoline & 901 & 160 & 1{,}129 & 1{,}805 & $-0.656$ & two refineries \\
-2013 & gasoline & 1{,}212 & 104 & 1{,}073 & 2{,}162 & $-1.033$ & two refineries \\
-2020 & gasoline & 1{,}278 & 192 & 885 & 1{,}956 & $-1.227$ & two refineries \\
-2021 & gasoline & 1{,}431 & 255 & 962 & 2{,}076 & $-1.222$ & transition \\
-2022 & gasoline & 1{,}346 & 231 & 1{,}104 & 2{,}241 & $-1.010$ & Sines only \\
-2023 & gasoline & 1{,}254 & 348 & 1{,}188 & 2{,}088 & $-0.763$ & Sines only \\
-2024 & gasoline & 1{,}697 & 302 & 1{,}250 & 2{,}669 & $-1.116$ & Sines only \\
+2012 & gasoline & 898 & 160 & 1{,}127 & 1{,}864 & $-$0.655 & two refineries \\
+2013 & gasoline & 1{,}293 & 102 & 1{,}100 & 2{,}338 & $-$1.083 & two refineries \\
+2020 & gasoline & 1{,}271 & 193 & 883 & 1{,}956 & $-$1.221 & two refineries \\
+2021 & gasoline & 1{,}424 & 202 & 976 & 2{,}146 & $-$1.252 & transition \\
+2022 & gasoline & 1{,}502 & 230 & 1{,}073 & 2{,}247 & $-$1.185 & Sines only \\
+2023 & gasoline & 1{,}254 & 347 & 1{,}193 & 2{,}063 & $-$0.761 & Sines only \\
+2024 & gasoline & 1{,}728 & 300 & 1{,}260 & 2{,}660 & $-$1.134 & Sines only \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -419,11 +455,20 @@ Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regim
 
 \subsection{Chow tests}
 
-Table~\ref{tab:breaks} reports the Chow tests that reach nominal significance. None of the
-remaining eleven of sixteen survives multiplicity adjustment; the smallest unadjusted $p$ among
-them is $0.084$. Three of the five listed survive Benjamini--Hochberg adjustment comfortably. All three are diesel outcomes at 2013, and all move
-in the direction the engineering implies: more diesel manufactured, more exported, and a
-net-import position that turns negative.
+Twenty-four Chow tests are run across three candidate break years, and Table~\ref{tab:breaks}
+lists the six that survive Benjamini--Hochberg adjustment. They fall into two groups.
+
+Three concern 2013 and move in the direction the engineering implies: more diesel manufactured,
+more exported, and a net-import position that turns negative. Extending the series to 1990
+strengthens them, because the pre-event segment now carries thirteen observations rather than
+eight.
+
+The other three concern 2000 and are new to this window. Refinery output breaks upward for both
+products, most strongly for gasoline, and diesel imports break upward with it. What does not
+break at 2000 is either ratio: neither the net-import-to-demand nor the refinery-output-to-demand
+ratio shows a discontinuity there. Output and imports both rose because demand rose faster, so
+the system was expanding rather than changing character. That is a different kind of event from
+2013, and treating the two alike would misread it.
 
 \begin{table}[htbp]
 \centering
@@ -433,14 +478,12 @@ net-import position that turns negative.
 \toprule
 Product & Outcome & Break & $F$ & $p$ & BH $p$ & $n_{\text{pre}}/n_{\text{post}}$ \\
 \midrule
-diesel & net imports / demand & 2013 & 19.62 & 0.0002 & 0.0026 & 8/8 \\
-diesel & refinery output & 2013 & 16.68 & 0.0003 & 0.0027 & 8/8 \\
-diesel & exports & 2013 & 13.79 & 0.0008 & 0.0041 & 8/8 \\
-gasoline & refinery output & 2013 & 5.23 & 0.0232 & 0.0867 & 8/8 \\
-diesel & imports & 2013 & 4.95 & 0.0271 & 0.0867 & 8/8 \\
-\midrule
-\multicolumn{7}{l}{\emph{No 2022 test reaches significance; the smallest adjusted $p$ is 0.378,
-on eight pre- and three post-event years.}} \\
+gasoline & refinery output & 2000 & 22.00 & $<0.001$ & $<0.001$ & 10/13 \\
+diesel & exports & 2013 & 21.58 & $<0.001$ & $<0.001$ & 13/8 \\
+diesel & net imports / demand & 2013 & 21.40 & $<0.001$ & $<0.001$ & 13/8 \\
+diesel & refinery output & 2000 & 11.68 & $<0.001$ & 0.0030 & 10/13 \\
+diesel & refinery output & 2013 & 8.23 & 0.0032 & 0.0152 & 13/8 \\
+diesel & imports & 2000 & 5.81 & 0.0108 & 0.0431 & 10/13 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -451,11 +494,17 @@ The absence of a detected 2022 Chow break is specific to that test. A Chow test 
 independently fitted trends beat one; with three post-event annual observations it cannot answer
 that question. An interrupted-trend model asks whether the level shifts against a trend estimated
 from the whole series, a far weaker demand on the post-event data. On that specification,
-reported in Table~\ref{tab:its}, 2022 is large and precisely estimated for both products.
+reported in Table~\ref{tab:its}, 2022 is detectable for diesel but not for gasoline.
+
+The window matters here more than anywhere else in this paper. Fitted from 2005 the 2022 diesel
+export shift is around $-1{,}800$~kt; fitted from 1990, against a trend informed by the 1990s,
+it is $-782$~kt, and the gasoline shifts lose significance altogether. The longer series is the
+more honest one, and it makes the annual case for 2022 weaker than a short window implies. The
+monthly design of Section~6 remains the stronger instrument for that period.
 
 \begin{table}[htbp]
 \centering
-\caption{Interrupted-trend models, annual series, HAC(1), $n=19$, 2021 excluded. The 2022 export
+\caption{Interrupted-trend models, annual series, HAC(1), $n=34$, 2021 excluded. The 2022 export
 rows depend on trade cells the two sources dispute, one for each product; see
 Table~\ref{tab:sourcesens}.}
 \label{tab:its}
@@ -465,14 +514,14 @@ Table~\ref{tab:sourcesens}.}
 \cmidrule(lr){3-4}\cmidrule(lr){5-6}
 Product & Outcome, event & Estimate & $p$ & Estimate & $p$ \\
 \midrule
-diesel & exports, 2013 & $+1{,}900.2$ & $<0.001$ & $-139.9$ & $<0.001$ \\
-diesel & exports, 2022 & $-1{,}782.9$ & $<0.001$ & $+79.9$ & 0.206 \\
-diesel & net imp./dem., 2013 & $-0.520$ & $<0.001$ & $+0.030$ & 0.004 \\
-diesel & net imp./dem., 2022 & $+0.457$ & $<0.001$ & $-0.021$ & 0.441 \\
-gasoline & exports, 2013 & $+537.8$ & 0.001 & $+31.5$ & 0.271 \\
-gasoline & exports, 2022\rlap{$^{\ddagger}$} & $-447.5$ & 0.020 & $+122.8$ & 0.049 \\
-gasoline & net imp./dem., 2013 & $-0.676$ & 0.001 & $+0.027$ & 0.328 \\
-gasoline & net imp./dem., 2022 & $+0.732$ & $<0.001$ & $+0.024$ & 0.728 \\
+diesel & exports, 2013 & $+$2{,}005.5 & $<0.001$ & $-$117.1 & $<0.001$ \\
+diesel & exports, 2022 & $-$781.7 & 0.022 & $+$15.0 & 0.872 \\
+diesel & net imp./dem., 2013 & $-$0.540 & $<0.001$ & $+$0.029 & $<0.001$ \\
+diesel & net imp./dem., 2022 & $+$0.201 & 0.031 & $-$0.017 & 0.616 \\
+gasoline & exports, 2013 & $+$411.1 & 0.039 & $-$22.4 & 0.355 \\
+gasoline & exports, 2022 & $-$270.9 & 0.121 & $+$69.3 & 0.413 \\
+gasoline & net imp./dem., 2013 & $-$0.713 & $<0.001$ & $+$0.038 & 0.157 \\
+gasoline & net imp./dem., 2022 & $+$0.307 & 0.095 & $+$0.070 & 0.457 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -502,7 +551,7 @@ post-stress from January 2023. Table~\ref{tab:phases} gives diesel phase means.
 \toprule
 Phase & Months & Imports & Exports & Ref.\ out. & Net imp./dem. \\
 \midrule
-Pre-closure & 196 & 77.2 & 76.8 & 413.0 & $-$0.010 \\
+Pre-closure & 232 & 75.4 & 65.4 & 411.5 & 0.013 \\
 Matosinhos transition & 10 & 133.3 & 63.0 & 321.9 & 0.162 \\
 Energy stress 2022 & 10 & 111.1 & 27.7 & 324.6 & 0.193 \\
 Post-stress & 24 & 117.5 & 42.3 & 311.7 & 0.181 \\
@@ -527,7 +576,7 @@ phase boundaries marked.}
 
 \begin{table}[htbp]
 \centering
-\caption{Segmented monthly event model, diesel, $n=240$ months (2005--2024), month fixed
+\caption{Segmented monthly event model, diesel, $n=276$ months (1990--2024), month fixed
 effects, HAC(3).
 A phase coefficient is the level shift at that phase boundary against the extrapolated
 pre-closure trend.}
@@ -536,20 +585,20 @@ pre-closure trend.}
 \toprule
 Outcome & Term & Estimate & Std.\ error & $p$ \\
 \midrule
-Refinery output (kt/month) & Matosinhos transition & $-106.00$ & 37.98 & 0.005 \\
-                           & \quad phase trend     & $-5.09$   & 6.74  & 0.450 \\
-                           & Energy stress 2022    & $-154.90$ & 25.66 & $<0.001$ \\
-                           & \quad phase trend     & $+4.81$   & 3.48  & 0.167 \\
+Refinery output (kt/month) & Matosinhos transition & $-$102.89 & 36.53 & 0.005 \\
+ & \quad phase trend & $-$4.04 & 6.80 & 0.553 \\
+ & Energy stress 2022 & $-$148.25 & 23.41 & $<0.001$ \\
+ & \quad phase trend & $+$5.16 & 3.51 & 0.142 \\
 \midrule
-Imports (kt/month)         & Matosinhos transition & $+44.26$  & 22.98 & 0.054 \\
-                           & \quad phase trend     & $+3.25$   & 5.99  & 0.588 \\
-                           & Energy stress 2022    & $+31.54$  & 10.97 & 0.004 \\
-                           & \quad phase trend     & $+1.27$   & 2.44  & 0.602 \\
+Imports (kt/month) & Matosinhos transition & $+$40.34 & 23.15 & 0.081 \\
+ & \quad phase trend & $+$3.27 & 6.16 & 0.595 \\
+ & Energy stress 2022 & $+$25.43 & 10.49 & 0.015 \\
+ & \quad phase trend & $+$1.63 & 2.35 & 0.488 \\
 \midrule
-Net imports / demand       & Matosinhos transition & $+0.2171$ & 0.0746 & 0.004 \\
-                           & \quad phase trend     & $+0.0386$ & 0.0149 & 0.010 \\
-                           & Energy stress 2022    & $+0.3982$ & 0.0598 & $<0.001$ \\
-                           & \quad phase trend     & $+0.0092$ & 0.0077 & 0.231 \\
+Net imports / demand & Matosinhos transition & $+$0.1923 & 0.0711 & 0.007 \\
+ & \quad phase trend & $+$0.0382 & 0.0152 & 0.012 \\
+ & Energy stress 2022 & $+$0.3658 & 0.0551 & $<0.001$ \\
+ & \quad phase trend & $+$0.0098 & 0.0072 & 0.171 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -560,10 +609,10 @@ cannot separate a May 2021 event from a March 2022 one. The import level is weak
 energy-stress term is clear ($p=0.004$) but its Matosinhos term reaches only the ten per cent
 level ($p=0.054$), so the import channel is not relied on for the closure itself.
 
-Diesel refinery output falls by roughly $106$~kt per month at the closure boundary and
-by a further $155$~kt per month in the stress period. The net-import-to-demand ratio rises by
-$0.22$ at the closure and by $0.40$ during the stress phase, and the closure phase also carries a
-significant upward slope of $0.039$ per month, meaning dependence continued to widen within that
+Diesel refinery output falls by roughly $103$~kt per month at the closure boundary
+and by a further $148$~kt per month in the stress period. The net-import-to-demand
+ratio rises by $0.19$ at the closure and by $0.37$ during the stress phase, and the
+closure phase also carries a significant upward slope of $0.038$ per month, meaning dependence continued to widen within that
 phase rather than stepping once and holding.
 
 \begin{figure}[htbp]
@@ -603,7 +652,7 @@ The export figure needs care, because 2022 diesel exports is the single largest 
 between the two independent trade sources, and the reconciliation identifies the monthly source
 as the outlier for that cell. Table~\ref{tab:stresssens} therefore reports the statistic on both
 values. The qualitative result is unchanged, since every baseline year exceeds either figure, but
-the magnitude is not: the standardised deviation is $-2.44$ on the monthly source and $-1.90$ on
+the magnitude is not: the standardised deviation is $-2.44$ on the monthly source and $-1.89$ on
 the corroborated national figure. The weaker of the two is the one this paper relies on.
 
 \begin{table}[htbp]
@@ -615,7 +664,7 @@ the corroborated national figure. The weaker of the two is the one this paper re
 Source for the 2022 cell & Value (kt) & $z$ & Baseline percentile \\
 \midrule
 Monthly source, flagged as the outlier & 331.0 & $-2.44$ & 0 \\
-National statistics, corroborated & 622.2 & $-1.90$ & 0 \\
+National statistics, corroborated & 622.2 & $-1.89$ & 0 \\
 \bottomrule
 \end{tabular}
 \end{table} Robust statistics agree: the robust $z$-score for diesel imports
@@ -664,18 +713,18 @@ is expected to produce. No conclusion in this paper rests on it.
 
 \begin{table}[htbp]
 \centering
-\caption{Short-run pass-through, $\Delta \log$ pre-tax price, HAC(8), $n=1{,}077$ weeks.}
+\caption{Short-run pass-through, $\Delta \log$ pre-tax price, HAC(8), $n=1{,}078$ weeks.}
 \label{tab:price}
 \begin{tabular}{llrrr}
 \toprule
 Product & Term & Estimate & Std.\ error & $p$ \\
 \midrule
-diesel   & $\Delta \log$ ES               & 0.7348 & 0.0341 & $<0.001$ \\
-         & $\Delta \log$ ES $\times$ post & 0.2719 & 0.0541 & $<0.001$ \\
-         & post                           & $-0.0004$ & 0.0009 & 0.647 \\
-gasoline & $\Delta \log$ ES               & 0.7997 & 0.0593 & $<0.001$ \\
-         & $\Delta \log$ ES $\times$ post & 0.0352 & 0.1375 & 0.798 \\
-         & post                           & $-0.0003$ & 0.0011 & 0.804 \\
+diesel & $\Delta \log$ ES & 0.7348 & 0.0341 & $<0.001$ \\
+ & $\Delta \log$ ES $\times$ post & 0.2724 & 0.0543 & $<0.001$ \\
+ & post & $-$0.0002 & 0.0009 & 0.803 \\
+gasoline & $\Delta \log$ ES & 0.7997 & 0.0593 & $<0.001$ \\
+ & $\Delta \log$ ES $\times$ post & 0.0353 & 0.1373 & 0.797 \\
+ & post & $-$0.0000 & 0.0011 & 0.969 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -688,24 +737,24 @@ The gasoline interaction is small and statistically indistinguishable from no ch
 
 For gasoline the short-run coefficient is not the whole result. Table~\ref{tab:ecm} reports the
 two-step Engle--Granger model the cointegration diagnostic indicates. The long-run relation is
-close to unit elastic, $\log \text{PT} = 0.147 + 0.974 \log \text{ES}$, and the speed at which
+close to unit elastic, $\log \text{PT} = 0.148 + 0.974 \log \text{ES}$, and the speed at which
 Portuguese gasoline prices close a gap against that relation roughly triples after the
 transition, from $-0.091$ to $-0.299$ per week. The implied half-life of a deviation falls from
 about eight weeks to a little over two.
 
 \begin{table}[htbp]
 \centering
-\caption{Gasoline error-correction model, two-step Engle--Granger, HAC(8), $n=1{,}077$ weeks.}
+\caption{Gasoline error-correction model, two-step Engle--Granger, HAC(8), $n=1{,}078$ weeks.}
 \label{tab:ecm}
 \begin{tabular}{lrrr}
 \toprule
 Term & Estimate & Std.\ error & $p$ \\
 \midrule
-Disequilibrium (lagged) & $-0.0907$ & 0.0354 & 0.010 \\
-\quad $\times$ post & $-0.2080$ & 0.0720 & 0.004 \\
+Disequilibrium (lagged) & $-$0.0907 & 0.0354 & 0.010 \\
+\quad $\times$ post & $-$0.2241 & 0.0741 & 0.003 \\
 $\Delta \log$ ES & 0.7889 & 0.0720 & $<0.001$ \\
-\quad $\times$ post & 0.1970 & 0.1648 & 0.232 \\
-post & $-0.0019$ & 0.0014 & 0.180 \\
+\quad $\times$ post & 0.2052 & 0.1667 & 0.218 \\
+post & $-$0.0018 & 0.0014 & 0.204 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -758,13 +807,13 @@ market did to a neighbouring system. Table~\ref{tab:spain} sets the two side by 
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}
 Year & PT & ES & PT$-$ES & PT & ES & PT$-$ES \\
 \midrule
-2018 & 1.049 & 0.899 & $+0.150$ & $-0.056$ & $-0.046$ & $-0.010$ \\
-2019 & 0.905 & 0.902 & $+0.003$ & $+0.070$ & $-0.032$ & $+0.102$ \\
-2020 & 1.077 & 0.932 & $+0.145$ & $-0.084$ & $-0.051$ & $-0.033$ \\
-2021 & 0.912 & 0.847 & $+0.065$ & $+0.026$ & $+0.009$ & $+0.016$ \\
-2022 & 0.867 & 0.904 & $-0.037$ & $+0.140$ & $+0.001$ & $+0.139$ \\
-2023 & 0.678 & 0.923 & $-0.245$ & $+0.262$ & $-0.041$ & $+0.303$ \\
-2024 & 0.855 & 0.898 & $-0.043$ & $+0.105$ & $-0.040$ & $+0.145$ \\
+2018 & 1.049 & 0.899 & $+$0.150 & $-$0.056 & $-$0.046 & $-$0.010 \\
+2019 & 0.905 & 0.902 & $+$0.003 & $+$0.070 & $-$0.032 & $+$0.102 \\
+2020 & 1.077 & 0.932 & $+$0.145 & $-$0.084 & $-$0.051 & $-$0.033 \\
+2021 & 0.912 & 0.847 & $+$0.065 & $+$0.026 & $+$0.009 & $+$0.016 \\
+2022 & 0.867 & 0.904 & $-$0.037 & $+$0.140 & $+$0.001 & $+$0.139 \\
+2023 & 0.678 & 0.923 & $-$0.245 & $+$0.262 & $-$0.041 & $+$0.303 \\
+2024 & 0.855 & 0.898 & $-$0.043 & $+$0.105 & $-$0.040 & $+$0.145 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -809,10 +858,10 @@ The pre/post comparisons use five pre-event and three post-event years. Repeatin
 \toprule
 Product & Outcome & 3 pre / 2 post & 5 pre / 3 post & 8 pre / 3 post \\
 \midrule
-diesel & net imports / demand & $+0.266$ & $+0.302$ & $+0.342$ \\
-diesel & refinery output / demand & $-0.279$ & $-0.320$ & $-0.364$ \\
-gasoline & net imports / demand & $+0.455$ & $+0.418$ & $+0.312$ \\
-gasoline & refinery output / demand & $-0.455$ & $-0.419$ & $-0.291$ \\
+diesel & net imports / demand & $+$0.224 & $+$0.277 & $+$0.323 \\
+diesel & refinery output / demand & $-$0.238 & $-$0.283 & $-$0.315 \\
+gasoline & net imports / demand & $+$0.333 & $+$0.393 & $+$0.281 \\
+gasoline & refinery output / demand & $-$0.388 & $-$0.424 & $-$0.321 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -847,10 +896,10 @@ Table~\ref{tab:sourcesens} recomputes each of those results on the corroborated 
 \cmidrule(lr){3-4}\cmidrule(lr){5-6}
 Product & Outcome & Estimate & $p$ & Estimate & $p$ \\
 \midrule
-diesel & exports & $-1{,}782.9$ & $<0.001$ & $-1{,}540.3$ & 0.001 \\
-diesel & net imp./dem. & $+0.457$ & $<0.001$ & $+0.396$ & $<0.001$ \\
-gasoline & exports & $-447.5$ & 0.020 & $-254.9$ & 0.146 \\
-gasoline & net imp./dem. & $+0.732$ & $<0.001$ & $+0.557$ & 0.002 \\
+diesel & exports & $-$781.7 & 0.022 & $-$781.7 & 0.022 \\
+diesel & net imp./dem. & $+$0.201 & 0.031 & $+$0.201 & 0.031 \\
+gasoline & exports & $-$270.9 & 0.121 & $-$202.8 & 0.149 \\
+gasoline & net imp./dem. & $+$0.307 & 0.095 & $+$0.253 & 0.111 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -907,7 +956,7 @@ stock changes are not modelled.
 
 The 2013 Sines hydrocracker coincides with an unambiguous structural change. Diesel refinery
 output and exports broke upward at 2013 and Portugal moved from net diesel importer to net diesel exporter,
-a result that survives multiplicity adjustment across sixteen tests and is corroborated by
+a result that survives multiplicity adjustment across twenty-four tests and is corroborated by
 interrupted-trend models with level shifts of $+1{,}900$~kt in exports and $-0.52$ in the
 net-import ratio.
 
@@ -961,7 +1010,7 @@ Diesel 2022 results survive the source sensitivity & Table~\ref{tab:sourcesens} 
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
 Refinery output falls 106 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
 2022 stress adds a further $-155$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
-Monthly models cover 240 months, 2005--2024 & Section~\ref{sec:coverage} & descriptive & Source extends beyond the window and is trimmed \\
+Monthly models cover 240 months, 1990--2024 & Section~\ref{sec:coverage} & descriptive & Source extends beyond the window and is trimmed \\
 2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
 All four price levels are non-stationary & Section~\ref{sec:pricediag} & descriptive & ADF only; no break-robust unit-root test \\
 Diesel not cointegrated, gasoline cointegrated & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification \\

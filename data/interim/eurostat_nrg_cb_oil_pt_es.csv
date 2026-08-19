@@ -1,4 +1,19 @@
 value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,geo_label,time,time_label
+597.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1990,1990
+498.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1991,1991
+651.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1992,1992
+886.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1993,1993
+855.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1994,1994
+813.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1995,1995
+853.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1996,1996
+908.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1997,1997
+771.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1998,1998
+879.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1999,1999
+931.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2000,2000
+927.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2001,2001
+963.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2002,2002
+974.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2003,2003
+737.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2004,2004
 743.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2005,2005
 575.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2006,2006
 757.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -20,6 +35,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 546.403,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2023,2023
 745.192,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2024,2024
 2618.484,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2025,2025
+0.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+122.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+101.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+204.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+25.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+34.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+53.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+2.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+0.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+11.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+154.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+10.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+60.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+55.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+130.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 128.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 104.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 89.0,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -41,6 +71,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 346.582,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 299.797,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 449.797,A,Annual,IMP,Imports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+1231.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1990,1990
+1854.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1991,1991
+2583.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1992,1992
+2517.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1993,1993
+2384.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1994,1994
+3336.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1995,1995
+3271.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1996,1996
+3604.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1997,1997
+4829.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1998,1998
+6749.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1999,1999
+7244.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2000,2000
+8055.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2001,2001
+9342.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2002,2002
+10800.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2003,2003
+11830.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2004,2004
 13217.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2005,2005
 13605.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2006,2006
 14410.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -62,6 +107,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 4970.428,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2023,2023
 7022.692,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2024,2024
 6575.702,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2025,2025
+64.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+661.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+259.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+387.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+123.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+319.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+293.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+152.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+143.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+268.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+1271.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+943.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+620.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+949.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+841.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 877.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 638.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 776.0,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -83,6 +143,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 1631.591,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 1254.293,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 1501.393,A,Annual,IMP,Imports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+1392.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1990,1990
+1252.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1991,1991
+1013.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1992,1992
+1579.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1993,1993
+1845.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1994,1994
+1438.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1995,1995
+1305.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1996,1996
+1249.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1997,1997
+1925.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1998,1998
+1612.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1999,1999
+2374.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2000,2000
+2291.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2001,2001
+2174.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2002,2002
+1888.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2003,2003
+2588.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2004,2004
 2866.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2005,2005
 3520.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2006,2006
 3231.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -104,6 +179,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 3816.049,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2023,2023
 3269.337,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2024,2024
 5148.195,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2025,2025
+294.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+252.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+244.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+103.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+533.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+904.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+658.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+888.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+789.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+588.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+397.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+635.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+540.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+782.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+805.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 792.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 1270.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 1091.0,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -125,6 +215,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 1254.246,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 1728.079,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 1204.316,A,Annual,EXP,Exports,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+401.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1990,1990
+1147.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1991,1991
+1337.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1992,1992
+1434.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1993,1993
+1514.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1994,1994
+824.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1995,1995
+1151.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1996,1996
+781.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1997,1997
+957.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1998,1998
+729.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1999,1999
+848.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2000,2000
+572.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2001,2001
+783.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2002,2002
+747.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2003,2003
+656.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2004,2004
 822.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2005,2005
 950.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2006,2006
 951.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -146,6 +251,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 6106.951,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2023,2023
 8151.519,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2024,2024
 5677.82,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2025,2025
+344.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+135.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+315.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+646.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+1295.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+1026.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+428.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+309.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+290.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+78.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+152.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+90.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+6.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+51.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+71.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 211.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 314.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 192.0,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -167,6 +287,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 283.668,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 728.175,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 314.863,A,Annual,EXP,Exports,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+8145.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1990,1990
+8534.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1991,1991
+9194.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1992,1992
+8851.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1993,1993
+9160.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1994,1994
+8534.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1995,1995
+9093.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1996,1996
+8970.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1997,1997
+9007.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1998,1998
+8928.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1999,1999
+8524.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2000,2000
+8481.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2001,2001
+8206.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2002,2002
+8040.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2003,2003
+7650.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2004,2004
 7437.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2005,2005
 7107.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2006,2006
 6846.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -188,6 +323,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 6063.507,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2023,2023
 6517.3,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2024,2024
 7023.985,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2025,2025
+1370.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+1507.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+1692.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+1795.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+1851.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+1890.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+1965.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+1949.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+2027.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+2079.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+2123.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+1995.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+2067.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+2005.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+1927.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 1808.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 1674.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 1589.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -209,6 +359,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 1192.692,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 1259.624,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 1342.174,A,Annual,GID_OBS,Gross inland deliveries - observed,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+14245.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1990,1990
+15046.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1991,1991
+15565.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1992,1992
+15879.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1993,1993
+16610.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1994,1994
+17818.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1995,1995
+19145.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1996,1996
+19470.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1997,1997
+21491.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1998,1998
+23160.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1999,1999
+24994.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2000,2000
+26915.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2001,2001
+27779.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2002,2002
+30046.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2003,2003
+32052.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2004,2004
 33512.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2005,2005
 34176.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2006,2006
 35876.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -230,6 +395,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 27701.653,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2023,2023
 27994.238,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2024,2024
 28246.092,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2025,2025
+2442.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+2564.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+2707.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+2777.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+2931.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+3070.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+3309.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+3580.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+4035.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+4228.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+4759.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+5183.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+5284.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+5335.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+5538.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 5492.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 5324.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 5482.0,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -251,6 +431,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 5141.595,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 5016.635,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 4954.744,A,Annual,GID_OBS,Gross inland deliveries - observed,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+9230.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1990,1990
+8932.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1991,1991
+9441.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1992,1992
+9363.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1993,1993
+9570.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1994,1994
+9696.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1995,1995
+9260.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1996,1996
+9235.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1997,1997
+9930.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1998,1998
+9432.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,1999,1999
+9615.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2000,2000
+9272.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2001,2001
+8871.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2002,2002
+9047.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2003,2003
+10434.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2004,2004
 10152.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2005,2005
 10038.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2006,2006
 9232.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -272,6 +467,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 9692.597,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2023,2023
 9760.987,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2024,2024
 9633.531,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,ES,Spain,2025,2025
+1704.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+1623.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+1860.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+1687.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+2354.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+2757.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+2591.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+2835.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+2792.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+2654.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+2296.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+2615.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+2518.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+2732.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+2551.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 2466.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 2750.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 2591.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2007,2007
@@ -293,6 +503,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 2063.427,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2023,2023
 2659.882,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2024,2024
 2048.514,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4652,Motor gasoline,THS_T,Thousand tonnes,PT,Portugal,2025,2025
+14571.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1990,1990
+15691.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1991,1991
+16119.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1992,1992
+15981.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1993,1993
+16312.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1994,1994
+16636.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1995,1995
+17280.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1996,1996
+18532.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1997,1997
+19969.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1998,1998
+20368.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,1999,1999
+20066.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2000,2000
+20177.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2001,2001
+20820.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2002,2002
+21631.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2003,2003
+21563.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2004,2004
 23457.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2005,2005
 23844.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2006,2006
 23933.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2007,2007
@@ -314,6 +539,21 @@ value,freq,freq_label,nrg_bal,nrg_bal_label,siec,siec_label,unit,unit_label,geo,
 25578.744,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2023,2023
 25139.501,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2024,2024
 24954.694,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,ES,Spain,2025,2025
+2984.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1990,1990
+2345.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1991,1991
+2987.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1992,1992
+3281.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1993,1993
+4186.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1994,1994
+3963.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1995,1995
+3684.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1996,1996
+3970.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1997,1997
+4368.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1998,1998
+4279.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,1999,1999
+3794.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2000,2000
+4533.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2001,2001
+4827.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2002,2002
+4955.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2003,2003
+4703.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2004,2004
 4906.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2005,2005
 5102.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2006,2006
 4634.0,A,Annual,TO_RPI_RO,Transformation output - refineries and petrochemical industry - refinery output,O4671,Gas oil and diesel oil,THS_T,Thousand tonnes,PT,Portugal,2007,2007

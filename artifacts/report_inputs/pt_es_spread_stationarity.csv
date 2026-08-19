@@ -1,3 +1,3 @@
 product,diagnostic,status,nobs,adf_statistic,p_value,used_lag,adf_nobs,stationary_5pct
-diesel,pt_es_spread_adf,estimated,1078,-1.3520224949335866,0.6050489970943267,16,1061,False
-gasoline,pt_es_spread_adf,estimated,1078,-2.7508170378980865,0.06564987601521044,16,1061,False
+diesel,pt_es_spread_adf,estimated,1079,-2.0709319098894396,0.25636248452583205,16,1062,False
+gasoline,pt_es_spread_adf,estimated,1079,-4.334220223579199,0.0003873531158217645,9,1069,True

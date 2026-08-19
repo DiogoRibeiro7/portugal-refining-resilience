@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T15:20:52.066955+00:00",
+  "created_at_utc": "2026-08-19T23:13:05.608901+00:00",
   "rows": 8,
   "columns": [
     "product",
@@ -12,7 +12,7 @@
     "nobs"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_source_sensitivity.csv",
-  "csv_sha256": "dd114b285a696fbd3bf33c997f7be46b683eae6c738d1341bada9311cd2543ce",
+  "csv_sha256": "c73ceb5b7e63bcea98a1a6e99b02acf11a7b55f38094e782739794bfe955cc29",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_source_sensitivity.parquet",
   "parquet_error": null,
   "metadata": {}

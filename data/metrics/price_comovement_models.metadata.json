@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T11:39:39.533744+00:00",
+  "created_at_utc": "2026-08-19T23:12:54.641617+00:00",
   "rows": 12,
   "columns": [
     "product",
@@ -16,7 +16,7 @@
     "levels_model_valid"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_comovement_models.csv",
-  "csv_sha256": "2819756ac4f11f9f5bc436fac4305d402bad689ca1d7abb9c1f828060a3c8eec",
+  "csv_sha256": "b1ed77c4c0846a2733b2e185250cbdf675ddb1232c5d2b627e86b4b4adcde3d0",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_comovement_models.parquet",
   "parquet_error": null,
   "metadata": {}

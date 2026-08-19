@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T14:58:41.015621+00:00",
+  "created_at_utc": "2026-08-19T23:12:38.329874+00:00",
   "rows": 36,
   "columns": [
     "product",
@@ -18,7 +18,7 @@
     "empirical_percentile"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_metrics.csv",
-  "csv_sha256": "1acbc66ab9673506ba6ed273939fd3ef016ac606c86b22980dbd53555b3b07fb",
+  "csv_sha256": "5fe8e61c946f6d54c2eb3d28161fdd9341d96f05e67f25bb13d24796e979821c",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_metrics.parquet",
   "parquet_error": null,
   "metadata": {}

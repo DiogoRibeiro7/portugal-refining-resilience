@@ -1,6 +1,11 @@
 analysis:
-  start_year: 2005
+  # The annual physical balance runs from 1990, the earliest Eurostat publishes.
+  # Other arms are limited by their own sources and declare their own windows:
+  # JODI monthly flows begin in 2002 and the weekly price bulletin in 2005.
+  start_year: 1990
   end_year: 2024
+  monthly_start_year: 2002
+  price_start_year: 2005
   products:
     - diesel
     - gasoline
@@ -21,7 +26,9 @@ analysis:
     model_family: portugal_spain_price_comovement
   annual_break_tests:
     minimum_segment_years: 5
-    candidate_break_years: [2013, 2022]
+    # 2000 is included because the descriptive series shows Portugal moving from a
+    # net diesel export position in the 1990s to import dependence around then.
+    candidate_break_years: [2000, 2013, 2022]
     transition_years: [2021]
   source_reconciliation:
     primary_source: JODI

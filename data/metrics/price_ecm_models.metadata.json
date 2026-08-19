@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T11:39:39.552986+00:00",
+  "created_at_utc": "2026-08-19T23:12:54.730689+00:00",
   "rows": 6,
   "columns": [
     "product",
@@ -15,7 +15,7 @@
     "model"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_models.csv",
-  "csv_sha256": "87228633b2f8cacb6840112b3b24eb5b566b75b8d7cb37c00f702a58b6972f69",
+  "csv_sha256": "bbe33bbf881716c533e1b2a9e0d290a3d8c265ed978406a16313730afff20ccd",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_models.parquet",
   "parquet_error": null,
   "metadata": {}

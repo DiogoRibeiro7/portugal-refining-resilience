@@ -282,7 +282,17 @@ def build_readiness_checks(
             "jodi_refinery_output_annual_completeness.csv",
         )
     ]
-    passed, detail = validate_jodi_completeness(completeness_files)
+    # JODI starts later than the annual window, so completeness is asserted over the
+    # years JODI actually covers rather than over years it cannot have.
+    try:
+        analysis = load_analysis_config(paths.root)
+        jodi_start = int(analysis.get("monthly_start_year", analysis["start_year"]))
+        jodi_end = int(analysis["end_year"])
+    except (FileNotFoundError, KeyError, ValueError):
+        jodi_start, jodi_end = 2005, 2024
+    passed, detail = validate_jodi_completeness(
+        completeness_files, start_year=jodi_start, end_year=jodi_end
+    )
     checks.append(_check_record("jodi_annual_completeness_valid", passed, detail))
 
     passed, detail = validate_monthly_panel(

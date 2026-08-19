@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T08:32:24.987570+00:00",
+  "created_at_utc": "2026-08-19T23:12:34.617731+00:00",
   "rows": 32,
   "columns": [
     "product",
@@ -14,7 +14,7 @@
     "interpretation"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_interrupted_trend_models.csv",
-  "csv_sha256": "fd1934ff05750c5ba1f5007e1e1bdafff840a7f3baf96b720508f20625d19aeb",
+  "csv_sha256": "841f4d8d86f925697b1743167990ad66771241990719397aa7c3e147a743d6ff",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_interrupted_trend_models.parquet",
   "parquet_error": null,
   "metadata": {}
