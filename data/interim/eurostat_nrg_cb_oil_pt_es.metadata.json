@@ -1,0 +1,24 @@
+{
+  "created_at_utc": "2026-08-19T08:27:57.715613+00:00",
+  "rows": 336,
+  "columns": [
+    "value",
+    "freq",
+    "freq_label",
+    "nrg_bal",
+    "nrg_bal_label",
+    "siec",
+    "siec_label",
+    "unit",
+    "unit_label",
+    "geo",
+    "geo_label",
+    "time",
+    "time_label"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\eurostat_nrg_cb_oil_pt_es.csv",
+  "csv_sha256": "a29fbae12033b03f651c6cb296e526067ecc066757af99b56baeab862c866c71",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\eurostat_nrg_cb_oil_pt_es.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

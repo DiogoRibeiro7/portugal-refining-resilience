@@ -1,0 +1,17 @@
+{
+  "created_at_utc": "2026-08-19T08:32:35.229838+00:00",
+  "rows": 48,
+  "columns": [
+    "product",
+    "outcome",
+    "event_phase",
+    "n_months",
+    "mean_value",
+    "std_value"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_phase_summary.csv",
+  "csv_sha256": "08ac21a72984d0880cfe5c409fd85419e02287ecc8195d91413ad77f903f72d0",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_phase_summary.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

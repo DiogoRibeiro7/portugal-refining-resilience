@@ -1,0 +1,18 @@
+{
+  "created_at_utc": "2026-08-19T08:29:57.552106+00:00",
+  "rows": 50,
+  "columns": [
+    "year",
+    "product",
+    "flow_canonical",
+    "n_months",
+    "missing_months",
+    "complete_year",
+    "assessment_status"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_demand_annual_completeness.csv",
+  "csv_sha256": "8a58430430436e00ea875e1e2281f50f165d0ceea860050cdc527c68af82f314",
+  "parquet": null,
+  "parquet_error": null,
+  "metadata": {}
+}

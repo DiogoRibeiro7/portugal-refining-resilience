@@ -1,0 +1,22 @@
+{
+  "created_at_utc": "2026-08-19T08:32:47.720915+00:00",
+  "rows": 8,
+  "columns": [
+    "product",
+    "term",
+    "estimate",
+    "std_error",
+    "p_value",
+    "nobs",
+    "covariance",
+    "outcome",
+    "comparison",
+    "model",
+    "model_family"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_short_run_models.csv",
+  "csv_sha256": "22892a0df588a8ec9f744542a417f4b5acaf8efb90601a9a5509ab74a5648e33",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_short_run_models.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

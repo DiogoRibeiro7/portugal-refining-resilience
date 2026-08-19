@@ -1,0 +1,23 @@
+{
+  "created_at_utc": "2026-08-19T08:32:47.583498+00:00",
+  "rows": 12,
+  "columns": [
+    "product",
+    "term",
+    "estimate",
+    "std_error",
+    "p_value",
+    "nobs",
+    "covariance",
+    "outcome",
+    "comparison",
+    "model",
+    "model_family",
+    "levels_model_valid"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_comovement_models.csv",
+  "csv_sha256": "2819756ac4f11f9f5bc436fac4305d402bad689ca1d7abb9c1f828060a3c8eec",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_comovement_models.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

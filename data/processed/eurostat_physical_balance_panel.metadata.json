@@ -1,0 +1,25 @@
+{
+  "created_at_utc": "2026-08-19T08:27:57.798320+00:00",
+  "rows": 84,
+  "columns": [
+    "year",
+    "country",
+    "product",
+    "demand_kt",
+    "exports_kt",
+    "imports_kt",
+    "refinery_output_kt",
+    "net_imports_kt",
+    "gross_import_dependence",
+    "net_import_to_demand_ratio",
+    "export_to_demand",
+    "refinery_output_to_demand_ratio",
+    "balance_residual_kt",
+    "balance_residual_to_demand_ratio"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\eurostat_physical_balance_panel.csv",
+  "csv_sha256": "da5066a89a9e92f90021e22b1577688d1ab5b8a510b131c623651c0593e43bf3",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\eurostat_physical_balance_panel.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

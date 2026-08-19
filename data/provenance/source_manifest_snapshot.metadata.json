@@ -1,0 +1,24 @@
+{
+  "created_at_utc": "2026-08-19T08:27:25.890923+00:00",
+  "rows": 7,
+  "columns": [
+    "source_id",
+    "organisation",
+    "role",
+    "landing_page",
+    "current_2024_xlsx",
+    "coverage",
+    "notes",
+    "current_long_xlsx",
+    "download_url",
+    "dataset",
+    "api_url",
+    "browser_url",
+    "history_xlsx"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\source_manifest_snapshot.csv",
+  "csv_sha256": "bef93248f0a43f47d685171ef837c6325d0f73beaf272dbfcd80308b30ab306d",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\source_manifest_snapshot.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

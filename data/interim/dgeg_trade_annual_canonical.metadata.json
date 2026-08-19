@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-19T08:27:36.179622+00:00",
+  "rows": 24,
+  "columns": [
+    "year",
+    "country",
+    "product",
+    "flow",
+    "source",
+    "value_kt"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\dgeg_trade_annual_canonical.csv",
+  "csv_sha256": "3efe249db4ede94df5bae745bebf996fc193ea979545ba6da85c6617448428cb",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\dgeg_trade_annual_canonical.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt",
+    "source": "DGEG"
+  }
+}

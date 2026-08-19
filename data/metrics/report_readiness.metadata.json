@@ -1,0 +1,14 @@
+{
+  "created_at_utc": "2026-08-19T08:33:19.396476+00:00",
+  "rows": 8,
+  "columns": [
+    "check",
+    "passed",
+    "detail"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\report_readiness.csv",
+  "csv_sha256": "65720361737b168aec99a1690a206d1b7e6e2dfa80f30f10a5d7c673f918c375",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\report_readiness.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

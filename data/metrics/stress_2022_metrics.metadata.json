@@ -1,0 +1,25 @@
+{
+  "created_at_utc": "2026-08-19T08:32:29.236156+00:00",
+  "rows": 36,
+  "columns": [
+    "product",
+    "value_column",
+    "target_year",
+    "target_value",
+    "baseline_start",
+    "baseline_end",
+    "baseline_n",
+    "baseline_mean",
+    "baseline_std",
+    "z_score",
+    "baseline_median",
+    "baseline_mad",
+    "robust_z_score",
+    "empirical_percentile"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_metrics.csv",
+  "csv_sha256": "1acbc66ab9673506ba6ed273939fd3ef016ac606c86b22980dbd53555b3b07fb",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_metrics.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

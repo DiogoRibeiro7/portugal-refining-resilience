@@ -241,10 +241,11 @@ def read_sales_workbook(path: Path, *, sheet: str = "DGEG") -> pd.DataFrame:
     raw = pd.read_excel(path, sheet_name=sheet, header=None)
     labels = raw.iloc[:, 0].map(_fold)
 
-    section_rows = labels[labels.eq(_SALES_SECTION)].index
-    if section_rows.empty:
+    folded = list(enumerate(labels))
+    section_rows = [position for position, label in folded if label == _SALES_SECTION]
+    if not section_rows:
         raise ValueError(f"{path.name} has no {_SALES_SECTION!r} section")
-    header_row = int(section_rows[0])
+    header_row = section_rows[0]
 
     year_columns: dict[int, int] = {}
     for position, value in enumerate(raw.iloc[header_row]):
@@ -256,24 +257,24 @@ def read_sales_workbook(path: Path, *, sheet: str = "DGEG") -> pd.DataFrame:
 
     # Stop before the next section so that bunkers and aviation are excluded.
     later_sections = [
-        int(index)
-        for index, label in labels.items()
-        if int(index) > header_row and label in {"memo fuel", "mercado de bancas maritimas"}
+        position
+        for position, label in folded
+        if position > header_row and label in {"memo fuel", "mercado de bancas maritimas"}
     ]
     section_end = min(later_sections) if later_sections else len(raw)
 
     records: list[dict[str, object]] = []
     for product, wanted in _SALES_PRODUCT_ROWS.items():
         rows = [
-            int(index)
-            for index, label in labels.items()
-            if header_row < int(index) < section_end and label in wanted
+            position
+            for position, label in folded
+            if header_row < position < section_end and label in wanted
         ]
-        missing = set(wanted) - {labels[index] for index in rows}
+        missing = set(wanted) - {folded[position][1] for position in rows}
         if missing:
             raise ValueError(
                 f"{path.name} domestic-market section is missing sales rows {sorted(missing)} "
-                f"for {product}. Found: {[labels[i] for i in rows]}"
+                f"for {product}. Found: {[folded[i][1] for i in rows]}"
             )
         for year, column in sorted(year_columns.items()):
             values = pd.to_numeric(

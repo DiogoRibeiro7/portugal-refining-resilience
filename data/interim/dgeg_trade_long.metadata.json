@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-19T08:27:36.141143+00:00",
+  "rows": 24,
+  "columns": [
+    "year",
+    "product",
+    "flow",
+    "value",
+    "unit"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\dgeg_trade_long.csv",
+  "csv_sha256": "a734bf94fa33da1ccdb065a2d7aeb6c47596f874857a048eef5222de5e982b2a",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\dgeg_trade_long.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "toneladas",
+    "source": "DGEG"
+  }
+}

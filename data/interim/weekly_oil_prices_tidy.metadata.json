@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-19T08:28:25.343150+00:00",
+  "rows": 4314,
+  "columns": [
+    "date",
+    "country",
+    "product",
+    "price_with_tax_eur_per_1000l",
+    "price_without_tax_eur_per_1000l"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\weekly_oil_prices_tidy.csv",
+  "csv_sha256": "831f7786dca589cd208adcfa1403ad71be2ae57267b26541494f3b96c3780e32",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\weekly_oil_prices_tidy.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "EUR per 1000 litres",
+    "primary_measure": "price_without_tax_eur_per_1000l",
+    "source": "EC Weekly Oil Bulletin price history"
+  }
+}

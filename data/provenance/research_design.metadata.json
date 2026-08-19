@@ -1,0 +1,15 @@
+{
+  "created_at_utc": "2026-08-19T08:27:21.889967+00:00",
+  "rows": 5,
+  "columns": [
+    "estimand",
+    "frequency",
+    "primary_source",
+    "causal"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\research_design.csv",
+  "csv_sha256": "d2db330094594f384096aef94f107a3d022fe241613b0d1d4962f7f07692bbee",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\research_design.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-19T08:27:57.763004+00:00",
+  "rows": 336,
+  "columns": [
+    "year",
+    "country",
+    "product",
+    "flow",
+    "value_kt",
+    "source"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\eurostat_oil_balance_canonical.csv",
+  "csv_sha256": "63391de65f2fa2aa567000d30fd681985e35c4ddf26df670dbcabe42b0c8e14e",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\eurostat_oil_balance_canonical.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt"
+  }
+}

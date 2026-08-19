@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-19T08:32:47.635483+00:00",
+  "rows": 2,
+  "columns": [
+    "product",
+    "model_family",
+    "reason",
+    "n_obs",
+    "pt_level_adf_p_value",
+    "es_level_adf_p_value",
+    "cointegration_statistic",
+    "cointegration_p_value"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice.csv",
+  "csv_sha256": "27964e50469ab9b12278e909ffb9334b62798c790053cc4557b4631b1b4afa02",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

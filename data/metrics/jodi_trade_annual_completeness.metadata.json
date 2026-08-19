@@ -1,0 +1,18 @@
+{
+  "created_at_utc": "2026-08-19T08:29:05.049528+00:00",
+  "rows": 100,
+  "columns": [
+    "year",
+    "product",
+    "flow",
+    "n_months",
+    "missing_months",
+    "complete_year",
+    "assessment_status"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_trade_annual_completeness.csv",
+  "csv_sha256": "0801cf60e7fafac3f83b6e8ffaebf73b496929fae3aca6e7f76ee5df85331de7",
+  "parquet": null,
+  "parquet_error": null,
+  "metadata": {}
+}

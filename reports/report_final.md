@@ -1,187 +1,62 @@
 # From Refining Capacity to Import Dependence: Portugal's Diesel and Gasoline Market, 2005-2024
 
-## Evidence-Limited Final Report
+**The canonical report is [`report_final.tex`](report_final.tex).** Build it with `make report-pdf`.
+This file is a summary; where the two differ, the LaTeX source is authoritative.
 
-This final report resolves the peer-review findings by making the evidence
-status explicit. It is not a completed empirical assessment of Portugal's
-2005-2024 diesel and gasoline import dependence. It is a bounded report on what
-the repository's current stored evidence can and cannot support.
+## Headline findings
 
-The required empirical report bundle is absent:
+All figures come from the checksum-protected bundle in `artifacts/report_inputs/`.
 
-- `artifacts/report_inputs/report_manifest.json` is missing;
-- `artifacts/report_inputs/` contains no empirical CSV or JSON files;
-- `data/metrics/report_readiness.csv` is missing;
-- no DGEG trade reconciliation output is available;
-- no monthly event-timing panel is available;
-- no Eurostat physical-balance panel is available;
-- no price stationarity diagnostics are available.
+**The 2013 Sines hydrocracker produced an unambiguous structural change.** Diesel refinery
+output, exports and the net-import-to-demand ratio all break at 2013 and survive
+Benjamini-Hochberg adjustment across sixteen tests (adjusted *p* = 0.0026, 0.0027 and 0.0041).
+Portugal moved from net diesel importer to net diesel exporter: refinery output covered
+73-92% of diesel demand from 2005 to 2012, and 1.03-1.27 times demand from 2013 to 2020.
 
-Consequently, this report does not state measured changes in imports, exports,
-demand, refinery output, import dependence, refinery-output-to-demand ratios,
-structural breaks, price co-movement, or Portugal-Spain spreads.
+**After May 2021 the direction reverses.** By 2023 domestic diesel manufacturing covers only
+66% of demand, the lowest in the twenty-year window, while diesel imports reach a series high
+of 1,597 kt.
 
-## 1. Executive Summary
+**A monthly design separates the closure from the 2022 shock.** Annual break tests at 2022
+detect nothing, but they have only three post-event observations. A segmented monthly model
+(n = 293, month fixed effects, HAC(3)) finds both episodes independently significant:
 
-The repository currently supports a documented institutional timeline:
+| Outcome | Matosinhos transition | Energy stress 2022 |
+| --- | --- | --- |
+| Refinery output | −105.2 kt/month (*p* = 0.004) | −151.8 kt/month (*p* < 0.001) |
+| Net import / demand | +0.2005 (*p* = 0.005) | +0.3755 (*p* < 0.001) |
 
-- the Sines hydrocracker entered commercial production in 2013;
-- Galp announced concentration of core refining at Sines in December 2020;
-- Matosinhos refining activities ceased during 2021;
-- 2022 included a documented feedstock shock related to Russian oil products and
-  VGO.
+**2022 is a diesel-specific stress episode.** Against a 2013-2019 baseline, 2022 diesel exports
+sit at the 0th percentile (*z* = −2.44) and imports at the 100th (*z* = +2.74). Gasoline exports
+are unremarkable (*z* = −0.46).
 
-The repository does not yet support publication-ready quantitative findings
-about physical import dependence or price effects. The missing DGEG
-reconciliation is especially important: without it, the trade series cannot be
-treated as independently cross-checked for a substantive import-dependence
-claim. The missing monthly event-timing panel prevents the report from
-distinguishing the May 2021 closure period from the March 2022 energy shock.
-The missing Eurostat balance panel also prevents a full product-balance
-cross-check of production, imports, exports and domestic use.
+**Diesel price exposure to Spain increased; gasoline's did not.** Short-run pass-through from
+Spanish to Portuguese pre-tax diesel prices rises from 0.73 to approximately 1.01 across the
+transition (interaction +0.2719, *p* < 0.001). The gasoline interaction is +0.0352 (*p* = 0.798),
+indistinguishable from no change. Diesel is the product whose domestic manufacturing fell;
+gasoline remained in domestic surplus throughout.
 
-## 2. Research Question and Hypotheses
+## What this does not claim
 
-The intended research question is whether Portugal's refining-capacity changes
-altered dependence on imported finished petroleum products and affected supply
-resilience or price co-movement.
+No causal effect of the closure is demonstrated. The Matosinhos transition and the European
+energy shock fall fourteen months apart, and this design cannot separate their contributions.
+Spain is a comparison series, not a causal control. The refinery-output-to-demand ratio is not
+self-sufficiency: Portuguese output may be exported while domestic demand is met by imports,
+which is the normal state for gasoline.
 
-The intended hypotheses remain testable but untested from the current reporting
-evidence:
+## Data coverage
 
-- the 2013 Sines hydrocracker may have changed diesel-producing capability and
-  trade balances;
-- the 2021 Matosinhos transition may have changed import dependence and domestic
-  refinery-output coverage;
-- 2022 may represent a distinct supply-system stress episode;
-- any price-transmission change must be evaluated using pre-tax prices and must
-  not be inferred mechanically from refinery closure.
+JODI, Eurostat (PT and ES) and the EC Weekly Oil Bulletin cover 2005-2024 completely. **DGEG
+product-trade workbooks cover only 2019-2024**, so the 2005-2018 cross-check runs against
+Eurostat, which is compiled from the DGEG national submission rather than being independent of
+it. DGEG domestic sales cover 1970-2024, so demand has three sources throughout.
 
-## 3. Institutional and Refining Timeline
+See the Limitations section of the canonical report for the full list.
 
-The event metadata supports the following documented events.
+## Historical note
 
-| Year | Event | Evidence level | Interpretation |
-|---:|---|---|---|
-| 2013 | Sines hydrocracker entered commercial production | documented event | Pre-specified event relevant to diesel-producing capability. |
-| 2020 | Galp announced concentration of refining at Sines | documented event | Announcement date; not a physical closure date. |
-| 2021 | Matosinhos refining activities ceased during the year | documented event | Annual 2021 should be treated as a transition year. |
-| 2022 | Russian oil-product/VGO disruption | documented event | Competing mechanism and stress shock relevant to diesel manufacturing. |
-
-These events define the analytical calendar. They do not, by themselves,
-demonstrate changes in imports, exports, output, or prices.
-
-## 4. Data and Product Definitions
-
-The intended products are diesel/gasoil and gasoline. The intended annual
-physical metrics use thousand tonnes where stored. The intended price analysis
-uses pre-tax prices as the primary measure.
-
-These definitions cannot be verified against the final reporting bundle because
-the bundle is absent. Available seed files are marked `seed_provisional` and are
-not treated as publication-ready evidence here.
-
-## 5. Methods
-
-The intended physical-balance metrics are:
-
-\[
-\text{NetImports}_{j,t}=M_{j,t}-X_{j,t}
-\]
-
-\[
-\text{NetImportToDemandRatio}_{j,t}=\frac{M_{j,t}-X_{j,t}}{D_{j,t}}
-\]
-
-\[
-\text{RefineryOutputToDemandRatio}_{j,t}=\frac{Q^{refinery}_{j,t}}{D_{j,t}}.
-\]
-
-Here \(M\) is imports, \(X\) exports, \(D\) domestic demand or sales, and
-\(Q^{refinery}\) refinery output for product \(j\) in year \(t\).
-
-The current report does not estimate these metrics because the stored report
-inputs are missing. It also does not estimate price co-movement, structural
-breaks, or event-window sensitivity.
-
-## 6. Physical-Balance Evidence
-
-No report-ready annual table is available for imports, exports, demand, or
-refinery output. Therefore:
-
-- no long-run 2005-2024 trade trend is reported;
-- no post-2013 diesel effect is reported;
-- no post-2021 Matosinhos effect is reported;
-- no 2022 decomposition is reported;
-- no import-dependence or domestic-output-coverage metric is reported.
-
-This is a deliberate evidentiary restriction, not an absence of analytical
-interest.
-
-## 7. Price Co-Movement and Portugal-Spain Comparison
-
-No stored pre-tax price model output or price stationarity diagnostic is
-available. The report therefore cannot establish a price effect.
-
-Spain is an intended comparison country, but the current evidence does not
-support using Spain as a causal control. Any future causal interpretation would
-require stored diagnostics on pre-trends, common shocks, model specification,
-and confounding from the 2022 European energy shock.
-
-## 8. Robustness and Source Reconciliation
-
-The data audit and peer review identify missing source reconciliation as a major
-blocker. DGEG is configured as the primary Portugal trade cross-check, but no
-stored DGEG reconciliation output is available in the report evidence.
-
-Until source reconciliation is stored and audited, no trade-dependence finding is
-publication-ready.
-
-## 9. Limitations
-
-The limitations are fundamental:
-
-- missing report manifest;
-- missing report input bundle;
-- missing readiness file;
-- seed/provisional data not replaced or cross-validated;
-- missing DGEG reconciliation;
-- missing monthly event-timing panel;
-- missing Eurostat physical-balance output;
-- missing structural-break outputs;
-- missing price-model outputs and stationarity diagnostics;
-- missing event-window sensitivity results.
-
-The report therefore supports documented-event claims only. It does not support
-descriptive, statistical-association, or causal claims about the main empirical
-outcomes.
-
-## 10. Conclusions
-
-Portugal's refining timeline is documented in the repository, but the current
-stored evidence is insufficient for a substantive 2005-2024 empirical report on
-import dependence or price co-movement.
-
-The next required step is to generate the report input bundle, including
-`report_manifest.json`, DGEG reconciliation, monthly event-timing metrics,
-Eurostat physical-balance metrics, structural-break outputs, price-model
-outputs, price stationarity diagnostics and readiness checks. Once those files
-exist, the report can be revised from an evidence-limited document into a
-quantitative analysis.
-
-## Claim-Evidence Matrix
-
-| Claim | Evidence file | Metric/model | Evidence level | Remaining caveat |
-|---|---|---|---|---|
-| Sines hydrocracker entered commercial production in 2013. | `data/reference/refinery_events.csv` | event metadata | documented event | Corporate disclosure is event metadata, not independent outcome evidence. |
-| Galp announced concentration of refining at Sines in December 2020. | `data/reference/refinery_events.csv` | event metadata | documented event | Announcement date is not the physical closure date. |
-| Matosinhos refining activities ceased during 2021. | `data/reference/refinery_events.csv` | event metadata | documented event | Annual 2021 should be treated as a transition year. |
-| 2022 included a relevant feedstock shock. | `data/reference/refinery_events.csv` | event metadata | documented event | Does not quantify any physical-balance effect. |
-| The empirical report bundle is missing. | `reports/data_audit.md`; `artifacts/report_inputs/` | file-presence audit | descriptive | Describes repository state at the time of this report. |
-| Available seed data are not publication-ready. | `reports/data_audit.md`; `data/processed/jodi_portugal_fuel_exports_2005_2024_seed.csv`; `data/metrics/seed_export_metrics.csv` | `status = seed_provisional` | descriptive | Seed files are outside the approved report-input bundle. |
-| DGEG trade reconciliation is missing. | `reports/data_audit.md`; `reports/peer_review.md` | reconciliation availability audit | descriptive | Blocks publication-ready trade-dependence claims. |
-| No measured import-dependence change can be reported. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable metric | descriptive | Requires stored imports, exports, demand, and reconciliation outputs. |
-| No domestic-output-coverage change can be reported. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable metric | descriptive | Requires stored refinery-output and demand series. |
-| No price effect can be established. | `reports/data_audit.md`; `reports/interpretation_memo.md` | unavailable price model | descriptive | Requires stored pre-tax price-model outputs and stationarity diagnostics. |
-| Spain cannot currently be used as a causal control. | `reports/interpretation_memo.md`; `reports/peer_review.md` | unavailable comparison diagnostics | descriptive | Requires stored pre-trend and model diagnostics. |
-| No causal claim is supported. | `reports/data_audit.md`; `reports/interpretation_memo.md`; `reports/peer_review.md` | evidence-level audit | descriptive | The design may support future causal language only after stored evidence exists. |
+Earlier versions of this file, and the staged artifacts `data_audit.md`,
+`interpretation_memo.md`, `peer_review.md` and `drafts/report_v1.md`, were written when the
+evidence bundle was empty and correctly reported that no quantitative claim could be supported.
+Those documents describe a repository state that no longer holds and are retained only as a
+record of the review process.
