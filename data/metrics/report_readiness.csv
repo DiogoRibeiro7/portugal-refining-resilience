@@ -1,0 +1,9 @@
+check,passed,detail
+core_report_bundle_complete,True,[]
+trade_not_seed_only,True,downloaded/cross-checked trade available
+jodi_annual_completeness_valid,True,All JODI completeness rows in 2005-2024 have 12 months
+monthly_event_panel_valid,True,"Monthly panel covers phases: ['energy_stress_2022', 'matosinhos_transition', 'post_stress', 'pre_matosinhos_closure']"
+monthly_event_outputs_valid,True,Monthly event models recorded for 6 outcomes
+eurostat_balance_available,True,Required before full petroleum-product balance claims
+price_outputs_valid,True,"Price model choices recorded for 2 products: ['ecm_required', 'short_run_log_difference']"
+dgeg_trade_reconciliation_valid,True,24 rows; 66.7% agree outright; 8 justified divergence(s)

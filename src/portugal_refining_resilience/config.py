@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, cast
+
+import yaml
 
 
 @dataclass(frozen=True)
@@ -59,3 +62,16 @@ def get_paths(start: Path | None = None) -> ProjectPaths:
     ):
         directory.mkdir(parents=True, exist_ok=True)
     return paths
+
+
+def load_analysis_config(root: Path | None = None) -> dict[str, Any]:
+    """Load ``config/analysis.yml``.
+
+    Analytical windows, event dates and source-reconciliation tolerances live in
+    configuration rather than in code so that changing them is a reviewable decision.
+    """
+    base = root or find_project_root()
+    payload: Any = yaml.safe_load((base / "config" / "analysis.yml").read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or not isinstance(payload.get("analysis"), dict):
+        raise ValueError("analysis.yml must contain a top-level 'analysis' mapping")
+    return cast("dict[str, Any]", payload["analysis"])

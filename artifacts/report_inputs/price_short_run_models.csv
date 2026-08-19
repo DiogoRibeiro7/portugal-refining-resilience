@@ -1,0 +1,9 @@
+product,term,estimate,std_error,p_value,nobs,covariance,outcome,comparison,model,model_family
+diesel,const,8.215624937151169e-05,0.00041889666676626854,0.8445120663576757,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,short_run_log_difference
+diesel,diff_log_ES,0.7348314026087439,0.034072328117752314,3.682337323744149e-103,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,short_run_log_difference
+diesel,diff_log_ES_x_post,0.27186364437300986,0.054101829039502045,5.033378282291183e-07,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,short_run_log_difference
+diesel,post,-0.0003924192424726233,0.0008569797943956676,0.647017416723394,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,short_run_log_difference
+gasoline,const,0.00015472404202132895,0.000590870472119473,0.7934310751988631,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,diff_log_ES,0.7997270363478612,0.05927658364612191,1.756135661900775e-41,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,diff_log_ES_x_post,0.035237944826166795,0.13748870615301528,0.797721502866456,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,post,-0.00026987179016944255,0.0010868167063173184,0.8038914772995788,1077.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required

@@ -1,0 +1,15 @@
+{
+  "created_at_utc": "2026-08-19T08:32:14.462068+00:00",
+  "rows": 24,
+  "columns": [
+    "metric",
+    "product",
+    "value",
+    "unit"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\descriptive_metrics.csv",
+  "csv_sha256": "684395461c0d7f37218d16a09ddba665f96dfefeb455483e5dbd1d94141a275b",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\descriptive_metrics.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

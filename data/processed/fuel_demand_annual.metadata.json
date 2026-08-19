@@ -1,0 +1,17 @@
+{
+  "created_at_utc": "2026-08-19T08:29:57.764778+00:00",
+  "rows": 40,
+  "columns": [
+    "year",
+    "product",
+    "demand_kt",
+    "source"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_demand_annual.csv",
+  "csv_sha256": "2d0cca020d503cda3e1f830019b297f1b3d6469f3e65194595393fb97a18fb81",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_demand_annual.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt"
+  }
+}

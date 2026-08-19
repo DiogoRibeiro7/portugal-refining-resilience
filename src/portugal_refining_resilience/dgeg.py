@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import re
+import unicodedata
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -53,7 +56,15 @@ _UNIT_TO_KT: dict[str, float] = {
 
 @dataclass(frozen=True)
 class ReconciliationThresholds:
-    """Default tolerances for source cross-check summaries."""
+    """Tolerances for source cross-check summaries.
+
+    A row is flagged only when it breaches **both** limits. Treating them as
+    alternatives made the absolute floor bind on every large series: 25 kt against
+    Portuguese diesel imports of roughly 1,600 kt is an effective tolerance of 1.6%,
+    which contradicts the 5% the percentage limit advertises and flagged agreement
+    as good as 2.1% as a failure. The absolute limit exists to stop small series
+    producing alarming percentages, not to override the percentage on large ones.
+    """
 
     warning_abs_kt: float = 25.0
     warning_pct: float = 5.0
@@ -95,6 +106,194 @@ def _value_to_kt(value: object, unit: object) -> float:
     if unit_key not in _UNIT_TO_KT:
         raise ValueError(f"Unknown DGEG unit: {unit!r}")
     return float(numeric) * _UNIT_TO_KT[unit_key]
+
+
+#: Sheet names carrying annual product trade, matched without accents.
+_TRADE_SHEET_FLOWS: dict[str, str] = {
+    "importacoes": "importações",
+    "exportacoes": "exportações",
+}
+
+#: Only the road-fuel columns are extracted. Matching is exact so that
+#: ``gasolina de aviação`` and ``av. gas`` are never folded into motor gasoline.
+_TRADE_PRODUCT_LABELS: dict[str, str] = {
+    "gasolina": "gasolina",
+    "gasoleo": "gasóleo",
+}
+
+_COUNTRY_HEADER = {"pais"}
+
+#: Rows after the country block; everything from here down is footnote prose.
+_FOOTNOTE_MARKERS = ("notas", "nota:", "os dados", "1 inclui", "2 inclui")
+
+
+def _strip_accents(value: object) -> str:
+    text = unicodedata.normalize("NFKD", str(value))
+    return "".join(character for character in text if not unicodedata.combining(character))
+
+
+def _fold(value: object) -> str:
+    """Normalise a Portuguese spreadsheet label to accent-free lowercase."""
+    return normalise_text(_strip_accents(value))
+
+
+def read_trade_workbook(path: Path, *, year: int) -> pd.DataFrame:
+    """Extract annual road-fuel trade from one DGEG import/export workbook.
+
+    DGEG publishes one workbook per year laying out partner country by product in
+    tonnes, with the product header on a row that also labels the country column.
+    The header row is located rather than assumed, and unknown layouts raise, because
+    a shifted column would silently reassign tonnage between fuels.
+    """
+    if not path.exists():
+        raise FileNotFoundError(path)
+    workbook = pd.ExcelFile(path)
+    records: list[dict[str, object]] = []
+    for sheet in workbook.sheet_names:
+        flow = _TRADE_SHEET_FLOWS.get(_fold(sheet))
+        if flow is None:
+            continue
+        raw = pd.read_excel(path, sheet_name=sheet, header=None)
+        header_rows = [
+            index
+            for index in range(len(raw))
+            if raw.iloc[index].map(_fold).isin(_COUNTRY_HEADER).any()
+        ]
+        if not header_rows:
+            raise ValueError(f"{path.name}:{sheet} has no country header row")
+        header_row = header_rows[0]
+        header = raw.iloc[header_row].map(_fold)
+
+        for folded_label, source_label in _TRADE_PRODUCT_LABELS.items():
+            positions = [position for position, value in enumerate(header) if value == folded_label]
+            if len(positions) != 1:
+                raise ValueError(
+                    f"{path.name}:{sheet} expected exactly one {folded_label!r} column, "
+                    f"found {len(positions)}. Header was: {list(header)}"
+                )
+            column = positions[0]
+            body = raw.iloc[header_row + 1 :]
+            labels = body.iloc[:, 0].map(_fold)
+            values = pd.to_numeric(body.iloc[:, column], errors="coerce")
+
+            # Only partner-country rows are summed. Every sheet also carries its own
+            # total, which doubles the figure if included: newer workbooks leave the
+            # label blank, older ones write "total geral". Footnote prose trails both.
+            is_footnote = labels.str.startswith(_FOOTNOTE_MARKERS)
+            is_blank = labels.eq("") | labels.eq("nan")
+            is_total = labels.str.contains("total") | (is_blank & values.notna())
+            is_country = ~is_blank & ~is_footnote & ~is_total
+            total = values.loc[is_country].sum(min_count=1)
+
+            # The sheet's own total is then a parse check rather than dead weight:
+            # a mismatch means the product column block has moved.
+            stated_totals = values.loc[is_total].dropna()
+            stated_totals = stated_totals[stated_totals.ne(0)]
+            if not stated_totals.empty and pd.notna(total) and total:
+                stated = float(stated_totals.iloc[0])
+                if abs(stated - float(total)) > 0.01 * abs(float(total)):
+                    raise ValueError(
+                        f"{path.name}:{sheet} {folded_label!r} country rows sum to {total:,.0f} "
+                        f"but the sheet's own total states {stated:,.0f}. "
+                        "The product column block has probably shifted."
+                    )
+            records.append(
+                {
+                    "year": year,
+                    "product": source_label,
+                    "flow": flow,
+                    "value": float(total),
+                    "unit": "toneladas",
+                }
+            )
+    if not records:
+        raise ValueError(
+            f"{path.name} contained no import/export sheet. Sheets: {workbook.sheet_names}"
+        )
+    return pd.DataFrame(records)
+
+
+#: Domestic-market sales rows that reconstruct each canonical product.
+#:
+#: ``gasolinas`` is the gasoline total; ``gas. auto`` is a small sub-line, not the
+#: aggregate. Diesel needs coloured and marked gasoil added to road gasoil, since
+#: ``gasoleo`` alone sits about 10% below the JODI and Eurostat demand concept.
+#: The workbook's own note records that ``gasoleo`` has included biodiesel since 2006.
+_SALES_PRODUCT_ROWS: dict[str, tuple[str, ...]] = {
+    "gasoline": ("gasolinas",),
+    "diesel": ("gasoleo", "gasoleo colorido e marcado"),
+}
+
+_SALES_SECTION = "mercado interno"
+_SALES_TONNES_TO_KT = 0.001
+
+
+def read_sales_workbook(path: Path, *, sheet: str = "DGEG") -> pd.DataFrame:
+    """Extract annual domestic petroleum-product sales from the DGEG long workbook.
+
+    The workbook lays products down the first column and years across the header, in
+    tonnes, with several market sections stacked vertically. Only the domestic-market
+    section is read, and only until the next section heading, so bunker and aviation
+    rows are never folded into road-fuel demand.
+    """
+    if not path.exists():
+        raise FileNotFoundError(path)
+    raw = pd.read_excel(path, sheet_name=sheet, header=None)
+    labels = raw.iloc[:, 0].map(_fold)
+
+    folded = list(enumerate(labels))
+    section_rows = [position for position, label in folded if label == _SALES_SECTION]
+    if not section_rows:
+        raise ValueError(f"{path.name} has no {_SALES_SECTION!r} section")
+    header_row = section_rows[0]
+
+    year_columns: dict[int, int] = {}
+    for position, value in enumerate(raw.iloc[header_row]):
+        match = re.match(r"^(\d{4})", str(value).strip())
+        if match:
+            year_columns[int(match.group(1))] = position
+    if not year_columns:
+        raise ValueError(f"{path.name}:{sheet} row {header_row} carries no year header")
+
+    # Stop before the next section so that bunkers and aviation are excluded.
+    later_sections = [
+        position
+        for position, label in folded
+        if position > header_row and label in {"memo fuel", "mercado de bancas maritimas"}
+    ]
+    section_end = min(later_sections) if later_sections else len(raw)
+
+    records: list[dict[str, object]] = []
+    for product, wanted in _SALES_PRODUCT_ROWS.items():
+        rows = [
+            position
+            for position, label in folded
+            if header_row < position < section_end and label in wanted
+        ]
+        missing = set(wanted) - {folded[position][1] for position in rows}
+        if missing:
+            raise ValueError(
+                f"{path.name} domestic-market section is missing sales rows {sorted(missing)} "
+                f"for {product}. Found: {[folded[i][1] for i in rows]}"
+            )
+        for year, column in sorted(year_columns.items()):
+            values = pd.to_numeric(
+                pd.Series([raw.iloc[index, column] for index in rows]), errors="coerce"
+            )
+            if values.isna().all():
+                continue
+            records.append(
+                {
+                    "year": year,
+                    "country": "PT",
+                    "product": product,
+                    "demand_kt": float(values.sum()) * _SALES_TONNES_TO_KT,
+                    "source": "DGEG",
+                    "concept": "domestic market sales",
+                    "component_rows": "+".join(wanted),
+                }
+            )
+    return pd.DataFrame(records)
 
 
 def canonicalise_trade_long(df: pd.DataFrame, *, source: str = "DGEG") -> pd.DataFrame:
@@ -153,10 +352,12 @@ def compare_trade_sources(
     joined["difference_pct_comparison"] = (
         100 * joined["difference_kt"] / comparison_value.replace(0, np.nan)
     )
+    breaches_absolute = joined["difference_kt"].abs() > thresholds.warning_abs_kt
+    breaches_relative = joined["difference_pct_comparison"].abs() > thresholds.warning_pct
+    # A missing percentage means the comparison value was zero, where the absolute
+    # difference is the only meaningful signal.
+    breaches_relative = breaches_relative | joined["difference_pct_comparison"].isna()
     joined["reconciliation_status"] = np.where(
-        (joined["difference_kt"].abs() > thresholds.warning_abs_kt)
-        | (joined["difference_pct_comparison"].abs() > thresholds.warning_pct),
-        "review",
-        "within_tolerance",
+        breaches_absolute & breaches_relative, "review", "within_tolerance"
     )
     return joined

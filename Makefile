@@ -27,9 +27,9 @@ report-inputs:
 	poetry run jupyter execute notebooks/19_export_report_inputs.ipynb
 
 report-pdf:
-	latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=reports/build reports/report_final.tex
+	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd reports/report_final.tex
 
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 	find . -type d -name .ipynb_checkpoints -prune -exec rm -rf {} +
-	rm -rf reports/build
+	latexmk -C -cd reports/report_final.tex

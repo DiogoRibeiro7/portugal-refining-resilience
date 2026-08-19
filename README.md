@@ -130,8 +130,9 @@ vintage is requested explicitly, and writes metadata sidecars with retrieval tim
 snapshot status. Commit transformed datasets only when they are intentionally part of the
 reviewable analysis surface.
 
-Report-writing prompts live in `prompts/` and must use the checksum-protected
-`artifacts/report_inputs/` bundle rather than notebook display state or chat history.
+Report writing is driven by prompts kept outside version control. Whatever drives it must use
+the checksum-protected `artifacts/report_inputs/` bundle rather than notebook display state or
+chat history, which is why the bundle carries a manifest that accounts for every file in it.
 
 Monthly event-timing claims must use `data/processed/fuel_monthly_analytical_panel.csv` and
 the persisted `data/metrics/monthly_event_models.csv` / `monthly_event_phase_summary.csv`

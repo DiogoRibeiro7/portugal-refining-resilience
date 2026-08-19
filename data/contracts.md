@@ -72,6 +72,51 @@ pre-closure trend, and its `*_trend` companion is the change in slope within the
 must be quoted together: neither is the whole effect on its own, and the level term is not a
 cumulative post-event average.
 
+## `jodi_dgeg_trade_reconciliation.csv`
+
+Key: `year, product, flow`.
+
+Required: the primary and comparison `value_kt` columns, `difference_kt`,
+`difference_pct_comparison`, and `reconciliation_status`.
+
+JODI and DGEG are the only independent pair available for Portuguese product trade.
+Eurostat `nrg_cb_oil` is compiled from the DGEG national submission and agrees with it to a
+median of 0.00% across 2019-2024 trade cells, so it corroborates DGEG rather than supplying a
+third opinion. It is still useful as an adjudicator: where JODI and DGEG disagree, Eurostat
+indicates which of the two is out of line.
+
+A row is flagged `review` only when it breaches **both** the absolute and the percentage
+tolerance. Treating them as alternatives made the 25 kt floor bind on every large series,
+giving an effective tolerance of 1.6% on Portuguese diesel imports and flagging agreement as
+close as 2.1% as a failure.
+
+Differing product definitions are not the source of the residual gap. The Eurostat blended
+biofuel wedge (`O4671` less `O4671XR5220B`) is 0.0 kt on exports in every year and at most
+4.5% on imports, so blending cannot explain export divergences at all.
+
+Every remaining `review` row must be listed in `config/analysis.yml` under
+`analysis.source_reconciliation.accepted_divergences`, with the series Eurostat identifies as
+the outlier. An unlisted divergence fails the readiness gate however few cells it touches, so
+a new data vintage cannot quietly widen the gap. Separately, at least
+`min_within_tolerance_share` of all rows must agree without invoking an exception, so the
+exception list can never grow until it carries the comparison.
+
+## `price_ecm_models.csv`
+
+Key: `product, term`.
+
+Required: `product`, `term`, `estimate`, `std_error`, `p_value`, `nobs`,
+`cointegrating_constant`, `cointegrating_slope`.
+
+Written only for products whose `price_model_choice.model_family` is `ecm_required`. Where
+cointegration is rejected the disequilibrium term is not a valid long-run residual, so fitting
+an error-correction model anyway would contradict the recorded model choice.
+
+`disequilibrium_lag` is the weekly speed of adjustment toward the long-run relation and is
+expected to be negative. Its `_x_post` companion is the change in that speed after the
+transition; quote the two together. The disequilibrium term is a generated regressor, so the
+second-stage standard errors are conditional on the first stage.
+
 ## `eurostat_physical_balance_panel.csv`
 
 Key: `year, country, product`.

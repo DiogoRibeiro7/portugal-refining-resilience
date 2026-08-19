@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-19T08:31:06.129056+00:00",
+  "rows": 40,
+  "columns": [
+    "year",
+    "product",
+    "refinery_output_kt",
+    "source",
+    "refining_regime",
+    "n_operating_refineries_regime"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_refinery_output_annual.csv",
+  "csv_sha256": "45abb97b05e25871f9ee2ab46600399efa2d9d3d3502affddb77343e6518b09f",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_refinery_output_annual.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt"
+  }
+}

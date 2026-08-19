@@ -1,0 +1,41 @@
+year,country,product,demand_kt,source,concept,component_rows
+2005,PT,gasoline,1808.13,DGEG,domestic market sales,gasolinas
+2006,PT,gasoline,1680.047,DGEG,domestic market sales,gasolinas
+2007,PT,gasoline,1589.4750000000001,DGEG,domestic market sales,gasolinas
+2008,PT,gasoline,1486.988,DGEG,domestic market sales,gasolinas
+2009,PT,gasoline,1463.095,DGEG,domestic market sales,gasolinas
+2010,PT,gasoline,1386.961,DGEG,domestic market sales,gasolinas
+2011,PT,gasoline,1244.515,DGEG,domestic market sales,gasolinas
+2012,PT,gasoline,1133.118,DGEG,domestic market sales,gasolinas
+2013,PT,gasoline,1092.747,DGEG,domestic market sales,gasolinas
+2014,PT,gasoline,1091.95,DGEG,domestic market sales,gasolinas
+2015,PT,gasoline,1080.136,DGEG,domestic market sales,gasolinas
+2016,PT,gasoline,1062.99,DGEG,domestic market sales,gasolinas
+2017,PT,gasoline,1032.388,DGEG,domestic market sales,gasolinas
+2018,PT,gasoline,1027.25,DGEG,domestic market sales,gasolinas
+2019,PT,gasoline,1067.602,DGEG,domestic market sales,gasolinas
+2020,PT,gasoline,883.033,DGEG,domestic market sales,gasolinas
+2021,PT,gasoline,976.001,DGEG,domestic market sales,gasolinas
+2022,PT,gasoline,1072.757,DGEG,domestic market sales,gasolinas
+2023,PT,gasoline,1193.965,DGEG,domestic market sales,gasolinas
+2024,PT,gasoline,1269.019,DGEG,domestic market sales,gasolinas
+2005,PT,diesel,5229.104,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2006,PT,diesel,5070.414,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2007,PT,diesel,5173.534000000001,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2008,PT,diesel,5097.834,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2009,PT,diesel,5131.742,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2010,PT,diesel,5164.235,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2011,PT,diesel,4860.87,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2012,PT,diesel,4438.542,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2013,PT,diesel,4338.569,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2014,PT,diesel,4449.693,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2015,PT,diesel,4594.417,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2016,PT,diesel,4622.97,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2017,PT,diesel,4743.334,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2018,PT,diesel,4795.167,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2019,PT,diesel,4909.7570000000005,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2020,PT,diesel,4276.218,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2021,PT,diesel,4601.716,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2022,PT,diesel,4768.71,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2023,PT,diesel,4983.839,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado
+2024,PT,diesel,4868.61,DGEG,domestic market sales,gasoleo+gasoleo colorido e marcado

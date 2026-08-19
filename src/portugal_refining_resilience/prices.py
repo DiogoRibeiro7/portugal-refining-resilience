@@ -1,9 +1,124 @@
 from __future__ import annotations
 
+import re
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller, coint
+
+#: Weekly Oil Bulletin product tokens mapped to this project's canonical products.
+_BULLETIN_PRODUCTS: dict[str, str] = {"euro95": "gasoline", "diesel": "diesel"}
+
+#: The bulletin quotes road fuels per 1000 litres. Anything else must not be
+#: silently rebadged as a EUR/1000L price.
+_BULLETIN_UNIT = "1000 l"
+
+_BULLETIN_HEADER = re.compile(
+    r"^(?P<country>[A-Z]{2,3})_price_(?P<basis>wo|with)_tax_(?P<product>euro95|diesel)$"
+)
+
+_BULLETIN_SHEETS: dict[str, str] = {
+    "wo": "Prices wo taxes",
+    "with": "Prices with taxes",
+}
+
+
+def _extract_bulletin_sheet(
+    path: Path,
+    sheet: str,
+    basis: str,
+    countries: tuple[str, ...],
+    value_column: str,
+) -> pd.DataFrame:
+    """Melt one Weekly Oil Bulletin price sheet into long rows."""
+    raw = pd.read_excel(path, sheet_name=sheet, header=None)
+    if len(raw) < 4:
+        raise ValueError(f"Sheet {sheet!r} has too few rows to contain a price history")
+    headers = [str(value).strip() for value in raw.iloc[0]]
+    units = [str(value).strip().lower() for value in raw.iloc[2]]
+    body = raw.iloc[3:].reset_index(drop=True)
+
+    dates = pd.to_datetime(body.iloc[:, 0], errors="coerce")
+    records: list[pd.DataFrame] = []
+    seen: set[tuple[str, str]] = set()
+    for position, header in enumerate(headers):
+        match = _BULLETIN_HEADER.match(header)
+        if match is None or match.group("basis") != basis:
+            continue
+        country = match.group("country")
+        if country not in countries:
+            continue
+        if units[position] != _BULLETIN_UNIT:
+            raise ValueError(
+                f"{sheet!r} column {header!r} is quoted in {units[position]!r}, "
+                f"expected {_BULLETIN_UNIT!r}. Re-inventory the workbook before extracting."
+            )
+        product = _BULLETIN_PRODUCTS[match.group("product")]
+        seen.add((country, product))
+        records.append(
+            pd.DataFrame(
+                {
+                    "date": dates,
+                    "country": country,
+                    "product": product,
+                    value_column: pd.to_numeric(body.iloc[:, position], errors="coerce"),
+                }
+            )
+        )
+
+    expected = {
+        (country, product) for country in countries for product in _BULLETIN_PRODUCTS.values()
+    }
+    missing = sorted(expected - seen)
+    if missing:
+        raise ValueError(f"Sheet {sheet!r} is missing price columns for: {missing}")
+    return pd.concat(records, ignore_index=True).dropna(subset=["date"])
+
+
+def extract_weekly_prices(
+    path: Path,
+    *,
+    countries: tuple[str, ...] = ("PT", "ES"),
+) -> pd.DataFrame:
+    """Extract a tidy weekly price panel from the EC Weekly Oil Bulletin workbook.
+
+    The workbook stores one wide sheet per tax basis, with ``{COUNTRY}_price_{basis}_tax_
+    {product}`` header tokens on the first row and units on the third. Layout changes are
+    rejected rather than guessed at, because the Commission controls this file and a
+    silently mis-parsed column would feed the price models directly.
+
+    Returns the ``weekly_oil_prices_tidy.csv`` contract: ``date``, ``country``,
+    ``product``, ``price_with_tax_eur_per_1000l``, ``price_without_tax_eur_per_1000l``.
+    """
+    if not path.exists():
+        raise FileNotFoundError(path)
+    without_tax = _extract_bulletin_sheet(
+        path, _BULLETIN_SHEETS["wo"], "wo", countries, "price_without_tax_eur_per_1000l"
+    )
+    with_tax = _extract_bulletin_sheet(
+        path, _BULLETIN_SHEETS["with"], "with", countries, "price_with_tax_eur_per_1000l"
+    )
+    tidy = without_tax.merge(with_tax, on=["date", "country", "product"], how="outer")
+    tidy = tidy.dropna(
+        subset=["price_without_tax_eur_per_1000l", "price_with_tax_eur_per_1000l"],
+        how="all",
+    )
+    tidy = tidy.sort_values(["country", "product", "date"]).reset_index(drop=True)
+    duplicated = tidy.duplicated(["date", "country", "product"], keep=False)
+    if duplicated.any():
+        examples = tidy.loc[duplicated, ["date", "country", "product"]].head(5).to_dict("records")
+        raise ValueError(f"Duplicate weekly price keys: {examples}")
+    return tidy[
+        [
+            "date",
+            "country",
+            "product",
+            "price_with_tax_eur_per_1000l",
+            "price_without_tax_eur_per_1000l",
+        ]
+    ]
 
 
 def price_comovement_design(
@@ -181,3 +296,66 @@ def fit_short_run_price_transmission(design: pd.DataFrame) -> object:
     frame["diff_log_ES_x_post"] = frame["diff_log_ES"] * frame["post"]
     x = sm.add_constant(frame[["diff_log_ES", "diff_log_ES_x_post", "post"]], has_constant="add")
     return sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": 8})
+
+
+def fit_error_correction_model(design: pd.DataFrame, *, maxlags: int = 8) -> dict[str, object]:
+    """Fit a two-step Engle-Granger ECM for cointegrated PT-ES price levels.
+
+    When ``choose_price_model`` returns ``ecm_required`` the levels are non-stationary
+    but move together, so neither a levels regression nor a pure difference model is
+    right: the first is spurious, the second discards the long-run relationship.
+
+    Step one estimates the cointegrating regression ``log PT = a + b log ES`` and keeps
+    its residual as the disequilibrium term. Step two regresses the weekly change in
+    the Portuguese price on the lagged disequilibrium, the contemporaneous Spanish
+    change, and interactions of both with the post-transition indicator, so the
+    adjustment speed and the short-run pass-through are each allowed to change.
+
+    The error-correction coefficient is expected to be negative: a Portuguese price
+    above its long-run relationship with Spain is pulled back down. Its magnitude is
+    the share of the gap closed each week.
+
+    The disequilibrium term is a generated regressor, so the second-stage standard
+    errors are conditional on the first stage; HAC covariance mitigates but does not
+    remove this.
+    """
+    required = {"log_PT", "log_ES", "diff_log_PT", "diff_log_ES", "post"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    if len(levels) < 20:
+        raise ValueError("Need at least 20 paired price levels to estimate a cointegrating vector")
+    long_run = sm.OLS(
+        levels["log_PT"], sm.add_constant(levels[["log_ES"]], has_constant="add")
+    ).fit()
+
+    frame = design.copy()
+    frame["disequilibrium"] = np.nan
+    frame.loc[levels.index, "disequilibrium"] = np.asarray(long_run.resid, dtype=float)
+    frame["disequilibrium_lag"] = frame["disequilibrium"].shift(1)
+
+    frame = frame.dropna(subset=["diff_log_PT", "diff_log_ES", "disequilibrium_lag", "post"]).copy()
+    frame["diff_log_ES_x_post"] = frame["diff_log_ES"] * frame["post"]
+    frame["disequilibrium_lag_x_post"] = frame["disequilibrium_lag"] * frame["post"]
+
+    x = sm.add_constant(
+        frame[
+            [
+                "disequilibrium_lag",
+                "disequilibrium_lag_x_post",
+                "diff_log_ES",
+                "diff_log_ES_x_post",
+                "post",
+            ]
+        ],
+        has_constant="add",
+    )
+    model = sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": maxlags})
+    return {
+        "model": model,
+        "cointegrating_constant": float(long_run.params.iloc[0]),
+        "cointegrating_slope": float(long_run.params.iloc[1]),
+        "n_obs": int(model.nobs),
+    }

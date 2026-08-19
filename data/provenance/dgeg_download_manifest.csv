@@ -1,0 +1,8 @@
+dataset,year,path,url,sha256
+dgeg_trade,2024.0,data\raw\dgeg\trade\dgeg_trade_2024.xlsx,https://www.dgeg.gov.pt/media/50hhvvxj/dgeg-oie-2024.xlsx,14d24ca64caa89be3468dfceb8b1093795ff547cabef49977b25179a9293cf8a
+dgeg_trade,2023.0,data\raw\dgeg\trade\dgeg_trade_2023.xlsx,https://www.dgeg.gov.pt/media/5dtfg4z4/dgeg-oie-2023.xlsx,a0fe6ac750abf3213d09c9d8b95634a08afecadd8309ac2ab1e78b4e390dc7b1
+dgeg_trade,2021.0,data\raw\dgeg\trade\dgeg_trade_2021.xlsx,https://www.dgeg.gov.pt/media/flnbvjfd/dgeg-oie-2021.xlsx,f495b1c01dc7e3b9e246f5ac273484f92804aaa625dbabf84f6191e3c4dc7bb2
+dgeg_trade,2020.0,data\raw\dgeg\trade\dgeg_trade_2020.xls,https://www.dgeg.gov.pt/media/t0fabr41/dgeg-oie-2020.xls,905a69aa589f781cc2b918c59bea8cf97855b0bac9fae54ba8711582bda342cb
+dgeg_trade,2019.0,data\raw\dgeg\trade\dgeg_trade_2019.xls,https://www.dgeg.gov.pt/media/wy4btnut/dgeg-oie-2019.xls,eb3009f372c81d4857769afeae8326a4a4ec03039683d008da18c4568e6d939e
+dgeg_trade,2022.0,data\raw\dgeg\trade\dgeg_trade_2022.xlsx,https://www.dgeg.gov.pt/media/zxlfzc3r/dgeg-oie-2022.xlsx,9d5583e49a4ce6151014c95e08979a7452b954dc20c02f26963d9603dd5ceff4
+dgeg_sales,,data\raw\dgeg\dgeg_sales_long.xlsx,https://www.dgeg.gov.pt/media/jm4opgll/dgeg-osl-1970-2024.xlsx,2a6fe1b198645d63a11de99d394e20008dee39700198aed583ef7b5ba34fa6e9

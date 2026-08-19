@@ -1,0 +1,21 @@
+{
+  "created_at_utc": "2026-08-19T08:27:36.264157+00:00",
+  "rows": 40,
+  "columns": [
+    "year",
+    "country",
+    "product",
+    "demand_kt",
+    "source",
+    "concept",
+    "component_rows"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\dgeg_domestic_sales_annual.csv",
+  "csv_sha256": "2315ccd694e85d6ba4c2fe070919b8669532ab25de66bcc34a980b52a61498f9",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\dgeg_domestic_sales_annual.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt",
+    "concept": "domestic market sales"
+  }
+}

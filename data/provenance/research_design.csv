@@ -1,0 +1,6 @@
+estimand,frequency,primary_source,causal
+net_import_to_demand_ratio,annual,JODI/Eurostat,no
+refinery_output_to_demand_ratio,annual,JODI/Eurostat,no
+2022_standardised_shock,annual,processed panel,no
+price_comovement,weekly,EC Weekly Oil Bulletin,no
+PT_minus_ES_price_spread,weekly,EC Weekly Oil Bulletin,conditional

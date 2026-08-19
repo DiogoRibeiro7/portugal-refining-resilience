@@ -1,0 +1,5 @@
+country,product,value_column,nobs,status,adf_statistic,p_value,used_lag,adf_nobs,stationary_5pct
+ES,diesel,price_without_tax_eur_per_1000l,1078,estimated,-2.107181528566506,0.24163669565526913,18,1059,False
+ES,gasoline,price_without_tax_eur_per_1000l,1078,estimated,-2.5097957663465844,0.1131090653511872,2,1075,False
+PT,diesel,price_without_tax_eur_per_1000l,1079,estimated,-2.4684892023327896,0.12333067359907018,17,1061,False
+PT,gasoline,price_without_tax_eur_per_1000l,1079,estimated,-2.4851586492542515,0.11912727184373567,13,1065,False

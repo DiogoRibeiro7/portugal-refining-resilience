@@ -1,0 +1,28 @@
+{
+  "created_at_utc": "2026-08-19T08:32:04.355245+00:00",
+  "rows": 586,
+  "columns": [
+    "date",
+    "product",
+    "demand_kt",
+    "exports_kt",
+    "imports_kt",
+    "refinery_output_kt",
+    "year",
+    "month",
+    "event_phase",
+    "net_imports_kt",
+    "gross_import_dependence",
+    "net_import_to_demand_ratio",
+    "export_to_demand",
+    "refinery_output_to_demand_ratio"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_monthly_analytical_panel.csv",
+  "csv_sha256": "f607b5de2c62b4086b87ef6898adb8abfeeaa28c625a4e6e689e92e712dd80d1",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_monthly_analytical_panel.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt",
+    "event_phases": "May 2021 closure; March 2022 energy stress"
+  }
+}

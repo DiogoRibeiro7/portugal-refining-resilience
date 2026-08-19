@@ -2,11 +2,24 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
-from .config import ProjectPaths
+from .config import ProjectPaths, load_analysis_config
 from .events import EVENT_PHASES
+
+
+def _bundle_first(paths: ProjectPaths, working: Path) -> Path:
+    """Prefer the bundled copy of a file over the working copy.
+
+    Report-writing prompts read ``artifacts/report_inputs/``. Validating the working
+    file instead would certify a table that is not the one the report was written
+    from, which is the opposite of what a checksum-protected bundle is for. The
+    working path is used only when the file has not been bundled yet.
+    """
+    bundled = paths.report_inputs / working.name
+    return bundled if bundled.exists() else working
 
 
 def _check_record(check: str, passed: bool, detail: str) -> dict[str, object]:
@@ -47,24 +60,72 @@ def validate_reconciliation(
     *,
     min_rows: int = 20,
     min_within_tolerance_share: float = 0.9,
+    accepted_divergences: list[dict[str, Any]] | None = None,
 ) -> tuple[bool, str]:
-    """Validate that a source reconciliation has enough overlap and mostly passes tolerance."""
+    """Validate a source reconciliation: enough overlap, and no unexplained divergence.
+
+    Two conditions apply. Every out-of-tolerance row must be named in
+    ``accepted_divergences`` with the reason it is accepted, so a new data vintage
+    cannot quietly widen the gap between sources however few cells it touches. And
+    ``min_within_tolerance_share`` of all rows must agree *without* invoking an
+    exception, so the exception list cannot grow until it carries the comparison.
+    """
     if not path.exists():
         return False, f"Missing reconciliation file: {path.name}"
     frame = pd.read_csv(path)
-    if "reconciliation_status" not in frame.columns:
-        return False, "Missing reconciliation_status column"
+    required = {"reconciliation_status", "year", "product", "flow"}
+    missing = required - set(frame.columns)
+    if missing:
+        return False, f"Reconciliation file missing columns: {sorted(missing)}"
     n_rows = len(frame)
     if n_rows < min_rows:
         return False, f"Only {n_rows} overlapping reconciliation rows; need at least {min_rows}"
-    within = frame["reconciliation_status"].eq("within_tolerance")
-    share = float(within.mean()) if n_rows else 0.0
+
+    accepted_keys = {
+        (int(entry["year"]), str(entry["product"]), str(entry["flow"]))
+        for entry in (accepted_divergences or [])
+    }
+    keys = list(
+        zip(
+            frame["year"].astype(int),
+            frame["product"].astype(str),
+            frame["flow"].astype(str),
+            strict=True,
+        )
+    )
+    is_accepted = pd.Series([key in accepted_keys for key in keys], index=frame.index)
+    flagged = frame["reconciliation_status"].ne("within_tolerance")
+
+    unexplained = frame.loc[flagged & ~is_accepted, ["year", "product", "flow"]]
+    if not unexplained.empty:
+        examples = unexplained.head(5).to_dict("records")
+        return (
+            False,
+            f"{len(unexplained)} unexplained divergence(s); justify each in "
+            f"config/analysis.yml source_reconciliation.accepted_divergences: {examples}",
+        )
+
+    stale = sorted(accepted_keys - {key for key, bad in zip(keys, flagged, strict=True) if bad})
+
+    # Measured over every row, counting a justified divergence as a divergence. This
+    # bounds the escape hatch: without it, listing enough exceptions would let two
+    # sources that broadly disagree pass a check whose whole purpose is to detect
+    # exactly that. The named-exception rule above stops silent drift; this stops the
+    # exception list growing until it carries the comparison.
+    share = float(frame["reconciliation_status"].eq("within_tolerance").mean())
     if share < min_within_tolerance_share:
         return (
             False,
-            f"{share:.1%} within tolerance; need at least {min_within_tolerance_share:.1%}",
+            f"only {share:.1%} of rows agree without invoking an exception; "
+            f"need at least {min_within_tolerance_share:.1%}",
         )
-    return True, f"{n_rows} rows; {share:.1%} within tolerance"
+    detail = (
+        f"{n_rows} rows; {share:.1%} agree outright; "
+        f"{int(is_accepted.sum())} justified divergence(s)"
+    )
+    if stale:
+        detail += f"; {len(stale)} accepted entr(y/ies) no longer diverge: {stale[:3]}"
+    return True, detail
 
 
 def validate_monthly_panel(path: Path) -> tuple[bool, str]:
@@ -146,7 +207,27 @@ def validate_price_outputs(metrics_dir: Path) -> tuple[bool, str]:
         return False, f"price_model_choice.csv missing columns: {sorted(missing_columns)}"
     if choices.empty:
         return False, "price_model_choice.csv has no rows"
-    return True, f"Price model choices recorded for {len(choices)} products"
+
+    # A levels regression on weekly fuel prices is only admissible when the
+    # diagnostics say so, so the coefficient table must carry that verdict rather
+    # than leaving a report writer to assume it.
+    models_path = metrics_dir / "price_comovement_models.csv"
+    if models_path.exists():
+        models = pd.read_csv(models_path)
+        verdict_columns = {"model_family", "levels_model_valid"}
+        missing_verdict = verdict_columns - set(models.columns)
+        if missing_verdict:
+            return (
+                False,
+                f"price_comovement_models.csv missing model-choice verdict columns: "
+                f"{sorted(missing_verdict)}",
+            )
+        unverdicted = models.loc[models["model_family"].isna(), "product"].unique()
+        if len(unverdicted):
+            return False, f"price_comovement_models.csv rows without a verdict: {list(unverdicted)}"
+
+    families = sorted(set(choices["model_family"].dropna().astype(str)))
+    return True, f"Price model choices recorded for {len(choices)} products: {families}"
 
 
 def build_readiness_checks(
@@ -166,7 +247,7 @@ def build_readiness_checks(
         _check_record("core_report_bundle_complete", bundle_complete, bundle_detail)
     ]
 
-    trade_path = paths.processed / "fuel_trade_annual.csv"
+    trade_path = _bundle_first(paths, paths.processed / "fuel_trade_annual.csv")
     if trade_path.exists():
         trade = pd.read_csv(trade_path)
         seed_only = "status" in trade.columns and set(trade["status"].dropna()) == {
@@ -185,20 +266,27 @@ def build_readiness_checks(
         checks.append(_check_record("trade_not_seed_only", False, "Missing fuel_trade_annual.csv"))
 
     completeness_files = [
-        paths.metrics / "jodi_trade_annual_completeness.csv",
-        paths.metrics / "jodi_demand_annual_completeness.csv",
-        paths.metrics / "jodi_refinery_output_annual_completeness.csv",
+        _bundle_first(paths, paths.metrics / name)
+        for name in (
+            "jodi_trade_annual_completeness.csv",
+            "jodi_demand_annual_completeness.csv",
+            "jodi_refinery_output_annual_completeness.csv",
+        )
     ]
     passed, detail = validate_jodi_completeness(completeness_files)
     checks.append(_check_record("jodi_annual_completeness_valid", passed, detail))
 
-    passed, detail = validate_monthly_panel(paths.processed / "fuel_monthly_analytical_panel.csv")
+    passed, detail = validate_monthly_panel(
+        _bundle_first(paths, paths.processed / "fuel_monthly_analytical_panel.csv")
+    )
     checks.append(_check_record("monthly_event_panel_valid", passed, detail))
 
-    passed, detail = validate_monthly_event_outputs(paths.metrics)
+    # These validators take a directory, so point them at the bundle once it exists.
+    evidence_dir = paths.report_inputs if paths.report_inputs.exists() else paths.metrics
+    passed, detail = validate_monthly_event_outputs(evidence_dir)
     checks.append(_check_record("monthly_event_outputs_valid", passed, detail))
 
-    eurostat_panel = paths.processed / "eurostat_physical_balance_panel.csv"
+    eurostat_panel = _bundle_first(paths, paths.processed / "eurostat_physical_balance_panel.csv")
     checks.append(
         _check_record(
             "eurostat_balance_available",
@@ -207,10 +295,23 @@ def build_readiness_checks(
         )
     )
 
-    passed, detail = validate_price_outputs(paths.metrics)
+    passed, detail = validate_price_outputs(evidence_dir)
     checks.append(_check_record("price_outputs_valid", passed, detail))
 
-    passed, detail = validate_reconciliation(paths.metrics / "jodi_dgeg_trade_reconciliation.csv")
+    reconciliation_config: dict[str, Any] = {}
+    try:
+        reconciliation_config = dict(
+            load_analysis_config(paths.root).get("source_reconciliation", {}) or {}
+        )
+    except (FileNotFoundError, ValueError):
+        reconciliation_config = {}
+    accepted = reconciliation_config.get("accepted_divergences") or []
+    share = float(reconciliation_config.get("min_within_tolerance_share", 0.9))
+    passed, detail = validate_reconciliation(
+        _bundle_first(paths, paths.metrics / "jodi_dgeg_trade_reconciliation.csv"),
+        min_within_tolerance_share=share,
+        accepted_divergences=list(accepted),
+    )
     checks.append(_check_record("dgeg_trade_reconciliation_valid", passed, detail))
 
     return pd.DataFrame(checks)

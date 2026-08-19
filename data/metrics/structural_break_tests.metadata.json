@@ -1,0 +1,23 @@
+{
+  "created_at_utc": "2026-08-19T08:32:24.867882+00:00",
+  "rows": 16,
+  "columns": [
+    "product",
+    "outcome",
+    "break_year",
+    "f_statistic",
+    "p_value",
+    "n_pre",
+    "n_post",
+    "window_start",
+    "window_end",
+    "excluded_years",
+    "method",
+    "bh_fdr_p_value"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\structural_break_tests.csv",
+  "csv_sha256": "783bf4bec2834c35853fd4eb598a62a43b98de1d52c31fc06884ddbac30f1c3d",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\structural_break_tests.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

@@ -42,9 +42,12 @@ _PRODUCT_LABEL_ALIASES: dict[str, set[str]] = {
         "MOTOR/AVIATION GASOLINE",
     },
 }
+# ``KTONS`` is the code the JODI world secondary CSV actually ships; the others are
+# accepted so hand-built or re-exported extracts still resolve.
 _TONNE_UNIT_CODES = {
     "KT",
     "KTON",
+    "KTONS",
     "1000 TONNES",
     "1000 TONS",
     "THOUSAND TONNES",
@@ -146,6 +149,19 @@ def filter_portugal_fuels(
         flow_mask |= out["_flow"].str.contains(token, regex=True)
 
     selected = out.loc[country_ok & (diesel_ok | gasoline_ok) & tonne_ok & flow_mask].copy()
+    if selected.empty:
+        # An empty selection means the source vocabulary moved, not that Portugal
+        # reported nothing. Report which predicate eliminated everything rather than
+        # handing back a silently empty panel.
+        raise ValueError(
+            "No JODI observations matched. Rows passing each filter: "
+            f"country={int(country_ok.sum())}, "
+            f"product={int((diesel_ok | gasoline_ok).sum())}, "
+            f"unit={int(tonne_ok.sum())}, flow={int(flow_mask.sum())}. "
+            f"Observed units={sorted(out['_unit'].unique())[:12]}, "
+            f"products={sorted(out['_product'].unique())[:12]}, "
+            f"flows={sorted(out['_flow'].unique())[:12]}."
+        )
     selected["product_canonical"] = "gasoline"
     selected.loc[diesel_ok.loc[selected.index], "product_canonical"] = "diesel"
 

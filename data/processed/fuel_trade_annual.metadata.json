@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-19T08:29:05.145734+00:00",
+  "rows": 80,
+  "columns": [
+    "year",
+    "country",
+    "product",
+    "flow",
+    "value_kt",
+    "source",
+    "status"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_trade_annual.csv",
+  "csv_sha256": "9119a457b9d0aee4cf98ecaa52eb503f2b638e34101929b518c37d9783782e32",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_trade_annual.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "kt"
+  }
+}

@@ -36,13 +36,17 @@ def test_validate_jodi_completeness_rejects_string_false(tmp_path: Path) -> None
 
 
 def test_validate_reconciliation_requires_tolerance_share(tmp_path: Path) -> None:
+    """Justifying every row must not turn a broad disagreement into a pass."""
     path = tmp_path / "reconciliation.csv"
-    pd.DataFrame({"reconciliation_status": ["review"] * 20}).to_csv(path, index=False)
+    frame = _reconciliation_frame({})
+    frame["reconciliation_status"] = "review"
+    frame.to_csv(path, index=False)
+    everything = frame[["year", "product", "flow"]].to_dict("records")
 
-    passed, detail = validate_reconciliation(path)
+    passed, detail = validate_reconciliation(path, accepted_divergences=everything)
 
     assert passed is False
-    assert "within tolerance" in detail
+    assert "without invoking an exception" in detail
 
 
 def test_validate_monthly_panel_requires_all_event_phases(tmp_path: Path) -> None:
@@ -161,3 +165,76 @@ def test_validate_price_outputs_requires_model_choice(tmp_path: Path) -> None:
 
     assert passed is False
     assert "price_model_choice.csv" in detail
+
+
+def _reconciliation_frame(statuses: dict[tuple[int, str, str], str]) -> pd.DataFrame:
+    rows = []
+    for year in range(2019, 2025):
+        for product in ("diesel", "gasoline"):
+            for flow in ("imports", "exports"):
+                rows.append(
+                    {
+                        "year": year,
+                        "product": product,
+                        "flow": flow,
+                        "reconciliation_status": statuses.get(
+                            (year, product, flow), "within_tolerance"
+                        ),
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
+def test_validate_reconciliation_rejects_an_unexplained_divergence(tmp_path: Path) -> None:
+    path = tmp_path / "jodi_dgeg_trade_reconciliation.csv"
+    _reconciliation_frame({(2022, "diesel", "exports"): "review"}).to_csv(path, index=False)
+
+    passed, detail = validate_reconciliation(path)
+
+    assert passed is False
+    assert "unexplained divergence" in detail
+    assert "2022" in detail
+
+
+def test_validate_reconciliation_accepts_a_justified_divergence(tmp_path: Path) -> None:
+    path = tmp_path / "jodi_dgeg_trade_reconciliation.csv"
+    _reconciliation_frame({(2022, "diesel", "exports"): "review"}).to_csv(path, index=False)
+
+    passed, detail = validate_reconciliation(
+        path,
+        accepted_divergences=[
+            {"year": 2022, "product": "diesel", "flow": "exports", "note": "vintage"}
+        ],
+    )
+
+    assert passed is True
+    assert "1 justified divergence" in detail
+
+
+def test_validate_reconciliation_still_fails_a_new_divergence(tmp_path: Path) -> None:
+    """Justifying one cell must not licence the next vintage to drift."""
+    path = tmp_path / "jodi_dgeg_trade_reconciliation.csv"
+    _reconciliation_frame(
+        {(2022, "diesel", "exports"): "review", (2023, "gasoline", "imports"): "review"}
+    ).to_csv(path, index=False)
+
+    passed, detail = validate_reconciliation(
+        path,
+        accepted_divergences=[{"year": 2022, "product": "diesel", "flow": "exports"}],
+    )
+
+    assert passed is False
+    assert "2023" in detail
+
+
+def test_validate_reconciliation_reports_entries_that_no_longer_diverge(tmp_path: Path) -> None:
+    path = tmp_path / "jodi_dgeg_trade_reconciliation.csv"
+    _reconciliation_frame({}).to_csv(path, index=False)
+
+    passed, detail = validate_reconciliation(
+        path,
+        accepted_divergences=[{"year": 2022, "product": "diesel", "flow": "exports"}],
+    )
+
+    assert passed is True
+    assert "no longer diverge" in detail

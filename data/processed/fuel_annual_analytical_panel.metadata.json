@@ -1,0 +1,32 @@
+{
+  "created_at_utc": "2026-08-19T08:31:11.533964+00:00",
+  "rows": 40,
+  "columns": [
+    "year",
+    "product",
+    "exports_kt",
+    "imports_kt",
+    "demand_kt",
+    "refinery_output_kt",
+    "refining_regime",
+    "net_imports_kt",
+    "gross_import_dependence",
+    "net_import_to_demand_ratio",
+    "export_to_demand",
+    "refinery_output_to_demand_ratio",
+    "imports_kt_yoy_change",
+    "imports_kt_yoy_pct",
+    "exports_kt_yoy_change",
+    "exports_kt_yoy_pct",
+    "demand_kt_yoy_change",
+    "demand_kt_yoy_pct",
+    "refinery_output_kt_yoy_change",
+    "refinery_output_kt_yoy_pct",
+    "net_imports_kt_yoy_change"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_annual_analytical_panel.csv",
+  "csv_sha256": "feb4e684119cc7a8d7177c97e438e36d964ad98ff4c44feabd6be19216895095",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_annual_analytical_panel.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

@@ -1,0 +1,7 @@
+product,event_year,value_column,pre_mean,post_mean,difference,difference_unit,difference_percentage_points,pct_difference,interpretation
+diesel,2021,gross_import_dependence,0.18965311966386733,0.274034231818791,0.08438111215492367,ratio,8.438111215492366,,descriptive pre/post difference; not causal
+gasoline,2021,gross_import_dependence,0.16665958075941728,0.2479228077880252,0.08126322702860792,ratio,8.126322702860792,,descriptive pre/post difference; not causal
+diesel,2021,net_import_to_demand_ratio,-0.11941722939961652,0.1830577206838948,0.30247495008351133,ratio,30.247495008351134,,descriptive pre/post difference; not causal
+gasoline,2021,net_import_to_demand_ratio,-1.3803954995398984,-0.9628633435807349,0.4175321559591635,ratio,41.75321559591635,,descriptive pre/post difference; not causal
+diesel,2021,refinery_output_to_demand_ratio,1.087696719359887,0.7672622497413867,-0.3204344696185003,ratio,-32.04344696185003,,descriptive pre/post difference; not causal
+gasoline,2021,refinery_output_to_demand_ratio,2.3928038148882975,1.974222353974528,-0.41858146091376947,ratio,-41.858146091376945,,descriptive pre/post difference; not causal
