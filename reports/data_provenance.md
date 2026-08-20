@@ -93,6 +93,9 @@ carries the machine-readable version, and notebook 20 blocks the report unless:
 
 - every number printed in a mapped table is reproducible from that table's declared file,
   at the precision the report prints;
+- every quantity stated in the prose, including the claim-evidence matrix, is reproducible from
+  the bundle. Figures the text derives rather than reads, such as a half-life computed from an
+  adjustment coefficient, are declared in `config/report_tables.yml` under `prose_allow`;
 - every sample size stated as `n=...` matches a fitted model;
 - an interval stated in words matches the configured event dates;
 - every trade cell the reconciliation flags has a sensitivity computed for it.

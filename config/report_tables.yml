@@ -37,3 +37,8 @@ tables:
     - annual_source_sensitivity.csv
   tab:windows:
     - event_window_sensitivity.csv
+
+# Quantities the prose derives rather than reads from a file. Each is computed in the
+# text from a value that is itself checked, so it has no row of its own to match.
+prose_allow:
+  0.6931: natural log of 2, used to turn an adjustment speed into a half-life

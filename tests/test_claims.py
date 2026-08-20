@@ -10,9 +10,11 @@ import pytest
 from portugal_refining_resilience.claims import (
     check_event_interval,
     check_flagged_cells_have_sensitivity,
+    check_prose_numbers,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     parse_latex_tables,
+    prose_without_tables,
     table_numbers,
     verify_table_values,
 )
@@ -187,3 +189,58 @@ def test_sensitivity_survival_handles_absent_input(empty: pd.DataFrame) -> None:
     passed, _ = check_sensitivity_survival(empty)
 
     assert passed is True
+
+
+PROSE = r"""
+Diesel demand averaged $4{,}522$~kt against output of $4{,}348$~kt.
+
+\begin{table}[htbp]
+\label{tab:x}
+\begin{tabular}{lr}
+\toprule
+a & 99.9 \
+\bottomrule
+\end{tabular}
+\end{table}
+"""
+
+
+def _bundle() -> list[pd.DataFrame]:
+    return [pd.DataFrame({"value": [4522.0, 4348.0]})]
+
+
+def test_prose_numbers_accepts_values_present_in_the_bundle() -> None:
+    passed, _ = check_prose_numbers(PROSE, _bundle())
+
+    assert passed is True
+
+
+def test_prose_numbers_catches_a_stale_value() -> None:
+    """The claim matrix carried averages from a superseded window."""
+    stale = PROSE.replace("$4{,}522$", "$5{,}064$")
+
+    passed, detail = check_prose_numbers(stale, _bundle())
+
+    assert passed is False
+    assert "5064" in detail.replace(".0", "")
+
+
+def test_prose_numbers_ignores_table_contents() -> None:
+    """Table values are checked against their own declared source, not the whole bundle."""
+    passed, _ = check_prose_numbers(PROSE, _bundle())
+
+    assert passed is True  # 99.9 lives inside the table and is not checked here
+
+
+def test_prose_numbers_honours_the_allow_list() -> None:
+    derived = PROSE.replace("$4{,}348$~kt", "$0.6931$")
+
+    assert check_prose_numbers(derived, _bundle())[0] is False
+    assert check_prose_numbers(derived, _bundle(), allow={0.6931})[0] is True
+
+
+def test_prose_without_tables_removes_float_environments() -> None:
+    body = prose_without_tables(PROSE)
+
+    assert "4{,}522" in body
+    assert "99.9" not in body

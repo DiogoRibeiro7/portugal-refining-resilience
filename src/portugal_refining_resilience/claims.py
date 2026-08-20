@@ -298,3 +298,54 @@ def load_table_sources(path: Path) -> dict[str, list[str]]:
     if not isinstance(payload, dict) or not isinstance(payload.get("tables"), dict):
         raise ValueError("report_tables.yml must contain a top-level 'tables' mapping")
     return {str(k): [str(v) for v in vs] for k, vs in payload["tables"].items()}
+
+
+def prose_without_tables(tex: str) -> str:
+    """Return the document body with table environments removed.
+
+    Table values are checked against the specific file each table declares. What is
+    left is prose, whose numbers were until now checked by nobody, which is where
+    stale values survived every earlier pass.
+    """
+    return re.sub(r"\\begin\{(table|longtable)\}.*?\\end\{\1\}", " ", tex, flags=re.DOTALL)
+
+
+#: Numbers written inside math mode, which is how the report states a quantity.
+_MATH = re.compile(r"\$([^$]{1,80})\$")
+
+
+def check_prose_numbers(
+    tex: str,
+    frames: list[pd.DataFrame],
+    *,
+    allow: set[float] | None = None,
+) -> tuple[bool, str]:
+    """Every quantity stated in the prose must be reproducible from the bundle.
+
+    Only math-mode spans are read, because that is how the report writes a number it
+    is asserting. Values that are stated in words, and years, are left alone. Figures
+    that are legitimately derived in the text rather than read from a file, such as a
+    half-life computed from an adjustment coefficient, are declared in the allow list
+    with a reason recorded beside them in configuration.
+    """
+    allow = allow or set()
+    body = prose_without_tables(tex)
+    unmatched: list[float] = []
+    for span in _MATH.findall(body):
+        cleaned = span.replace("{,}", "").replace("\\%", "")
+        for token in _NUMBER.findall(cleaned):
+            try:
+                value = float(token)
+            except ValueError:  # pragma: no cover - regex guarantees a number
+                continue
+            if 1900.0 <= value <= 2100.0 and value.is_integer():
+                continue
+            if abs(value) < 1e-9 or value in allow:
+                continue
+            decimals = len(token.split(".")[1]) if "." in token else 0
+            if not _reproducible(value, decimals, frames):
+                unmatched.append(value)
+    if unmatched:
+        shown = sorted(set(unmatched))[:10]
+        return False, f"{len(set(unmatched))} prose value(s) not reproducible: {shown}"
+    return True, "every quantity stated in the prose reproduces from the bundle"

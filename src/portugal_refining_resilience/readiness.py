@@ -9,6 +9,7 @@ import pandas as pd
 from .claims import (
     check_event_interval,
     check_flagged_cells_have_sensitivity,
+    check_prose_numbers,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     load_table_sources,
@@ -429,7 +430,19 @@ def build_report_claim_checks(
         passed, detail = check_flagged_cells_have_sensitivity(reconciliation, sensitivities)
         checks.append(_check_record("disputed_cells_have_sensitivity", passed, detail))
 
-    # 5. surface results that change significance when the source is swapped
+    # 5. numbers stated in the prose, including the claim-evidence matrix
+    every_frame = [_read_if_present(path) for path in sorted(paths.report_inputs.glob("*.csv"))]
+    every_frame = [frame for frame in every_frame if not frame.empty]
+    allow: set[float] = set()
+    if mapping_path.exists():
+        import yaml
+
+        payload = yaml.safe_load(mapping_path.read_text(encoding="utf-8")) or {}
+        allow = {float(v) for v in (payload.get("prose_allow") or {})}
+    passed, detail = check_prose_numbers(tex, every_frame, allow=allow)
+    checks.append(_check_record("report_prose_matches_bundle", passed, detail))
+
+    # 6. surface results that change significance when the source is swapped
     passed, detail = check_sensitivity_survival(
         _read_if_present(paths.report_inputs / "annual_source_sensitivity.csv")
     )
