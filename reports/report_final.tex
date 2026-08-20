@@ -627,9 +627,11 @@ cannot separate a May 2021 event from a March 2022 one. The import level is weak
 energy-stress term reaches five per cent ($p=0.015$) but its Matosinhos term only ten per cent
 ($p=0.081$), so the import channel is not relied on for the closure itself.
 
-Diesel refinery output falls by roughly $103$~kt per month at the closure boundary
-and by a further $148$~kt per month in the stress period. The net-import-to-demand
-ratio rises by $0.19$ at the closure and by $0.37$ during the stress phase, and the
+Diesel refinery output sits about $103$~kt per month below the extrapolated pre-closure
+trend during the transition and about $148$~kt per month below it during the stress period.
+The second figure is measured against the same counterfactual as the first, not against the
+transition phase, so the two do not add. The net-import-to-demand ratio sits $0.19$ above
+that counterfactual at the closure and $0.37$ above it during the stress phase, and the
 closure phase also carries a significant upward slope of $0.038$ per month, meaning dependence continued to widen within that
 phase rather than stepping once and holding.
 
@@ -742,7 +744,7 @@ not valid for inference for both products. It is reported here because
 discarding it silently would hide how much specification choice matters, not because it supports
 any claim.
 
-On that specification the diesel interaction term $\text{ES}\times\text{post}$ is $-0.102$
+On that specification the diesel interaction term $\text{ES}\times\text{post}$ is $-0.101$
 ($p<0.001$): Portuguese prices appear to become \emph{less} responsive to Spanish prices after the
 transition. The licensed error-correction model gives $+0.529$ ($p<0.001$) on the same
 interaction, the opposite sign. The levels model also reports a deterministic trend of $-0.015$
@@ -858,10 +860,17 @@ These are descriptive.
 
 The two spreads behave differently under test, on $1{,}079$ observations each. The gasoline
 spread rejects a unit root decisively (ADF $p=0.0004$) and can be read as fluctuating around a
-stable level, which is consistent with the cointegration found for that pair. The diesel spread
-does not reject ($p=0.256$), so it must not be read as a disequilibrium measure, and the change
-in its mean across the transition describes where the series sat rather than a departure from an
-equilibrium.
+stable level. The diesel spread does not reject ($p=0.256$), so it must not be read as a
+disequilibrium measure, and the change in its mean across the transition describes where the
+series sat rather than a departure from an equilibrium.
+
+This does not contradict Section~\ref{sec:pricediag}, where both pairs are cointegrated. The
+raw difference $\text{PT}-\text{ES}$ is the cointegrating combination only if the long-run
+coefficient is one and the relation holds in levels rather than logs. Neither condition is met:
+the estimated slopes are $0.956$ for diesel and $0.974$ for gasoline, and the relation is
+estimated in logs. A pair can therefore be cointegrated while its unweighted EUR spread
+wanders, which is what the diesel series does. These spread tests are descriptive companions to
+the figures above, not a second opinion on the model choice.
 
 \section{Portugal--Spain Comparison}
 
@@ -1039,7 +1048,7 @@ stock changes are not modelled.
 The 2013 Sines hydrocracker coincides with an unambiguous structural change. Diesel refinery
 output and exports broke upward at 2013 and Portugal moved from net diesel importer to net diesel exporter,
 a result that survives multiplicity adjustment across twenty-four tests and is corroborated by
-interrupted-trend models with level shifts of $+1{,}900$~kt in exports and $-0.52$ in the
+interrupted-trend models with level shifts of $+2{,}005.5$~kt in exports and $-0.540$ in the
 net-import ratio.
 
 After May 2021 the direction reverses. By 2023 domestic diesel manufacturing covered two thirds

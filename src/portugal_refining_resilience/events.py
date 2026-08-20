@@ -25,10 +25,14 @@ def assign_monthly_event_phase(
     if not closure < stress < post_stress:
         raise ValueError("Expected closure_date < energy_stress_date < post_stress_date")
 
+    # Every comparison against NaT is False, so a missing date would keep the default
+    # and be silently reported as a pre-closure observation. An undated row belongs to
+    # no phase, and saying so lets the panel validation see it.
     phase = pd.Series("pre_matosinhos_closure", index=dates.index, dtype="object")
     phase.loc[(parsed >= closure) & (parsed < stress)] = "matosinhos_transition"
     phase.loc[(parsed >= stress) & (parsed < post_stress)] = "energy_stress_2022"
     phase.loc[parsed >= post_stress] = "post_stress"
+    phase.loc[parsed.isna()] = None
     return phase
 
 

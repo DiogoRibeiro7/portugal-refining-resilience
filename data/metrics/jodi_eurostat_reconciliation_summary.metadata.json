@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-20T11:29:53.867493+00:00",
+  "rows": 1,
+  "columns": [
+    "comparison",
+    "n_cells",
+    "n_agree",
+    "share_within_tolerance",
+    "n_divergent",
+    "n_divergent_before_2019",
+    "first_year",
+    "last_year"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_reconciliation_summary.csv",
+  "csv_sha256": "36bfeee135e80a62572ac761a864539036765a906436e6c42bcec469bd5e9405",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_reconciliation_summary.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

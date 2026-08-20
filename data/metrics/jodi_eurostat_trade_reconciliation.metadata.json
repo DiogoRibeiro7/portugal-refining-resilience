@@ -1,0 +1,24 @@
+{
+  "created_at_utc": "2026-08-20T11:29:53.837343+00:00",
+  "rows": 80,
+  "columns": [
+    "year",
+    "country_jodi",
+    "product",
+    "flow",
+    "value_kt_jodi",
+    "source_jodi",
+    "status",
+    "country_eurostat",
+    "value_kt_eurostat",
+    "source_eurostat",
+    "difference_kt",
+    "difference_pct_comparison",
+    "reconciliation_status"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_trade_reconciliation.csv",
+  "csv_sha256": "3258663d8e2d4497fa0eb4a7290e160239d4b79f00c417a2c7c3e395bf6ee74a",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_trade_reconciliation.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

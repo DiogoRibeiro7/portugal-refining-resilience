@@ -423,3 +423,35 @@ def adf_lag_rule_sensitivity(design: pd.DataFrame, *, product: str) -> pd.DataFr
                     }
                 )
     return pd.DataFrame(rows)
+
+
+def model_choice_scale_comparison(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Run the selection diagnostics on both scales and record the disagreement.
+
+    The paper states that the EUR-levels diagnostic and the log diagnostic disagree for
+    diesel, and rests a specification decision on it. That comparison has to exist as
+    evidence rather than as an assertion about a version of the code that no longer
+    runs, so both are computed here and the superseded scale is kept alongside the one
+    used.
+    """
+    required = {"PT", "ES", "log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+    rows: list[dict[str, object]] = []
+    for scale, columns in (("EUR_per_1000L", ("PT", "ES")), ("log", ("log_PT", "log_ES"))):
+        paired = design[list(columns)].apply(pd.to_numeric, errors="coerce").dropna()
+        pt, es = paired[columns[0]], paired[columns[1]]
+        _, coint_p, _ = coint(pt, es)
+        rows.append(
+            {
+                "product": product,
+                "scale": scale,
+                "used_for_model_choice": scale == "log",
+                "pt_adf_p_value": float(adfuller(pt, autolag="AIC")[1]),
+                "es_adf_p_value": float(adfuller(es, autolag="AIC")[1]),
+                "cointegration_p_value": float(coint_p),
+                "cointegrated_5pct": bool(float(coint_p) < 0.05),
+            }
+        )
+    return pd.DataFrame(rows)

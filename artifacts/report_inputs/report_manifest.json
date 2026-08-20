@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-20T11:14:19.830180+00:00",
+  "created_at_utc": "2026-08-20T11:30:05.769636+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -156,6 +156,13 @@
       "bytes": 1793
     },
     {
+      "file": "price_model_choice_scale_comparison.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice_scale_comparison.csv",
+      "sha256": "c4fceb9a087d12363c079260a82fec4c7c2df97af928f7c972d6d3cb2240f0ac",
+      "bytes": 466
+    },
+    {
       "file": "price_short_run_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_short_run_models.csv",
@@ -203,6 +210,20 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_dgeg_trade_reconciliation.csv",
       "sha256": "edc3d81fab369bb8e288eb1ad4ef815d5449206c1318f77d6adbab44f3bed30d",
       "bytes": 2997
+    },
+    {
+      "file": "jodi_eurostat_trade_reconciliation.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_trade_reconciliation.csv",
+      "sha256": "3258663d8e2d4497fa0eb4a7290e160239d4b79f00c417a2c7c3e395bf6ee74a",
+      "bytes": 8946
+    },
+    {
+      "file": "jodi_eurostat_reconciliation_summary.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_reconciliation_summary.csv",
+      "sha256": "36bfeee135e80a62572ac761a864539036765a906436e6c42bcec469bd5e9405",
+      "bytes": 153
     },
     {
       "file": "eurostat_physical_balance_panel.csv",
