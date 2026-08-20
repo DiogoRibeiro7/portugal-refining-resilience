@@ -63,15 +63,18 @@ over the full thirty-five years detects a smaller level shift in diesel exports 
 beginning in 2005, and the gasoline ones are no longer significant, so the annual evidence for
 2022 is thinner than a short window suggests. A monthly
 segmented model with month fixed effects separates the May 2021 closure from the March 2022
-energy shock and finds both: diesel refinery output falls $103$~kt per month at the closure
-boundary and a further $148$~kt per month during the stress period, with the
-net-import-to-demand ratio rising $0.19$ and $0.37$ respectively.
+energy shock and finds both. Each phase is measured against the same counterfactual, the
+pre-closure trend extrapolated forward, rather than against the phase before it: diesel
+refinery output sits $103$~kt per month below that counterfactual during the transition and
+$148$~kt per month below it during the stress period, with the net-import-to-demand ratio
+$0.19$ and $0.37$ above it.
 
 Over 2018--2024 Spanish diesel output covered $0.85$--$0.93$ of Spanish demand with no trend,
 while Portugal's fell to $0.68$. That weakens a purely common-shock account, though the two systems
-differ on margins this paper does not measure. On prices, the contemporaneous elasticity of
-Portuguese to Spanish pre-tax diesel prices rises from $0.73$ to approximately $1.01$; the
-gasoline elasticity does not move, but its error-correction speed roughly triples, so both fuels
+differ on margins this paper does not measure. On prices, both pairs are cointegrated in logs and both
+error-correction speeds more than triple: diesel from $-0.133$ to $-0.466$ per week and gasoline
+from $-0.091$ to $-0.315$. The diesel contemporaneous elasticity also rises, from $0.713$ to
+$1.242$; the gasoline elasticity does not move, so both fuels
 became more tightly linked to Spain through different channels. These are co-movement measures,
 not causal pass-through.
 
@@ -241,7 +244,8 @@ The refinery-output-to-demand ratio is \emph{not} self-sufficiency. Portuguese r
 may be exported while domestic demand is met partly by imports, and for gasoline that is the
 normal state of the system.
 
-\textbf{Annual breaks.} Chow tests on a linear trend at pre-specified break years, with 2021
+\textbf{Annual breaks.} Chow tests on a linear trend at candidate break years, of which 2013
+and 2022 were pre-specified and 2000 is exploratory, with 2021
 excluded as a transition year so that it is assigned to neither side, and Benjamini--Hochberg
 adjustment across all twenty-four tests.
 
@@ -707,17 +711,28 @@ unchanged in each.
 \subsection{Diagnostics and model choice}
 \label{sec:pricediag}
 
-Weekly pre-tax prices are the primary measure. Augmented Dickey--Fuller tests on the levels fail
-to reject a unit root for all four series: Portuguese diesel $p=0.204$, Spanish diesel $p=0.263$,
-Portuguese gasoline $p=0.245$, Spanish gasoline $p=0.126$. A regression in levels is therefore at
-risk of being spurious for both products, and the model family is selected accordingly.
+Weekly pre-tax prices are the primary measure. The diagnostics are run on log levels, which is
+the scale the models are estimated on: the short-run specification regresses $\Delta \log$ PT on
+$\Delta \log$ ES, and the error-correction model takes its long-run residual from $\log$ PT on
+$\log$ ES. An earlier version of this analysis ran them on the EUR per 1000~litres levels, and
+the two scales do not agree where it matters: diesel Engle--Granger is $0.088$ on the EUR levels
+and $0.022$ on logs, which is the difference between fitting an error-correction model and
+declaring the pair not cointegrated. The log-scale result is the one reported here.
 
-For diesel the pair does not reject the null of no cointegration (Engle--Granger $p=0.088$), so
-the short-run log-difference model carries the inference. That margin is narrow enough to note:
-on a longer price series, or under a different lag choice, diesel could plausibly cross into the
-cointegrated case, and the short-run reading should be held with that in mind. For gasoline the
-pair \emph{is} cointegrated ($p=0.00001$), so an error-correction model is indicated and
-estimated.
+Augmented Dickey--Fuller tests on the log levels do not reject a unit root for diesel in either
+country: Portugal $p=0.145$, Spain $p=0.214$. For gasoline they reject marginally, Portugal
+$p=0.041$ and Spain $p=0.049$, but that verdict is not robust: substituting BIC for AIC in the
+lag selection moves the Spanish figure to $0.071$ and the rejection disappears. Across the six
+combinations of deterministic term and lag rule tried, no series rejects at one per cent. A
+levels regression is admitted only on rejection at one per cent rather than five, because the
+two errors are not symmetric. Regressing one near-integrated series on another is the spurious
+regression case and its inference is invalid, whereas an error-correction model whose series
+turn out to be stationary retains a valid stationary regressor and nests the difference
+specification. Neither product clears that bar.
+
+Both pairs are then cointegrated in logs: diesel Engle--Granger $p=0.022$ and gasoline
+$p=0.000053$. An error-correction model is therefore indicated for both, and estimated in
+Section~\ref{sec:ecm}.
 
 \subsection{The levels model, and why it is not used}
 \label{sec:levels}
@@ -729,10 +744,12 @@ any claim.
 
 On that specification the diesel interaction term $\text{ES}\times\text{post}$ is $-0.102$
 ($p<0.001$): Portuguese prices appear to become \emph{less} responsive to Spanish prices after the
-transition. The licensed short-run specification gives $+0.272$ ($p<0.001$), the opposite sign.
-The levels model also reports a deterministic trend of $-0.015$ per week ($p=0.005$). Both
-features are what a regression between two integrated series without a cointegrating relationship
-is expected to produce. No conclusion in this paper rests on it.
+transition. The licensed error-correction model gives $+0.529$ ($p<0.001$) on the same
+interaction, the opposite sign. The levels model also reports a deterministic trend of $-0.015$
+per week ($p=0.005$). Both features are what a regression between two integrated series
+estimated without its cointegrating relationship is expected to produce. No conclusion in this
+paper rests on it, and the sign reversal is the reason the stationarity bar in
+Section~\ref{sec:pricediag} is set where it is.
 
 \subsection{Short-run co-movement}
 
@@ -755,44 +772,72 @@ gasoline & $\Delta \log$ ES & 0.7997 & 0.0593 & $<0.001$ \\
 \end{tabular}
 \end{table}
 
-The weekly elasticity of Portuguese to Spanish pre-tax diesel prices rises from $0.73$ before the
-May 2021 transition to approximately $1.01$ after it, and the increase is precisely estimated.
-The gasoline interaction is small and statistically indistinguishable from no change.
+This is the difference-only specification. It is nested in the error-correction models below,
+which are the ones the diagnostics licence, and it is reported because it is what a reader would
+obtain without the long-run term and because the two give different short-run elasticities. On
+this specification the weekly elasticity of Portuguese to Spanish pre-tax diesel prices rises
+from $0.73$ to $1.01$; the gasoline interaction is small and indistinguishable from no change.
+Omitting the disequilibrium term is not innocuous: for diesel it moves the post-transition
+elasticity from $1.24$ to $1.01$, because part of the adjustment it leaves out is loaded onto
+the contemporaneous coefficient.
 
-\subsection{Gasoline error correction}
+\subsection{Error correction}
+\label{sec:ecm}
 
-For gasoline the short-run coefficient is not the whole result. Table~\ref{tab:ecm} reports the
-two-step Engle--Granger model the cointegration diagnostic indicates. The long-run relation is
-close to unit elastic, $\log \text{PT} = 0.148 + 0.974 \log \text{ES}$, and the speed at which
-Portuguese gasoline prices close a gap against that relation roughly triples after the
-transition, from $-0.091$ to $-0.299$ per week. The implied half-life of a deviation falls from
-about eight weeks to a little over two.
+Both pairs are cointegrated in logs, so for both the short-run coefficient is not the whole
+result. Table~\ref{tab:ecm} reports the two-step Engle--Granger models. Both long-run relations
+are close to unit elastic: $\log \text{PT} = 0.279 + 0.956 \log \text{ES}$ for diesel and
+$\log \text{PT} = 0.148 + 0.974 \log \text{ES}$ for gasoline.
+
+The adjustment speed, the share of a gap against that relation closed each week, more than
+triples for both products after the transition. For diesel it moves from $-0.133$ to $-0.466$,
+shortening the half-life of a deviation from $4.9$ to $1.1$ weeks. For gasoline it moves from
+$-0.091$ to $-0.315$, a half-life of $7.3$ weeks falling to $1.8$. Both changes are precisely
+estimated.
+
+The two products differ in the other channel. The diesel contemporaneous elasticity rises from
+$0.713$ to $1.242$, and the increase is precisely estimated ($p<0.001$). The gasoline
+contemporaneous elasticity does not move: its interaction is $0.205$ with $p=0.218$, so the
+post-transition level of $0.994$ is not distinguishable from the pre-transition $0.789$.
 
 \begin{table}[htbp]
 \centering
-\caption{Gasoline error-correction model, two-step Engle--Granger, HAC(8), $n=1{,}078$ weeks.}
+\caption{Error-correction models, two-step Engle--Granger, HAC(8), $n=1{,}078$ weeks.}
 \label{tab:ecm}
-\begin{tabular}{lrrr}
+\begin{tabular}{llrrr}
 \toprule
-Term & Estimate & Std.\ error & $p$ \\
+Product & Term & Estimate & Std.\ error & $p$ \\
 \midrule
-Disequilibrium (lagged) & $-$0.0907 & 0.0354 & 0.010 \\
-\quad $\times$ post & $-$0.2241 & 0.0741 & 0.003 \\
-$\Delta \log$ ES & 0.7889 & 0.0720 & $<0.001$ \\
-\quad $\times$ post & 0.2052 & 0.1667 & 0.218 \\
-post & $-$0.0018 & 0.0014 & 0.204 \\
+diesel & Disequilibrium (lagged) & $-$0.1326 & 0.0257 & $<0.001$ \\
+ & \quad $\times$ post & $-$0.3335 & 0.0784 & $<0.001$ \\
+ & \quad post-period level & $-$0.4662 & 0.0741 & $<0.001$ \\
+ & $\Delta \log$ ES & 0.7129 & 0.0396 & $<0.001$ \\
+ & \quad $\times$ post & 0.5289 & 0.1124 & $<0.001$ \\
+ & \quad post-period level & 1.2418 & 0.1052 & $<0.001$ \\
+ & post & $-$0.0071 & 0.0017 & $<0.001$ \\
+\midrule
+gasoline & Disequilibrium (lagged) & $-$0.0907 & 0.0354 & 0.010 \\
+ & \quad $\times$ post & $-$0.2241 & 0.0741 & 0.003 \\
+ & \quad post-period level & $-$0.3148 & 0.0652 & $<0.001$ \\
+ & $\Delta \log$ ES & 0.7889 & 0.0720 & $<0.001$ \\
+ & \quad $\times$ post & 0.2052 & 0.1667 & 0.218 \\
+ & \quad post-period level & 0.9941 & 0.1503 & $<0.001$ \\
+ & post & $-$0.0018 & 0.0014 & 0.204 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Gasoline linkage to Spain therefore did tighten. It tightened in the long-run adjustment channel
-rather than in contemporaneous co-movement, which a difference-only model cannot observe by
-construction. Reporting only the short-run coefficient would have supported the conclusion that
-gasoline was unaffected, and that conclusion would have been an artefact of the specification.
+Linkage to Spain therefore tightened for both fuels, and for both it tightened in the long-run
+adjustment channel, which a difference-only model cannot observe by construction. For diesel the
+contemporaneous channel tightened as well. Reporting only the short-run coefficient would have
+supported the conclusion that gasoline was unaffected, and that conclusion would have been an
+artefact of the specification.
 
-The disequilibrium term is a generated regressor, so the second-stage standard errors are
-conditional on the first-stage cointegrating estimate. HAC covariance mitigates but does not
-remove this.
+Two caveats belong with these estimates. The disequilibrium term is a generated regressor, so the
+second-stage standard errors are conditional on the first-stage cointegrating estimate; HAC
+covariance mitigates but does not remove this. And the diesel cointegration verdict rests on
+$p=0.022$, which clears five per cent but not one, so the diesel model is the more
+specification-dependent of the two.
 
 \subsection{Price spreads}
 \label{sec:spreads}
@@ -1047,16 +1092,16 @@ Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes 
 Diesel 2022 annual results do not depend on the disputed cell & Table~\ref{tab:sourcesens} & association & Annual panel uses the corroborated source throughout \\
 No 2022 gasoline annual result reaches significance & Table~\ref{tab:sourcesens} & --- & Weak on either source; not relied on \\
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
-Refinery output shifts $-102.89$ kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
-2022 stress adds a further $-148.25$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
+Refinery output sits $-102.89$ kt/month below the pre-closure counterfactual in the transition & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
+In the stress phase it sits $-148.25$ kt/month below the same counterfactual & Table~\ref{tab:monthly} & association & Not incremental to the transition shift; confounded with demand recovery \\
 Monthly models cover 276 months, 2002--2024 & Section~\ref{sec:coverage} & descriptive & JODI begins in 2002, later than the annual window \\
 2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
-All four price levels are non-stationary & Section~\ref{sec:pricediag} & descriptive & ADF only; no break-robust unit-root test \\
-Diesel does not reject no-cointegration at $p=0.088$; gasoline does & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification \\
-Levels model gives the opposite sign and is not used & Section~\ref{sec:levels} & --- & Retained as a specification warning only \\
-Diesel elasticity rises 0.73 to 1.01 & Table~\ref{tab:price} & association & Retail, not wholesale, prices \\
-Gasoline short-run elasticity unchanged & Table~\ref{tab:price} & association & Not the whole picture; see the ECM \\
-Gasoline adjustment speed triples & Table~\ref{tab:ecm} & association & Generated-regressor standard errors \\
+Diesel log prices are non-stationary; gasoline rejects only marginally & Section~\ref{sec:pricediag} & descriptive & ADF only; the gasoline verdict changes with the lag rule \\
+Both pairs are cointegrated in logs, diesel $p=0.022$ and gasoline $p=0.000053$ & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification; diesel clears five per cent but not one \\
+EUR-levels model gives the opposite sign and is not used & Section~\ref{sec:levels} & --- & Retained as a specification warning only \\
+Diesel contemporaneous elasticity rises $0.7129$ to $1.2418$ & Tables~\ref{tab:ecm}, \ref{tab:price} & association & Retail, not wholesale, prices; $1.01$ in the difference-only model \\
+Gasoline contemporaneous elasticity unchanged & Table~\ref{tab:ecm} & association & Interaction $p=0.218$; not the whole picture, see the adjustment speed \\
+Both adjustment speeds more than triple & Table~\ref{tab:ecm} & association & Generated-regressor standard errors \\
 PT--ES diesel spread moves $-30.8$ EUR/1000L & Section~\ref{sec:spreads} & descriptive & That spread is non-stationary; not a disequilibrium measure \\
 Diesel spread is not mean-reverting; the gasoline spread is & Section~\ref{sec:spreads} & descriptive & Diesel ADF $p=0.256$, gasoline $p=0.0004$ \\
 Spanish diesel balance is flat while Portugal's falls & Table~\ref{tab:spain} & descriptive & Weakens but does not dispose of the common-shock account \\

@@ -1,10 +1,10 @@
 product,term,estimate,std_error,p_value,nobs,covariance,outcome,comparison,model,model_family,levels_model_valid
-diesel,const,-5.069102105490116,8.621810963575081,0.5565729894680407,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,short_run_log_difference,False
-diesel,ES,1.0254201907158258,0.0145336065353111,0.0,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,short_run_log_difference,False
-diesel,ES_x_post,-0.10102341308066529,0.023805158259495075,2.1980400464080265e-05,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,short_run_log_difference,False
-diesel,trend,-0.014829985182751831,0.005235276787294304,0.004615622328110015,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,short_run_log_difference,False
-diesel,post,74.15046533349187,18.940191285247927,9.041179588170669e-05,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,short_run_log_difference,False
-diesel,post_trend,-0.09895657175564065,0.03648869065481967,0.006688278033992916,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,short_run_log_difference,False
+diesel,const,-5.069102105490116,8.621810963575081,0.5565729894680407,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
+diesel,ES,1.0254201907158258,0.0145336065353111,0.0,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
+diesel,ES_x_post,-0.10102341308066529,0.023805158259495075,2.1980400464080265e-05,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
+diesel,trend,-0.014829985182751831,0.005235276787294304,0.004615622328110015,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
+diesel,post,74.15046533349187,18.940191285247927,9.041179588170669e-05,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
+diesel,post_trend,-0.09895657175564065,0.03648869065481967,0.006688278033992916,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
 gasoline,const,6.200620812119829,8.569195785214651,0.46931487145061335,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
 gasoline,ES,1.0144541185003833,0.015639893286703885,0.0,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False
 gasoline,ES_x_post,-0.07324126042740077,0.0362026878286717,0.04306396985032026,1079.0,HAC(8),PT pre-tax EUR/1000L,ES pre-tax EUR/1000L,PT-ES price co-movement with ES_x_post interaction,ecm_required,False

@@ -15,6 +15,7 @@ from portugal_refining_resilience.claims import (
     check_event_interval,
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
+    check_prose_statistics,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     claim_matrix_rows,
@@ -413,5 +414,74 @@ def test_bundle_within_window_ignores_files_with_no_year(
     )
 
     passed, _ = check_bundle_within_window(inputs, start_year=1990, end_year=2024)
+
+    assert passed is True
+
+
+STATS = r"""
+The pair does not reject no-cointegration (Engle--Granger $p=0.088$), and the break is
+clear ($F=22.0$, adjusted $p<0.001$).
+"""
+
+
+def _typed_bundle() -> list[pd.DataFrame]:
+    """A bundle where 0.088 exists, but not as a p-value."""
+    return [
+        pd.DataFrame({"cointegration_p_value": [0.0218, 0.000053]}),
+        pd.DataFrame({"p_value": [0.005, 0.0001]}),
+        pd.DataFrame({"f_statistic": [22.0, 3.1]}),
+        pd.DataFrame({"gross_import_dependence": [0.0884, 0.5]}),
+    ]
+
+
+def test_prose_statistics_catches_a_p_value_that_is_only_a_coincidence() -> None:
+    """0.088 stopped being the diesel cointegration p-value and nothing noticed.
+
+    ``check_prose_numbers`` accepted it because an import-dependence ratio sits within
+    half a printed unit. A p-value has to match something that is a p-value.
+    """
+    passed, detail = check_prose_statistics(STATS, _typed_bundle())
+
+    assert passed is False
+    assert "0.088" in detail
+
+
+def test_prose_statistics_accepts_a_current_p_value() -> None:
+    current = STATS.replace("$p=0.088$", "$p=0.022$")
+
+    passed, _ = check_prose_statistics(current, _typed_bundle())
+
+    assert passed is True
+
+
+def test_prose_statistics_honours_the_comparison() -> None:
+    """``p<0.001`` asserts a bound, so it must not be matched as an equality."""
+    passed, _ = check_prose_statistics(
+        r"the break is clear ($F=22.0$, adjusted $p<0.001$)", _typed_bundle()
+    )
+
+    assert passed is True
+
+
+def test_prose_statistics_checks_f_against_f_columns() -> None:
+    wrong = STATS.replace("$F=22.0$", "$F=99.9$").replace("$p=0.088$", "$p=0.022$")
+
+    passed, detail = check_prose_statistics(wrong, _typed_bundle())
+
+    assert passed is False
+    assert "99.9" in detail
+
+
+def test_claim_matrix_reads_every_table_a_row_cites(
+    matrix_sources: dict[str, list[pd.DataFrame]],
+) -> None:
+    """A row comparing the licensed model with another must be checkable against both."""
+    row = MATRIX.replace(
+        "Diesel elasticity reaches $1.01$ & Table~\\ref{tab:price}",
+        "Diesel elasticity reaches $1.01$, or $1.0072$ in the other & "
+        "Tables~\\ref{tab:price}, \\ref{tab:monthly}",
+    )
+
+    passed, _ = check_claim_matrix(row, matrix_sources, [])
 
     assert passed is True

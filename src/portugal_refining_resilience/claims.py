@@ -17,6 +17,7 @@ must have a sensitivity computed for it.
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -409,8 +410,14 @@ def check_claim_matrix(
     allow = allow or set()
     bad: list[str] = []
     for row in claim_matrix_rows(tex):
-        label = re.search(r"\\ref\{(tab:[^{}]+)\}", row)
-        frames = table_frames.get(label.group(1)) if label else None
+        # A row may cite more than one table, and then its numbers may come from any of
+        # them: a claim about the licensed model that names the difference-only figure
+        # for comparison is checkable only against both.
+        frames = [
+            frame
+            for label in re.findall(r"\\ref\{(tab:[^{}]+)\}", row)
+            for frame in table_frames.get(label, [])
+        ]
         if not frames:
             frames = fallback
         claim = _strip_latex(row.split("&")[0])[:44]
@@ -467,3 +474,71 @@ def check_bundle_within_window(
         f"every bundle artifact stays within {start_year}-{end_year}; "
         f"{len(exempt)} declared exemption(s)"
     )
+
+
+#: A statistic quoted in prose, with the comparison it asserts.
+_P_VALUE = re.compile(r"p\s*(=|<|>|\\le|\\leq|\\ge|\\geq)\s*\$?\s*(\d*\.\d+|\d+)")
+_F_STATISTIC = re.compile(r"F\$?\s*(=)\s*\$?\s*(\d*\.\d+|\d+)")
+
+#: Which columns hold which kind of statistic.
+_STATISTIC_COLUMNS: dict[str, Callable[[str], bool]] = {
+    "p": lambda name: "p_value" in name or name == "p",
+    "F": lambda name: "f_statistic" in name,
+}
+
+
+def _satisfied(operator: str, quoted: float, decimals: int, values: list[float]) -> bool:
+    """Does some recorded statistic support the comparison the prose asserts?"""
+    tolerance = 0.5 * (10.0**-decimals) + 1e-9
+    if operator == "=":
+        return any(abs(value - quoted) <= tolerance for value in values)
+    if operator in {"<", "\\le", "\\leq"}:
+        return any(value <= quoted + tolerance for value in values)
+    return any(value >= quoted - tolerance for value in values)
+
+
+def check_prose_statistics(
+    tex: str, frames: list[pd.DataFrame], *, checked_labels: set[str] | None = None
+) -> tuple[bool, str]:
+    """Check quoted test statistics against columns that hold that kind of statistic.
+
+    ``check_prose_numbers`` accepts any number that appears anywhere in the bundle,
+    which is too weak for a statistic. When the price model selection was corrected and
+    the diesel cointegration p-value moved from 0.088 to 0.022, the report kept quoting
+    0.088 and every gate passed: a Eurostat balance residual and several monthly
+    import-dependence ratios sit within half a printed unit of 0.088, so the number was
+    reproducible from the bundle while being false about the thing it described.
+
+    A p-value is therefore checked only against columns that hold p-values, and an F
+    statistic only against F columns. The comparison is honoured, so ``p<0.001`` asks
+    whether some recorded p-value is below the bound rather than equal to it.
+
+    A bound asserted over a set of terms, as in "these terms have p<=0.007", is checked
+    for existence rather than for all of them: the prose does not say which terms it
+    means in a form this can read.
+    """
+    body = prose_without_tables(tex, checked_labels)
+    pools: dict[str, list[float]] = {kind: [] for kind in _STATISTIC_COLUMNS}
+    for frame in frames:
+        for column in frame.select_dtypes("number").columns:
+            name = str(column).lower()
+            for kind, belongs in _STATISTIC_COLUMNS.items():
+                if belongs(name):
+                    pools[kind].extend(float(v) for v in frame[column].dropna())
+
+    unsupported: list[str] = []
+    for kind, pattern in (("p", _P_VALUE), ("F", _F_STATISTIC)):
+        if not pools[kind]:
+            continue
+        for match in pattern.finditer(body):
+            operator, token = match.group(1), match.group(2)
+            decimals = len(token.split(".")[1]) if "." in token else 0
+            if not _satisfied(operator, float(token), decimals, pools[kind]):
+                context = body[max(0, match.start() - 48) : match.start()]
+                context = " ".join(context.split())[-44:]
+                unsupported.append(f"{kind}{operator}{token} (...{context})")
+
+    if unsupported:
+        return False, f"{len(unsupported)} quoted statistic(s) not in the bundle: {unsupported[:4]}"
+    counted = sum(len(pools[kind]) for kind in pools)
+    return True, f"every quoted statistic reproduces from a recorded one ({counted} available)"

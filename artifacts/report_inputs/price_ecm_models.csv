@@ -1,7 +1,17 @@
 product,term,estimate,std_error,p_value,nobs,cointegrating_constant,cointegrating_slope,covariance,model_family,model
+diesel,const,0.0006512513166330709,0.0005411982149827138,0.2288405901102496,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+diesel,disequilibrium_lag,-0.1326316704325367,0.025655929326488112,2.34557506254638e-07,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+diesel,disequilibrium_lag_x_post,-0.333542732189364,0.07838435447997975,2.088428602131944e-05,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+diesel,diff_log_ES,0.7129226987540538,0.03957130428044382,1.4551551958381693e-72,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+diesel,diff_log_ES_x_post,0.5289235364056427,0.11244181528647133,2.551439663049967e-06,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+diesel,post,-0.0071196268440786685,0.0016765383351688373,2.1701632465384953e-05,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+diesel,disequilibrium_lag_post_period,-0.4661744026219007,0.07406689344820287,3.094585018741712e-10,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,"two-step Engle-Granger error-correction model, post-period level (Wald)"
+diesel,diff_log_ES_post_period,1.2418462351596964,0.10524891282646022,3.9433949231462483e-32,1078.0,0.27929719613021486,0.9564648857454778,HAC(8),ecm_required,"two-step Engle-Granger error-correction model, post-period level (Wald)"
 gasoline,const,0.0002954625937598784,0.0007254777642317365,0.6838124629740121,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,two-step Engle-Granger error-correction model
 gasoline,disequilibrium_lag,-0.09072366969816832,0.035392964718933786,0.010367496420006922,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,two-step Engle-Granger error-correction model
 gasoline,disequilibrium_lag_x_post,-0.22405922376087956,0.07414966266541624,0.002513462246612658,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,two-step Engle-Granger error-correction model
 gasoline,diff_log_ES,0.7888724382326264,0.07200714803033459,6.255003686553492e-28,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,two-step Engle-Granger error-correction model
 gasoline,diff_log_ES_x_post,0.20519247345809374,0.16668770242452002,0.21832306224336073,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,two-step Engle-Granger error-correction model
 gasoline,post,-0.0017865220295223297,0.0014065078516536443,0.20401953603789202,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,two-step Engle-Granger error-correction model
+gasoline,disequilibrium_lag_post_period,-0.31478289345904786,0.06515768154080726,1.3578477850950783e-06,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,"two-step Engle-Granger error-correction model, post-period level (Wald)"
+gasoline,diff_log_ES_post_period,0.9940649116907202,0.15033304576076745,3.7809300766249926e-11,1078.0,0.14783608213167287,0.9739714185933552,HAC(8),ecm_required,"two-step Engle-Granger error-correction model, post-period level (Wald)"

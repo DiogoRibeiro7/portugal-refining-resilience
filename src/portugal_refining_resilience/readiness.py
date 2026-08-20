@@ -12,6 +12,7 @@ from .claims import (
     check_event_interval,
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
+    check_prose_statistics,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     load_table_sources,
@@ -448,6 +449,10 @@ def build_report_claim_checks(
         tex, every_frame, allow=allow, checked_labels=checked_labels
     )
     checks.append(_check_record("report_prose_matches_bundle", passed, detail))
+
+    # 5b. a quoted statistic must reproduce from a column of that kind of statistic
+    passed, detail = check_prose_statistics(tex, every_frame, checked_labels=checked_labels)
+    checks.append(_check_record("prose_statistics_match_bundle", passed, detail))
 
     # 6. the claim-evidence matrix, row by row against each cited table's source
     table_frames: dict[str, list[pd.DataFrame]] = {}

@@ -47,5 +47,5 @@ year,product,flow_canonical,n_months,missing_months,complete_year,assessment_sta
 2024,gasoline,refinery output,12,,True,1
 2025,diesel,refinery output,12,,True,1
 2025,gasoline,refinery output,12,,True,1
-2026,diesel,refinery output,5,"6,7,8,9,10,11,12",False,1
-2026,gasoline,refinery output,5,"6,7,8,9,10,11,12",False,1
+2026,diesel,refinery output,6,"7,8,9,10,11,12",False,1
+2026,gasoline,refinery output,6,"7,8,9,10,11,12",False,1

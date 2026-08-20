@@ -1,3 +1,3 @@
-product,model_family,reason,n_obs,pt_level_adf_p_value,es_level_adf_p_value,cointegration_statistic,cointegration_p_value
-diesel,short_run_log_difference,Levels do not both reject unit-root null and cointegration is not detected,1079,0.2025223895456808,0.26297597908983206,-3.100490491666185,0.08820433606899514
-gasoline,ecm_required,Levels appear nonstationary but PT and ES are cointegrated,1079,0.24490418736175917,0.1259958285763449,-5.618828423660483,1.0286643177084548e-05
+product,n_obs,scale,pt_level_adf_p_value,es_level_adf_p_value,levels_alpha,cointegration_statistic,cointegration_p_value,model_family,reason
+diesel,1079,log,0.14482539912863923,0.21391184616895248,0.01,-3.6399650778455257,0.021845429039228557,ecm_required,Log levels are not clearly stationary and PT and ES are cointegrated
+gasoline,1079,log,0.04054197122698137,0.04894712909038501,0.01,-5.25968943103628,5.333074708697961e-05,ecm_required,Log levels are not clearly stationary and PT and ES are cointegrated

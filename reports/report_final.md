@@ -33,7 +33,10 @@ demand, the lowest in the window, with imports at a series high of 1,632 kt.
 **The monthly design separates the closure from the 2022 shock**, which annual data cannot do with
 ten months between them:
 
-| Outcome | Matosinhos transition | Energy stress 2022 |
+Each phase is measured against the same counterfactual — the pre-closure trend extrapolated
+forward — not against the phase before it, so the second column is not an increment on the first:
+
+| Outcome, vs pre-closure counterfactual | Matosinhos transition | Energy stress 2022 |
 | --- | --- | --- |
 | Refinery output | −103 kt/month (*p* = 0.005) | −148 kt/month (*p* < 0.001) |
 | Net imports / demand | +0.19 (*p* = 0.007) | +0.37 (*p* < 0.001) |
@@ -48,11 +51,18 @@ weakens a purely common-shock account without disposing of it. The comparison is
 those years on purpose: across the full 1990-2024 panel the Spanish ratio is not flat either,
 falling to 0.667 in 2007 before recovering.
 
-**Price linkage tightened for both fuels, through different channels.** The contemporaneous
-elasticity of Portuguese to Spanish pre-tax diesel prices rises from 0.73 to about 1.01
-(*p* < 0.001). The gasoline elasticity does not move, but its error-correction speed roughly
-triples, from −0.091 to −0.315 per week (*p* = 0.003), shortening the half-life of a price gap
-from about eight weeks to a little over two.
+**Price linkage tightened for both fuels.** Both pairs are cointegrated in log prices, so both get
+an error-correction model, and both adjustment speeds more than triple after the transition:
+
+| Product | Adjustment speed | Half-life of a gap | Contemporaneous elasticity |
+| --- | --- | --- | --- |
+| Diesel | −0.133 → −0.466 | 4.9 → 1.1 weeks | 0.713 → 1.242 (*p* < 0.001) |
+| Gasoline | −0.091 → −0.315 | 7.3 → 1.8 weeks | 0.789 → 0.994 (*p* = 0.218) |
+
+The channels differ: diesel tightened in both, gasoline only in the speed of adjustment. The
+diagnostics are run on log prices, the scale the models are estimated on. On the EUR/1000L levels
+diesel does not appear cointegrated (*p* = 0.088 against 0.022 on logs), which would have replaced
+the diesel model with a difference-only one and put its post-transition elasticity at 1.01.
 
 ## What this does not claim
 

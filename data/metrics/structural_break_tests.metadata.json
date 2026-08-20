@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-20T09:49:30.493651+00:00",
+  "created_at_utc": "2026-08-20T11:13:49.519490+00:00",
   "rows": 24,
   "columns": [
     "product",
@@ -13,10 +13,11 @@
     "window_end",
     "excluded_years",
     "method",
+    "specification",
     "bh_fdr_p_value"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\structural_break_tests.csv",
-  "csv_sha256": "8c17fc5a3f0c8b1152157349b24a4c8453d5e5553065f9b93c7786f034f19728",
+  "csv_sha256": "740cd3c44b28da32de355a5cf166dd371c6d6307799bc22710065ea05609a90e",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\structural_break_tests.parquet",
   "parquet_error": null,
   "metadata": {}

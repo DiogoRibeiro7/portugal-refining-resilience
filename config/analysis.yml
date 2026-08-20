@@ -29,6 +29,10 @@ analysis:
     # 2000 is included because the descriptive series shows Portugal moving from a
     # net diesel export position in the 1990s to import dependence around then.
     candidate_break_years: [2000, 2013, 2022]
+    # 2013 and 2022 were named before the panel was extended. 2000 was added after,
+    # once the 1990s were in view, so it is exploratory and no conclusion rests on it.
+    # The break-test artifact labels each row from this list.
+    pre_specified_break_years: [2013, 2022]
     transition_years: [2021]
   source_reconciliation:
     primary_source: JODI
