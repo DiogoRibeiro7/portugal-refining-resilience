@@ -13,9 +13,11 @@ from .claims import (
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
     check_prose_statistics,
+    check_prose_uses_licensed_models,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     load_table_sources,
+    load_yaml_block,
     parse_latex_tables,
     verify_table_values,
 )
@@ -482,5 +484,30 @@ def build_report_claim_checks(
         exempt=exempt,
     )
     checks.append(_check_record("bundle_within_study_window", passed, detail))
+
+    # 9. a claim must quote the model family the diagnostics licensed for it
+    scope = load_yaml_block(mapping_path, "model_family_scope")
+    if scope:
+        choice = _read_if_present(paths.report_inputs / str(scope["choice_file"]))
+        family_files = dict(scope["family_files"])
+        chosen = set(choice["model_family"].astype(str)) if not choice.empty else set()
+        licensed_files = {family_files[name] for name in chosen if name in family_files}
+        superseded_files = set(family_files.values()) - licensed_files
+
+        def _estimates(names: set[str]) -> list[float]:
+            values: list[float] = []
+            for name in sorted(names):
+                frame = _read_if_present(paths.report_inputs / name)
+                if "estimate" in frame.columns:
+                    values.extend(float(v) for v in frame["estimate"].dropna())
+            return values
+
+        passed, detail = check_prose_uses_licensed_models(
+            tex,
+            licensed_estimates=_estimates(licensed_files),
+            superseded_estimates=_estimates(superseded_files),
+            may_cite_superseded=set(scope.get("may_cite_superseded", [])),
+        )
+        checks.append(_check_record("prose_uses_licensed_model_family", passed, detail))
 
     return pd.DataFrame(checks)

@@ -542,3 +542,112 @@ def check_prose_statistics(
         return False, f"{len(unsupported)} quoted statistic(s) not in the bundle: {unsupported[:4]}"
     counted = sum(len(pools[kind]) for kind in pools)
     return True, f"every quoted statistic reproduces from a recorded one ({counted} available)"
+
+
+#: A sentence has to be about prices before a price coefficient can be read out of it.
+_PRICE_CLAIM = re.compile(
+    r"elasticity|pass-through|co-movement|error.correction|Spanish|spread|price",
+    re.IGNORECASE,
+)
+
+
+def _matches_estimate(value: float, decimals: int, estimates: list[float]) -> bool:
+    """Is ``value`` a rounded form of one of these coefficients?
+
+    Unlike :func:`_reproducible` this does not also try the value divided by a hundred.
+    That fallback exists because ratios are sometimes printed as percentage points, and
+    applying it to coefficients matched a monthly kt figure of 103 against a price
+    elasticity of 1.0254.
+    """
+    tolerance = 0.5 * (10.0**-decimals) + 1e-9
+    return any(abs(estimate - value) <= tolerance for estimate in estimates)
+
+
+def document_sections(tex: str) -> list[tuple[str, str]]:
+    """Split the document into (label, body), labelling by the first ``sec:`` label."""
+    heading = re.compile(r"\\(?:sub)?section\{")
+    starts = [match.start() for match in heading.finditer(tex)]
+    sections: list[tuple[str, str]] = []
+    for index, start in enumerate(starts):
+        end = starts[index + 1] if index + 1 < len(starts) else len(tex)
+        body = tex[start:end]
+        found = re.search(r"\\label\{(sec:[^{}]+)\}", body)
+        sections.append((found.group(1) if found else "", body))
+    return sections
+
+
+def check_prose_uses_licensed_models(
+    tex: str,
+    *,
+    licensed_estimates: list[float],
+    superseded_estimates: list[float],
+    may_cite_superseded: set[str],
+) -> tuple[bool, str]:
+    """Flag a coefficient quoted from a model family the diagnostics did not licence.
+
+    The price model family is chosen from the data, and correcting that choice changed
+    which numbers the paper is entitled to headline. The conclusion went on quoting the
+    difference-only diesel elasticity of 0.73 to 1.01 after the licensed model became an
+    error-correction model giving 0.713 to 1.242. Every gate passed, because both
+    numbers are real: they are estimates from a model that was fitted and persisted,
+    just not the one the diagnostics selected.
+
+    A number is flagged when it reproduces from a superseded family's estimates and from
+    no licensed estimate. Sections whose subject is a superseded family are exempt by
+    name, because reporting what the discarded specification said is the point there.
+
+    Floats are excluded: table values are checked against their declared source, and the
+    claim-evidence matrix against the tables each row cites, both of which are stricter.
+    """
+    body_of = re.compile(r"\\begin\{(table|longtable)\}.*?\\end\{\1\}", re.DOTALL)
+
+    bad: list[str] = []
+    for label, section in document_sections(tex):
+        if label in may_cite_superseded:
+            continue
+        prose = body_of.sub(" ", section)
+        # Only sentences that are about prices at all. Numeric agreement alone is far
+        # too weak a signal: a diesel coverage ratio printed as 0.800 sits within half
+        # a printed unit of the gasoline short-run elasticity of 0.7997 and has nothing
+        # to do with it.
+        for paragraph in prose.split("\n\n"):
+            if not _PRICE_CLAIM.search(paragraph):
+                continue
+            # A superseded figure may be quoted anywhere it is attributed: a paragraph
+            # that cross-references the section where that specification is set out is
+            # telling the reader which model the number comes from, which is the whole
+            # thing this check exists to require.
+            cited = set(re.findall(r"\\ref\{(sec:[^{}]+)\}", paragraph))
+            if cited & may_cite_superseded:
+                continue
+            for match in _MATH.finditer(paragraph):
+                for token in _NUMBER.findall(match.group(1).replace("{,}", "")):
+                    try:
+                        value = float(token.replace(",", ""))
+                    except ValueError:  # pragma: no cover - regex guarantees a number
+                        continue
+                    decimals = len(token.split(".")[1]) if "." in token else 0
+                    # Compared as coefficients, so without the percentage-point
+                    # fallback in _reproducible: a coefficient is never a number a
+                    # hundred times smaller.
+                    if not _matches_estimate(value, decimals, superseded_estimates):
+                        continue
+                    if _matches_estimate(value, decimals, licensed_estimates):
+                        continue
+                    bad.append(f"{value} in {label or 'an unlabelled section'}")
+    if bad:
+        return False, (
+            f"{len(bad)} coefficient(s) quoted from a superseded model family: {bad[:6]}"
+        )
+    return True, "no claim quotes a model family the diagnostics did not licence"
+
+
+def load_yaml_block(path: Path, key: str) -> dict[str, Any]:
+    """Return one top-level mapping from the report-table config, or an empty dict."""
+    import yaml
+
+    if not path.exists():
+        return {}
+    loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    block = loaded.get(key, {})
+    return dict(block) if isinstance(block, dict) else {}

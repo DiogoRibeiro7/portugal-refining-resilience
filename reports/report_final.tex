@@ -74,8 +74,9 @@ while Portugal's fell to $0.68$. That weakens a purely common-shock account, tho
 differ on margins this paper does not measure. On prices, both pairs are cointegrated in logs and both
 error-correction speeds more than triple: diesel from $-0.133$ to $-0.466$ per week and gasoline
 from $-0.091$ to $-0.315$. The diesel contemporaneous elasticity also rises, from $0.713$ to
-$1.242$; the gasoline elasticity does not move, so both fuels
-became more tightly linked to Spain through different channels. These are co-movement measures,
+$1.242$; the gasoline elasticity does not move. Both fuels became more tightly
+linked to Spain, diesel through both channels and gasoline through the speed of adjustment
+alone. These are co-movement measures,
 not causal pass-through.
 
 The paper reports associations around documented events. It does not claim a causal effect of
@@ -754,6 +755,7 @@ paper rests on it, and the sign reversal is the reason the stationarity bar in
 Section~\ref{sec:pricediag} is set where it is.
 
 \subsection{Short-run co-movement}
+\label{sec:shortrun}
 
 \begin{table}[htbp]
 \centering
@@ -1031,9 +1033,11 @@ Eurostat, which is compiled from the DGEG submission rather than independent of 
 \item \textbf{Low annual power after 2021.} Three post-event annual observations cannot support a
 Chow test. The interrupted-trend models carry the annual evidence for 2022, and they impose a
 common trend that the Chow design does not.
-\item \textbf{Generated regressor in the gasoline ECM.} The disequilibrium term is estimated in a
-first stage, so the reported second-stage standard errors are conditional on it. A single-step or
-maximum-likelihood estimator would price that uncertainty properly.
+\item \textbf{Generated regressor in both error-correction models.} The disequilibrium term is
+estimated in a first stage, so the reported second-stage standard errors are conditional on it. A
+single-step or maximum-likelihood estimator would price that uncertainty properly. This now bears
+on the diesel result as well as the gasoline one, and the diesel model carries the additional
+caveat that its cointegration verdict clears five per cent but not one.
 \item \textbf{JODI assessment codes unverified.} All Portuguese observations carry assessment code
 1, whose exact semantics have not been confirmed against JODI documentation.
 \item \textbf{Retail, not wholesale, prices.} The Weekly Oil Bulletin reports consumer prices.
@@ -1044,6 +1048,7 @@ stock changes are not modelled.
 \end{enumerate}
 
 \section{Conclusions}
+\label{sec:conclusions}
 
 The 2013 Sines hydrocracker coincides with an unambiguous structural change. Diesel refinery
 output and exports broke upward at 2013 and Portugal moved from net diesel importer to net diesel exporter,
@@ -1062,11 +1067,14 @@ Spain, refining the same products under the same European shock, shows no compar
 That weakens the common-shock explanation without disposing of it, since the two systems differ
 on margins this paper does not measure.
 
-On prices, the contemporaneous elasticity of Portuguese to Spanish pre-tax diesel prices rises from
-$0.73$ to approximately $1.01$. The gasoline elasticity is unchanged, but its error-correction
-speed roughly triples, so both fuels became more tightly linked to Spanish prices through
-different channels. That contrast is only visible because the model family was selected
-from diagnostics rather than assumed.
+On prices, both pairs are cointegrated in logs and both error-correction speeds more than
+triple: diesel from $-0.133$ to $-0.466$ per week and gasoline from $-0.091$ to $-0.315$. The
+diesel contemporaneous elasticity rises with it, from $0.713$ to $1.242$, while the gasoline
+elasticity is unchanged. Both fuels became more tightly linked to Spanish prices, diesel
+through both channels and gasoline through the speed of adjustment alone. The difference-only
+specification in Section~\ref{sec:shortrun} puts the diesel figure at $1.01$ instead, and the
+gap between the two is the reason the model family is selected from diagnostics rather than
+assumed.
 
 This is an association, not a demonstrated causal effect. The closure and the largest European
 energy shock in decades fall ten months apart, and this design cannot

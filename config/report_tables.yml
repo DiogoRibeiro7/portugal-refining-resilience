@@ -42,3 +42,19 @@ tables:
 # text from a value that is itself checked, so it has no row of its own to match.
 prose_allow:
   0.6931: natural log of 2, used to turn an adjustment speed into a half-life
+
+# Which model family the diagnostics licensed, and where each family's estimates live.
+# A claim that quotes a coefficient from a family the diagnostics did not licence is
+# using a model the paper argued against, even when the number itself is real. That is
+# not a numeric error and no reproducibility check can see it.
+model_family_scope:
+  choice_file: price_model_choice.csv
+  family_files:
+    ecm_required: price_ecm_models.csv
+    short_run_log_difference: price_short_run_models.csv
+    levels: price_comovement_models.csv
+  # Sections whose subject is a superseded family, and which may therefore quote it.
+  may_cite_superseded:
+    - sec:pricediag
+    - sec:levels
+    - sec:shortrun

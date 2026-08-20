@@ -16,9 +16,11 @@ from portugal_refining_resilience.claims import (
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
     check_prose_statistics,
+    check_prose_uses_licensed_models,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     claim_matrix_rows,
+    document_sections,
     parse_latex_tables,
     prose_without_tables,
     table_numbers,
@@ -485,3 +487,84 @@ def test_claim_matrix_reads_every_table_a_row_cites(
     passed, _ = check_claim_matrix(row, matrix_sources, [])
 
     assert passed is True
+
+
+LICENSED = [0.712923, 1.241846, -0.132632, -0.466174]
+SUPERSEDED = [0.734831, 1.007214, 0.272383]
+
+FAMILY_TEX = """
+\\section{Conclusions}
+\\label{sec:conclusions}
+
+On prices, the contemporaneous elasticity of Portuguese to Spanish pre-tax diesel prices
+rises from $0.73$ to approximately $1.01$.
+"""
+
+
+def _family(tex: str, allowed: set[str] | None = None) -> tuple[bool, str]:
+    return check_prose_uses_licensed_models(
+        tex,
+        licensed_estimates=LICENSED,
+        superseded_estimates=SUPERSEDED,
+        may_cite_superseded=allowed or {"sec:shortrun"},
+    )
+
+
+def test_licensed_family_catches_a_conclusion_from_a_superseded_model() -> None:
+    """Correcting the model choice changed which numbers the paper may headline.
+
+    Both figures are real estimates from a model that was fitted and persisted. What
+    is wrong is that the diagnostics did not select that model, and no reproducibility
+    check can see the difference.
+    """
+    passed, detail = _family(FAMILY_TEX)
+
+    assert passed is False
+    assert "sec:conclusions" in detail
+
+
+def test_licensed_family_accepts_the_licensed_numbers() -> None:
+    current = FAMILY_TEX.replace("$0.73$", "$0.713$").replace("$1.01$", "$1.242$")
+
+    passed, _ = _family(current)
+
+    assert passed is True
+
+
+def test_licensed_family_allows_a_section_whose_subject_is_the_old_model() -> None:
+    """Reporting what the discarded specification said is the point in that section."""
+    passed, _ = _family(FAMILY_TEX, allowed={"sec:conclusions"})
+
+    assert passed is True
+
+
+def test_licensed_family_allows_an_attributed_comparison() -> None:
+    """Quoting a superseded figure is fine when the prose says where it comes from."""
+    attributed = FAMILY_TEX.replace(
+        "approximately $1.01$.",
+        "approximately $1.242$. Section~\\ref{sec:shortrun} puts it at $1.01$.",
+    ).replace("$0.73$", "$0.713$")
+
+    passed, _ = _family(attributed)
+
+    assert passed is True
+
+
+def test_licensed_family_ignores_a_paragraph_that_is_not_about_prices() -> None:
+    """0.800 diesel coverage sits within a printed unit of a 0.7997 elasticity."""
+    unrelated = """
+\\section{Robustness}
+\\label{sec:windows}
+
+Diesel refinery output coverage falls from $1.083$ to $0.735$.
+"""
+
+    passed, _ = _family(unrelated)
+
+    assert passed is True
+
+
+def test_document_sections_labels_by_the_first_section_label() -> None:
+    sections = document_sections(FAMILY_TEX)
+
+    assert [label for label, _ in sections] == ["sec:conclusions"]

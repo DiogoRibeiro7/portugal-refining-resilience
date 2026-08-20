@@ -8,3 +8,4 @@ prose_statistics_match_bundle,True,every quoted statistic reproduces from a reco
 claim_matrix_matches_cited_source,True,all 36 claim-matrix rows check out
 source_swap_survival_reported,True,every result keeps its significance under the source swap
 bundle_within_study_window,True,every bundle artifact stays within 1990-2024; 5 declared exemption(s)
+prose_uses_licensed_model_family,True,no claim quotes a model family the diagnostics did not licence
