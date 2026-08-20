@@ -28,6 +28,12 @@ import dependence is not by itself evidence of reduced security of supply.
 
 ## Headline findings
 
+**The system crossed the same line three times.** Portugal was a net diesel exporter through most
+of the 1990s, a net importer for the fourteen years from 1999, an exporter again from 2013 after
+the hydrocracker, and an importer in every year since 2021. The 2013 unit did not move Portugal
+somewhere new — it restored the position the country had held in the early 1990s. The 2021 closure
+did not merely undo that: 2023 is the most import-dependent year in the whole window.
+
 **Three transitions, not one.** Portuguese refinery output breaks upward around 2000 for both
 products, most strongly for gasoline (*F* = 22.0, Benjamini-Hochberg adjusted *p* < 0.001). Neither
 ratio breaks there: output and imports rose because demand rose faster, so the system was expanding
