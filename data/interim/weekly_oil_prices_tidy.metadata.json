@@ -1,6 +1,6 @@
 {
-  "created_at_utc": "2026-08-19T08:28:25.343150+00:00",
-  "rows": 4314,
+  "created_at_utc": "2026-08-20T13:14:49.505102+00:00",
+  "rows": 4318,
   "columns": [
     "date",
     "country",
@@ -9,7 +9,7 @@
     "price_without_tax_eur_per_1000l"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\weekly_oil_prices_tidy.csv",
-  "csv_sha256": "831f7786dca589cd208adcfa1403ad71be2ae57267b26541494f3b96c3780e32",
+  "csv_sha256": "a9819262311b5e13205195fc24c5c89ca92e823119af858df69487d3494f666d",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\weekly_oil_prices_tidy.parquet",
   "parquet_error": null,
   "metadata": {

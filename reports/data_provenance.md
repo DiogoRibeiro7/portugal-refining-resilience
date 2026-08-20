@@ -10,12 +10,22 @@ All derived files live in `artifacts/report_inputs/`, the checksum-protected evi
 Its `report_manifest.json` records a SHA-256 for every file and accounts for every file in the
 directory: anything present but unmanifested is removed when the bundle is rebuilt.
 
+## Windows
+
+Each arm runs over the full study window intersected with what its own source provides.
+
+| Arm | Window | Limited by |
+|---|---|---|
+| Annual physical balance | 1990–2024 | Eurostat, earliest published year |
+| Monthly event models | 2002–2024 | JODI, earliest published month |
+| Weekly price models | 2005–2024 | EC Weekly Oil Bulletin |
+
 ## Primary sources
 
 | Source | What it provides | Coverage used | Acquisition notebook |
 |---|---|---|---|
 | JODI Oil World Database | Monthly imports, exports, refinery output, demand | 2005–2024, complete | `03_acquire_jodi_oil.ipynb` |
-| Eurostat `nrg_cb_oil` | Annual balance, Portugal and Spain | 2005–2024, complete | `04_acquire_eurostat_oil_balance.ipynb` |
+| Eurostat `nrg_cb_oil` | Annual balance, PT and ES; **source for the annual panel** | 1990–2024, complete | `04_acquire_eurostat_oil_balance.ipynb` |
 | DGEG trade workbooks | National import/export statistics | 2019–2024 only | `02_acquire_dgeg_trade_and_sales.ipynb` |
 | DGEG long sales workbook | Domestic market sales | 1970–2024 | `02_acquire_dgeg_trade_and_sales.ipynb` |
 | EC Weekly Oil Bulletin | Weekly pre- and post-tax consumer prices | 2005-01-03 to 2024-12-30 | `05_acquire_weekly_oil_prices.ipynb` |
@@ -34,8 +44,8 @@ retrieval time, URL, SHA-256 and vintage status.
 | 4 | Balance at the event years | `headline_event_years.csv`, `refining_regime_annual.csv` | `18`, `06` |
 | 5 | Chow tests | `structural_break_tests.csv` | `13_structural_breaks.ipynb` |
 | 6 | Interrupted-trend models | `annual_interrupted_trend_models.csv` | `13_structural_breaks.ipynb` |
-| 7 | Diesel monthly phase means (2005-2024) | `monthly_event_phase_summary.csv` | `14_monthly_event_analysis.ipynb` |
-| 8 | Segmented monthly event model (n=240) | `monthly_event_models.csv` | `14_monthly_event_analysis.ipynb` |
+| 7 | Diesel monthly phase means (2002-2024) | `monthly_event_phase_summary.csv` | `14_monthly_event_analysis.ipynb` |
+| 8 | Segmented monthly event model (n=276) | `monthly_event_models.csv` | `14_monthly_event_analysis.ipynb` |
 | 9 | Short-run pass-through | `price_short_run_models.csv` | `15_price_comovement.ipynb` |
 | 10 | Gasoline error-correction model | `price_ecm_models.csv` | `15_price_comovement.ipynb` |
 | 11 | Diesel balance, Portugal against Spain | `pt_es_physical_balance_comparison.csv` | `16_spain_comparison.ipynb` |
@@ -83,6 +93,9 @@ carries the machine-readable version, and notebook 20 blocks the report unless:
 
 - every number printed in a mapped table is reproducible from that table's declared file,
   at the precision the report prints;
+- every quantity stated in the prose, including the claim-evidence matrix, is reproducible from
+  the bundle. Figures the text derives rather than reads, such as a half-life computed from an
+  adjustment coefficient, are declared in `config/report_tables.yml` under `prose_allow`;
 - every sample size stated as `n=...` matches a fitted model;
 - an interval stated in words matches the configured event dates;
 - every trade cell the reconciliation flags has a sensitivity computed for it.

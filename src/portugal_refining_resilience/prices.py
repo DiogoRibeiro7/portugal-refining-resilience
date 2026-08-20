@@ -154,6 +154,13 @@ def price_comovement_design(
     return wide
 
 
+#: A levels regression is only admissible on strong evidence of stationarity. Getting
+#: this branch wrong is the spurious-regression case, whereas an unnecessary
+#: error-correction model still nests the difference specification, so the threshold is
+#: deliberately stricter than the conventional five per cent.
+LEVELS_STATIONARITY_ALPHA = 0.01
+
+
 def stationarity_diagnostics(
     df: pd.DataFrame,
     *,
@@ -222,55 +229,76 @@ def spread_stationarity(design: pd.DataFrame) -> dict[str, float | int | str | b
 
 
 def choose_price_model(design: pd.DataFrame, *, product: str) -> dict[str, object]:
-    """Choose a price model family from stationarity and cointegration diagnostics."""
-    required = {"PT", "ES"}
+    """Choose a price model family from stationarity and cointegration diagnostics.
+
+    The diagnostics run on log levels because the models they licence are estimated in
+    logs: the short-run specification regresses ``diff_log_PT`` on ``diff_log_ES``, and
+    the error-correction model takes its long-run residual from ``log PT`` on
+    ``log ES``. Testing the EUR/1000L levels answered a question about a different pair
+    of series, and the two disagree where it matters: diesel Engle--Granger is 0.088 on
+    levels and 0.022 on logs, which is the difference between fitting an ECM and
+    declaring the pair not cointegrated.
+
+    The levels branch requires rejection at ``LEVELS_STATIONARITY_ALPHA`` rather than at
+    five per cent. The two mistakes are not symmetric. Regressing one near-integrated
+    series on another is the spurious-regression case and its inference is invalid,
+    whereas an error-correction model whose series turn out to be stationary still has a
+    valid stationary regressor and nests the difference specification. Strong evidence
+    is therefore required before the risky branch is taken. The asymmetry is load-bearing
+    here: Portuguese and Spanish log gasoline prices fall either side of the five per
+    cent line depending on the lag-selection rule alone.
+    """
+    required = {"log_PT", "log_ES"}
     missing = required - set(design.columns)
     if missing:
         raise ValueError(f"Price design missing columns: {sorted(missing)}")
-    paired = design[["PT", "ES"]].apply(pd.to_numeric, errors="coerce").dropna()
-    pt = paired["PT"]
-    es = paired["ES"]
+    paired = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    pt = paired["log_PT"]
+    es = paired["log_ES"]
     if len(paired) < 20 or pt.nunique() < 2 or es.nunique() < 2:
         return {
             "product": product,
             "model_family": "insufficient_observations",
             "reason": "Need at least 20 non-constant paired observations",
             "n_obs": int(len(paired)),
+            "scale": "log",
         }
 
     pt_level_p = float(adfuller(pt, autolag="AIC")[1])
     es_level_p = float(adfuller(es, autolag="AIC")[1])
-    if pt_level_p < 0.05 and es_level_p < 0.05:
+    diagnostics: dict[str, object] = {
+        "product": product,
+        "n_obs": int(len(paired)),
+        "scale": "log",
+        "pt_level_adf_p_value": pt_level_p,
+        "es_level_adf_p_value": es_level_p,
+        "levels_alpha": LEVELS_STATIONARITY_ALPHA,
+    }
+    if pt_level_p < LEVELS_STATIONARITY_ALPHA and es_level_p < LEVELS_STATIONARITY_ALPHA:
         return {
-            "product": product,
+            **diagnostics,
             "model_family": "levels",
-            "reason": "PT and ES levels reject unit-root null at 5%",
-            "n_obs": int(len(paired)),
-            "pt_level_adf_p_value": pt_level_p,
-            "es_level_adf_p_value": es_level_p,
+            "reason": (
+                "PT and ES log levels both reject the unit-root null at "
+                f"{LEVELS_STATIONARITY_ALPHA:.0%}"
+            ),
         }
 
     coint_stat, coint_p, _ = coint(pt, es)
-    if float(coint_p) < 0.05:
-        return {
-            "product": product,
-            "model_family": "ecm_required",
-            "reason": "Levels appear nonstationary but PT and ES are cointegrated",
-            "n_obs": int(len(paired)),
-            "pt_level_adf_p_value": pt_level_p,
-            "es_level_adf_p_value": es_level_p,
-            "cointegration_statistic": float(coint_stat),
-            "cointegration_p_value": float(coint_p),
-        }
-    return {
-        "product": product,
-        "model_family": "short_run_log_difference",
-        "reason": "Levels do not both reject unit-root null and cointegration is not detected",
-        "n_obs": int(len(paired)),
-        "pt_level_adf_p_value": pt_level_p,
-        "es_level_adf_p_value": es_level_p,
+    diagnostics |= {
         "cointegration_statistic": float(coint_stat),
         "cointegration_p_value": float(coint_p),
+    }
+    if float(coint_p) < 0.05:
+        return {
+            **diagnostics,
+            "model_family": "ecm_required",
+            "reason": "Log levels are not clearly stationary and PT and ES are cointegrated",
+        }
+    return {
+        **diagnostics,
+        "model_family": "short_run_log_difference",
+        "reason": ("Log levels are not clearly stationary and cointegration is not detected"),
     }
 
 
@@ -359,3 +387,71 @@ def fit_error_correction_model(design: pd.DataFrame, *, maxlags: int = 8) -> dic
         "cointegrating_slope": float(long_run.params.iloc[1]),
         "n_obs": int(model.nobs),
     }
+
+
+def adf_lag_rule_sensitivity(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Re-run the log-level unit-root test under each reasonable lag and trend rule.
+
+    The model family turns on whether the log levels are stationary, and for gasoline
+    that verdict is marginal. Recording it under one lag rule would present a knife-edge
+    result as a settled one, so every rule a reader might reasonably have chosen is
+    reported and the paper is held to the least favourable of them.
+    """
+    required = {"log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+    rows: list[dict[str, object]] = []
+    for country in ("PT", "ES"):
+        series = pd.to_numeric(design[f"log_{country}"], errors="coerce").dropna()
+        for regression in ("c", "ct"):
+            for rule in ("AIC", "BIC", "fixed_8"):
+                if rule == "fixed_8":
+                    result = adfuller(series, regression=regression, maxlag=8, autolag=None)
+                else:
+                    result = adfuller(series, regression=regression, autolag=rule)
+                rows.append(
+                    {
+                        "product": product,
+                        "country": country,
+                        "regression": regression,
+                        "lag_rule": rule,
+                        "adf_statistic": float(result[0]),
+                        "p_value": float(result[1]),
+                        "stationary_5pct": bool(result[1] < 0.05),
+                        "stationary_1pct": bool(result[1] < LEVELS_STATIONARITY_ALPHA),
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
+def model_choice_scale_comparison(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Run the selection diagnostics on both scales and record the disagreement.
+
+    The paper states that the EUR-levels diagnostic and the log diagnostic disagree for
+    diesel, and rests a specification decision on it. That comparison has to exist as
+    evidence rather than as an assertion about a version of the code that no longer
+    runs, so both are computed here and the superseded scale is kept alongside the one
+    used.
+    """
+    required = {"PT", "ES", "log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+    rows: list[dict[str, object]] = []
+    for scale, columns in (("EUR_per_1000L", ("PT", "ES")), ("log", ("log_PT", "log_ES"))):
+        paired = design[list(columns)].apply(pd.to_numeric, errors="coerce").dropna()
+        pt, es = paired[columns[0]], paired[columns[1]]
+        _, coint_p, _ = coint(pt, es)
+        rows.append(
+            {
+                "product": product,
+                "scale": scale,
+                "used_for_model_choice": scale == "log",
+                "pt_adf_p_value": float(adfuller(pt, autolag="AIC")[1]),
+                "es_adf_p_value": float(adfuller(es, autolag="AIC")[1]),
+                "cointegration_p_value": float(coint_p),
+                "cointegrated_5pct": bool(float(coint_p) < 0.05),
+            }
+        )
+    return pd.DataFrame(rows)

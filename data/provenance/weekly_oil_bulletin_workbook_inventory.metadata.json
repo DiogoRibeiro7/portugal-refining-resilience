@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T08:28:21.197533+00:00",
+  "created_at_utc": "2026-08-20T13:14:46.883929+00:00",
   "rows": 7,
   "columns": [
     "file",
@@ -9,7 +9,7 @@
     "preview"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\weekly_oil_bulletin_workbook_inventory.csv",
-  "csv_sha256": "abcddbf57d52e08b9d7774b033119f1d9f26e9c5a33b5f70b9af56900f19ff93",
+  "csv_sha256": "4f0d749bf0fc1c38e4a2f7bb3eb6073b9f2f0af9410844c88699b868cbfee2e2",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\weekly_oil_bulletin_workbook_inventory.parquet",
   "parquet_error": null,
   "metadata": {}

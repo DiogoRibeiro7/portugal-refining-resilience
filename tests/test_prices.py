@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from portugal_refining_resilience import prices as prices_module
 from portugal_refining_resilience.prices import (
     choose_price_model,
     extract_weekly_prices,
@@ -53,12 +54,64 @@ def test_spread_stationarity_handles_short_design() -> None:
 
 
 def test_choose_price_model_handles_short_design() -> None:
-    design = pd.DataFrame({"PT": [1.0, 2.0], "ES": [1.0, 1.5]})
+    design = pd.DataFrame({"log_PT": [1.0, 2.0], "log_ES": [1.0, 1.5]})
 
     out = choose_price_model(design, product="diesel")
 
     assert out["model_family"] == "insufficient_observations"
     assert out["n_obs"] == 2
+
+
+def test_choose_price_model_requires_the_scale_it_licences() -> None:
+    """The selector ran on EUR levels while both models were estimated in logs.
+
+    The two disagreed: diesel Engle--Granger was 0.088 on levels and 0.022 on logs,
+    which decided whether an ECM was fitted at all. Asking for the EUR columns must
+    now fail rather than quietly answer a question about different series.
+    """
+    euro_only = pd.DataFrame({"PT": np.arange(40.0), "ES": np.arange(40.0)})
+
+    with pytest.raises(ValueError, match="log_ES"):
+        choose_price_model(euro_only, product="diesel")
+
+
+def test_choose_price_model_diagnoses_the_same_columns_the_ecm_fits() -> None:
+    """A structural guard: the selector and the model it licences share a scale."""
+    design = pd.DataFrame(
+        {
+            "log_PT": np.linspace(0.0, 1.0, 40),
+            "log_ES": np.linspace(0.0, 1.0, 40) + np.cos(np.arange(40.0)) * 0.1,
+        }
+    )
+
+    out = choose_price_model(design, product="diesel")
+
+    assert out["scale"] == "log"
+
+
+@pytest.mark.parametrize(
+    ("adf_p", "expected"),
+    [(0.005, "levels"), (0.03, "ecm_required"), (0.20, "ecm_required")],
+)
+def test_choose_price_model_levels_branch_needs_one_percent(
+    monkeypatch: pytest.MonkeyPatch, adf_p: float, expected: str
+) -> None:
+    """A marginal unit-root rejection must not licence a levels regression.
+
+    Portuguese and Spanish log gasoline prices sit either side of five per cent
+    depending only on the lag-selection rule, and the levels model reverses the sign
+    of the post-transition interaction. The stricter threshold keeps that verdict
+    from turning on an arbitrary choice.
+    """
+    monkeypatch.setattr(prices_module, "adfuller", lambda *a, **k: (0.0, adf_p, 1, 30))
+    monkeypatch.setattr(prices_module, "coint", lambda *a, **k: (0.0, 0.001, None))
+    design = pd.DataFrame(
+        {"log_PT": np.linspace(0.0, 1.0, 40), "log_ES": np.linspace(1.0, 2.0, 40)}
+    )
+
+    out = choose_price_model(design, product="gasoline")
+
+    assert out["model_family"] == expected
 
 
 def _write_bulletin(

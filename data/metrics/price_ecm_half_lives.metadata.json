@@ -1,0 +1,16 @@
+{
+  "created_at_utc": "2026-08-20T13:17:31.183941+00:00",
+  "rows": 4,
+  "columns": [
+    "product",
+    "phase",
+    "adjustment_speed",
+    "half_life_weeks",
+    "model"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_half_lives.csv",
+  "csv_sha256": "e6dab56b9aa494b830c87e5654965b4e2bec6c69426eb0376c6bb40966c76853",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_half_lives.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

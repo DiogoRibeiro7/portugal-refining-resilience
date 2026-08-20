@@ -1,6 +1,11 @@
 analysis:
-  start_year: 2005
+  # The annual physical balance runs from 1990, the earliest Eurostat publishes.
+  # Other arms are limited by their own sources and declare their own windows:
+  # JODI monthly flows begin in 2002 and the weekly price bulletin in 2005.
+  start_year: 1990
   end_year: 2024
+  monthly_start_year: 2002
+  price_start_year: 2005
   products:
     - diesel
     - gasoline
@@ -21,7 +26,13 @@ analysis:
     model_family: portugal_spain_price_comovement
   annual_break_tests:
     minimum_segment_years: 5
-    candidate_break_years: [2013, 2022]
+    # 2000 is included because the descriptive series shows Portugal moving from a
+    # net diesel export position in the 1990s to import dependence around then.
+    candidate_break_years: [2000, 2013, 2022]
+    # 2013 and 2022 were named before the panel was extended. 2000 was added after,
+    # once the 1990s were in view, so it is exploratory and no conclusion rests on it.
+    # The break-test artifact labels each row from this list.
+    pre_specified_break_years: [2013, 2022]
     transition_years: [2021]
   source_reconciliation:
     primary_source: JODI
@@ -52,6 +63,38 @@ analysis:
       - {year: 2022, product: diesel,   flow: exports, outlier: JODI, note: "Eurostat 622.2 matches DGEG; JODI reports 331.0, the largest single gap"}
       - {year: 2022, product: gasoline, flow: exports, outlier: JODI, note: "Eurostat 1501.7 matches DGEG; JODI reports 1346.0"}
       - {year: 2024, product: gasoline, flow: exports, outlier: DGEG, note: "Eurostat 1728.1 matches JODI; DGEG workbook reports 1319.8"}
+  window_scope:
+    rationale: >
+      Every artifact in the evidence bundle is trimmed to start_year-end_year unless
+      it is named below. Sources publish past the window and keep publishing, so an
+      untrimmed artifact silently acquires years the analysis never used. That is not
+      hypothetical: the Portugal-Spain comparison carried 2025 while the annual panel
+      stopped at 2024, and a claim of stability "throughout" was written against a
+      series the paper does not include. A file listed here must say which arm sets
+      its window and why the extra years are safe to publish.
+    exempt:
+      - file: fuel_monthly_analytical_panel.csv
+        note: >
+          JODI monthly flows run to 2026-05. The monthly models trim to the study
+          window and fit 276 months; the panel keeps the later months so the series
+          can be extended without re-running acquisition. The paper states the trim
+          in its coverage section.
+      - file: jodi_demand_annual_completeness.csv
+        note: >
+          Source-coverage diagnostic: reports how many months JODI carries for each
+          year it publishes, including the partial years past the window. Naming those
+          years is the point of the table. The readiness check that reads it scopes
+          itself to 2002-2024.
+      - file: jodi_refinery_output_annual_completeness.csv
+        note: >
+          Same diagnostic for refinery output; see the demand entry above.
+      - file: jodi_trade_annual_completeness.csv
+        note: >
+          Same diagnostic for trade; see the demand entry above.
+      - file: source_manifest_snapshot.csv
+        note: >
+          Provenance rather than analysis: records when each source was retrieved and
+          what it covered, which is necessarily outside any analytical window.
   reporting:
     causal_language_requires_control_design: true
     seed_data_is_publication_ready: false

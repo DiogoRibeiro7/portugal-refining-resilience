@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T08:32:20.625413+00:00",
+  "created_at_utc": "2026-08-20T13:17:13.019331+00:00",
   "rows": 6,
   "columns": [
     "product",
@@ -14,7 +14,7 @@
     "interpretation"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\dependence_pre_post_summary.csv",
-  "csv_sha256": "788fea08eef22bb12ce2cfe36752c7c6f582036783c98eb8b7e6a4189f268903",
+  "csv_sha256": "7b4c9b5d405a53064f51c5795f88234a36debddaabce9d4e7bd3a7d2d26dab06",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\dependence_pre_post_summary.parquet",
   "parquet_error": null,
   "metadata": {}

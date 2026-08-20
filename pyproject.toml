@@ -70,6 +70,10 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+# The notebooks import from src/ directly rather than from an installed package, so
+# the tests are made to work the same way. Without this a plain `pytest` fails to
+# collect unless the project happens to be installed into the environment.
+pythonpath = ["src"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

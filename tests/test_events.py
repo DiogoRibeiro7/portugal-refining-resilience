@@ -23,6 +23,20 @@ def test_assign_monthly_event_phase_separates_closure_and_2022_stress() -> None:
     ]
 
 
+def test_assign_monthly_event_phase_does_not_call_an_undated_row_pre_closure() -> None:
+    """Every comparison against NaT is False, so the default label used to win.
+
+    An undated observation would have been counted as pre-closure evidence, which is
+    the phase the whole design contrasts everything else against.
+    """
+    dates = pd.Series(pd.to_datetime(["2021-04-01", None, "2022-03-01"]))
+
+    out = assign_monthly_event_phase(dates)
+
+    assert out.tolist()[0] == "pre_matosinhos_closure"
+    assert out.isna().tolist() == [False, True, False]
+
+
 def test_annual_event_role_keeps_2021_as_transition() -> None:
     years = pd.Series([2020, 2021, 2022])
 

@@ -1,117 +1,117 @@
 {
-  "created_at_utc": "2026-08-19T15:21:06.665759+00:00",
+  "created_at_utc": "2026-08-20T13:17:48.661458+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_annual_analytical_panel.csv",
-      "sha256": "d8568dd8b88a8eb67b641589efa6d7539758e61ee4748ddf94730b97d906845c",
-      "bytes": 9952
+      "sha256": "ec571f1ca56cf67a869ccaf52d981df8f66102f41b10bafb9f05e4b9877af18e",
+      "bytes": 17298
     },
     {
       "file": "fuel_monthly_analytical_panel.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\fuel_monthly_analytical_panel.csv",
-      "sha256": "8c87854f4985612b9ae20816a8c1552234975e6d83dcf0752bd01a1f56daaf09",
-      "bytes": 87149
+      "sha256": "013c91b1254756f49af7d50ef1fc2e2ce562290f958bf0154756b36bebd90ca1",
+      "bytes": 87988
     },
     {
       "file": "descriptive_metrics.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\descriptive_metrics.csv",
-      "sha256": "9b1521df1d61281fa0dbc43d8681a6c2fc849fc2caa7b8ea20952b29a67b99d2",
-      "bytes": 1020
+      "sha256": "0f3c267de36bcb71919dfca448291f14ec9bb4fb2b7e277764fafe102f706b6d",
+      "bytes": 1123
     },
     {
       "file": "dependence_pre_post_summary.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\dependence_pre_post_summary.csv",
-      "sha256": "a8af20120cba1cc16fac8c6d1892880c2c2de6a033cec713985f8d4134e3fae9",
-      "bytes": 1150
+      "sha256": "7b4c9b5d405a53064f51c5795f88234a36debddaabce9d4e7bd3a7d2d26dab06",
+      "bytes": 1154
     },
     {
       "file": "structural_break_tests.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\structural_break_tests.csv",
-      "sha256": "4aaa9f9a6b9e225134000dc562dc3983b00a156c779f4aef8f4b720a5175c2d1",
-      "bytes": 2528
+      "sha256": "740cd3c44b28da32de355a5cf166dd371c6d6307799bc22710065ea05609a90e",
+      "bytes": 3784
     },
     {
       "file": "annual_interrupted_trend_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_interrupted_trend_models.csv",
-      "sha256": "d87d4ffb4bb8db7918cc3ab5e09022d28f2758989f702b01e24b65995b907ed1",
-      "bytes": 4674
+      "sha256": "841f4d8d86f925697b1743167990ad66771241990719397aa7c3e147a743d6ff",
+      "bytes": 4684
     },
     {
       "file": "stress_2022_metrics.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_metrics.csv",
-      "sha256": "1acbc66ab9673506ba6ed273939fd3ef016ac606c86b22980dbd53555b3b07fb",
-      "bytes": 5482
+      "sha256": "5fe8e61c946f6d54c2eb3d28161fdd9341d96f05e67f25bb13d24796e979821c",
+      "bytes": 6119
     },
     {
       "file": "stress_2022_source_sensitivity.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_source_sensitivity.csv",
-      "sha256": "7898d6c7901770543afed120427f2bc5f5e521155e4ba9730770778c387ac689",
-      "bytes": 1946
+      "sha256": "a0a48de727ddab75b36cfc4fd1a82ef147458794c8d7222ebdbb7cc6088d7c97",
+      "bytes": 1998
     },
     {
       "file": "annual_source_sensitivity.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_source_sensitivity.csv",
-      "sha256": "dd114b285a696fbd3bf33c997f7be46b683eae6c738d1341bada9311cd2543ce",
-      "bytes": 931
+      "sha256": "c73ceb5b7e63bcea98a1a6e99b02acf11a7b55f38094e782739794bfe955cc29",
+      "bytes": 918
     },
     {
       "file": "monthly_event_phase_summary.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_phase_summary.csv",
-      "sha256": "ad05334b5f48ae55aa0b68aeafa58b2a0ec385cbdf84946880bdcf35037f2754",
-      "bytes": 3811
+      "sha256": "8333a17d27beb7985d64a514a930e8986fdc8e698f32e8d474e687e3d0057c32",
+      "bytes": 3785
     },
     {
       "file": "monthly_event_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_models.csv",
-      "sha256": "b510d436882dc2f87d9f867525dfd5a9eaec08f2a9ebceb22faceadace27e57f",
-      "bytes": 27016
+      "sha256": "b2f509df51a935b0a99130ec192520215f34165996857f9dce46ad39251c600a",
+      "bytes": 26959
     },
     {
       "file": "event_window_sensitivity.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\event_window_sensitivity.csv",
-      "sha256": "b506ef874963da0a2e9a791ed0bc942bc2005a182ad7c9575e93df853764b34f",
-      "bytes": 4333
+      "sha256": "be7a80504eb239c6b3c261fa06a70e0e1f3797e29436fa4308a99b7d189bb1e0",
+      "bytes": 4501
     },
     {
       "file": "jodi_trade_annual_completeness.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_trade_annual_completeness.csv",
-      "sha256": "4c2ac619e2a836a6ed071be50a3c43a027fa3e1443849572c3907b9b0b3aa869",
-      "bytes": 3346
+      "sha256": "7e292d2ce0c23aeb4b5b3e18ce34b7609d143f8e48aeac9fc6b9bfd8eb219559",
+      "bytes": 3439
     },
     {
       "file": "jodi_demand_annual_completeness.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_demand_annual_completeness.csv",
-      "sha256": "28760ce611794ad9590d805955e7c8cf0b0b53a070219968f1062245c02d1e83",
-      "bytes": 1670
+      "sha256": "cf29406688e0abd6b8006c9029c5fbd6c4439edde4ee03efc3c244194ba81399",
+      "bytes": 1717
     },
     {
       "file": "jodi_refinery_output_annual_completeness.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_refinery_output_annual_completeness.csv",
-      "sha256": "3683ae8090897fbd8e0714b120017773aed9e3afa503325940e34a570e6ca3b2",
-      "bytes": 2120
+      "sha256": "3192f9cc7617b32855fdcccafd83181a4a98728d885e3ec37226e2a7545ada2f",
+      "bytes": 2167
     },
     {
       "file": "headline_event_years.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\tables\\headline_event_years.csv",
-      "sha256": "89852ad3a92baacc5625982f75e03cd1fa4759421856753010eb3e9dd5f6036d",
-      "bytes": 1514
+      "sha256": "6a0de56dd644f2181909d398ff78343b4d39cadf6d360ab2192702d5813f600a",
+      "bytes": 1698
     },
     {
       "file": "refinery_events.csv",
@@ -124,64 +124,85 @@
       "file": "source_manifest_snapshot.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\source_manifest_snapshot.csv",
-      "sha256": "d541f7e6c65bb5d62a88da7d6499870450a2f1d48c7aee694266dfa6ad6d15dd",
-      "bytes": 2171
+      "sha256": "bef93248f0a43f47d685171ef837c6325d0f73beaf272dbfcd80308b30ab306d",
+      "bytes": 2179
     },
     {
       "file": "price_comovement_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_comovement_models.csv",
-      "sha256": "437ea2fc31ef9bd4fdf4d058a5a66c8964c3c22ddc2f5da2aa3f485e79686bc8",
-      "bytes": 2562
+      "sha256": "ac0220014e4846bd9bfe3843ac293e71beddb65c20f8980ee51524f75eb776b7",
+      "bytes": 2506
     },
     {
       "file": "price_stationarity_diagnostics.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_stationarity_diagnostics.csv",
-      "sha256": "da3626c1208ca6bcd5ec1b99fb5e73d84f8d9e2b3ec4b40f93e69e693124edc3",
-      "bytes": 542
+      "sha256": "34b4761294f72c6bf943d9d3db666411d87a1478471498687090ceaa0738809f",
+      "bytes": 547
     },
     {
       "file": "price_model_choice.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice.csv",
-      "sha256": "fca3cf6bd3b7b63e560af7ebe09c63b3e06b603b48ea18267bf2a6678d6ef48e",
-      "bytes": 480
+      "sha256": "9501a919e1ea1f6e8cd56648427cadb245406327ba27538d6759af7b8a87b36a",
+      "bytes": 513
+    },
+    {
+      "file": "price_adf_lag_sensitivity.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_adf_lag_sensitivity.csv",
+      "sha256": "87a522ae86700a329946b6b5c476225450c2f5c13ac2be999d6b5739ec83f98c",
+      "bytes": 1793
+    },
+    {
+      "file": "price_model_choice_scale_comparison.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice_scale_comparison.csv",
+      "sha256": "c4fceb9a087d12363c079260a82fec4c7c2df97af928f7c972d6d3cb2240f0ac",
+      "bytes": 466
     },
     {
       "file": "price_short_run_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_short_run_models.csv",
-      "sha256": "69a6d4b9b8159991e3d61f1ad1f3607d6223b037b6cb3c0754add5407a3a1339",
-      "bytes": 1743
+      "sha256": "ef0dd2bb6295ff035672eed9a609fe620b62bdd3008c55249cdec5972c6e1229",
+      "bytes": 2190
     },
     {
       "file": "price_ecm_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_models.csv",
-      "sha256": "a014ec760ef0365d721cd4acde7b082139bdf83161a6ef0445dc2a0f28bc2270",
-      "bytes": 1297
+      "sha256": "186a52557e7eaf1f1c2804aa27582f497349bc09718be3b9d04fd8f61577ef40",
+      "bytes": 3452
+    },
+    {
+      "file": "price_ecm_half_lives.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_half_lives.csv",
+      "sha256": "e6dab56b9aa494b830c87e5654965b4e2bec6c69426eb0376c6bb40966c76853",
+      "bytes": 491
     },
     {
       "file": "pt_es_spread_stationarity.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_spread_stationarity.csv",
-      "sha256": "9a9a7ac06a1b2a13e0591e762bdbd8fca9fd3aef5fa15b181a21375646153285",
-      "bytes": 274
+      "sha256": "d9650ea565defe96ca10bd07cb6558b9f8805ffce9dd5c704196afb6046529ae",
+      "bytes": 277
     },
     {
       "file": "pt_es_price_spread_summary.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_price_spread_summary.csv",
-      "sha256": "27887140083b8fba049c97e24f1f1d19b0325604e832712b06833469b7b98797",
-      "bytes": 288
+      "sha256": "abe4de257be563c677f580f80f8fcd9ccc090d27af1a579afac7b8ece6c25a95",
+      "bytes": 286
     },
     {
       "file": "pt_es_physical_balance_comparison.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_physical_balance_comparison.csv",
-      "sha256": "82dbf96d1565e6b1e49027db45db6583e7dc5f04b9687ecf2408fa088ddb81a2",
-      "bytes": 12492
+      "sha256": "bb09e841b0505291e60e2350741b9a46affbc4d9add6038c01fcfa8bfbebe0c1",
+      "bytes": 20975
     },
     {
       "file": "jodi_dgeg_trade_reconciliation.csv",
@@ -191,95 +212,109 @@
       "bytes": 2997
     },
     {
+      "file": "jodi_eurostat_trade_reconciliation.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_trade_reconciliation.csv",
+      "sha256": "3258663d8e2d4497fa0eb4a7290e160239d4b79f00c417a2c7c3e395bf6ee74a",
+      "bytes": 8946
+    },
+    {
+      "file": "jodi_eurostat_reconciliation_summary.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_reconciliation_summary.csv",
+      "sha256": "36bfeee135e80a62572ac761a864539036765a906436e6c42bcec469bd5e9405",
+      "bytes": 153
+    },
+    {
       "file": "eurostat_physical_balance_panel.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\processed\\eurostat_physical_balance_panel.csv",
-      "sha256": "75ba6cd429dfe8fcfcd71fbc53d010b24a871e0e0dd79e4803003940c544e2fa",
-      "bytes": 14279
+      "sha256": "df6c9681febab6e87e34b5100b50fbce24af70e7df0e7fb9ca57915db9a679a9",
+      "bytes": 22959
     },
     {
       "file": "diesel_dependence_ratios.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\diesel_dependence_ratios.png",
-      "sha256": "955fa487b7ba8507a65e0bd0982074074174412f3f3f887bb8cf02746cfdcc47",
-      "bytes": 115716
+      "sha256": "aa744f6b0b64909042195bcd1c518b409b2a3b2c8f431cb9ea66bf1f03bafd27",
+      "bytes": 133827
     },
     {
       "file": "diesel_physical_balance.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\diesel_physical_balance.png",
-      "sha256": "4b8b4548cbc6af118d7174931e9743c001a8c802a757e0d476052c22a2a4c97f",
-      "bytes": 145332
+      "sha256": "748d643d06e0c717f725f3d59a843939dc9eb37c17e0bd3626704ba505c0e6da",
+      "bytes": 170407
     },
     {
       "file": "gasoline_dependence_ratios.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\gasoline_dependence_ratios.png",
-      "sha256": "3cb76833597c3a09e9f2271c4838ba57e58f01bc1ae726c0d6bd703bba73aa1b",
-      "bytes": 96948
+      "sha256": "36c3a8334ed237484e40fe8e7bec0cf7edcab025489f860d8cdf200803cc284d",
+      "bytes": 104737
     },
     {
       "file": "gasoline_physical_balance.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\gasoline_physical_balance.png",
-      "sha256": "57322130d09fc9e653a3e8fc2a7fd971d7bf61a88441d0ccf2902e7c04c3dd7d",
-      "bytes": 150214
+      "sha256": "3ad7efbcf043711ac8d91fa6658e4e7fd862b406026169936b828e49ce7cbb49",
+      "bytes": 173206
     },
     {
       "file": "monthly_event_diesel_exports_kt.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_diesel_exports_kt.png",
-      "sha256": "1c727bb62f2a89337f9ee8d6e4a7d9a65ddd9d57b7afbeff2ef120f39479d22f",
-      "bytes": 137217
+      "sha256": "0f7ab5a2e0ecdcb2ccd86a37f80b51c52919d31dc5810c032eaf3462ff0c8306",
+      "bytes": 133334
     },
     {
       "file": "monthly_event_diesel_imports_kt.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_diesel_imports_kt.png",
-      "sha256": "72ec8be1128b022c2691905ff214984c47c8b1d59c971b49e695ccb2e9522bb4",
-      "bytes": 118452
+      "sha256": "cb26c79aa878732bde5bedac9f4a069a978f2bbc960e28f205bd6f66851b5472",
+      "bytes": 124566
     },
     {
       "file": "monthly_event_diesel_net_import_to_demand_ratio.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_diesel_net_import_to_demand_ratio.png",
-      "sha256": "b77204643a855597c216013bcfca7b95bd3d71b3be4a6e3cfdcbb5e5d77f80a8",
-      "bytes": 128739
+      "sha256": "cb57468610277452efad5009604be30196c3e8d36b3c31cc2bcbf56244b3e9fd",
+      "bytes": 132583
     },
     {
       "file": "monthly_event_gasoline_exports_kt.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_gasoline_exports_kt.png",
-      "sha256": "627f7f0537814777105c65d914f2146a3d62b1979f07edb2c7ee75109887e2cc",
-      "bytes": 161323
+      "sha256": "562bd1fbb5b41155b12bb55c2b261def5d6393a980a99fc552c22e0ad24c5be8",
+      "bytes": 172780
     },
     {
       "file": "monthly_event_gasoline_imports_kt.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_gasoline_imports_kt.png",
-      "sha256": "581afbfd35a653828b6a37c0727f3637fb0c47d19ef025b3eeb9d0c1edfc9a33",
-      "bytes": 107005
+      "sha256": "2f3b37ec2233d8d74985e96664479583dd3cc45a98d37af9f7a44843158daf04",
+      "bytes": 107796
     },
     {
       "file": "monthly_event_gasoline_net_import_to_demand_ratio.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_gasoline_net_import_to_demand_ratio.png",
-      "sha256": "7f3a7cc1e85b9e427678f326f18d364754e97357943579fedcb65e3419401a1a",
-      "bytes": 133465
+      "sha256": "c16d0dd6a8abe0c911fc385c3f7f81e015dc3f760ddf37ab07e6ed8800d6e699",
+      "bytes": 136367
     },
     {
       "file": "pt_es_diesel_pretax_price_spread.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\pt_es_diesel_pretax_price_spread.png",
-      "sha256": "6fa9b1fe94218a13deff89f63cf0b35850f671fedf0a03418f63dc31e324ac1b",
-      "bytes": 113845
+      "sha256": "424c5769c9bd68a7bec68e8430c780c808ff0aeee4d6c3713b527ec1170a8d94",
+      "bytes": 113459
     },
     {
       "file": "pt_es_gasoline_pretax_price_spread.png",
       "kind": "figure",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\pt_es_gasoline_pretax_price_spread.png",
-      "sha256": "2aef39d9dd2c6dfc883b77822d733878601adaa2740036dc048b15692d782efe",
-      "bytes": 130439
+      "sha256": "f001a4b1b96fb7ee7d8888fea7115a2c2d8f4e4e79e57e128750a0a3dbd37413",
+      "bytes": 130272
     }
   ],
   "missing": [],

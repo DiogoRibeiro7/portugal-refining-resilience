@@ -7,11 +7,17 @@ from typing import Any
 import pandas as pd
 
 from .claims import (
+    check_bundle_within_window,
+    check_claim_matrix,
     check_event_interval,
     check_flagged_cells_have_sensitivity,
+    check_prose_numbers,
+    check_prose_statistics,
+    check_prose_uses_licensed_models,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     load_table_sources,
+    load_yaml_block,
     parse_latex_tables,
     verify_table_values,
 )
@@ -282,7 +288,17 @@ def build_readiness_checks(
             "jodi_refinery_output_annual_completeness.csv",
         )
     ]
-    passed, detail = validate_jodi_completeness(completeness_files)
+    # JODI starts later than the annual window, so completeness is asserted over the
+    # years JODI actually covers rather than over years it cannot have.
+    try:
+        analysis = load_analysis_config(paths.root)
+        jodi_start = int(analysis.get("monthly_start_year", analysis["start_year"]))
+        jodi_end = int(analysis["end_year"])
+    except (FileNotFoundError, KeyError, ValueError):
+        jodi_start, jodi_end = 2005, 2024
+    passed, detail = validate_jodi_completeness(
+        completeness_files, start_year=jodi_start, end_year=jodi_end
+    )
     checks.append(_check_record("jodi_annual_completeness_valid", passed, detail))
 
     passed, detail = validate_monthly_panel(
@@ -419,10 +435,79 @@ def build_report_claim_checks(
         passed, detail = check_flagged_cells_have_sensitivity(reconciliation, sensitivities)
         checks.append(_check_record("disputed_cells_have_sensitivity", passed, detail))
 
-    # 5. surface results that change significance when the source is swapped
+    # 5. numbers stated in the prose, including the claim-evidence matrix
+    every_frame = [_read_if_present(path) for path in sorted(paths.report_inputs.glob("*.csv"))]
+    every_frame = [frame for frame in every_frame if not frame.empty]
+    allow: set[float] = set()
+    if mapping_path.exists():
+        import yaml
+
+        payload = yaml.safe_load(mapping_path.read_text(encoding="utf-8")) or {}
+        allow = {float(v) for v in (payload.get("prose_allow") or {})}
+    # Tables verified against a declared source are excluded; everything else,
+    # including the unlabelled claim-evidence matrix, is checked here.
+    checked_labels = set(load_table_sources(mapping_path)) if mapping_path.exists() else set()
+    passed, detail = check_prose_numbers(
+        tex, every_frame, allow=allow, checked_labels=checked_labels
+    )
+    checks.append(_check_record("report_prose_matches_bundle", passed, detail))
+
+    # 5b. a quoted statistic must reproduce from a column of that kind of statistic
+    passed, detail = check_prose_statistics(tex, every_frame, checked_labels=checked_labels)
+    checks.append(_check_record("prose_statistics_match_bundle", passed, detail))
+
+    # 6. the claim-evidence matrix, row by row against each cited table's source
+    table_frames: dict[str, list[pd.DataFrame]] = {}
+    if mapping_path.exists():
+        for label, files in load_table_sources(mapping_path).items():
+            loaded = [_read_if_present(paths.report_inputs / name) for name in files]
+            loaded = [frame for frame in loaded if not frame.empty]
+            if loaded:
+                table_frames[label] = loaded
+    passed, detail = check_claim_matrix(tex, table_frames, every_frame, allow=allow)
+    checks.append(_check_record("claim_matrix_matches_cited_source", passed, detail))
+
+    # 7. surface results that change significance when the source is swapped
     passed, detail = check_sensitivity_survival(
         _read_if_present(paths.report_inputs / "annual_source_sensitivity.csv")
     )
     checks.append(_check_record("source_swap_survival_reported", passed, detail))
+
+    # 8. no artifact may cover years the study window excludes unless it says so
+    config = load_analysis_config(paths.root)
+    scope = config.get("window_scope", {}) or {}
+    exempt = {str(entry["file"]) for entry in scope.get("exempt", []) if "file" in entry}
+    passed, detail = check_bundle_within_window(
+        paths.report_inputs,
+        start_year=int(config["start_year"]),
+        end_year=int(config["end_year"]),
+        exempt=exempt,
+    )
+    checks.append(_check_record("bundle_within_study_window", passed, detail))
+
+    # 9. a claim must quote the model family the diagnostics licensed for it
+    scope = load_yaml_block(mapping_path, "model_family_scope")
+    if scope:
+        choice = _read_if_present(paths.report_inputs / str(scope["choice_file"]))
+        family_files = dict(scope["family_files"])
+        chosen = set(choice["model_family"].astype(str)) if not choice.empty else set()
+        licensed_files = {family_files[name] for name in chosen if name in family_files}
+        superseded_files = set(family_files.values()) - licensed_files
+
+        def _estimates(names: set[str]) -> list[float]:
+            values: list[float] = []
+            for name in sorted(names):
+                frame = _read_if_present(paths.report_inputs / name)
+                if "estimate" in frame.columns:
+                    values.extend(float(v) for v in frame["estimate"].dropna())
+            return values
+
+        passed, detail = check_prose_uses_licensed_models(
+            tex,
+            licensed_estimates=_estimates(licensed_files),
+            superseded_estimates=_estimates(superseded_files),
+            may_cite_superseded=set(scope.get("may_cite_superseded", [])),
+        )
+        checks.append(_check_record("prose_uses_licensed_model_family", passed, detail))
 
     return pd.DataFrame(checks)

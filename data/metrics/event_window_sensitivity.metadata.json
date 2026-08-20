@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T15:20:49.759948+00:00",
+  "created_at_utc": "2026-08-20T13:17:37.223231+00:00",
   "rows": 36,
   "columns": [
     "product",
@@ -15,7 +15,7 @@
     "post_years"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\event_window_sensitivity.csv",
-  "csv_sha256": "b506ef874963da0a2e9a791ed0bc942bc2005a182ad7c9575e93df853764b34f",
+  "csv_sha256": "be7a80504eb239c6b3c261fa06a70e0e1f3797e29436fa4308a99b7d189bb1e0",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\event_window_sensitivity.parquet",
   "parquet_error": null,
   "metadata": {}

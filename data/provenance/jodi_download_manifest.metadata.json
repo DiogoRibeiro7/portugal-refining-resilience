@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-19T08:27:53.605272+00:00",
+  "created_at_utc": "2026-08-20T13:14:31.663711+00:00",
   "rows": 1,
   "columns": [
     "source",
@@ -8,7 +8,7 @@
     "sha256"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\jodi_download_manifest.csv",
-  "csv_sha256": "cd12266b0b99e7a4c629615c61938e4737fff61439f3dcd82cce764dc7cff7c1",
+  "csv_sha256": "593f3e39a600566c24154a73366c180e8e916e423ce04094c2040e7a1ee413aa",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\jodi_download_manifest.parquet",
   "parquet_error": null,
   "metadata": {}
