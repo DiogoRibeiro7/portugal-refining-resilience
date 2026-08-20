@@ -1,6 +1,6 @@
 check,passed,detail
-report_tables_match_bundle,False,"tab:diesel: [0.66, 0.73, 0.74, 0.79, 0.92, 1.03]; tab:gasoline: [-1.69, -1.51, -1.29, -1.23, -1.19, -1.12]; tab:headline: [-1.227, -1.222, -1.116, -1.033, -1.01, -0.763]; tab:breaks: [0.0003, 0.0008, 0.0026, 0.0027, 0.0041, 0.0232]; tab:its: [-1782.9, -447.5, -139.9, -0.676, -0.52, 0.024]; tab:phases: [-0.01, 76.8, 77.2, 196.0, 413.0]; tab:monthly: [-154.9, -106.0, -5.09, 0.0092, 0.0149, 0.0386]; tab:price: [-0.0004, -0.0003, 0.0352, 0.0541, 0.1375, 0.2719]; tab:ecm: [-0.208, -0.0019, 0.004, 0.1648, 0.18, 0.197]; tab:sourcesens: [-1782.9, -1540.3, -447.5, -254.9, 0.001, 0.002]; tab:windows: [-0.455, -0.419, -0.364, -0.291, -0.279, 0.266]"
-report_sample_sizes_match,False,"report states n=[19, 240, 1077] but the fitted models report [34, 276, 1078]"
+report_tables_match_bundle,True,all mapped tables verified; not checkable: ['tab:coverage']
+report_sample_sizes_match,True,"stated sample sizes [34, 276, 1078] match the fitted models"
 report_event_interval_correct,True,stated interval matches the configured 10-month gap
 disputed_cells_have_sensitivity,True,"8 disputed cell(s), all covered by a sensitivity"
 source_swap_survival_reported,True,every result keeps its significance under the source swap

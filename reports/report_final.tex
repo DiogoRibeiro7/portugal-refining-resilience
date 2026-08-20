@@ -114,6 +114,12 @@ Four hypotheses were pre-specified before estimation:
 read as pass-through.
 \end{enumerate}
 
+A fifth candidate break year, 2000, was added after the annual panel was extended back to 1990
+and the 1990s were seen for the first time. It was not pre-specified, and every result
+concerning it is exploratory. It is reported because omitting a visible feature of the series
+would be worse than labelling it, but it carries less evidential weight than the pre-specified
+events and no conclusion here depends on it.
+
 Throughout, four evidence levels are kept distinct: a \emph{documented event}, a
 \emph{descriptive change}, a \emph{statistical association or structural break}, and a
 \emph{causal effect}. Only the first three are claimed anywhere in this paper.
@@ -240,7 +246,8 @@ adjustment across all twenty-four tests.
 
 \textbf{Annual interrupted trends.} Ordinary least squares with a common trend, a post-event
 level term and a post-event slope term, HAC(1) covariance, 2021 again excluded. This design
-retains all nineteen observations rather than splitting the series.
+retains all thirty-five annual observations, less the excluded transition year, rather than
+splitting the series.
 
 \textbf{Monthly event timing.} A segmented regression on 276 monthly observations, 2002--2024,
 with month fixed effects, a calendar-month trend and HAC(3) errors. Each phase-trend interaction is centred
@@ -456,14 +463,16 @@ Year & Product & Exports & Imports & Demand & Ref.\ out. & Net imp./dem. & Regim
 \subsection{Chow tests}
 
 Twenty-four Chow tests are run across three candidate break years, and Table~\ref{tab:breaks}
-lists the six that survive Benjamini--Hochberg adjustment. They fall into two groups.
+lists the six that survive Benjamini--Hochberg adjustment. They fall into two groups, and only
+the first was pre-specified.
 
 Three concern 2013 and move in the direction the engineering implies: more diesel manufactured,
 more exported, and a net-import position that turns negative. Extending the series to 1990
 strengthens them, because the pre-event segment now carries thirteen observations rather than
 eight.
 
-The other three concern 2000 and are new to this window. Refinery output breaks upward for both
+The other three concern 2000, which is exploratory rather than pre-specified: it was added once
+the extended panel revealed the 1990s. Refinery output breaks upward for both
 products, most strongly for gasoline, and diesel imports break upward with it. What does not
 break at 2000 is either ratio: neither the net-import-to-demand nor the refinery-output-to-demand
 ratio shows a discontinuity there. Output and imports both rose because demand rose faster, so
@@ -576,7 +585,7 @@ phase boundaries marked.}
 
 \begin{table}[htbp]
 \centering
-\caption{Segmented monthly event model, diesel, $n=276$ months (1990--2024), month fixed
+\caption{Segmented monthly event model, diesel, $n=276$ months (2002--2024), month fixed
 effects, HAC(3).
 A phase coefficient is the level shift at that phase boundary against the extrapolated
 pre-closure trend.}
@@ -883,8 +892,14 @@ falls from $1.088$ to $0.767$. These are descriptive pre/post differences, not e
 
 Two 2022 trade cells are disputed between the two independent sources: diesel exports, where the
 monthly source reports 331.0~kt against 622.2~kt nationally, and gasoline exports, where it
-reports 1{,}346.0~kt against 1{,}501.7~kt. Several annual results depend on them.
-Table~\ref{tab:sourcesens} recomputes each of those results on the corroborated national values.
+reports 1{,}346.0~kt against 1{,}501.7~kt.
+
+Moving the annual panel to Eurostat changes what that disagreement can affect. The annual
+results are now computed from the national submission, which already carries the corroborated
+value for the diesel cell, so the disputed monthly figure does not enter the annual arm at all.
+Table~\ref{tab:sourcesens} records this: the diesel rows are identical under both sources
+because there is nothing to swap. The disagreement now bears only on the monthly arm and on the
+JODI cross-check, not on the annual conclusions.
 
 \begin{table}[htbp]
 \centering
@@ -904,20 +919,19 @@ gasoline & net imp./dem. & $+$0.307 & 0.095 & $+$0.253 & 0.111 \\
 \end{tabular}
 \end{table}
 
-The diesel results are robust. Both the export level change and the net-import-ratio shift keep
-their sign, remain significant at conventional levels, and lose roughly a tenth to a seventh of
-their magnitude. The diesel conclusions in this paper hold on either source.
+The diesel results are unaffected by the swap, for the reason just given, and both remain
+significant at conventional levels.
 
-The gasoline export result is not robust. Its level change falls from $-447.5$~kt to
-$-254.9$~kt and ceases to be significant at five per cent. That result is therefore not relied
-on anywhere in this paper, and the gasoline evidence for 2022 rests on the net-import ratio,
-which does survive. Where the text reports a 2022 gasoline export shift it should be read as
-conditional on the primary source.
+The gasoline results are weak on either source. Neither the export level change nor the
+net-import-ratio shift reaches five per cent under the primary values, and swapping to the
+corroborated ones reduces both further. No 2022 gasoline result is relied on anywhere in this
+paper. The gasoline evidence for that year rests on the monthly design of Section~6 rather than
+on the annual models.
 
 \subsection{Multiplicity}
 
-Sixteen Chow tests are reported and Benjamini--Hochberg adjustment is applied across all of them,
-not to a selected subset. Three survive at conventional levels. The monthly models are not
+Twenty-four Chow tests are run and Benjamini--Hochberg adjustment is applied across all of
+them, not to a selected subset. Six survive at conventional levels. The monthly models are not
 included in that adjustment and their $p$-values should be read as unadjusted; the phase terms
 that carry the conclusions, on refinery output and on the net-import ratio, have $p\le 0.006$,
 inside any reasonable correction for the twelve terms reported. The import-level terms are
@@ -1005,12 +1019,14 @@ Balance at each event year & Table~\ref{tab:headline} & descriptive & 2021 marke
 Refining regime by year & Table~\ref{tab:headline} & documented & Regime label, not capacity \\
 Diesel net-import ratio breaks at 2013 & Table~\ref{tab:breaks} & structural break & Diagnostic, not a causal estimator \\
 No Chow break detected at 2022 & Table~\ref{tab:breaks} & structural break & Three post-event years; low power \\
+2000 break is exploratory, not pre-specified & Table~\ref{tab:breaks} & association & Added after extending the panel; no conclusion rests on it \\
 Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes a common trend; 2022 export rows depend on disputed cells \\
-Diesel 2022 results survive the source sensitivity & Table~\ref{tab:sourcesens} & association & Gasoline exports does not survive \\
+Diesel 2022 annual results do not depend on the disputed cell & Table~\ref{tab:sourcesens} & association & Annual panel uses the corroborated source throughout \\
+No 2022 gasoline annual result reaches significance & Table~\ref{tab:sourcesens} & --- & Weak on either source; not relied on \\
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
 Refinery output falls 106 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
 2022 stress adds a further $-155$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
-Monthly models cover 240 months, 1990--2024 & Section~\ref{sec:coverage} & descriptive & Source extends beyond the window and is trimmed \\
+Monthly models cover 276 months, 2002--2024 & Section~\ref{sec:coverage} & descriptive & JODI begins in 2002, later than the annual window \\
 2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
 All four price levels are non-stationary & Section~\ref{sec:pricediag} & descriptive & ADF only; no break-robust unit-root test \\
 Diesel not cointegrated, gasoline cointegrated & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification \\
