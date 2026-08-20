@@ -17,7 +17,7 @@ price_ecm_models.csv,6,"product, term, estimate, std_error, p_value, nobs, coint
 price_model_choice.csv,2,"product, model_family, reason, n_obs, pt_level_adf_p_value, es_level_adf_p_value, cointegration_statistic, cointegration_p_value"
 price_short_run_models.csv,10,"product, term, estimate, std_error, p_value, nobs, covariance, outcome, comparison, model, model_family"
 price_stationarity_diagnostics.csv,4,"country, product, value_column, nobs, status, adf_statistic, p_value, used_lag, adf_nobs, stationary_5pct"
-pt_es_physical_balance_comparison.csv,216,"year, product, metric, PT, ES, PT_minus_ES"
+pt_es_physical_balance_comparison.csv,210,"year, product, metric, PT, ES, PT_minus_ES"
 pt_es_price_spread_summary.csv,2,"product, pre_spread_mean, post_spread_mean, difference, unit, interpretation"
 pt_es_spread_stationarity.csv,2,"product, diagnostic, status, nobs, adf_statistic, p_value, used_lag, adf_nobs, stationary_5pct"
 report_claim_checks.csv,7,"check, passed, detail"

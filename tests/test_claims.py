@@ -4,10 +4,13 @@ Each test reproduces a defect that reached a finished draft and was found by a h
 reviewer rather than by the pipeline.
 """
 
+import pathlib
+
 import pandas as pd
 import pytest
 
 from portugal_refining_resilience.claims import (
+    check_bundle_within_window,
     check_claim_matrix,
     check_event_interval,
     check_flagged_cells_have_sensitivity,
@@ -350,5 +353,65 @@ def test_claim_matrix_reads_a_year_range_as_years(
 ) -> None:
     """``2002--2024`` must not be parsed as the number -2024."""
     passed, _ = check_claim_matrix(MATRIX, matrix_sources, [])
+
+    assert passed is True
+
+
+def _bundle_dir(tmp_path: pathlib.Path, **files: pd.DataFrame) -> pathlib.Path:
+    for name, frame in files.items():
+        frame.to_csv(tmp_path / f"{name}.csv", index=False)
+    return tmp_path
+
+
+def test_bundle_within_window_accepts_a_trimmed_bundle(tmp_path: pathlib.Path) -> None:
+    inputs = _bundle_dir(
+        tmp_path, panel=pd.DataFrame({"year": [1990, 2010, 2024], "value": [1.0, 2.0, 3.0]})
+    )
+
+    passed, _ = check_bundle_within_window(inputs, start_year=1990, end_year=2024)
+
+    assert passed is True
+
+
+def test_bundle_within_window_catches_a_year_the_study_excludes(
+    tmp_path: pathlib.Path,
+) -> None:
+    """Eurostat published 2025 and the comparison was never trimmed.
+
+    A stability claim was then written against a series the paper does not include.
+    """
+    inputs = _bundle_dir(tmp_path, panel=pd.DataFrame({"year": [2024, 2025], "value": [1.0, 2.0]}))
+
+    passed, detail = check_bundle_within_window(inputs, start_year=1990, end_year=2024)
+
+    assert passed is False
+    assert "2025" in detail
+    assert "panel.csv" in detail
+
+
+def test_bundle_within_window_honours_a_declared_exemption(
+    tmp_path: pathlib.Path,
+) -> None:
+    """A source-coverage diagnostic describes the source, not the analysis."""
+    inputs = _bundle_dir(
+        tmp_path, completeness=pd.DataFrame({"year": [2024, 2026], "months": [12, 5]})
+    )
+
+    passed, detail = check_bundle_within_window(
+        inputs, start_year=1990, end_year=2024, exempt={"completeness.csv"}
+    )
+
+    assert passed is True
+    assert "1 declared exemption" in detail
+
+
+def test_bundle_within_window_ignores_files_with_no_year(
+    tmp_path: pathlib.Path,
+) -> None:
+    inputs = _bundle_dir(
+        tmp_path, coefficients=pd.DataFrame({"term": ["const"], "estimate": [0.5]})
+    )
+
+    passed, _ = check_bundle_within_window(inputs, start_year=1990, end_year=2024)
 
     assert passed is True

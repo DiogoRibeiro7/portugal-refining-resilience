@@ -425,3 +425,45 @@ def check_claim_matrix(
     if bad:
         return False, f"{len(bad)} matrix value(s) not in the cited source: {bad[:6]}"
     return True, f"all {len(claim_matrix_rows(tex))} claim-matrix rows check out"
+
+
+def check_bundle_within_window(
+    report_inputs: Path,
+    *,
+    start_year: int,
+    end_year: int,
+    exempt: set[str] | None = None,
+) -> tuple[bool, str]:
+    """Does every bundle artifact stay inside the declared study window?
+
+    Sources keep publishing after the window closes, so an artifact that is never
+    trimmed quietly gains years the analysis did not use. A reader checking a claim
+    against the bundle then sees a longer series than the paper was written from,
+    and a range or stability claim can be true of one and false of the other.
+
+    Files that legitimately extend past the window are named in the config with a
+    reason, in the same way divergent trade cells are.
+    """
+    exempt = exempt or set()
+    offenders: list[str] = []
+    for path in sorted(report_inputs.glob("*.csv")):
+        if path.name in exempt:
+            continue
+        frame = pd.read_csv(path)
+        if "year" not in frame.columns:
+            continue
+        years = pd.to_numeric(frame["year"], errors="coerce").dropna()
+        outside = years[(years < start_year) | (years > end_year)]
+        if not outside.empty:
+            span = (
+                f"{int(outside.min())}"
+                if outside.nunique() == 1
+                else (f"{int(outside.min())}-{int(outside.max())}")
+            )
+            offenders.append(f"{path.name} ({span})")
+    if offenders:
+        return False, (f"artifact(s) outside {start_year}-{end_year} and not declared: {offenders}")
+    return True, (
+        f"every bundle artifact stays within {start_year}-{end_year}; "
+        f"{len(exempt)} declared exemption(s)"
+    )

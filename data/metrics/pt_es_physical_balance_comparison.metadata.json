@@ -1,6 +1,6 @@
 {
-  "created_at_utc": "2026-08-20T09:36:53.508290+00:00",
-  "rows": 216,
+  "created_at_utc": "2026-08-20T09:50:07.684103+00:00",
+  "rows": 210,
   "columns": [
     "year",
     "product",
@@ -10,7 +10,7 @@
     "PT_minus_ES"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_physical_balance_comparison.csv",
-  "csv_sha256": "e6122b738fd3b960f3faf671c40738c7970434d9ff98c1b8d1d384b11d324cab",
+  "csv_sha256": "bb09e841b0505291e60e2350741b9a46affbc4d9add6038c01fcfa8bfbebe0c1",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_physical_balance_comparison.parquet",
   "parquet_error": null,
   "metadata": {}

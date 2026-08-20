@@ -42,9 +42,11 @@ ten months between them:
 trend informed by the 1990s, the diesel export level shift is −782 kt (*p* = 0.022), roughly half
 what a 2005-start window gives, and both gasoline shifts lose significance.
 
-**Spain did not move the same way.** Spanish diesel output covered 0.85-0.93 of Spanish demand
-throughout with no trend, while Portugal's fell to 0.678 in 2023 against Spain's 0.923. That
-weakens a purely common-shock account without disposing of it.
+**Spain did not move the same way.** Over 2018-2024 Spanish diesel output covered 0.85-0.93 of
+Spanish demand with no trend, while Portugal's fell to 0.678 in 2023 against Spain's 0.923. That
+weakens a purely common-shock account without disposing of it. The comparison is confined to
+those years on purpose: across the full 1990-2024 panel the Spanish ratio is not flat either,
+falling to 0.667 in 2007 before recovering.
 
 **Price linkage tightened for both fuels, through different channels.** The contemporaneous
 elasticity of Portuguese to Spanish pre-tax diesel prices rises from 0.73 to about 1.01

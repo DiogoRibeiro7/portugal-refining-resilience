@@ -7,6 +7,7 @@ from typing import Any
 import pandas as pd
 
 from .claims import (
+    check_bundle_within_window,
     check_claim_matrix,
     check_event_interval,
     check_flagged_cells_have_sensitivity,
@@ -464,5 +465,17 @@ def build_report_claim_checks(
         _read_if_present(paths.report_inputs / "annual_source_sensitivity.csv")
     )
     checks.append(_check_record("source_swap_survival_reported", passed, detail))
+
+    # 8. no artifact may cover years the study window excludes unless it says so
+    config = load_analysis_config(paths.root)
+    scope = config.get("window_scope", {}) or {}
+    exempt = {str(entry["file"]) for entry in scope.get("exempt", []) if "file" in entry}
+    passed, detail = check_bundle_within_window(
+        paths.report_inputs,
+        start_year=int(config["start_year"]),
+        end_year=int(config["end_year"]),
+        exempt=exempt,
+    )
+    checks.append(_check_record("bundle_within_study_window", passed, detail))
 
     return pd.DataFrame(checks)
