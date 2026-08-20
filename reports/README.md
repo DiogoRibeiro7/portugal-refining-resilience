@@ -8,5 +8,8 @@ Build the PDF with:
 make report-pdf
 ```
 
-The Markdown files in this directory are intermediate review artifacts and
-evidence notes generated during report development.
+`report_final.md` is a summary of the canonical report. `data_provenance.md` maps every table and
+figure to the file behind it.
+
+Earlier staged artifacts from the report-writing chain are in `archive/`. They were written when
+the evidence bundle was empty and do not describe current findings.
