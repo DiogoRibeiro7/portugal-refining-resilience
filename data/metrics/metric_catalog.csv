@@ -25,7 +25,7 @@ price_stationarity_diagnostics.csv,4,"country, product, value_column, nobs, stat
 pt_es_physical_balance_comparison.csv,210,"year, product, metric, PT, ES, PT_minus_ES"
 pt_es_price_spread_summary.csv,2,"product, pre_spread_mean, post_spread_mean, difference, unit, interpretation"
 pt_es_spread_stationarity.csv,2,"product, diagnostic, status, nobs, adf_statistic, p_value, used_lag, adf_nobs, stationary_5pct"
-report_claim_checks.csv,9,"check, passed, detail"
+report_claim_checks.csv,10,"check, passed, detail"
 report_readiness.csv,8,"check, passed, detail"
 seed_export_metrics.csv,10,"metric, product, value, unit, status"
 stress_2022_metrics.csv,36,"product, value_column, target_year, target_value, baseline_start, baseline_end, baseline_n, baseline_mean, baseline_std, z_score, baseline_median, baseline_mad, robust_z_score, empirical_percentile"

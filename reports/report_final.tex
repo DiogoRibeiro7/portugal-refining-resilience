@@ -102,6 +102,23 @@ The empirical question is whether the loss of refining capacity increased Portug
 on imported finished petroleum products and reduced supply resilience, and whether
 Portugal--Spain price co-movement changed after the closure.
 
+The answer this paper arrives at is a sequence rather than a single event, and the sequence is
+the argument. Around 2000 Portuguese refinery output breaks upward for both products while
+neither dependence ratio moves: the system was growing to meet demand that was growing faster,
+which changes its size but not its character. In 2013 the hydrocracker changes the character.
+It shifts the product slate towards middle distillates, and Portugal crosses from net diesel
+importer to net diesel exporter, a position it holds through 2020. In May 2021 Matosinhos
+closes, and the crossing reverses: by 2023 domestic manufacturing covers $0.678$ of diesel
+demand, the lowest figure in the window, with imports at a series high. Ten months after the
+closure the European energy shock arrives and tests the reduced system, and the test falls
+almost entirely on diesel.
+
+Read as a sequence, these are not three unrelated breaks but one system moving along a single
+dimension, first away from import dependence and then back towards it, with the return
+overshooting the starting point. What the paper cannot do is apportion the final movement
+between the closure and the shock, because they fall ten months apart. That limit is why the
+monthly design exists and why the causal question is left open.
+
 The paper does not assume that closure raised prices. It separates four mechanisms and tests
 each in turn:
 \[
@@ -128,6 +145,53 @@ events and no conclusion here depends on it.
 Throughout, four evidence levels are kept distinct: a \emph{documented event}, a
 \emph{descriptive change}, a \emph{statistical association or structural break}, and a
 \emph{causal effect}. Only the first three are claimed anywhere in this paper.
+
+\section{What Resilience Means Here}
+\label{sec:resilience}
+
+Resilience is a word that can carry several different claims about a fuel system, and this
+paper measures only some of them. Four senses are used, each tied to a specific quantity, and
+the rest of the paper is organised around them.
+
+\textbf{Domestic supply buffer.} The share of consumption the country manufactures, measured
+as refinery output over domestic demand. This is a capability measure and not a
+self-sufficiency measure: output may be exported while demand is met by imports, which is the
+normal state for Portuguese gasoline. A ratio above one says the system \emph{could} in
+principle cover its own demand from domestic manufacturing, not that it does.
+
+\textbf{Import exposure.} How much of consumption arrives through the trade channel, and in
+which direction on balance. Gross import dependence, imports over demand, measures the volume
+that must be sourced abroad. The net-import-to-demand ratio measures the country's position:
+negative for a net seller, positive for a net buyer. The two answer different questions and a
+system can move on one without moving on the other, which is what happens around 2000.
+
+\textbf{Concentration.} A country with two conversion sites has a domestic alternative when
+one has an outage; a country with one does not. Portugal moved from two refineries to one in
+May 2021. This is a documented event rather than an estimated quantity, and it is the reason
+the 2022 episode is examined separately: a shock to a single-site system is not the same object
+as the same shock to a distributed one.
+
+\textbf{Price integration.} How closely, and how quickly, domestic pre-tax prices track a
+neighbouring market's. A system meeting more of its demand through imports has less room for
+domestic price formation, so integration is the price-side counterpart of physical exposure.
+Section~\ref{sec:pricediag} onwards measures it as contemporaneous co-movement and as the speed
+at which a gap against the long-run relation closes.
+
+Several things that belong to a full account of security of supply are absent, and their
+absence bounds every claim made here. Compulsory stocks and commercial inventory are not
+observed, and stockholding is the first line of defence against an interruption. Port,
+storage and pipeline capacity, which determine whether an import volume can physically be
+landed and moved, are not observed. Nor are supplier diversification, crude slate, contractual
+terms, or spare capacity at the remaining site. A country that imports a large share of its
+diesel through deep, liquid, well-connected markets may be more secure than one that
+manufactures more of its own with a single vulnerable feedstock route. Nothing here can
+distinguish those cases.
+
+What is measured, then, is the structural dimension: how much of demand the domestic system
+covers, how much arrives by import, how concentrated the manufacturing is, and how tightly
+domestic prices move with a neighbour's. Where the paper says dependence rose, it means those
+quantities moved. It does not mean that supply became less secure, which is a question the
+available data cannot answer.
 
 \section{Data}
 
@@ -210,20 +274,13 @@ blended-biofuel wedge, \texttt{O4671} less \texttt{O4671XR5220B}, is $0.0$~kt on
 year of the window and at most $4.5\%$ on imports, so blending cannot explain any export
 divergence at all.
 
-\subsection{Source reconciliation}
-\label{sec:recon}
+\subsection{Cross-checking the sources against each other}
 
-JODI and DGEG are the only genuinely independent pair. Across the 24 overlapping 2019--2024 trade
-cells, $66.7\%$ agree within tolerance. Over the
-full window, JODI and Eurostat agree on $89\%$ of 80 cells, with only three of the nine
-divergences occurring before 2019.
-
-A cell is flagged only when it breaches both the absolute and the percentage tolerance. Applying
-them as alternatives makes a 25~kt floor bind on series of roughly $1{,}600$~kt, an effective
-tolerance of $1.6\%$, which would flag agreement as close as $2.1\%$ as failure. Each of the
-eight remaining divergent cells is enumerated in the analysis configuration, together
-with the series Eurostat identifies as the outlier: six where JODI is out of line, two where the DGEG
-workbook is. An unlisted divergence fails the readiness gate however few cells it touches.
+Two of the three trade sources are genuinely independent, and where they disagree the paper
+reports the result on both. Nine of eighty JODI--Eurostat cells and eight of twenty-four
+JODI--DGEG cells diverge beyond tolerance. The tolerances, the divergent cells and the reason
+each is accepted are set out in Appendix~\ref{app:audit}, and no divergent cell enters a
+headline figure without the alternative value being reported alongside it.
 
 \section{Methods}
 
@@ -412,6 +469,43 @@ Year & Imports & Exports & Demand & Refinery out. & Gross imp.\ dep. & Net imp./
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{Why the two products diverge}
+\label{sec:mechanism}
+
+The two products behave differently in almost every result that follows, and the reason is
+visible in the window means. Portuguese diesel demand averaged $4{,}522$~kt against gasoline
+demand of $1{,}511$~kt: the country consumes roughly three times as much diesel as gasoline.
+Manufacturing runs the other way relative to demand. Gasoline output averaged $2{,}337$~kt
+against that $1{,}511$~kt of demand, a surplus exported at an average of $971$~kt a year
+against imports of only $129.5$~kt. Diesel output averaged $4{,}348$~kt against $4{,}522$~kt of
+demand, a deficit covered by imports averaging $804$~kt against exports of $643$~kt.
+
+This is the familiar European mismatch in national form. A refinery converts crude into a slate
+of products in proportions set by the crude and the conversion units installed, and that slate
+is not free to follow demand. Portuguese demand dieselised: gasoline demand peaks in 2000 and
+declines thereafter, while diesel demand peaks in 2004 and stays several times larger. The
+refining system was left producing more gasoline than the country could burn and less diesel
+than it needed, so gasoline became a structural export and diesel a structural import.
+
+That difference in starting position, rather than any difference in how the two products were
+treated, is what makes them respond differently to the same events. A hydrocracker converts
+heavy gasoil into middle distillates, so the 2013 unit acted on the deficit product: diesel
+output peaks at $6{,}104$~kt in 2015 and the trade position crosses into surplus. Gasoline had
+no deficit to close and no comparable break follows.
+
+The same asymmetry governs the losses. Gasoline entered the 2021 closure with output well above
+domestic demand, so removing capacity moved the ratio down a wide margin without reaching one:
+the gasoline coverage ratio stays above $1.7$ in every year after the closure. Diesel entered
+with a ratio near one and no comparable margin, so the same proportional loss pushed it to
+$0.678$ by 2023 and turned the country back into a net buyer. A buffer is only protective while
+it is large relative to the shock, and Portugal held a large one in the product it did not much
+need and a thin one in the product it did.
+
+This account is consistent with every result reported below, but it is not tested by any of
+them. Yield economics, the crude slate and the commercial logic of export contracts are not
+observed here, and a competing account in which the two products differ for reasons of
+contracting rather than chemistry would fit the same series.
 
 \subsection{Dependence ratios}
 
@@ -705,9 +799,37 @@ close to baseline ($z=0.58$), so the diesel import surge is not demand-driven.
 
 The stress is therefore diesel-specific on the supply side. That is consistent with the
 documented suspension of Russian oil-product and vacuum gas oil purchases feeding diesel
-manufacturing at Sines, and inconsistent with a general refining shutdown, which would have moved
-gasoline equally. The metrics are reported across three baseline windows and the ranking is
-unchanged in each.
+manufacturing at Sines, and inconsistent with a general refining shutdown, which would have
+moved gasoline equally. The metrics are reported across three baseline windows and the ranking
+is unchanged in each.
+
+The pattern is worth reading as a whole rather than statistic by statistic, because the four
+terms of the balance move in a way that identifies where the constraint bound. Refinery output
+falls to the bottom of its baseline range while gasoline output barely moves, which locates
+the problem in diesel manufacturing rather than in running the refinery. Demand sits at its
+baseline, so nothing was rationed and no adjustment came from consumption. Exports collapse
+and imports reach the top of the baseline range. A system that cannot make as much of a
+product, and whose consumers want the usual amount of it, has two ways to close the gap: stop
+selling it abroad and start buying it. Portugal did both, in that order of magnitude.
+
+This is what the trade channel absorbing a shock looks like, and it is the first direct
+observation in this paper of resilience in the sense of Section~\ref{sec:resilience} being
+tested. The domestic buffer contributed nothing: output moved the wrong way, which is what a
+feedstock disruption does. The whole adjustment ran through imports. Whether that counts as a
+system coping or a system exposed depends on a judgement this paper cannot make, because the
+terms on which those imports were obtained, and whether they would have been available in a
+tighter market, are not in the data.
+
+The concentration point matters here in a way it does not elsewhere. A disruption to one
+feedstock route is a different object in a two-site system than in a one-site system: with two
+conversion sites, a problem specific to one of them can be partly offset by the other, and
+with one there is no domestic offset available at any price. Portugal entered 2022 having
+become a one-site system ten months earlier. The evidence here cannot separate how much of the
+2022 movement is the shock and how much is the reduced system meeting it, and that is not a
+technicality: the two are not independent. A closure changes how a subsequent common shock
+propagates, so the common-shock account and the closure account are not competing explanations
+to be weighed against each other but two parts of one causal chain that this design cannot
+decompose.
 
 \section{Prices}
 
@@ -837,6 +959,31 @@ contemporaneous channel tightened as well. Reporting only the short-run coeffici
 supported the conclusion that gasoline was unaffected, and that conclusion would have been an
 artefact of the specification.
 
+What this amounts to is a loss of domestic price insulation. Before the transition a gap
+between the Portuguese and Spanish pre-tax diesel price took about five weeks to half-close;
+afterwards it takes a little over one. A Portuguese price that departs from the Iberian
+relation is pulled back roughly three and a half times faster than it used to be, and it
+departs less in the first place, since the contemporaneous elasticity has risen to $1.242$.
+Portuguese pre-tax diesel prices behave less like the output of a domestic market with its own
+supply conditions and more like a local expression of an Iberian one.
+
+That reading sits naturally alongside the physical result. A country meeting a larger share of
+its diesel demand from imports is buying at prices formed in the market those imports come
+from, so there is less scope for a domestic supply position to hold the local price apart.
+The two findings are consistent and their timing coincides, which is the strongest statement
+the design supports. It is not evidence that the physical change caused the price change. The
+same tightening would follow from a period in which common cost shocks came to dominate both
+markets, and 2021--2024 was exactly such a period. Distinguishing the two would need
+refinery-gate or wholesale prices and an import-origin series, neither of which is observed
+here.
+
+Gasoline is the useful check on that story. Its contemporaneous elasticity does not move, so
+whatever tightened the diesel relation did not simply tighten everything. But its adjustment
+speed does move, by a similar factor, and gasoline is the product whose physical position
+barely changed. That weakens any account tying the price result directly to the physical one,
+and it is reported here rather than left out because it is the observation least favourable to
+the paper's own framing.
+
 Two caveats belong with these estimates. The disequilibrium term is a generated regressor, so the
 second-stage standard errors are conditional on the first-stage cointegrating estimate; HAC
 covariance mitigates but does not remove this. And the diesel cointegration verdict rests on
@@ -882,6 +1029,14 @@ Spain refines the same products and was exposed to the same European energy shoc
 its diesel balance is a useful, if imperfect, reference for what a shock common to the Iberian
 market did to a neighbouring system. Table~\ref{tab:spain} sets the two side by side.
 
+The reason to look at Spain is specific. The two countries share a border, a product market
+and a regulatory environment; they faced the same withdrawal from Russian products on the same
+timetable; and Spanish prices are already the comparison series in the price models, so the
+same country carries both halves of the paper. What differs is the event. Portugal closed a
+refinery in May 2021 and Spain did not. If the post-2021 Portuguese movement were the European
+shock working through any Iberian refining system, Spain should show something like it. Spain
+shows nothing like it, which is the whole content of the comparison.
+
 \begin{table}[htbp]
 \centering
 \caption{Diesel balance ratios, Portugal against Spain.}
@@ -912,15 +1067,31 @@ more of its own diesel demand than Spain did in 2018, 2020 and 2021, and less fr
 to $0.678$ in 2023 while Spain sat at $0.923$. Across those years Spanish net imports stay within $0.052$ of
 balance; Portugal reaches $0.262$ in 2023.
 
-This does not identify a causal effect, and Spain is not used as a control. It weakens the
-common-shock explanation without disposing of it: a divergence appearing in one country and not
-the other is not by itself sufficient evidence that a shared shock was unimportant, because the
-two systems differ in ways this paper has not measured. Crude slate, refinery maintenance
+This does not identify a causal effect, and Spain is not used as a control. A control would
+have to be a system alike in every relevant respect except the treatment, and two national
+refining sectors never are. It weakens the common-shock explanation without disposing of it: a
+divergence appearing in one country and not the other is not by itself sufficient evidence
+that a shared shock was unimportant, because the two systems differ in ways this paper has not
+measured. Crude slate, refinery maintenance
 schedules, inventory positions, demand composition and product-market exposure all differ, and
-the Russian VGO disruption in particular did not fall on the two countries equally. Establishing
-that the common shock was second-order would require diagnostics on each of those margins, none
-of which are estimated here. Demand recovery, Sines maintenance and the VGO disruption remain
-live alternatives.
+the Russian VGO disruption in particular did not fall on the two countries equally. Establishing that the common shock was second-order would require diagnostics on each of those
+margins, none of which are estimated here.
+
+Three alternatives remain live, and they are not equally troubling. The first is that Sines
+was more exposed to the specific feedstock that was withdrawn than the Spanish system was, in
+which case the divergence is about feedstock sourcing and not about capacity at all. The
+second is maintenance: an unplanned outage at the one remaining Portuguese site would produce
+a similar signature and is not observable in annual balances. The third is demand composition,
+since the two countries recovered from the pandemic on slightly different paths.
+
+The first two are worth separating from the common-shock story proper. Both run through the
+fact that Portugal had one conversion site by 2022, and having one site is a consequence of
+the closure. An account in which a common European shock hit Portugal harder because its
+refining had just been concentrated is not an alternative to the closure explanation; it is a
+version of it, with the closure acting on the propagation of the shock rather than on the
+level of output directly. Only the third alternative, demand composition, is genuinely
+independent of the closure, and the 2022 diesel demand figure sits close to its own baseline,
+which is weak support for it.
 
 \subsection{Balance residuals}
 \label{sec:residuals}
@@ -966,56 +1137,13 @@ $0.278$, a change of $7.6$ percentage points; the diesel net-import-to-demand ra
 $-0.108$ to $0.169$, a change of $27.7$ percentage points; and diesel refinery output coverage
 falls from $1.083$ to $0.800$. These are descriptive pre/post differences, not effect estimates.
 
-\subsection{Sensitivity to the disputed trade cells}
-\label{sec:sourcesens}
+\subsection{Two further robustness questions}
 
-Two 2022 trade cells are disputed between the two independent sources: diesel exports, where the
-monthly source reports 331.0~kt against 622.2~kt nationally, and gasoline exports, where it
-reports 1{,}346.0~kt against 1{,}501.7~kt.
-
-Moving the annual panel to Eurostat changes what that disagreement can affect. The annual
-results are now computed from the national submission, which already carries the corroborated
-value for the diesel cell, so the disputed monthly figure does not enter the annual arm at all.
-Table~\ref{tab:sourcesens} records this: the diesel rows are identical under both sources
-because there is nothing to swap. The disagreement now bears only on the monthly arm and on the
-JODI cross-check, not on the annual conclusions.
-
-\begin{table}[htbp]
-\centering
-\caption{2022 interrupted-trend level changes, computed on each trade source.}
-\label{tab:sourcesens}
-\begin{tabular}{llrrrr}
-\toprule
-& & \multicolumn{2}{c}{Primary source} & \multicolumn{2}{c}{Corroborated} \\
-\cmidrule(lr){3-4}\cmidrule(lr){5-6}
-Product & Outcome & Estimate & $p$ & Estimate & $p$ \\
-\midrule
-diesel & exports & $-$781.7 & 0.022 & $-$781.7 & 0.022 \\
-diesel & net imp./dem. & $+$0.201 & 0.031 & $+$0.201 & 0.031 \\
-gasoline & exports & $-$270.9 & 0.121 & $-$202.8 & 0.149 \\
-gasoline & net imp./dem. & $+$0.307 & 0.095 & $+$0.253 & 0.111 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The diesel results are unaffected by the swap, for the reason just given, and both remain
-significant at conventional levels.
-
-The gasoline results are weak on either source. Neither the export level change nor the
-net-import-ratio shift reaches five per cent under the primary values, and swapping to the
-corroborated ones reduces both further. No 2022 gasoline result is relied on anywhere in this
-paper. The gasoline evidence for that year rests on the monthly design of Section~6 rather than
-on the annual models.
-
-\subsection{Multiplicity}
-
-Twenty-four Chow tests are run and Benjamini--Hochberg adjustment is applied across all of
-them, not to a selected subset. Six survive at conventional levels. The monthly models are not
-included in that adjustment and their $p$-values should be read as unadjusted; the phase terms
-that carry the conclusions, on refinery output and on the net-import ratio, have $p\le 0.007$,
-inside any reasonable correction for the twelve terms reported. The import-level terms are
-weaker and are not relied on: the Matosinhos import shift is significant only at the ten per
-cent level.
+Two checks that would otherwise interrupt the argument are reported in
+Appendix~\ref{app:audit}. The first re-estimates every 2022 result on each of the two trade
+sources, since the disputed cells fall in that year; one result changes significance and it is
+marked wherever it appears. The second applies a Benjamini--Hochberg correction across all
+twenty-four Chow tests, and six survive it.
 
 \section{Limitations}
 
@@ -1050,40 +1178,79 @@ stock changes are not modelled.
 \section{Conclusions}
 \label{sec:conclusions}
 
-The 2013 Sines hydrocracker coincides with an unambiguous structural change. Diesel refinery
-output and exports broke upward at 2013 and Portugal moved from net diesel importer to net diesel exporter,
-a result that survives multiplicity adjustment across twenty-four tests and is corroborated by
-interrupted-trend models with level shifts of $+2{,}005.5$~kt in exports and $-0.540$ in the
-net-import ratio.
+\subsection{What changed in Portugal's dependence profile}
 
-After May 2021 the direction reverses. By 2023 domestic diesel manufacturing covered two thirds
-of demand, the lowest coverage in twenty years, and imports reached a series high. Two annual
-designs and one monthly design agree on the direction; they disagree only on whether three annual
-post-event observations can support a Chow test, which they cannot. The monthly design separates
-the closure from the 2022 energy shock and finds both independently associated with lower
-refinery output and higher net import dependence, the 2022 effect being the larger.
+Over thirty-five years Portugal's diesel system crossed the same line twice, in opposite
+directions, and ended further from self-coverage than it began. It entered the 1990s a net diesel
+importer, expanded through 2000 without changing character, crossed into net export in 2013 after
+the hydrocracker, held that position through 2020, and crossed back in 2022. By 2023 domestic
+manufacturing covered $0.678$ of diesel demand, the lowest figure in the window, with imports at a
+series high.
 
-Spain, refining the same products under the same European shock, shows no comparable movement.
-That weakens the common-shock explanation without disposing of it, since the two systems differ
-on margins this paper does not measure.
+Read against the four senses of resilience set out in Section~\ref{sec:resilience}, the profile
+changed on three of them and in the same direction. The domestic buffer thinned: the diesel
+coverage ratio fell below its 1990s level. Import exposure rose on both measures, in volume and in
+net position. Manufacturing concentrated from two sites to one. Price integration tightened, on
+both the contemporaneous and the adjustment channel. Nothing moved the other way.
 
-On prices, both pairs are cointegrated in logs and both error-correction speeds more than
-triple: diesel from $-0.133$ to $-0.466$ per week and gasoline from $-0.091$ to $-0.315$. The
-diesel contemporaneous elasticity rises with it, from $0.713$ to $1.242$, while the gasoline
-elasticity is unchanged. Both fuels became more tightly linked to Spanish prices, diesel
-through both channels and gasoline through the speed of adjustment alone. The difference-only
-specification in Section~\ref{sec:shortrun} puts the diesel figure at $1.01$ instead, and the
-gap between the two is the reason the model family is selected from diagnostics rather than
-assumed.
+Gasoline did not follow, and the reason is the one given in Section~\ref{sec:mechanism} rather
+than anything about how the two products were treated. Gasoline entered every one of these events
+with output far above domestic demand and left with output still far above it. The same
+proportional loss of capacity that pushed diesel across a line left gasoline comfortably on one
+side of it. That is the clearest practical lesson available here: what determined exposure was
+not the size of the shock but how much margin the product had before it arrived.
 
-This is an association, not a demonstrated causal effect. The closure and the largest European
-energy shock in decades fall ten months apart, and this design cannot
-separate their contributions to the post-2021 level. What the evidence supports is that
-Portugal's diesel system moved from surplus to deficit over the study window, that the movement
-is concentrated around two documented events, that it is not shared by Spain, and that Portuguese
-retail pre-tax fuel prices now co-move with Spanish retail pre-tax prices considerably more
-closely than before. Nothing here speaks to refinery-gate or wholesale prices, which are not
-observed.
+\subsection{What can and cannot be inferred}
+
+The causal question is open and this design cannot close it. The Matosinhos transition and the
+largest European product-supply shock in decades fall ten months apart, which is too close for
+annual data to separate and close enough that the monthly design separates them only under an
+assumption about the shape of the trend between them. The monthly model finds both phases
+independently associated with lower refinery output and higher net import dependence, with the
+2022 shift the larger of the two, and that is as far as the evidence goes.
+
+More than that, the two are not independent in a way that a better estimator would fix. The
+closure changed the structure through which the 2022 shock propagated: a feedstock disruption at
+the single remaining conversion site has no domestic offset, and would have had a partial one in
+2019. Asking how much of 2022 was the shock and how much was the closure presumes a decomposition
+that the physical system does not have.
+
+What follows for policy is correspondingly narrow, and narrower than the subject usually invites.
+The structural exposure measures moved, and they moved together and in one direction, which is a
+fact about the system that a policy discussion would need to start from. But this paper has not
+observed stocks, storage, port capacity, supplier diversity or the terms on which the additional
+imports were obtained, and those are the quantities that determine whether higher import exposure
+is a vulnerability or simply a different and possibly cheaper way of meeting demand. A country
+importing a large share of its diesel through deep and well-connected markets may be better
+placed than one manufacturing more of its own from a single exposed feedstock route. Nothing here
+can tell those two states apart, and a reader who takes rising import dependence as
+\emph{prima facie} evidence of reduced security is going beyond what is shown.
+
+The price finding carries the same limit in a different form. Portuguese pre-tax diesel prices now
+track Spanish ones more closely and revert to the Iberian relation about three and a half times
+faster. That is co-movement between two retail series, not pass-through, and the specification
+controls for nothing the two markets have in common. Nothing here speaks to refinery-gate or
+wholesale prices, which are not observed at all.
+
+\subsection{What evidence would settle it}
+
+The obvious constraint is time. Three post-closure annual observations cannot support a Chow test,
+and several results in this paper are weak precisely because the post-event window is short.
+Extending the panel by a few more years would let the annual designs speak, and would show whether
+the 2023 coverage figure was the floor of an adjustment or a level.
+
+Three other kinds of evidence would do more than waiting. A monthly series of Sines throughput and
+unplanned outages would separate a feedstock disruption from a maintenance event, which annual
+balances cannot distinguish and which is the most troubling of the remaining alternatives to the
+account here. An import-origin series would show whether the additional diesel came from the same
+markets that set the Spanish price, which is the mechanism the price result is consistent with but
+does not demonstrate. And refinery-gate or wholesale quotations would let the price question be
+asked as pass-through rather than as co-movement, which is the form in which it is worth asking.
+
+Failing all of those, the cleanest natural experiment would be a comparable single-refinery
+closure elsewhere in Europe at a date not adjacent to a continent-wide supply shock. The
+identification problem in this paper is not a shortage of data about Portugal. It is that the two
+events fall ten months apart, and no amount of Portuguese data will move them.
 
 \section*{Claim--Evidence Matrix}
 \addcontentsline{toc}{section}{Claim--Evidence Matrix}
@@ -1174,8 +1341,10 @@ provenance documentation.}
 \url{https://github.com/DiogoRibeiro7/portugal-refining-resilience}.
 \end{enumerate}
 
-\section*{Appendix A. Data and Code Availability}
-\addcontentsline{toc}{section}{Appendix A. Data and Code Availability}
+\appendix
+
+\section{Data and Code Availability}
+\label{app:availability}
 
 All data underlying this paper are public and are listed in the References. The analysis
 code, the derived tables behind every figure and table above, and a document recording the
@@ -1190,5 +1359,81 @@ of the price diagnostics including the recorded model-family verdict, and source
 reconciliation. The reconciliation check additionally requires every out-of-tolerance cell to
 be named with a reason, so a later data vintage cannot widen the gap between sources
 silently. All eight pass for this paper.
+
+
+\section{Source Reconciliation, Sensitivity and Multiplicity}
+\label{app:audit}
+
+This appendix holds the material that establishes the evidence is sound: how the sources are
+compared, what happens to the results when a disputed cell is replaced, and how the multiple
+testing is corrected. It is placed here rather than in the body because it answers a question
+about the evidence rather than about Portugal, and every claim it supports is stated in the
+body with a pointer back to this appendix.
+
+\subsection{Source reconciliation}
+\label{sec:recon}
+
+JODI and DGEG are the only genuinely independent pair. Across the 24 overlapping 2019--2024 trade
+cells, $66.7\%$ agree within tolerance. Over the
+full window, JODI and Eurostat agree on $89\%$ of 80 cells, with only three of the nine
+divergences occurring before 2019.
+
+A cell is flagged only when it breaches both the absolute and the percentage tolerance. Applying
+them as alternatives makes a 25~kt floor bind on series of roughly $1{,}600$~kt, an effective
+tolerance of $1.6\%$, which would flag agreement as close as $2.1\%$ as failure. Each of the
+eight remaining divergent cells is enumerated in the analysis configuration, together
+with the series Eurostat identifies as the outlier: six where JODI is out of line, two where the DGEG
+workbook is. An unlisted divergence fails the readiness gate however few cells it touches.
+
+\subsection{Sensitivity to the disputed trade cells}
+\label{sec:sourcesens}
+
+Two 2022 trade cells are disputed between the two independent sources: diesel exports, where the
+monthly source reports 331.0~kt against 622.2~kt nationally, and gasoline exports, where it
+reports 1{,}346.0~kt against 1{,}501.7~kt.
+
+Moving the annual panel to Eurostat changes what that disagreement can affect. The annual
+results are now computed from the national submission, which already carries the corroborated
+value for the diesel cell, so the disputed monthly figure does not enter the annual arm at all.
+Table~\ref{tab:sourcesens} records this: the diesel rows are identical under both sources
+because there is nothing to swap. The disagreement now bears only on the monthly arm and on the
+JODI cross-check, not on the annual conclusions.
+
+\begin{table}[htbp]
+\centering
+\caption{2022 interrupted-trend level changes, computed on each trade source.}
+\label{tab:sourcesens}
+\begin{tabular}{llrrrr}
+\toprule
+& & \multicolumn{2}{c}{Primary source} & \multicolumn{2}{c}{Corroborated} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Product & Outcome & Estimate & $p$ & Estimate & $p$ \\
+\midrule
+diesel & exports & $-$781.7 & 0.022 & $-$781.7 & 0.022 \\
+diesel & net imp./dem. & $+$0.201 & 0.031 & $+$0.201 & 0.031 \\
+gasoline & exports & $-$270.9 & 0.121 & $-$202.8 & 0.149 \\
+gasoline & net imp./dem. & $+$0.307 & 0.095 & $+$0.253 & 0.111 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The diesel results are unaffected by the swap, for the reason just given, and both remain
+significant at conventional levels.
+
+The gasoline results are weak on either source. Neither the export level change nor the
+net-import-ratio shift reaches five per cent under the primary values, and swapping to the
+corroborated ones reduces both further. No 2022 gasoline result is relied on anywhere in this
+paper. The gasoline evidence for that year rests on the monthly design of Section~6 rather than
+on the annual models.
+
+\subsection{Multiplicity}
+
+Twenty-four Chow tests are run and Benjamini--Hochberg adjustment is applied across all of
+them, not to a selected subset. Six survive at conventional levels. The monthly models are not
+included in that adjustment and their $p$-values should be read as unadjusted; the phase terms
+that carry the conclusions, on refinery output and on the net-import ratio, have $p\le 0.007$,
+inside any reasonable correction for the twelve terms reported. The import-level terms are
+weaker and are not relied on: the Matosinhos import shift is significant only at the ten per
+cent level.
 
 \end{document}

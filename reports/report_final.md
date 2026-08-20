@@ -15,6 +15,17 @@ Each arm runs over the study window intersected with what its own source provide
 | Monthly event models | 2002-2024 (n = 276) | JODI, earliest published month |
 | Weekly price models | 2005-2024 (n = 1,078) | EC Weekly Oil Bulletin |
 
+## What "resilience" means here
+
+Four senses, each tied to a quantity: the **domestic buffer** (refinery output over demand),
+**import exposure** (imports over demand, and the net position), **concentration** (two refineries
+to one), and **price integration** (co-movement with Spain, and how fast a gap closes). The
+profile moved on all four, in the same direction.
+
+Not measured, and this bounds every claim: stocks, storage and port capacity, supplier
+diversification, crude slate, and the terms on which the extra imports were obtained. Rising
+import dependence is not by itself evidence of reduced security of supply.
+
 ## Headline findings
 
 **Three transitions, not one.** Portuguese refinery output breaks upward around 2000 for both
