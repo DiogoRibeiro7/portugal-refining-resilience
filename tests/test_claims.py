@@ -8,11 +8,13 @@ import pandas as pd
 import pytest
 
 from portugal_refining_resilience.claims import (
+    check_claim_matrix,
     check_event_interval,
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
     check_sensitivity_survival,
     check_stated_sample_sizes,
+    claim_matrix_rows,
     parse_latex_tables,
     prose_without_tables,
     table_numbers,
@@ -225,11 +227,38 @@ def test_prose_numbers_catches_a_stale_value() -> None:
     assert "5064" in detail.replace(".0", "")
 
 
-def test_prose_numbers_ignores_table_contents() -> None:
+def test_prose_numbers_ignores_verified_table_contents() -> None:
     """Table values are checked against their own declared source, not the whole bundle."""
-    passed, _ = check_prose_numbers(PROSE, _bundle())
+    passed, _ = check_prose_numbers(PROSE, _bundle(), checked_labels={"tab:x"})
 
-    assert passed is True  # 99.9 lives inside the table and is not checked here
+    assert passed is True  # 99.9 lives in a table checked against its own source
+
+
+def test_prose_numbers_still_checks_a_table_nothing_else_covers() -> None:
+    """A table with no declared source used to be dropped here and checked nowhere.
+
+    That is the hole the claim-evidence matrix fell through: an unmapped float was
+    stripped from the prose and absent from the mapped tables, so its numbers were
+    verified by neither pass.
+    """
+    unmapped = PROSE.replace("a & 99.9", "a & $99.9$")
+
+    passed, detail = check_prose_numbers(unmapped, _bundle(), checked_labels=set())
+
+    assert passed is False
+    assert "99.9" in detail
+
+
+def test_prose_numbers_sees_only_math_mode() -> None:
+    """The prose pass reads math mode, which is why the matrix needs its own check.
+
+    A bare ``99.9`` in running text is indistinguishable from a page or year number,
+    so this pass cannot claim it. ``check_claim_matrix`` reads every number in a row
+    instead, because there the surrounding table gives each one its meaning.
+    """
+    passed, _ = check_prose_numbers(PROSE, _bundle(), checked_labels=set())
+
+    assert passed is True
 
 
 def test_prose_numbers_honours_the_allow_list() -> None:
@@ -239,8 +268,87 @@ def test_prose_numbers_honours_the_allow_list() -> None:
     assert check_prose_numbers(derived, _bundle(), allow={0.6931})[0] is True
 
 
-def test_prose_without_tables_removes_float_environments() -> None:
-    body = prose_without_tables(PROSE)
+def test_prose_without_tables_removes_only_verified_floats() -> None:
+    body = prose_without_tables(PROSE, checked_labels={"tab:x"})
 
     assert "4{,}522" in body
     assert "99.9" not in body
+
+
+def test_prose_without_tables_keeps_a_float_with_no_declared_source() -> None:
+    body = prose_without_tables(PROSE, checked_labels=set())
+
+    assert "99.9" in body
+
+
+MATRIX = r"""
+\begin{longtable}{llll}
+\toprule
+Claim & Where shown & Level & Caveat \\
+\midrule
+\endhead
+Output shifts $-102.89$ kt/month & Table~\ref{tab:monthly} & association & Quote the trend \\
+Diesel elasticity reaches $1.01$ & Table~\ref{tab:price} & association & Retail prices \\
+Panel covers 2002--2024 & Section~\ref{sec:coverage} & descriptive & JODI starts late \\
+\end{longtable}
+"""
+
+
+@pytest.fixture()
+def matrix_sources() -> dict[str, list[pd.DataFrame]]:
+    return {
+        "tab:monthly": [pd.DataFrame({"estimate": [-102.888228, -148.246334]})],
+        "tab:price": [pd.DataFrame({"estimate": [0.7348314, 1.0072139]})],
+    }
+
+
+def test_claim_matrix_rows_skips_the_header(matrix_sources: object) -> None:
+    rows = claim_matrix_rows(MATRIX)
+
+    assert len(rows) == 3
+    assert all("Where shown" not in row for row in rows)
+
+
+def test_claim_matrix_accepts_values_from_the_cited_table(
+    matrix_sources: dict[str, list[pd.DataFrame]],
+) -> None:
+    passed, _ = check_claim_matrix(MATRIX, matrix_sources, [])
+
+    assert passed is True
+
+
+def test_claim_matrix_catches_a_stale_coefficient(
+    matrix_sources: dict[str, list[pd.DataFrame]],
+) -> None:
+    """The matrix kept a coefficient from before the panel was extended."""
+    stale = MATRIX.replace("$-102.89$", "$-106.00$")
+
+    passed, detail = check_claim_matrix(stale, matrix_sources, [])
+
+    assert passed is False
+    assert "106" in detail
+
+
+def test_claim_matrix_rejects_a_value_real_in_a_different_table(
+    matrix_sources: dict[str, list[pd.DataFrame]],
+) -> None:
+    """Checking against the whole bundle would accept this; the cited source does not.
+
+    ``0.7348`` is a genuine estimate, but it belongs to the price table rather than to
+    the monthly one the row points at.
+    """
+    misplaced = MATRIX.replace("$-102.89$ kt/month", "$0.7348$ kt/month")
+
+    passed, detail = check_claim_matrix(misplaced, matrix_sources, [])
+
+    assert passed is False
+    assert "0.7348" in detail
+
+
+def test_claim_matrix_reads_a_year_range_as_years(
+    matrix_sources: dict[str, list[pd.DataFrame]],
+) -> None:
+    """``2002--2024`` must not be parsed as the number -2024."""
+    passed, _ = check_claim_matrix(MATRIX, matrix_sources, [])
+
+    assert passed is True

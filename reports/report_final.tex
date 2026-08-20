@@ -239,7 +239,7 @@ $Q^{\text{refinery}}$:
 
 The refinery-output-to-demand ratio is \emph{not} self-sufficiency. Portuguese refinery output
 may be exported while domestic demand is met partly by imports, and for gasoline that is the
-normal state of the system throughout the window.
+normal state of the system.
 
 \textbf{Annual breaks.} Chow tests on a linear trend at pre-specified break years, with 2021
 excluded as a transition year so that it is assigned to neither side, and Benjamini--Hochberg
@@ -422,8 +422,8 @@ of this paper.}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{gasoline_dependence_ratios.png}
-\caption{Gasoline dependence ratios. The output ratio remains far above one throughout, so no
-regime change comparable to diesel occurs.}
+\caption{Gasoline dependence ratios. The output ratio dips just below one in 1993 and stays well
+above it in every other year, so no regime change comparable to diesel occurs.}
 \label{fig:gasratios}
 \end{figure}
 
@@ -485,7 +485,8 @@ the system was expanding rather than changing character. That is a different kin
 
 \begin{table}[htbp]
 \centering
-\caption{Chow tests at pre-specified break years, 2021 excluded as a transition year.}
+\caption{Chow tests at candidate break years, 2021 excluded as a transition year. 2013 and 2022
+were pre-specified; 2000 was added after the panel was extended back to 1990 and is exploratory.}
 \label{tab:breaks}
 \begin{tabular}{llrrrrr}
 \toprule
@@ -649,8 +650,9 @@ phase rather than stepping once and holding.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{monthly_event_gasoline_net_import_to_demand_ratio.png}
-\caption{Monthly gasoline net imports to demand. The series stays far below zero throughout,
-consistent with the annual picture of a persistent export surplus.}
+\caption{Monthly gasoline net imports to demand. The series sits below zero in nearly every
+month, with occasional single months where imports exceed exports, consistent with the annual
+picture of a persistent export surplus.}
 \label{fig:monthlygasratio}
 \end{figure}
 
@@ -658,8 +660,11 @@ consistent with the annual picture of a persistent export surplus.}
 \label{sec:stress}
 
 Against a 2013--2019 baseline, 2022 diesel exports sit at the zeroth percentile of the baseline
-distribution and diesel imports of $1{,}275$~kt sit $2.74$ standard deviations above the mean and
-at the hundredth percentile.
+distribution and diesel imports of $1{,}316$~kt sit $2.10$ standard deviations above the mean, at
+the hundredth percentile. A seven-year baseline gives the standard deviation few observations to
+work with, so the median-and-MAD form is reported alongside it: on that measure the same figure
+stands at $2.94$. The percentile, which assumes nothing about the shape of the baseline, is the
+statistic to lean on.
 
 The export figure needs care, because 2022 diesel exports is the single largest disagreement
 between the two independent trade sources, and the reconciliation identifies the monthly source
@@ -1029,7 +1034,7 @@ Matosinhos refining ceased May 2021 & Section~\ref{sec:intro} & documented event
 2022 Russian product and VGO disruption & Section~\ref{sec:intro} & documented event & Establishes timing, not magnitude \\
 Diesel demand averaged 4{,}522 kt, output 4{,}348 kt & Section~\ref{sec:summary} & descriptive & Window means, not a model \\
 Portugal was a net diesel exporter 2013--2020 & Tables~\ref{tab:diesel}, \ref{tab:gasoline} & descriptive & Ratio is not self-sufficiency \\
-Gasoline is a net export product in every year & Tables~\ref{tab:diesel}, \ref{tab:gasoline} & descriptive & Same caveat \\
+Gasoline is a net export product in every year but 1993 & Tables~\ref{tab:diesel}, \ref{tab:gasoline} & descriptive & Same caveat; 1993 net-import ratio $+0.056$ \\
 Balance at each event year & Table~\ref{tab:headline} & descriptive & 2021 marked transition \\
 Refining regime by year & Table~\ref{tab:headline} & documented & Regime label, not capacity \\
 Diesel net-import ratio breaks at 2013 & Table~\ref{tab:breaks} & structural break & Diagnostic, not a causal estimator \\
@@ -1039,8 +1044,8 @@ Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes 
 Diesel 2022 annual results do not depend on the disputed cell & Table~\ref{tab:sourcesens} & association & Annual panel uses the corroborated source throughout \\
 No 2022 gasoline annual result reaches significance & Table~\ref{tab:sourcesens} & --- & Weak on either source; not relied on \\
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
-Refinery output falls 106 kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
-2022 stress adds a further $-155$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
+Refinery output shifts $-102.89$ kt/month at the closure boundary & Table~\ref{tab:monthly} & association & Quote with its phase-trend term \\
+2022 stress adds a further $-148.25$ kt/month & Table~\ref{tab:monthly} & association & Confounded with demand recovery \\
 Monthly models cover 276 months, 2002--2024 & Section~\ref{sec:coverage} & descriptive & JODI begins in 2002, later than the annual window \\
 2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
 All four price levels are non-stationary & Section~\ref{sec:pricediag} & descriptive & ADF only; no break-robust unit-root test \\
@@ -1049,8 +1054,8 @@ Levels model gives the opposite sign and is not used & Section~\ref{sec:levels} 
 Diesel elasticity rises 0.73 to 1.01 & Table~\ref{tab:price} & association & Retail, not wholesale, prices \\
 Gasoline short-run elasticity unchanged & Table~\ref{tab:price} & association & Not the whole picture; see the ECM \\
 Gasoline adjustment speed triples & Table~\ref{tab:ecm} & association & Generated-regressor standard errors \\
-PT--ES diesel spread moves $-30.8$ EUR/1000L & Section~\ref{sec:spreads} & descriptive & Spread is non-stationary \\
-Neither spread is mean-reverting & Section~\ref{sec:spreads} & descriptive & Gasoline marginal at $p=0.066$ \\
+PT--ES diesel spread moves $-30.8$ EUR/1000L & Section~\ref{sec:spreads} & descriptive & That spread is non-stationary; not a disequilibrium measure \\
+Diesel spread is not mean-reverting; the gasoline spread is & Section~\ref{sec:spreads} & descriptive & Diesel ADF $p=0.256$, gasoline $p=0.0004$ \\
 Spanish diesel balance is flat while Portugal's falls & Table~\ref{tab:spain} & descriptive & Weakens but does not dispose of the common-shock account \\
 Eurostat balance residuals are not closed & Section~\ref{sec:residuals} & descriptive & Stock changes not modelled \\
 Pre/post differences hold across three windows & Table~\ref{tab:windows} & descriptive & Magnitudes vary with baseline length \\

@@ -4,4 +4,5 @@ report_sample_sizes_match,True,"stated sample sizes [34, 276, 1078] match the fi
 report_event_interval_correct,True,stated interval matches the configured 10-month gap
 disputed_cells_have_sensitivity,True,"8 disputed cell(s), all covered by a sensitivity"
 report_prose_matches_bundle,True,every quantity stated in the prose reproduces from the bundle
+claim_matrix_matches_cited_source,True,all 36 claim-matrix rows check out
 source_swap_survival_reported,True,every result keeps its significance under the source swap

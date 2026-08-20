@@ -7,6 +7,7 @@ from typing import Any
 import pandas as pd
 
 from .claims import (
+    check_claim_matrix,
     check_event_interval,
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
@@ -439,10 +440,26 @@ def build_report_claim_checks(
 
         payload = yaml.safe_load(mapping_path.read_text(encoding="utf-8")) or {}
         allow = {float(v) for v in (payload.get("prose_allow") or {})}
-    passed, detail = check_prose_numbers(tex, every_frame, allow=allow)
+    # Tables verified against a declared source are excluded; everything else,
+    # including the unlabelled claim-evidence matrix, is checked here.
+    checked_labels = set(load_table_sources(mapping_path)) if mapping_path.exists() else set()
+    passed, detail = check_prose_numbers(
+        tex, every_frame, allow=allow, checked_labels=checked_labels
+    )
     checks.append(_check_record("report_prose_matches_bundle", passed, detail))
 
-    # 6. surface results that change significance when the source is swapped
+    # 6. the claim-evidence matrix, row by row against each cited table's source
+    table_frames: dict[str, list[pd.DataFrame]] = {}
+    if mapping_path.exists():
+        for label, files in load_table_sources(mapping_path).items():
+            loaded = [_read_if_present(paths.report_inputs / name) for name in files]
+            loaded = [frame for frame in loaded if not frame.empty]
+            if loaded:
+                table_frames[label] = loaded
+    passed, detail = check_claim_matrix(tex, table_frames, every_frame, allow=allow)
+    checks.append(_check_record("claim_matrix_matches_cited_source", passed, detail))
+
+    # 7. surface results that change significance when the source is swapped
     passed, detail = check_sensitivity_survival(
         _read_if_present(paths.report_inputs / "annual_source_sensitivity.csv")
     )

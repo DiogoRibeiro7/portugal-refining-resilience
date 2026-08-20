@@ -300,14 +300,27 @@ def load_table_sources(path: Path) -> dict[str, list[str]]:
     return {str(k): [str(v) for v in vs] for k, vs in payload["tables"].items()}
 
 
-def prose_without_tables(tex: str) -> str:
-    """Return the document body with table environments removed.
+def prose_without_tables(tex: str, checked_labels: set[str] | None = None) -> str:
+    """Return the document body with the separately-checked tables removed.
 
-    Table values are checked against the specific file each table declares. What is
-    left is prose, whose numbers were until now checked by nobody, which is where
-    stale values survived every earlier pass.
+    Only environments whose label is verified against a declared source are dropped,
+    because those numbers are already covered. Everything else stays, including any
+    table that declares no source.
+
+    Removing every float instead left a hole exactly where stale values collect: the
+    claim-evidence matrix is an unlabelled ``longtable``, so it was stripped here and
+    absent from the mapped tables, and was checked by nothing at all.
     """
-    return re.sub(r"\\begin\{(table|longtable)\}.*?\\end\{\1\}", " ", tex, flags=re.DOTALL)
+    labels = checked_labels or set()
+
+    def drop(match: re.Match[str]) -> str:
+        body = match.group(0)
+        found = re.search(r"\\label\{([^{}]+)\}", body)
+        if found is not None and found.group(1) in labels:
+            return " "
+        return body
+
+    return re.sub(r"\\begin\{(table|longtable)\}.*?\\end\{\1\}", drop, tex, flags=re.DOTALL)
 
 
 #: Numbers written inside math mode, which is how the report states a quantity.
@@ -319,6 +332,7 @@ def check_prose_numbers(
     frames: list[pd.DataFrame],
     *,
     allow: set[float] | None = None,
+    checked_labels: set[str] | None = None,
 ) -> tuple[bool, str]:
     """Every quantity stated in the prose must be reproducible from the bundle.
 
@@ -329,7 +343,7 @@ def check_prose_numbers(
     with a reason recorded beside them in configuration.
     """
     allow = allow or set()
-    body = prose_without_tables(tex)
+    body = prose_without_tables(tex, checked_labels)
     unmatched: list[float] = []
     for span in _MATH.findall(body):
         cleaned = span.replace("{,}", "").replace("\\%", "")
@@ -349,3 +363,65 @@ def check_prose_numbers(
         shown = sorted(set(unmatched))[:10]
         return False, f"{len(set(unmatched))} prose value(s) not reproducible: {shown}"
     return True, "every quantity stated in the prose reproduces from the bundle"
+
+
+def claim_matrix_rows(tex: str) -> list[str]:
+    """Return the body rows of the claim-evidence matrix.
+
+    The matrix is the one table with no declared source of its own, because each row
+    points at wherever in the paper the claim is shown.
+    """
+    match = re.search(r"\\begin\{longtable\}.*?\\end\{longtable\}", tex, re.DOTALL)
+    if match is None:
+        return []
+    # Everything up to \endhead is the repeating column header rather than a claim.
+    # Keeping it would treat a header cell as a row whose numbers need a source.
+    body = match.group(0)
+    for marker in ("\\endhead", "\\midrule"):
+        if marker in body:
+            body = body.split(marker, 1)[1]
+            break
+    rows = []
+    for segment in body.split("\\\\"):
+        cleaned = re.sub(r"\\(?:top|mid|bottom)rule|\\endhead", " ", segment)
+        if cleaned.count("&") >= 2 and "caption" not in cleaned:
+            rows.append(cleaned)
+    return rows
+
+
+def check_claim_matrix(
+    tex: str,
+    table_frames: dict[str, list[pd.DataFrame]],
+    fallback: list[pd.DataFrame],
+    *,
+    allow: set[float] | None = None,
+) -> tuple[bool, str]:
+    """Verify each matrix row against the source behind the table it cites.
+
+    Every row names where its claim is shown. Checking a row's numbers against the
+    whole bundle would accept a figure that appears somewhere, anywhere, which is how
+    a stale monthly coefficient survived in the matrix while the table it cited had
+    already been corrected. Checking against the cited table's own source does not.
+
+    Rows that cite a section rather than a table fall back to the whole bundle, since
+    there is no narrower source to hold them to.
+    """
+    allow = allow or set()
+    bad: list[str] = []
+    for row in claim_matrix_rows(tex):
+        label = re.search(r"\\ref\{(tab:[^{}]+)\}", row)
+        frames = table_frames.get(label.group(1)) if label else None
+        if not frames:
+            frames = fallback
+        claim = _strip_latex(row.split("&")[0])[:44]
+        # an en-dashed year range reads as a negative number otherwise: 2013--2020
+        for value, decimals in printed_numbers([row.replace("--", " ")]):
+            if 1900.0 <= value <= 2100.0 and float(value).is_integer():
+                continue
+            if abs(value) < 1e-9 or value in allow:
+                continue
+            if not _reproducible(value, decimals, frames):
+                bad.append(f"{claim!r}: {value}")
+    if bad:
+        return False, f"{len(bad)} matrix value(s) not in the cited source: {bad[:6]}"
+    return True, f"all {len(claim_matrix_rows(tex))} claim-matrix rows check out"
