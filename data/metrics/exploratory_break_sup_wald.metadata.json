@@ -1,0 +1,23 @@
+{
+  "created_at_utc": "2026-08-21T22:26:44.438515+00:00",
+  "rows": 8,
+  "columns": [
+    "product",
+    "outcome",
+    "window_start",
+    "window_end",
+    "sup_wald_statistic",
+    "break_year_selected",
+    "p_value",
+    "null_95th_percentile",
+    "n_candidates",
+    "n_simulations",
+    "significant_5pct",
+    "method"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\exploratory_break_sup_wald.csv",
+  "csv_sha256": "846e4f0403379802c58b8c0a24e427661ecd0c620d15205f100a41ac93874de5",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\exploratory_break_sup_wald.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

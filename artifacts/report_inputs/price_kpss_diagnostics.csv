@@ -1,0 +1,9 @@
+product,country,value_column,regression,nobs,kpss_statistic,p_value,used_lag,rejects_stationarity_5pct
+diesel,PT,log_PT,c,994,1.179341302139855,0.01,19,True
+diesel,PT,log_PT,ct,994,0.3167501209836849,0.01,19,True
+diesel,ES,log_ES,c,994,1.339610270718541,0.01,19,True
+diesel,ES,log_ES,ct,994,0.3065171192838961,0.01,19,True
+gasoline,PT,log_PT,c,994,1.5033794301933634,0.01,19,True
+gasoline,PT,log_PT,ct,994,0.31550052839029763,0.01,19,True
+gasoline,ES,log_ES,c,994,1.9390016937787122,0.01,19,True
+gasoline,ES,log_ES,ct,994,0.3123917959956242,0.01,19,True

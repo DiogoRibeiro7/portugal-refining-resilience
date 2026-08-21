@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-21T22:27:00.993949+00:00",
+  "rows": 4,
+  "columns": [
+    "product",
+    "phase",
+    "elasticity",
+    "std_error",
+    "t_statistic_vs_one",
+    "p_value",
+    "differs_from_one_5pct",
+    "side"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_elasticity_unit_tests.csv",
+  "csv_sha256": "74abf34441afd07da45942af1c6611dc2e327d333f80deac739fa122e3294ae6",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_elasticity_unit_tests.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

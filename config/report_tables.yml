@@ -35,6 +35,8 @@ tables:
     - pt_es_physical_balance_comparison.csv
   tab:sourcesens:
     - annual_source_sensitivity.csv
+  tab:armrecon:
+    - monthly_annual_agreement_summary.csv
   tab:windows:
     - event_window_sensitivity.csv
 
@@ -42,6 +44,7 @@ tables:
 # text from a value that is itself checked, so it has no row of its own to match.
 prose_allow:
   0.6931: natural log of 2, used to turn an adjustment speed into a half-life
+  1186: the 2013 diesel export effect at 2020, being the level shift of 2005.5 less seven years of the decay term of 117.1, both of which are checked against annual_interrupted_trend_models.csv
 
 # Which model family the diagnostics licensed, and where each family's estimates live.
 # A claim that quotes a coefficient from a family the diagnostics did not licence is

@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-21T22:26:12.154343+00:00",
+  "rows": 12,
+  "columns": [
+    "model",
+    "n_obs",
+    "r_squared",
+    "adj_r_squared",
+    "residual_sd",
+    "durbin_watson",
+    "ljung_box_lag",
+    "ljung_box_p_value",
+    "residual_autocorrelation_5pct"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_model_residual_diagnostics.csv",
+  "csv_sha256": "1f2c82bb2effc6aa2714d4d578a0878c4517ff2bde0ac5c51af86a7adce342e9",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\annual_model_residual_diagnostics.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

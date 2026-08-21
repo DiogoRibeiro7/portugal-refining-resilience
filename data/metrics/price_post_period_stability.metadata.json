@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-21T22:27:01.021433+00:00",
+  "rows": 8,
+  "columns": [
+    "product",
+    "subset",
+    "n_obs",
+    "n_post",
+    "pre_adjustment_speed",
+    "post_adjustment_speed",
+    "half_life_weeks",
+    "speed_ratio"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_post_period_stability.csv",
+  "csv_sha256": "7eacd01666ec9e28a2d819213d4e528bfe4e0ea0dfbf2106f2ebf32930adc7c3",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_post_period_stability.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

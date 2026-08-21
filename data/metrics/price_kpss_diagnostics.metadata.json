@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-21T22:27:00.913472+00:00",
+  "rows": 8,
+  "columns": [
+    "product",
+    "country",
+    "value_column",
+    "regression",
+    "nobs",
+    "kpss_statistic",
+    "p_value",
+    "used_lag",
+    "rejects_stationarity_5pct"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_kpss_diagnostics.csv",
+  "csv_sha256": "e8e8a828a727005a8d8899bece14cb0bcb278fef1e687f700ed811f8eda8d982",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_kpss_diagnostics.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

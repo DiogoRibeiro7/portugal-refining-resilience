@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-21T22:27:08.376864+00:00",
+  "rows": 184,
+  "columns": [
+    "product",
+    "year",
+    "flow",
+    "monthly_source_kt",
+    "annual_source_kt",
+    "difference_kt",
+    "difference_pct",
+    "within_tolerance"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_annual_balance_reconciliation.csv",
+  "csv_sha256": "bc69d0cee5915eb545c036dc7e10d131bdfca589ab36c189f7ca877d158516cf",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_annual_balance_reconciliation.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}
