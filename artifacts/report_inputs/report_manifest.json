@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T15:15:32.849522+00:00",
+  "created_at_utc": "2026-08-21T21:06:43.871769+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -33,8 +33,8 @@
       "file": "structural_break_tests.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\structural_break_tests.csv",
-      "sha256": "740cd3c44b28da32de355a5cf166dd371c6d6307799bc22710065ea05609a90e",
-      "bytes": 3784
+      "sha256": "6271f406e1a900366793e82397bfb61ba5b5da4ee715ea5760ae3cd1849e1d94",
+      "bytes": 4850
     },
     {
       "file": "annual_interrupted_trend_models.csv",
@@ -47,8 +47,8 @@
       "file": "stress_2022_metrics.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\stress_2022_metrics.csv",
-      "sha256": "5fe8e61c946f6d54c2eb3d28161fdd9341d96f05e67f25bb13d24796e979821c",
-      "bytes": 6119
+      "sha256": "4749071b3a007e4a560c0288bf50061d15cc0ce24647f646c4c29b3b0abb85c4",
+      "bytes": 11313
     },
     {
       "file": "stress_2022_source_sensitivity.csv",
@@ -191,6 +191,48 @@
       "bytes": 273
     },
     {
+      "file": "pt_es_spread_stationarity_by_regime.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_spread_stationarity_by_regime.csv",
+      "sha256": "7a7f8c4b6d8a11a8092f0f02b434c4c455c0163deb7ee209ec3bcd9f507d7bd5",
+      "bytes": 676
+    },
+    {
+      "file": "price_kpss_diagnostics.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_kpss_diagnostics.csv",
+      "sha256": "e8e8a828a727005a8d8899bece14cb0bcb278fef1e687f700ed811f8eda8d982",
+      "bytes": 563
+    },
+    {
+      "file": "weekly_price_coverage.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\weekly_price_coverage.csv",
+      "sha256": "a291a95d83b3c092e35d4c856b284f10b1927c9e48aabc1f989c161733e6071f",
+      "bytes": 470
+    },
+    {
+      "file": "price_cointegrating_slope_tests.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_cointegrating_slope_tests.csv",
+      "sha256": "3deabca86a10fd8ff7a3d82e338f26fe3039f1c8c1666a8a7e5108eaecb695f7",
+      "bytes": 729
+    },
+    {
+      "file": "price_elasticity_unit_tests.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_elasticity_unit_tests.csv",
+      "sha256": "74abf34441afd07da45942af1c6611dc2e327d333f80deac739fa122e3294ae6",
+      "bytes": 550
+    },
+    {
+      "file": "price_post_period_stability.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_post_period_stability.csv",
+      "sha256": "7eacd01666ec9e28a2d819213d4e528bfe4e0ea0dfbf2106f2ebf32930adc7c3",
+      "bytes": 998
+    },
+    {
       "file": "pt_es_price_spread_summary.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_price_spread_summary.csv",
@@ -224,6 +266,20 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\jodi_eurostat_reconciliation_summary.csv",
       "sha256": "36bfeee135e80a62572ac761a864539036765a906436e6c42bcec469bd5e9405",
       "bytes": 153
+    },
+    {
+      "file": "monthly_annual_balance_reconciliation.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_annual_balance_reconciliation.csv",
+      "sha256": "bc69d0cee5915eb545c036dc7e10d131bdfca589ab36c189f7ca877d158516cf",
+      "bytes": 13100
+    },
+    {
+      "file": "monthly_annual_agreement_summary.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_annual_agreement_summary.csv",
+      "sha256": "09f7dfcad404d522def26ebddd4242b1221059cc1bc3d13ee5ef1c87a75d1372",
+      "bytes": 389
     },
     {
       "file": "eurostat_physical_balance_panel.csv",
@@ -301,6 +357,13 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\monthly_event_gasoline_net_import_to_demand_ratio.png",
       "sha256": "c16d0dd6a8abe0c911fc385c3f7f81e015dc3f760ddf37ab07e6ed8800d6e699",
       "bytes": 136367
+    },
+    {
+      "file": "pt_es_diesel_output_ratio_full_window.png",
+      "kind": "figure",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\figures\\pt_es_diesel_output_ratio_full_window.png",
+      "sha256": "f18b95e1ca955e7a8221d72e3af1d20297b91f4a7748ea03d01bdb6f56bd60dc",
+      "bytes": 113855
     },
     {
       "file": "pt_es_diesel_pretax_price_spread.png",

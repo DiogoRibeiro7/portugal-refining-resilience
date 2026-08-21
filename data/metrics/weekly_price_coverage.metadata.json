@@ -1,0 +1,22 @@
+{
+  "created_at_utc": "2026-08-21T21:06:27.145629+00:00",
+  "rows": 4,
+  "columns": [
+    "country",
+    "product",
+    "observed_weeks",
+    "first_date",
+    "last_date",
+    "weeks_spanned",
+    "missing_weeks",
+    "fortnight_gaps",
+    "three_week_gaps",
+    "longest_gap_days",
+    "handling"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\weekly_price_coverage.csv",
+  "csv_sha256": "a291a95d83b3c092e35d4c856b284f10b1927c9e48aabc1f989c161733e6071f",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\weekly_price_coverage.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

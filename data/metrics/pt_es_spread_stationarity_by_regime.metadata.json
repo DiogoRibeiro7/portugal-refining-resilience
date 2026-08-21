@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-21T21:06:27.067884+00:00",
+  "rows": 6,
+  "columns": [
+    "product",
+    "segment",
+    "nobs",
+    "mean_spread",
+    "adf_statistic",
+    "p_value",
+    "used_lag",
+    "adf_nobs",
+    "stationary_5pct"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_spread_stationarity_by_regime.csv",
+  "csv_sha256": "7a7f8c4b6d8a11a8092f0f02b434c4c455c0163deb7ee209ec3bcd9f507d7bd5",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_spread_stationarity_by_regime.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

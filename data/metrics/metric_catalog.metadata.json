@@ -1,13 +1,13 @@
 {
-  "created_at_utc": "2026-08-21T15:15:29.128809+00:00",
-  "rows": 34,
+  "created_at_utc": "2026-08-21T21:06:40.701133+00:00",
+  "rows": 42,
   "columns": [
     "file",
     "rows",
     "columns"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\metric_catalog.csv",
-  "csv_sha256": "ff2cd5e8eebd3bce7f2a9836b60750810d73b26f1b08369172c24ca0a31ab0f7",
+  "csv_sha256": "1d92c10cddaaa3b1279cf4f41fcde8dbdf586f81b5a91663d2d50bd61627b00f",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\metric_catalog.parquet",
   "parquet_error": null,
   "metadata": {}

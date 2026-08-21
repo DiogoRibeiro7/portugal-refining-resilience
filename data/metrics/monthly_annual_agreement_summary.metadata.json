@@ -1,0 +1,18 @@
+{
+  "created_at_utc": "2026-08-21T21:06:35.170516+00:00",
+  "rows": 4,
+  "columns": [
+    "flow",
+    "n_cells",
+    "median_abs_pct",
+    "max_abs_pct",
+    "share_within_tolerance",
+    "worst_year",
+    "worst_product"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_annual_agreement_summary.csv",
+  "csv_sha256": "09f7dfcad404d522def26ebddd4242b1221059cc1bc3d13ee5ef1c87a75d1372",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_annual_agreement_summary.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

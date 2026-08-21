@@ -1,0 +1,5 @@
+country,product,observed_weeks,first_date,last_date,weeks_spanned,missing_weeks,fortnight_gaps,three_week_gaps,longest_gap_days,handling
+ES,diesel,994,2005-01-03,2024-12-30,1044,50,26,12,21,"dropped, not interpolated"
+ES,gasoline,994,2005-01-03,2024-12-30,1044,50,26,12,21,"dropped, not interpolated"
+PT,diesel,995,2005-01-03,2024-12-30,1044,49,25,12,21,"dropped, not interpolated"
+PT,gasoline,995,2005-01-03,2024-12-30,1044,49,25,12,21,"dropped, not interpolated"
