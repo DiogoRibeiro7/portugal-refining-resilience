@@ -1,0 +1,13 @@
+{
+  "created_at_utc": "2026-08-21T21:49:05.563636+00:00",
+  "rows": 7,
+  "columns": [
+    "component",
+    "version"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\software_environment.csv",
+  "csv_sha256": "a70fb7f39cbafd81cbd063cc7a784784731e88d45ba1dea5d1a3de5b34d49112",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\provenance\\software_environment.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

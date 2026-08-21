@@ -1,0 +1,8 @@
+component,version
+python,3.13.5
+numpy,2.3.5
+pandas,2.3.3
+scipy,1.15.3
+statsmodels,0.14.5
+platform,Windows-11
+implementation,CPython
