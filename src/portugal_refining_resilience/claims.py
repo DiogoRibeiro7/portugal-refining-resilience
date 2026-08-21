@@ -651,3 +651,61 @@ def load_yaml_block(path: Path, key: str) -> dict[str, Any]:
     loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     block = loaded.get(key, {})
     return dict(block) if isinstance(block, dict) else {}
+
+
+#: A quantity carrying one of these units is a claim, not prose.
+_UNIT_QUANTITY = re.compile(
+    r"(\d[\d,]*(?:\.\d+)?)\s*(?:\\%|%|per\s+cent|~?\bkt\b|\bmonths?\b|\bweeks?\b)"
+)
+
+
+def check_quantities_are_checkable(
+    tex: str, *, checked_labels: set[str] | None = None, allow: set[float] | None = None
+) -> tuple[bool, str]:
+    """Every quantity in the prose must be written where the other checks can see it.
+
+    The numeric checks read math mode. A quantity written as "68 per cent" is therefore
+    invisible to all of them, and the paper carried "covers only 66 per cent of demand"
+    against a ratio of 0.678 through several review rounds because of it. When the two
+    bare percentages in the document were eventually checked by hand, both were wrong.
+
+    Checking such values instead of forbidding them does not work, and the attempt is
+    worth recording. A percentage carries about two significant figures, while the bundle
+    holds hundreds of dense ratio series; every candidate value, right or wrong, finds a
+    match somewhere. Restricting the search to ratio columns does not help, because the
+    monthly panel alone contributes several hundred ratios spanning the unit interval. A
+    check that cannot fail is worse than no check, since it reports confidence it has not
+    earned.
+
+    So the rule is about form rather than value: write the number in math mode, where
+    ``check_prose_numbers`` will hold it against the bundle. Stated thresholds and other
+    figures that are not measurements are exempted by value in the config.
+    """
+    allow = allow or set()
+    # Floats are exempt in full. A table's values are held against its declared source and
+    # the claim-evidence matrix against the tables each row cites, both stricter than the
+    # math-mode pass this rule exists to feed. Requiring math mode inside a tabular would
+    # be asking for a notation change with no verification behind it.
+    body = re.sub(
+        r"\\begin\{(table|longtable)\}.*?\\end\{\1\}",
+        " ",
+        prose_without_tables(tex, checked_labels),
+        flags=re.DOTALL,
+    )
+    spans = [(m.start(), m.end()) for m in re.finditer(r"\$[^$]*\$", body)]
+
+    bare: list[str] = []
+    for match in _UNIT_QUANTITY.finditer(body):
+        if any(start <= match.start() < end for start, end in spans):
+            continue
+        plain = match.group(1).replace(",", "")
+        value = float(plain)
+        if value in allow or (1900.0 <= value <= 2100.0 and value.is_integer()):
+            continue
+        context = " ".join(body[max(0, match.start() - 40) : match.start()].split())
+        bare.append(f"{match.group(0).strip()} (...{context[-34:]})")
+    if bare:
+        return False, (
+            f"{len(bare)} quantit(y/ies) outside math mode, so no check can see them: {bare[:5]}"
+        )
+    return True, "every quantity carrying a unit is written where the checks can read it"

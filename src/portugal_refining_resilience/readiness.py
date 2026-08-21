@@ -14,6 +14,7 @@ from .claims import (
     check_prose_numbers,
     check_prose_statistics,
     check_prose_uses_licensed_models,
+    check_quantities_are_checkable,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     load_table_sources,
@@ -455,6 +456,10 @@ def build_report_claim_checks(
     # 5b. a quoted statistic must reproduce from a column of that kind of statistic
     passed, detail = check_prose_statistics(tex, every_frame, checked_labels=checked_labels)
     checks.append(_check_record("prose_statistics_match_bundle", passed, detail))
+
+    # 5c. a quantity written outside math mode escapes every check above
+    passed, detail = check_quantities_are_checkable(tex, checked_labels=checked_labels, allow=allow)
+    checks.append(_check_record("quantities_written_where_checked", passed, detail))
 
     # 6. the claim-evidence matrix, row by row against each cited table's source
     table_frames: dict[str, list[pd.DataFrame]] = {}

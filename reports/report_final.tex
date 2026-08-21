@@ -29,7 +29,7 @@
 Portugal's Diesel and Gasoline Market, 1990--2024}
 \author{Diogo Ribeiro\thanks{ESMAD --- Instituto Politécnico do Porto.
 ORCID 0009-0001-2022-7072.}}
-\date{2026-08-19}
+\date{2026-08-21}
 
 \begin{document}
 
@@ -45,7 +45,11 @@ this paper measures how the product balance and price exposure changed over 1990
 annual balance runs from 1990, the earliest year Eurostat publishes; the monthly flows begin
 in 2002 and the weekly prices in 2005, each limited by its own source.
 
-Over thirty-five years the system passes through three transitions rather than one. Portuguese
+Over thirty-five years the system crosses the same line three times. Portugal was a net diesel
+exporter through most of the 1990s, a net importer for the fourteen years from 1999, an exporter
+again from 2013, and an importer in every year since 2021, so the 2013 hydrocracker restored a
+position the country had held before rather than creating a new one. Three breaks mark the
+crossings. Portuguese
 refinery output breaks upward around 2000 for both products, most strongly for gasoline
 ($F=22.0$, Benjamini--Hochberg adjusted $p<0.001$), while demand grew faster still, so the
 period reads as capacity chasing consumption rather than a change in orientation. The 2013
@@ -182,11 +186,11 @@ that must be sourced abroad. The net-import-to-demand ratio measures the country
 negative for a net seller, positive for a net buyer. The two answer different questions and a
 system can move on one without moving on the other, which is what happens around 2000.
 
-\textbf{Concentration.} A country with two conversion sites has a domestic alternative when
-one has an outage; a country with one does not. Portugal moved from two refineries to one in
-May 2021. This is a documented event rather than an estimated quantity, and it is the reason
-the 2022 episode is examined separately: a shock to a single-site system is not the same object
-as the same shock to a distributed one.
+\textbf{Concentration.} How many places the manufacturing happens in. Portugal moved from two
+refineries to one in May 2021. This is a documented event rather than an estimated quantity,
+and it is the reason the 2022 episode is examined separately: a shock to a single-site system
+is not the same object as the same shock to a distributed one. What that difference consists
+of is set out in Section~\ref{sec:closure}.
 
 \textbf{Price integration.} How closely, and how quickly, domestic pre-tax prices track a
 neighbouring market's. A system meeting more of its demand through imports has less room for
@@ -304,8 +308,8 @@ observations per product, 2005-01-03 to 2024-12-30 \\
 
 The annual panel is built from Eurostat, which is the only source reaching back to 1990. JODI
 begins in 2002 and so cannot carry the annual arm; it supplies the monthly flows and serves as
-an annual cross-check over the years both cover. The monthly source runs to 2026-05 and is
-trimmed to the study window, leaving 276 months per product.
+an annual cross-check over the years both cover. The monthly source runs to 2026-06 and is
+trimmed to the study window, leaving $276$ months per product.
 
 \subsection{The one material coverage gap}
 
@@ -386,9 +390,9 @@ than assumed. HAC(8) covariance throughout. Pre-tax prices are the primary measu
 \label{sec:summary}
 
 Over 1990--2024, Portuguese diesel demand averaged $4{,}522$~kt against average refinery output
-of $4{,}348$~kt, average imports of $804$~kt and average exports of $643$~kt. The asymmetry
-between the two fuels is structural: Portugal consumes several times as much diesel as gasoline
-while manufacturing considerably more gasoline than it consumes.
+of $4{,}348$~kt, average imports of $804$~kt and average exports of $643$~kt. The two fuels sit
+in opposite positions relative to demand, which Section~\ref{sec:mechanism} takes up once both
+panels have been shown.
 
 Peaks are informative about timing. Diesel refinery output and exports both peak in 2015, two
 years after the hydrocracker. Diesel imports peak in 2023, two years after the closure. Diesel
@@ -404,12 +408,12 @@ and the capacity path are not the same story.
 \label{fig:dieselbalance}
 \end{figure}
 
-Table~\ref{tab:diesel} gives the annual diesel panel. Three regimes are visible in the later part
-of the window. From 2005 to 2012 Portugal is a net diesel importer with output covering 70 to 96
-per cent of demand. From 2013 the
+Table~\ref{tab:diesel} gives the annual diesel panel, and the crossings described in
+Section~\ref{sec:intro} are visible in the last two columns. Taking the later part of the
+window, from 2005 to 2012 Portugal is a net diesel importer with output covering $0.70$ to $0.96$ of demand. From 2013 the
 ratio exceeds one and the net-import-to-demand ratio turns negative: Portugal manufactures more
 diesel than it consumes and exports the surplus. From 2021 the system returns to net import
-dependence, and by 2023 output covers only 66 per cent of demand.
+dependence, and by 2023 output covers only $0.678$ of demand.
 
 \begin{table}[htbp]
 \centering
@@ -611,7 +615,7 @@ refining regime in force. The 2021 row is a transition year and is excluded from
 \begin{table}[htbp]
 \centering
 \caption{Balance at the event years. $^{\dagger}$The two independent trade sources disagree on
-2022 diesel exports; the national figure is 622.2~kt, which puts net imports over demand at
+2022 diesel exports; the national figure is $622.2$~kt, which puts net imports over demand at
 $+0.132$ rather than $+0.190$. See Table~\ref{tab:sourcesens}.}
 \label{tab:headline}
 \small
@@ -1184,10 +1188,14 @@ which is weak support for it.
 \label{sec:residuals}
 
 The Eurostat panel permits an internal consistency check absent from JODI. Defining the residual
-as $Q^{\text{refinery}} + M - X - D$, Spanish gasoline residuals run at 6--15 per cent of demand,
-reflecting stock changes, refinery fuel and statistical differences that the four reported terms
-do not close. Balance residuals are therefore reported but not interpreted as flows, and no claim
-in this paper is derived from a residual.
+as $Q^{\text{refinery}} + M - X - D$, the residuals are large and do not sit on one side of zero.
+Across 1990--2024 the Spanish gasoline residual ranges from $-20.0$ to $+15.2$ per cent of demand
+and the Spanish diesel residual from $-14.7$ to $+13.9$; the Portuguese ones are smaller but still
+reach $-9.1$ and $+12.0$. They reflect stock changes, refinery fuel and statistical differences
+that the four reported terms do not close. Balance residuals are therefore reported but not
+interpreted as flows, and no claim in this paper is derived from a residual. Their size is also
+why the paper infers nothing about stock behaviour from the balance: a residual of this magnitude
+would swamp any inventory signal it might carry.
 
 \section{Robustness}
 
@@ -1237,8 +1245,10 @@ twenty-four Chow tests, and six survive it.
 \begin{enumerate}
 \item \textbf{2022 confounds the post-closure window.} The Matosinhos transition and the European
 energy shock fall ten months apart. The monthly model separates them statistically, but
-COVID-recovery demand, Sines maintenance schedules and the Russian VGO disruption are competing
-explanations that are not separately identified.
+COVID-recovery demand, Sines maintenance and the Russian VGO disruption are not separately
+identified. Two of those run through the concentration the closure produced and are therefore
+not alternatives to it, as Section~\ref{sec:conclusions} sets out; unplanned maintenance is
+the one that is genuinely independent and the one no series here can rule out.
 \item \textbf{No causal design.} No control group, instrument or counterfactual is used. Every
 post-2021 result is an association measured around a documented event. The Spain comparison
 constrains the common-shock explanation but does not license difference-in-differences: no
@@ -1256,8 +1266,8 @@ caveat that its cointegration verdict clears five per cent but not one.
 \item \textbf{JODI assessment codes unverified.} All Portuguese observations carry assessment code
 1, whose exact semantics have not been confirmed against JODI documentation.
 \item \textbf{Retail, not wholesale, prices.} The Weekly Oil Bulletin reports consumer prices.
-Pass-through results describe retail co-movement, not refinery-gate or international wholesale
-transmission.
+The price results describe retail co-movement, not refinery-gate or international wholesale
+transmission, and are not pass-through in the causal sense.
 \item \textbf{Balance residuals are not closed.} The four Eurostat terms do not sum to zero and
 stock changes are not modelled.
 \end{enumerate}
@@ -1275,7 +1285,7 @@ diesel demand and the net-import ratio stood at $0.262$: the weakest coverage an
 dependence anywhere in the window.
 
 Read against the four senses of resilience set out in Section~\ref{sec:resilience}, the profile
-changed on three of them and in the same direction. The domestic buffer thinned: the diesel
+changed on all four and in the same direction. The domestic buffer thinned: the diesel
 coverage ratio fell below its 1990s level. Import exposure rose on both measures, in volume and in
 net position. Manufacturing concentrated from two sites to one. Price integration tightened, on
 both the contemporaneous and the adjustment channel. Nothing moved the other way.
@@ -1321,25 +1331,18 @@ propagate; the shock determined when that would be tested. Gasoline is the contr
 supplies for this: it went through the same closure at the same plant and shows almost none of
 it, because it entered with a margin that diesel did not have.
 
-What the paper cannot say is how much of the post-2021 level is permanent. Coverage recovers
-from $0.678$ in 2023 to $0.855$ in 2024, which is consistent with 2023 having been the trough
-of an adjustment and equally consistent with a system that now runs closer to its import
-channel and fluctuates around it.
-
 \subsection{What can and cannot be inferred}
 
-The causal question is open and this design cannot close it. The Matosinhos transition and the
-largest European product-supply shock in decades fall ten months apart, which is too close for
-annual data to separate and close enough that the monthly design separates them only under an
-assumption about the shape of the trend between them. The monthly model finds both phases
-independently associated with lower refinery output and higher net import dependence, with the
-2022 shift the larger of the two, and that is as far as the evidence goes.
+The causal question is open and this design cannot close it. The monthly model finds both
+phases independently associated with lower refinery output and higher net import dependence,
+with the 2022 shift the larger of the two, and that is as far as the evidence goes. It is worth
+being clear that no better estimator would close the gap either, for the reason given above:
+the decomposition being asked for is not a property the physical system has.
 
-More than that, the two are not independent in a way that a better estimator would fix. The
-closure changed the structure through which the 2022 shock propagated: a feedstock disruption at
-the single remaining conversion site has no domestic offset, and would have had a partial one in
-2019. Asking how much of 2022 was the shock and how much was the closure presumes a decomposition
-that the physical system does not have.
+Nor can the paper say how much of the post-2021 level is permanent. Coverage recovers from
+$0.678$ in 2023 to $0.855$ in 2024, which is consistent with 2023 having been the trough of an
+adjustment and equally consistent with a system that now runs closer to its import channel and
+fluctuates around it.
 
 What follows for policy is correspondingly narrow, and narrower than the subject usually invites.
 The structural exposure measures moved, and they moved together and in one direction, which is a
@@ -1360,10 +1363,10 @@ wholesale prices, which are not observed at all.
 
 \subsection{What evidence would settle it}
 
-The obvious constraint is time. Three post-closure annual observations cannot support a Chow test,
-and several results in this paper are weak precisely because the post-event window is short.
-Extending the panel by a few more years would let the annual designs speak, and would show whether
-the 2023 coverage figure was the floor of an adjustment or a level.
+The obvious constraint is time. Three post-closure annual observations cannot support a Chow
+test, and several results in this paper are weak precisely because the post-event window is
+short. A few more years would let the annual designs speak, and would answer the question left
+open above about whether 2023 was a trough or a level.
 
 Three other kinds of evidence would do more than waiting. A monthly series of Sines throughput and
 unplanned outages would separate a feedstock disruption from a maintenance event, which annual
@@ -1505,7 +1508,7 @@ full window, JODI and Eurostat agree on $89\%$ of 80 cells, with only three of t
 divergences occurring before 2019.
 
 A cell is flagged only when it breaches both the absolute and the percentage tolerance. Applying
-them as alternatives makes a 25~kt floor bind on series of roughly $1{,}600$~kt, an effective
+them as alternatives makes a $25$~kt floor bind on series of roughly $1{,}600$~kt, an effective
 tolerance of $1.6\%$, which would flag agreement as close as $2.1\%$ as failure. Each of the
 eight remaining divergent cells is enumerated in the analysis configuration, together
 with the series Eurostat identifies as the outlier: six where JODI is out of line, two where the DGEG
@@ -1515,8 +1518,8 @@ workbook is. An unlisted divergence fails the readiness gate however few cells i
 \label{sec:sourcesens}
 
 Two 2022 trade cells are disputed between the two independent sources: diesel exports, where the
-monthly source reports 331.0~kt against 622.2~kt nationally, and gasoline exports, where it
-reports 1{,}346.0~kt against 1{,}501.7~kt.
+monthly source reports $331.0$~kt against $622.2$~kt nationally, and gasoline exports, where it
+reports $1{,}346.0$~kt against $1{,}501.7$~kt.
 
 Moving the annual panel to Eurostat changes what that disagreement can affect. The annual
 results are now computed from the national submission, which already carries the corroborated

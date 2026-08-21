@@ -75,7 +75,7 @@ analysis:
     exempt:
       - file: fuel_monthly_analytical_panel.csv
         note: >
-          JODI monthly flows run to 2026-05. The monthly models trim to the study
+          JODI monthly flows run to 2026-06. The monthly models trim to the study
           window and fit 276 months; the panel keeps the later months so the series
           can be extended without re-running acquisition. The paper states the trim
           in its coverage section.
