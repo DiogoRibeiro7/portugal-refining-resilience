@@ -1,5 +1,5 @@
 {
-  "title": "Portugal Refining Resilience",
+  "title": "From Refining Capacity to Import Dependence: Reproducible Evidence on Portugal's Diesel and Gasoline Market, 1990-2024",
   "version": "0.3.0",
   "publication_date": "2026-08-19",
   "upload_type": "software",
@@ -14,7 +14,7 @@
       "type": "ProjectLeader"
     }
   ],
-  "description": "Portugal Refining Resilience is a notebook-first research software repository for analysing how Portugal's petroleum-product system changed around the 2013 Sines hydrocracker expansion and the 2021 discontinuation of refining at Matosinhos. The repository combines auditable data-provenance files, a sequential notebook pipeline, reusable Python helpers, and report-readiness checks to separate documented refining-capacity events from trade-balance, import-dependence, supply-resilience, and price-transmission evidence. This initial release is structured for transparent review and reproducibility; the committed seed series is provisional and should be replaced or cross-validated by the acquisition notebooks before empirical results are treated as publication-ready.",
+  "description": "This archive contains the reproducible analysis code, derived evidence tables, figures, provenance records, and final report for an empirical study of Portugal's diesel and motor-gasoline balance from 1990 to 2024. The analysis examines how Portugal's petroleum-product system changed around three refining and supply events: the expansion of diesel conversion capability at Sines in 2013, the discontinuation of refining at Matosinhos in May 2021, and the European energy stress episode in 2022. The repository combines Eurostat annual oil-balance data, JODI monthly physical-flow series, DGEG national statistics, European Commission Weekly Oil Bulletin prices, and refinery-event metadata. The workflow estimates physical import-dependence ratios, refinery-output coverage, annual structural-break and interrupted-trend diagnostics, monthly segmented event models, Portugal-Spain balance comparisons, source-reconciliation checks, and retail pre-tax price co-movement models. The release is intended to support transparent review of the report's empirical claims: generated report inputs are checksum-manifested, tables and prose statistics are checked against the evidence bundle, and source disagreements are recorded with sensitivity analyses.",
   "keywords": [
     "Portugal",
     "energy economics",
@@ -23,9 +23,13 @@
     "fuel trade",
     "import dependence",
     "supply resilience",
-    "price transmission",
+    "price co-movement",
+    "cointegration",
+    "error-correction models",
+    "structural breaks",
     "reproducible research",
-    "Jupyter notebooks"
+    "Jupyter notebooks",
+    "research software"
   ],
   "related_identifiers": [
     {
@@ -48,5 +52,5 @@
     "European Commission Weekly Oil Bulletin, weekly consumer fuel prices with and without taxes.",
     "Galp official disclosures, refinery event metadata for Sines and Matosinhos."
   ],
-  "notes": "Research software release. Raw downloaded source files are excluded from version control by default; transformed, reviewable seed data and provenance files are included where they are part of the auditable analysis surface."
+  "notes": "Research software and derived-evidence release. Raw downloaded source files are excluded from version control by default where redistribution may be impractical or license-sensitive; the archive includes reproducible acquisition and processing code, provenance records, transformed analysis tables, report inputs, and a checksum manifest for the generated evidence bundle."
 }

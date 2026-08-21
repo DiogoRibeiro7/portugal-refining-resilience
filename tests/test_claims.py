@@ -17,6 +17,7 @@ from portugal_refining_resilience.claims import (
     check_prose_numbers,
     check_prose_statistics,
     check_prose_uses_licensed_models,
+    check_quantities_are_checkable,
     check_sensitivity_survival,
     check_stated_sample_sizes,
     claim_matrix_rows,
@@ -568,3 +569,63 @@ def test_document_sections_labels_by_the_first_section_label() -> None:
     sections = document_sections(FAMILY_TEX)
 
     assert [label for label, _ in sections] == ["sec:conclusions"]
+
+
+BARE = r"""
+\\section{Diesel}
+\\label{sec:diesel}
+
+By 2023 output covers only 66 per cent of demand, against 70 to 96 per cent earlier.
+"""
+
+
+def test_quantity_lint_catches_a_percentage_outside_math_mode() -> None:
+    """The paper carried "66 per cent" against a ratio of 0.678 for several rounds.
+
+    No numeric check could see it, because they all read math mode. Both of the bare
+    percentages in the document turned out to be wrong when read by hand.
+    """
+    passed, detail = check_quantities_are_checkable(BARE)
+
+    assert passed is False
+    assert "66 per cent" in detail
+
+
+def test_quantity_lint_reads_both_ends_of_a_range() -> None:
+    """ "70 to 96 per cent" states two claims and only one sits next to the unit."""
+    passed, detail = check_quantities_are_checkable(BARE)
+
+    assert passed is False
+    assert "70" in detail or "96" in detail
+
+
+def test_quantity_lint_accepts_math_mode() -> None:
+    fixed = BARE.replace("66 per cent", "$0.678$").replace("70 to 96 per cent", "$0.70$ to $0.96$")
+
+    passed, _ = check_quantities_are_checkable(fixed)
+
+    assert passed is True
+
+
+def test_quantity_lint_exempts_tables_and_the_matrix() -> None:
+    """Table values have a stricter check of their own against a declared source."""
+    table = r"""
+\\section{X}
+\\begin{table}
+\\begin{tabular}{lr}
+2023 & 68 per cent \\\\
+\\end{tabular}
+\\end{table}
+"""
+
+    passed, _ = check_quantities_are_checkable(table)
+
+    assert passed is True
+
+
+def test_quantity_lint_honours_the_allow_list() -> None:
+    """A stated tolerance is not a measurement and has nothing to reproduce from."""
+    threshold = "\\section{X}\n\nApplying a 25 kt floor to the comparison.\n"
+
+    assert check_quantities_are_checkable(threshold)[0] is False
+    assert check_quantities_are_checkable(threshold, allow={25.0})[0] is True

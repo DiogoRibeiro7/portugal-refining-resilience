@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this repository, please cite it using the metadata below."
-title: "Portugal Refining Resilience"
+title: "From Refining Capacity to Import Dependence: Reproducible Evidence on Portugal's Diesel and Gasoline Market, 1990-2024"
 authors:
   - family-names: "Ribeiro"
     given-names: "Diogo"
@@ -10,10 +10,12 @@ version: "0.3.0"
 date-released: "2026-08-19"
 license: MIT
 repository-code: "https://github.com/DiogoRibeiro7/portugal-refining-resilience"
-abstract: "Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience, and price transmission."
+abstract: "Reproducible research software, derived evidence tables, figures, provenance records, and final report for an empirical analysis of Portugal's diesel and motor-gasoline balance from 1990 to 2024, covering refinery-output coverage, import dependence, structural breaks, monthly event timing, Portugal-Spain comparisons, and retail pre-tax price co-movement."
 keywords:
   - Portugal
-  - refining
+  - refining capacity
   - petroleum products
-  - energy resilience
-  - price transmission
+  - import dependence
+  - energy economics
+  - price co-movement
+  - reproducible research
