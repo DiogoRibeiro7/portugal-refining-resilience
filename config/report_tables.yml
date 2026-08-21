@@ -35,6 +35,8 @@ tables:
     - pt_es_physical_balance_comparison.csv
   tab:sourcesens:
     - annual_source_sensitivity.csv
+  tab:armrecon:
+    - monthly_annual_agreement_summary.csv
   tab:windows:
     - event_window_sensitivity.csv
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 #: Share metrics produced by :func:`add_supply_metrics`. Their differences are
 #: ratio differences, not already-scaled percentage points.
@@ -96,6 +97,39 @@ def benchmark_deviation(
             if len(baseline) and pd.notna(target_value)
             else float("nan")
         )
+        # A z-score against a level mean measures the trend when the baseline has one.
+        # Diesel imports rise by roughly ninety kt a year across 2013-2019, so 2022 scores
+        # two standard deviations above a mean it was never going to sit at. Fitting the
+        # baseline trend and scoring the deviation from its extrapolation says whether a
+        # value is unusual given where the series was already heading.
+        baseline_years = pd.to_numeric(
+            group_df.loc[group_df["year"].between(baseline_start, baseline_end), "year"],
+            errors="coerce",
+        ).dropna()
+        slope = intercept = trend_t = residual_sd = expected = detrended = float("nan")
+        if len(baseline) > 2 and baseline.nunique() > 1:
+            years = baseline_years.to_numpy(dtype=float) - float(baseline_start)
+            values = baseline.to_numpy(dtype=float)
+            design = np.column_stack([np.ones_like(years), years])
+            coefficients, *_ = np.linalg.lstsq(design, values, rcond=None)
+            intercept, slope = float(coefficients[0]), float(coefficients[1])
+            residuals = values - design @ coefficients
+            dof = len(values) - 2
+            residual_sd = float(np.sqrt(residuals @ residuals / dof)) if dof > 0 else float("nan")
+            gram = float(np.sum((years - years.mean()) ** 2))
+            slope_se = residual_sd / np.sqrt(gram) if gram > 0 and residual_sd > 0 else float("nan")
+            trend_t = slope / slope_se if slope_se and np.isfinite(slope_se) else float("nan")
+            expected = intercept + slope * (target_year - baseline_start)
+            if residual_sd > 0 and pd.notna(target_value):
+                detrended = (target_value - expected) / residual_sd
+
+        if len(baseline) > 1 and std > 0:
+            half_width = float(
+                stats.t.ppf(0.975, len(baseline) - 1) * std * np.sqrt(1.0 + 1.0 / len(baseline))
+            )
+            low, high = mean - half_width, mean + half_width
+        else:
+            low = high = float("nan")
         records.append(
             {
                 group: str(group_name),
@@ -114,6 +148,22 @@ def benchmark_deviation(
                 if mad > 0
                 else float("nan"),
                 "empirical_percentile": percentile,
+                # A z-score against a seven-year baseline reads as decisive and is not.
+                # The interval below is what that baseline actually supports for a single
+                # new year, and a value inside it is not distinguishable from the baseline
+                # however extreme its z-score looks.
+                "baseline_trend_per_year": slope,
+                "baseline_trend_t_statistic": trend_t,
+                "baseline_trend_residual_sd": residual_sd,
+                "trend_extrapolated_expectation": expected,
+                "detrended_z_score": detrended,
+                "prediction_interval_low": low,
+                "prediction_interval_high": high,
+                "outside_prediction_interval": (
+                    bool(target_value < low or target_value > high)
+                    if np.isfinite(low) and np.isfinite(high) and pd.notna(target_value)
+                    else False
+                ),
             }
         )
     return pd.DataFrame(records)

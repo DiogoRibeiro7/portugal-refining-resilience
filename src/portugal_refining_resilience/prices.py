@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from typing import Any, cast
 
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-from statsmodels.tsa.stattools import adfuller, coint
+from statsmodels.tsa.stattools import adfuller, coint, kpss
 
 #: Weekly Oil Bulletin product tokens mapped to this project's canonical products.
 _BULLETIN_PRODUCTS: dict[str, str] = {"euro95": "gasoline", "diesel": "diesel"}
@@ -452,6 +453,257 @@ def model_choice_scale_comparison(design: pd.DataFrame, *, product: str) -> pd.D
                 "es_adf_p_value": float(adfuller(es, autolag="AIC")[1]),
                 "cointegration_p_value": float(coint_p),
                 "cointegrated_5pct": bool(float(coint_p) < 0.05),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def kpss_levels_diagnostics(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Test the log levels with stationarity as the null, not as the alternative.
+
+    ADF takes a unit root as its null, so failing to reject it is weak evidence and a
+    marginal rejection is weaker still. The gasoline levels reject marginally under ADF,
+    which on its own leaves the model-family choice resting on a knife edge a referee can
+    push either way. KPSS reverses the null, so the two tests together either agree that a
+    series is integrated or expose the ambiguity rather than hiding it.
+    """
+    required = {"log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    rows: list[dict[str, float | int | str | bool]] = []
+    for country, column in (("PT", "log_PT"), ("ES", "log_ES")):
+        series = pd.to_numeric(design[column], errors="coerce").dropna()
+        for regression in ("c", "ct"):
+            statistic, p_value, used_lag, _ = kpss(series, regression=regression, nlags="auto")
+            rows.append(
+                {
+                    "product": product,
+                    "country": country,
+                    "value_column": column,
+                    "regression": regression,
+                    "nobs": int(len(series)),
+                    "kpss_statistic": float(statistic),
+                    "p_value": float(p_value),
+                    "used_lag": int(used_lag),
+                    # KPSS p-values are interpolated from a small table and clipped, so a
+                    # reported 0.01 means "at most 0.01". Carry the verdict, not the number.
+                    "rejects_stationarity_5pct": bool(float(p_value) < 0.05),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def cointegrating_slope_test(
+    design: pd.DataFrame, *, product: str, leads_lags: tuple[int, ...] = (2, 4, 8)
+) -> pd.DataFrame:
+    """Test whether the long-run slope is one, by dynamic OLS.
+
+    Whether the raw PT-ES difference is the cointegrating combination turns on this slope
+    being one, and how the price spread may be read depends on the answer. The first-stage
+    OLS slope is super-consistent but its t-statistic is not standard normal, so it cannot
+    support the test. Leads and lags of the differenced regressor absorb the endogeneity
+    and restore standard inference.
+    """
+    required = {"log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna().copy()
+    levels["diff_log_ES"] = levels["log_ES"].diff()
+
+    rows: list[dict[str, float | int | str | bool]] = []
+    for span in leads_lags:
+        frame = levels.copy()
+        regressors = ["log_ES"]
+        for shift in range(-span, span + 1):
+            name = f"diff_log_ES_{shift:+d}"
+            frame[name] = frame["diff_log_ES"].shift(-shift)
+            regressors.append(name)
+        frame = frame.dropna()
+        design_matrix = sm.add_constant(frame[regressors], has_constant="add")
+        fit = sm.OLS(frame["log_PT"], design_matrix).fit(cov_type="HAC", cov_kwds={"maxlags": 8})
+        test = fit.t_test("log_ES = 1")
+        p_value = float(np.ravel(test.pvalue)[0])
+        rows.append(
+            {
+                "product": product,
+                "estimator": "DOLS",
+                "leads_lags": int(span),
+                "nobs": int(fit.nobs),
+                "slope": float(fit.params["log_ES"]),
+                "std_error": float(fit.bse["log_ES"]),
+                "t_statistic_vs_one": float(np.ravel(test.tvalue)[0]),
+                "p_value": p_value,
+                "differs_from_one_5pct": bool(p_value < 0.05),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def elasticity_unit_tests(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Test the contemporaneous elasticity against one rather than against zero.
+
+    Regression output tests each coefficient against zero, which here asks whether
+    Portuguese prices respond to Spanish prices at all. That was never in doubt. The
+    threshold that carries economic content is one, which separates a price that
+    under-transmits a Spanish move from one that overshoots it, and quoting only the
+    change in the estimate conceals that the two phases sit on opposite sides of it.
+    """
+    fitted = fit_error_correction_model(design)
+    model = cast(Any, fitted["model"])
+    specifications = {
+        "pre_transition": "diff_log_ES = 1",
+        "post_transition": "diff_log_ES + diff_log_ES_x_post = 1",
+    }
+    rows: list[dict[str, float | int | str | bool]] = []
+    for phase, specification in specifications.items():
+        test = model.t_test(specification)
+        estimate = float(np.ravel(test.effect)[0])
+        p_value = float(np.ravel(test.pvalue)[0])
+        rows.append(
+            {
+                "product": product,
+                "phase": phase,
+                "elasticity": estimate,
+                "std_error": float(np.ravel(test.sd)[0]),
+                "t_statistic_vs_one": float(np.ravel(test.tvalue)[0]),
+                "p_value": p_value,
+                "differs_from_one_5pct": bool(p_value < 0.05),
+                "side": "below" if estimate < 1.0 else "above",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def post_period_adjustment_stability(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Re-estimate the post-transition adjustment speed on subsets of the post period.
+
+    Every interaction term in the error-correction model is identified off the post period
+    alone, and that period is a fifth of the sample. It also contains the 2022 price
+    episode, so a reader is entitled to ask whether faster adjustment is a property of the
+    new regime or of that one year. Re-estimating without it, and on each half of the
+    period, answers the question rather than leaving it standing.
+    """
+    if "date" not in design.columns:
+        raise ValueError("Price design missing column: date")
+
+    dates = pd.to_datetime(design["date"], errors="coerce")
+    post = design["post"].astype(float) == 1.0
+    midpoint = cast(pd.Timestamp, dates[post].quantile(0.5))
+
+    subsets: dict[str, pd.Series] = {
+        "full_post_period": pd.Series(True, index=design.index),
+        "excluding_2022": dates.dt.year != 2022,
+        "first_half_of_post": ~post | (dates <= midpoint),
+        "second_half_of_post": ~post | (dates > midpoint),
+    }
+
+    rows: list[dict[str, float | int | str | bool]] = []
+    for label, mask in subsets.items():
+        subset = design.loc[mask]
+        fitted = fit_error_correction_model(subset)
+        model = cast(Any, fitted["model"])
+        pre_speed = float(model.params["disequilibrium_lag"])
+        post_speed = float(
+            model.params["disequilibrium_lag"] + model.params["disequilibrium_lag_x_post"]
+        )
+        rows.append(
+            {
+                "product": product,
+                "subset": label,
+                "n_obs": int(model.nobs),
+                "n_post": int((subset["post"].astype(float) == 1.0).sum()),
+                "pre_adjustment_speed": pre_speed,
+                "post_adjustment_speed": post_speed,
+                "half_life_weeks": float(np.log(2.0) / -np.log1p(post_speed)),
+                "speed_ratio": float(post_speed / pre_speed),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def spread_stationarity_by_regime(design: pd.DataFrame, *, product: str) -> pd.DataFrame:
+    """Run the spread unit-root test within each regime as well as on the pooled series.
+
+    The spread mean shifts across the transition by tens of EUR per 1000 litres. An
+    unmodelled level shift biases ADF towards not rejecting, so the pooled test understates
+    mean reversion by construction and its verdict is not the one to quote. Testing within
+    regimes removes the shift instead of arguing around it.
+    """
+    required = {"PT", "ES", "post"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    frame = pd.DataFrame(
+        {
+            "spread": pd.to_numeric(design["PT"], errors="coerce")
+            - pd.to_numeric(design["ES"], errors="coerce"),
+            "post": design["post"].astype(float),
+        }
+    ).dropna()
+
+    segments = {
+        "pooled": pd.Series(True, index=frame.index),
+        "pre_transition": frame["post"] == 0.0,
+        "post_transition": frame["post"] == 1.0,
+    }
+
+    rows: list[dict[str, float | int | str | bool]] = []
+    for label, mask in segments.items():
+        values = frame.loc[mask, "spread"]
+        adf_statistic, p_value, used_lag, nobs, *_ = adfuller(values, autolag="AIC")
+        rows.append(
+            {
+                "product": product,
+                "segment": label,
+                "nobs": int(len(values)),
+                "mean_spread": float(values.mean()),
+                "adf_statistic": float(adf_statistic),
+                "p_value": float(p_value),
+                "used_lag": int(used_lag),
+                "adf_nobs": int(nobs),
+                "stationary_5pct": bool(float(p_value) < 0.05),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def weekly_coverage(prices: pd.DataFrame) -> pd.DataFrame:
+    """Record how many weeks the bulletin actually published, and where the gaps are.
+
+    The price models assume evenly spaced weekly observations, and the bulletin does not
+    supply them: it skips weeks. A differenced observation spanning a gap is a two- or
+    three-week change entered as one, and both the unit-root and the HAC lag structures
+    read the index as even. The paper has to state the size of that, which means the
+    count has to exist in the evidence rather than in a sentence.
+    """
+    required = {"date", "country", "product"}
+    missing = required - set(prices.columns)
+    if missing:
+        raise ValueError(f"Weekly prices missing columns: {sorted(missing)}")
+
+    rows: list[dict[str, float | int | str]] = []
+    for (country, product), group in prices.groupby(["country", "product"]):
+        dates = pd.Series(sorted(pd.to_datetime(group["date"]).unique()))
+        gaps = dates.diff().dt.days.dropna().astype(int)
+        spanned = int((dates.iloc[-1] - dates.iloc[0]).days // 7) + 1
+        rows.append(
+            {
+                "country": str(country),
+                "product": str(product),
+                "observed_weeks": int(len(dates)),
+                "first_date": dates.iloc[0].date().isoformat(),
+                "last_date": dates.iloc[-1].date().isoformat(),
+                "weeks_spanned": spanned,
+                "missing_weeks": int(spanned - len(dates)),
+                "fortnight_gaps": int((gaps == 14).sum()),
+                "three_week_gaps": int((gaps == 21).sum()),
+                "longest_gap_days": int(gaps.max()) if len(gaps) else 0,
+                "handling": "dropped, not interpolated",
             }
         )
     return pd.DataFrame(rows)

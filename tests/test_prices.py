@@ -7,10 +7,15 @@ import pytest
 from portugal_refining_resilience import prices as prices_module
 from portugal_refining_resilience.prices import (
     choose_price_model,
+    cointegrating_slope_test,
+    elasticity_unit_tests,
     extract_weekly_prices,
     fit_error_correction_model,
+    kpss_levels_diagnostics,
+    post_period_adjustment_stability,
     price_comovement_design,
     spread_stationarity,
+    spread_stationarity_by_regime,
     stationarity_diagnostics,
 )
 
@@ -236,3 +241,111 @@ def test_error_correction_model_requires_enough_levels() -> None:
 
     with pytest.raises(ValueError, match="at least 20 paired price levels"):
         fit_error_correction_model(frame)
+
+
+def _levels_frame(series_pt: np.ndarray, series_es: np.ndarray) -> pd.DataFrame:
+    """Wrap two log-level paths in the columns the diagnostics read."""
+    frame = pd.DataFrame({"log_PT": series_pt, "log_ES": series_es})
+    frame["date"] = pd.date_range("2015-01-04", periods=len(frame), freq="7D")
+    frame["post"] = (frame["date"] >= "2021-05-01").astype(int)
+    return frame
+
+
+def test_kpss_rejects_stationarity_for_a_random_walk() -> None:
+    """The complement to ADF must call an integrated series integrated."""
+    rng = np.random.default_rng(11)
+    walk = np.cumsum(rng.normal(0, 0.02, 400)) + np.log(1000.0)
+    frame = _levels_frame(walk, walk + rng.normal(0, 0.01, 400))
+
+    result = kpss_levels_diagnostics(frame, product="diesel")
+
+    assert set(result["regression"]) == {"c", "ct"}
+    assert result.loc[result["regression"] == "c", "rejects_stationarity_5pct"].all()
+
+
+def test_kpss_does_not_reject_stationarity_for_white_noise() -> None:
+    """A test that rejected everything would settle nothing, so check the other branch."""
+    rng = np.random.default_rng(12)
+    noise = rng.normal(np.log(1000.0), 0.02, 400)
+    frame = _levels_frame(noise, rng.normal(np.log(1000.0), 0.02, 400))
+
+    result = kpss_levels_diagnostics(frame, product="diesel")
+
+    assert not result.loc[result["regression"] == "c", "rejects_stationarity_5pct"].any()
+
+
+def test_cointegrating_slope_test_recovers_a_slope_below_one() -> None:
+    design = _cointegrated_design(beta=0.9)
+
+    result = cointegrating_slope_test(design, product="diesel", leads_lags=(2, 4))
+
+    assert set(result["leads_lags"]) == {2, 4}
+    assert result["slope"].between(0.85, 0.95).all()
+    assert result["differs_from_one_5pct"].all()
+
+
+def test_cointegrating_slope_test_does_not_reject_a_unit_slope() -> None:
+    """The whole point of the test is that it can come out either way."""
+    design = _cointegrated_design(beta=1.0)
+
+    result = cointegrating_slope_test(design, product="diesel", leads_lags=(2,))
+
+    assert result["slope"].iloc[0] == pytest.approx(1.0, abs=0.03)
+    assert not bool(result["differs_from_one_5pct"].iloc[0])
+
+
+def test_elasticity_unit_tests_place_the_estimate_against_one() -> None:
+    design = _cointegrated_design(theta=0.6)
+
+    result = elasticity_unit_tests(design, product="diesel")
+
+    pre = result.loc[result["phase"] == "pre_transition"].iloc[0]
+    assert pre["elasticity"] == pytest.approx(0.6, abs=0.06)
+    assert pre["side"] == "below"
+    assert pre["t_statistic_vs_one"] < 0
+    assert bool(pre["differs_from_one_5pct"])
+
+
+def test_post_period_stability_reports_the_full_sample_among_the_subsets() -> None:
+    """The subset rows are only interpretable next to the estimate they qualify."""
+    design = _cointegrated_design(gamma=-0.25)
+    full = fit_error_correction_model(design)
+    model = full["model"]
+    expected = float(model.params["disequilibrium_lag"] + model.params["disequilibrium_lag_x_post"])
+
+    result = post_period_adjustment_stability(design, product="diesel")
+
+    assert set(result["subset"]) == {
+        "full_post_period",
+        "excluding_2022",
+        "first_half_of_post",
+        "second_half_of_post",
+    }
+    row = result.loc[result["subset"] == "full_post_period"].iloc[0]
+    assert row["post_adjustment_speed"] == pytest.approx(expected, abs=1e-9)
+    assert (result["n_post"] > 0).all()
+
+
+def test_spread_stationarity_by_regime_splits_at_the_transition() -> None:
+    """A pooled test on a series whose mean shifts is the one result not to quote."""
+    rng = np.random.default_rng(13)
+    frame = pd.DataFrame({"date": pd.date_range("2015-01-04", periods=400, freq="7D")})
+    frame["post"] = (frame["date"] >= "2021-05-01").astype(int)
+    frame["ES"] = 1000.0 + rng.normal(0, 5, 400)
+    # a stationary spread whose level moves across the transition
+    frame["PT"] = frame["ES"] + rng.normal(0, 3, 400) - 40.0 * frame["post"]
+
+    result = spread_stationarity_by_regime(frame, product="diesel")
+
+    assert list(result["segment"]) == ["pooled", "pre_transition", "post_transition"]
+    pre = result.loc[result["segment"] == "pre_transition"].iloc[0]
+    post = result.loc[result["segment"] == "post_transition"].iloc[0]
+    assert post["mean_spread"] < pre["mean_spread"] - 30.0
+    assert bool(pre["stationary_5pct"]) and bool(post["stationary_5pct"])
+
+
+def test_spread_stationarity_by_regime_requires_the_price_columns() -> None:
+    frame = pd.DataFrame({"log_PT": [1.0] * 30, "log_ES": [1.0] * 30})
+
+    with pytest.raises(ValueError, match="Price design missing columns"):
+        spread_stationarity_by_regime(frame, product="diesel")
