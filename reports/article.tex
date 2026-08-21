@@ -45,7 +45,10 @@ monthly physical flows, DGEG national statistics and the European Commission Wee
 Bulletin, this paper measures how the product balance and price exposure changed over
 1990--2024.
 
-Portugal's diesel trade position crosses the same line three times: a net exporter through most
+Portuguese demand dieselised as it did across Europe, and for the same fiscal reason
+\citep{harding2014diesel, silva2022different}: the continent's refineries were left
+over-producing gasoline and under-producing diesel \citep{deboncourt2013refining}. Against that
+background, Portugal's diesel trade position crosses the same line three times: a net exporter through most
 of the 1990s, a net importer for the fourteen years from 1999, an exporter again from 2013 in
 every year but 2019, and an importer in every year since 2021. The 2013 hydrocracker therefore restored a position the
 country had held before rather than creating a new one, and the 2021 closure carried the system
@@ -160,6 +163,8 @@ it, and the one case where this changes a conclusion is marked wherever it appea
 
 \subsection{What resilience is taken to mean}
 
+Energy security has no single accepted measure, and the reviews that map the field note that no study operationalises all its dimensions at once \citep{kruyt2009indicators, ang2015energysecurity}. Existing quantitative work concentrates on source diversification, political risk and transport risk \citep{cohen2011measuring}, and the link between import diversification and security is contested rather than settled \citep{vivoda2009diversification}. What follows is narrower than any of these, and deliberately so: it is the part of the concept a national product balance and a bilateral price relation can measure.
+
 Resilience here means the capacity of Portugal's domestic refining and its trade channels to
 absorb a product-specific supply shock without a sharp increase in import reliance or in
 exposure to prices formed elsewhere. The definition is deliberately narrow, and the narrowness is
@@ -211,6 +216,15 @@ on its phase boundary, so a phase coefficient is the level shift at that boundar
 against the extrapolated pre-closure trend, and the companion trend term is the change in slope
 within the phase. The two must be quoted together, and a phase coefficient is not an increment on
 the phase before it.
+
+The retail fuel price literature is largely concerned with asymmetry in how quickly prices
+rise and fall \citep{bacon1991rockets, borenstein1997gasoline, peltzman2000prices}, a finding
+whose robustness has been questioned \citep{bachmeier2003new} and whose methods have been
+surveyed with the warning that the field is technique-driven \citep{meyer2004asymmetric}. No
+asymmetry is estimated here. The closest published relative runs its diagnostics on euro-area
+consumer fuel prices from the same bulletin before choosing a specification
+\citep{meyler2009passthrough}, and testing a long-run coefficient against a value implied in
+advance follows \citet{bachmeier2006testing}.
 
 For prices, model family is selected from stationarity and cointegration diagnostics rather
 than assumed, and the diagnostics are run on log levels because that is the scale the models are
@@ -525,7 +539,9 @@ Year & PT & ES & PT$-$ES & PT & ES & PT$-$ES \\
 \end{tabular}
 \end{table}
 
-Spain refines the same products, shares a border and a product market, and faced the same
+Spain refines the same products, shares a long border across which fuel moves in response to
+price and tax differences \citep{leal2009prices, banfi2005fuel, teixido2024carbon}, and shares a
+product market, and faced the same
 withdrawal from Russian products on the same timetable. What differs is the event: Portugal
 closed a refinery in May 2021 and Spain did not. If the post-2021 Portuguese movement were the
 European shock working through any Iberian refining system, Spain should show something like it.
@@ -553,14 +569,16 @@ regression is only safe if they are. If they are not, the second question is whe
 wander together, which is what cointegration means and what makes an error-correction model
 the right form.
 
-Augmented Dickey--Fuller tests on the log levels do not reject a unit root for diesel in either
+Augmented Dickey--Fuller tests \citep{dickey1979distribution, said1984testing} on the log
+levels do not reject a unit root for diesel in either
 country, at $p=0.123$ for Portugal and $p=0.119$ for Spain. For gasoline they reject
 marginally, at $p=0.019$ and $p=0.028$, and that verdict is not quite robust: of the six
 combinations of deterministic term and lag rule tried per series, the Spanish one fails to reject
 in the case with a trend and lags by BIC, at $p=0.074$. Across all of them, no series rejects at
 one per cent. Neither product, then, clears the bar for a levels regression.
 
-Both pairs are cointegrated in logs, diesel at $p<0.001$ and gasoline at $p=0.0026$. The two
+Both pairs are cointegrated in logs \citep{engle1987cointegration}, diesel at $p<0.001$ and
+gasoline at $p=0.0026$. The two
 results together settle the specification for both products: the levels wander, they wander
 together, and an error-correction model is what fits a pair that behaves that way.
 
@@ -822,7 +840,8 @@ weeks contain the 2022 price episode. Re-estimating without 2022 and on each hal
 period leaves the direction intact and moves the multiple of the pre-transition adjustment
 speed between $2.96$ and $4.40$.
 \item \textbf{Generated regressor in both error-correction models.} The disequilibrium term is
-estimated in a first stage, so second-stage standard errors are conditional on it. A single-step
+estimated in a first stage, so second-stage standard errors are conditional on it
+\citep{pagan1984econometric}. A single-step
 or maximum-likelihood estimator would price that uncertainty properly. So does the assumption
 that one cointegrating vector, estimated over the whole sample, holds on both sides of the
 transition.
