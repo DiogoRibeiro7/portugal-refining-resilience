@@ -6,8 +6,8 @@ authors:
     given-names: "Diogo"
     affiliation: "ESMAD - Instituto Politécnico do Porto"
     orcid: "https://orcid.org/0009-0001-2022-7072"
-version: "0.3.0"
-date-released: "2026-08-19"
+version: "0.4.0"
+date-released: "2026-08-21"
 license: MIT
 repository-code: "https://github.com/DiogoRibeiro7/portugal-refining-resilience"
 abstract: "Reproducible research software, derived evidence tables, figures, provenance records, and final report for an empirical analysis of Portugal's diesel and motor-gasoline balance from 1990 to 2024, covering refinery-output coverage, import dependence, structural breaks, monthly event timing, Portugal-Spain comparisons, and retail pre-tax price co-movement."
