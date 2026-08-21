@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T09:38:19.687640+00:00",
+  "created_at_utc": "2026-08-21T15:15:18.109455+00:00",
   "rows": 4,
   "columns": [
     "product",
@@ -11,7 +11,7 @@
     "cointegrated_5pct"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice_scale_comparison.csv",
-  "csv_sha256": "c4fceb9a087d12363c079260a82fec4c7c2df97af928f7c972d6d3cb2240f0ac",
+  "csv_sha256": "cbeece6b1440751621f2630dd4ddd747884847abf9bde44ad32e3c790eac82f1",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_model_choice_scale_comparison.parquet",
   "parquet_error": null,
   "metadata": {}

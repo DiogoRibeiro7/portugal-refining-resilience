@@ -1,5 +1,5 @@
 product,phase,adjustment_speed,half_life_weeks,model
-diesel,pre_transition,-0.1326316704325367,4.871316188977375,two-step Engle-Granger error-correction model
-diesel,post_transition,-0.4661744026219007,1.104289535107693,two-step Engle-Granger error-correction model
-gasoline,pre_transition,-0.09072366969816832,7.288135883161166,two-step Engle-Granger error-correction model
-gasoline,post_transition,-0.31478289345904786,1.8336278795978598,two-step Engle-Granger error-correction model
+diesel,pre_transition,-0.14152122927799457,4.542447516404447,two-step Engle-Granger error-correction model
+diesel,post_transition,-0.5995147419959452,0.7574730641052194,two-step Engle-Granger error-correction model
+gasoline,pre_transition,-0.09112989327402365,7.254052869771599,two-step Engle-Granger error-correction model
+gasoline,post_transition,-0.3678226784379724,1.5114900146530597,two-step Engle-Granger error-correction model

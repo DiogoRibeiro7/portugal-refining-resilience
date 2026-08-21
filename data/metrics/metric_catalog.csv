@@ -12,7 +12,7 @@ jodi_eurostat_reconciliation_summary.csv,1,"comparison, n_cells, n_agree, share_
 jodi_eurostat_trade_reconciliation.csv,80,"year, country_jodi, product, flow, value_kt_jodi, source_jodi, status, country_eurostat, value_kt_eurostat, source_eurostat, difference_kt, difference_pct_comparison, reconciliation_status"
 jodi_refinery_output_annual_completeness.csv,50,"year, product, flow_canonical, n_months, missing_months, complete_year, assessment_status"
 jodi_trade_annual_completeness.csv,100,"year, product, flow, n_months, missing_months, complete_year, assessment_status"
-metric_catalog.csv,33,"file, rows, columns"
+metric_catalog.csv,34,"file, rows, columns"
 monthly_event_models.csv,228,"product, outcome, term, estimate, std_error, p_value, n_obs, r2_adj"
 monthly_event_phase_summary.csv,48,"product, outcome, event_phase, n_months, mean_value, std_value"
 price_adf_lag_sensitivity.csv,24,"product, country, regression, lag_rule, adf_statistic, p_value, stationary_5pct, stationary_1pct"
