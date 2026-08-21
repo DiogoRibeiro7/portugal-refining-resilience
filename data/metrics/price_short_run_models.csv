@@ -1,11 +1,11 @@
 product,term,estimate,std_error,p_value,nobs,covariance,outcome,comparison,model,model_family
-diesel,const,8.215624937155175e-05,0.0004188966667662683,0.8445120663576007,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-diesel,diff_log_ES,0.7348314026087437,0.034072328117752355,3.68233732374677e-103,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-diesel,diff_log_ES_x_post,0.2723825809731798,0.05427524162652351,5.206510499380677e-07,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-diesel,post,-0.00021371504554468012,0.0008558348148568452,0.8028075270976263,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-diesel,diff_log_ES_post_period,1.0072139835819236,0.042248114179860005,1.2721664776748197e-125,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,"short-run log-difference transmission, post-period level (Wald)",ecm_required
-gasoline,const,0.00015472404202126658,0.0005908704721194747,0.7934310751989451,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-gasoline,diff_log_ES,0.7997270363478611,0.059276583646121886,1.7561356619007253e-41,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-gasoline,diff_log_ES_x_post,0.03532822751763325,0.13728068651342717,0.7969139792832114,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-gasoline,post,-4.108149114592385e-05,0.0010542683754803561,0.9689168384390181,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
-gasoline,diff_log_ES_post_period,0.8350552638654943,0.12382350032549305,1.5417387649088828e-11,1078.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,"short-run log-difference transmission, post-period level (Wald)",ecm_required
+diesel,const,8.215624937147053e-05,0.0004188966667662699,0.8445120663577531,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+diesel,diff_log_ES,0.7348314026087437,0.034072328117752286,3.682337323743311e-103,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+diesel,diff_log_ES_x_post,0.26381948541135514,0.06320126726527635,2.9893616882082745e-05,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+diesel,post,-0.0001198390774151621,0.0009530163701212886,0.8999320902446569,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+diesel,diff_log_ES_post_period,0.9986508880200988,0.0532308166416824,1.5810494954398586e-78,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,"short-run log-difference transmission, post-period level (Wald)",ecm_required
+gasoline,const,0.0001547240420213221,0.0005908704721194734,0.7934310751988722,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,diff_log_ES,0.7997270363478606,0.05927658364612186,1.756135661900775e-41,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,diff_log_ES_x_post,0.006583728863367918,0.18965070646268897,0.9723069805737721,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,post,-7.184556603041677e-05,0.0013000278538145963,0.9559276355355119,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,short-run log-difference transmission,ecm_required
+gasoline,diff_log_ES_post_period,0.8063107652112285,0.1801489893809636,7.612588343123098e-06,993.0,HAC(8),delta log PT pre-tax price,delta log ES pre-tax price,"short-run log-difference transmission, post-period level (Wald)",ecm_required

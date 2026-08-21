@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T09:38:19.654889+00:00",
+  "created_at_utc": "2026-08-21T14:06:26.891972+00:00",
   "rows": 24,
   "columns": [
     "product",
@@ -12,7 +12,7 @@
     "stationary_1pct"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_adf_lag_sensitivity.csv",
-  "csv_sha256": "87a522ae86700a329946b6b5c476225450c2f5c13ac2be999d6b5739ec83f98c",
+  "csv_sha256": "a52f5fc76d48a086ebefc0d43a5494e3c52a1b6f40250608b9045784be93dbf7",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_adf_lag_sensitivity.parquet",
   "parquet_error": null,
   "metadata": {}

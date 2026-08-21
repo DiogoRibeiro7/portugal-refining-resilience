@@ -457,9 +457,15 @@ def check_bundle_within_window(
         if path.name in exempt:
             continue
         frame = pd.read_csv(path)
-        if "year" not in frame.columns:
+        # A file may carry its calendar as a year column or as dates. Reading only the
+        # former let the weekly price series run past the window unnoticed, because it
+        # keys on date.
+        if "year" in frame.columns:
+            years = pd.to_numeric(frame["year"], errors="coerce").dropna()
+        elif "date" in frame.columns:
+            years = pd.to_datetime(frame["date"], errors="coerce").dropna().dt.year
+        else:
             continue
-        years = pd.to_numeric(frame["year"], errors="coerce").dropna()
         outside = years[(years < start_year) | (years > end_year)]
         if not outside.empty:
             span = (

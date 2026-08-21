@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T09:38:18.137083+00:00",
+  "created_at_utc": "2026-08-21T14:06:26.126300+00:00",
   "rows": 4,
   "columns": [
     "country",
@@ -14,7 +14,7 @@
     "stationary_5pct"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_stationarity_diagnostics.csv",
-  "csv_sha256": "34b4761294f72c6bf943d9d3db666411d87a1478471498687090ceaa0738809f",
+  "csv_sha256": "a74de2ebeb552678d3ff96ab591c42dd6ffbcdf9248251abee020ecb89e699b8",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_stationarity_diagnostics.parquet",
   "parquet_error": null,
   "metadata": {}

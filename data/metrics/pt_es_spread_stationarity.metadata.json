@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T09:38:19.716388+00:00",
+  "created_at_utc": "2026-08-21T14:06:26.916479+00:00",
   "rows": 2,
   "columns": [
     "product",
@@ -13,7 +13,7 @@
     "stationary_5pct"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_spread_stationarity.csv",
-  "csv_sha256": "d9650ea565defe96ca10bd07cb6558b9f8805ffce9dd5c704196afb6046529ae",
+  "csv_sha256": "221892d1753724049ec4f670974e6cb21e343af6546352a9b3f7fed876051921",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\pt_es_spread_stationarity.parquet",
   "parquet_error": null,
   "metadata": {}

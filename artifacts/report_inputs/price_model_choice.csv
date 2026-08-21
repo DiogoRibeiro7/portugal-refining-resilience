@@ -1,3 +1,3 @@
 product,n_obs,scale,pt_level_adf_p_value,es_level_adf_p_value,levels_alpha,cointegration_statistic,cointegration_p_value,model_family,reason
-diesel,1079,log,0.14482539912863923,0.21391184616895248,0.01,-3.6399650778455257,0.021845429039228557,ecm_required,Log levels are not clearly stationary and PT and ES are cointegrated
-gasoline,1079,log,0.04054197122698137,0.04894712909038501,0.01,-5.25968943103628,5.333074708697961e-05,ecm_required,Log levels are not clearly stationary and PT and ES are cointegrated
+diesel,994,log,0.12313930649922444,0.11895632007440399,0.01,-5.799092259684793,4.348245362986022e-06,ecm_required,Log levels are not clearly stationary and PT and ES are cointegrated
+gasoline,994,log,0.01913027856090363,0.02751358770395659,0.01,-4.296244974271303,0.0025951503549340167,ecm_required,Log levels are not clearly stationary and PT and ES are cointegrated
