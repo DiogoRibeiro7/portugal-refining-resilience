@@ -1,4 +1,4 @@
-.PHONY: install test lint format check notebooks report-inputs report-pdf clean
+.PHONY: install test lint format check notebooks report-inputs report-pdf article-pdf clean
 
 install:
 	poetry install
@@ -28,6 +28,9 @@ report-inputs:
 
 report-pdf:
 	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd reports/report_final.tex
+
+article-pdf:
+	latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -cd reports/article.tex
 
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +

@@ -1,7 +1,7 @@
 """Tests for report-claim verification.
 
-Each test reproduces a defect that reached a finished draft and was found by a human
-reviewer rather than by the pipeline.
+Each test reproduces a failure mode these checks exist to catch, using the smallest
+fixture that exhibits it.
 """
 
 import pathlib
@@ -82,7 +82,7 @@ def test_verify_table_values_accepts_correctly_rounded_numbers() -> None:
 
 
 def test_verify_table_values_catches_a_stale_coefficient() -> None:
-    """The published draft carried coefficients from a superseded model run."""
+    """A table may carry coefficients from a superseded model run."""
     stale = TABLE.replace("$-106.00$", "$-105.21$")
     rows = parse_latex_tables(stale)["tab:monthly"]
 
@@ -107,7 +107,7 @@ def test_verify_table_values_ignores_years() -> None:
 
 
 def test_check_stated_sample_sizes_catches_a_window_mismatch() -> None:
-    """The draft said n=293 after the model had been restricted to 240 months."""
+    """A stated sample size may belong to a window the model no longer uses."""
     tex = r"a model on $n=293$ observations"
 
     passed, detail = check_stated_sample_sizes(tex, _models())
@@ -126,7 +126,7 @@ def test_check_stated_sample_sizes_accepts_any_fitted_model() -> None:
 
 
 def test_check_event_interval_catches_the_wrong_gap() -> None:
-    """The draft said the two events fall fourteen months apart; they fall ten."""
+    """An interval stated in words must match the configured event dates."""
     tex = "the two fall fourteen months apart"
     dates = {"matosinhos_closure_start": "2021-05-01", "energy_stress_start": "2022-03-01"}
 
@@ -580,10 +580,9 @@ By 2023 output covers only 66 per cent of demand, against 70 to 96 per cent earl
 
 
 def test_quantity_lint_catches_a_percentage_outside_math_mode() -> None:
-    """The paper carried "66 per cent" against a ratio of 0.678 for several rounds.
+    """A bare "66 per cent" against a ratio of 0.678 is invisible to every numeric check.
 
-    No numeric check could see it, because they all read math mode. Both of the bare
-    percentages in the document turned out to be wrong when read by hand.
+    They all read math mode, so a percentage written out in words reaches none of them.
     """
     passed, detail = check_quantities_are_checkable(BARE)
 

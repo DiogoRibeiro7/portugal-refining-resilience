@@ -1,10 +1,10 @@
 """Verify that the written report agrees with the evidence bundle.
 
 The readiness gate establishes that evidence exists, is complete and reconciles. It
-cannot establish that the prose uses it correctly, and three separate defects reached a
-finished draft through that gap: a table quoting a coefficient the pipeline no longer
-produced, a stated sample size belonging to an earlier window, and a headline statistic
-computed from the one trade cell the reconciliation had flagged as an outlier.
+cannot establish that the prose uses it correctly. Three failure modes sit in that gap: a
+table quoting a coefficient the pipeline no longer produces, a stated sample size belonging
+to an earlier window, and a headline statistic computed from a trade cell the reconciliation
+has flagged as an outlier.
 
 The checks here close that gap by reading the report and comparing it against the
 bundle it claims to be based on. They are deliberately mechanical: every number in a
@@ -503,11 +503,10 @@ def check_prose_statistics(
     """Check quoted test statistics against columns that hold that kind of statistic.
 
     ``check_prose_numbers`` accepts any number that appears anywhere in the bundle,
-    which is too weak for a statistic. When the price model selection was corrected and
-    the diesel cointegration p-value moved from 0.088 to 0.022, the report kept quoting
-    0.088 and every gate passed: a Eurostat balance residual and several monthly
-    import-dependence ratios sit within half a printed unit of 0.088, so the number was
-    reproducible from the bundle while being false about the thing it described.
+    which is too weak for a statistic. Suppose the diesel cointegration p-value is 0.022 and
+    the text still says 0.088. That passes, because a Eurostat balance residual and several
+    monthly import-dependence ratios sit within half a printed unit of 0.088, so the number
+    is reproducible from the bundle while being false about the thing it describes.
 
     A p-value is therefore checked only against columns that hold p-values, and an F
     statistic only against F columns. The comparison is honoured, so ``p<0.001`` asks
@@ -585,12 +584,12 @@ def check_prose_uses_licensed_models(
 ) -> tuple[bool, str]:
     """Flag a coefficient quoted from a model family the diagnostics did not licence.
 
-    The price model family is chosen from the data, and correcting that choice changed
-    which numbers the paper is entitled to headline. The conclusion went on quoting the
-    difference-only diesel elasticity of 0.73 to 1.01 after the licensed model became an
-    error-correction model giving 0.713 to 1.242. Every gate passed, because both
-    numbers are real: they are estimates from a model that was fitted and persisted,
-    just not the one the diagnostics selected.
+    The price model family is chosen from the data, so which numbers the text is
+    entitled to headline depends on that choice. A passage may quote the difference-only
+    diesel elasticity of 0.73 to 1.01 while the licensed model is an error-correction model
+    giving 0.713 to 1.242, and every numeric check will pass, because both numbers are real.
+    They are estimates from a model that was fitted and persisted, just not the one the
+    diagnostics selected.
 
     A number is flagged when it reproduces from a superseded family's estimates and from
     no licensed estimate. Sections whose subject is a superseded family are exempt by
@@ -665,12 +664,12 @@ def check_quantities_are_checkable(
     """Every quantity in the prose must be written where the other checks can see it.
 
     The numeric checks read math mode. A quantity written as "68 per cent" is therefore
-    invisible to all of them, and the paper carried "covers only 66 per cent of demand"
-    against a ratio of 0.678 through several review rounds because of it. When the two
-    bare percentages in the document were eventually checked by hand, both were wrong.
+    invisible to all of them, so a statement such as "covers only 66 per cent of demand"
+    against a ratio of 0.678 can stand unchallenged. A bare percentage is a form in which an
+    error persists without any check seeing it.
 
-    Checking such values instead of forbidding them does not work, and the attempt is
-    worth recording. A percentage carries about two significant figures, while the bundle
+    Checking such values instead of forbidding them does not work, and the reason is
+    worth stating. A percentage carries about two significant figures, while the bundle
     holds hundreds of dense ratio series; every candidate value, right or wrong, finds a
     match somewhere. Restricting the search to ratio columns does not help, because the
     monthly panel alone contributes several hundred ratios spanning the unit interval. A
