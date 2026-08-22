@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-22T10:16:24.400420+00:00",
+  "rows": 15,
+  "columns": [
+    "pair",
+    "product",
+    "phase",
+    "adjustment_speed",
+    "std_error",
+    "p_value",
+    "embargo_interaction_p_value",
+    "n_obs"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_phase_adjustment_speeds.csv",
+  "csv_sha256": "b9dffb396572cae36062b6905211e774b4c67d8f2202118f37fd7d48ba62e1d5",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_phase_adjustment_speeds.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}
