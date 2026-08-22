@@ -1,7 +1,7 @@
 {
   "title": "From Refining Capacity to Import Dependence: Reproducible Evidence on Portugal's Diesel and Gasoline Market, 1990-2024",
-  "version": "0.4.0",
-  "publication_date": "2026-08-21",
+  "version": "0.5.0",
+  "publication_date": "2026-08-22",
   "upload_type": "software",
   "access_right": "open",
   "license": "mit",
@@ -14,7 +14,7 @@
       "type": "ProjectLeader"
     }
   ],
-  "description": "This archive contains the reproducible analysis code, derived evidence tables, figures, provenance records, and final report for an empirical study of Portugal's diesel and motor-gasoline balance from 1990 to 2024. The analysis examines how Portugal's petroleum-product system changed around three refining and supply events: the expansion of diesel conversion capability at Sines in 2013, the discontinuation of refining at Matosinhos in May 2021, and the European energy stress episode in 2022. The repository combines Eurostat annual oil-balance data, JODI monthly physical-flow series, DGEG national statistics, European Commission Weekly Oil Bulletin prices, and refinery-event metadata. The workflow estimates physical import-dependence ratios, refinery-output coverage, annual structural-break and interrupted-trend diagnostics, monthly segmented event models, Portugal-Spain balance comparisons, source-reconciliation checks, and retail pre-tax price models. Model family for the price arm is selected from stationarity and cointegration diagnostics run on log prices, the scale the models are estimated on, and both products are fitted as two-step Engle-Granger error-correction models. The release is intended to support transparent review of the report's empirical claims: generated report inputs are checksum-manifested, tables and prose statistics are checked against the evidence bundle, and source disagreements are recorded with sensitivity analyses.",
+  "description": "This archive contains the reproducible analysis code, derived evidence tables, figures, provenance records, and final report for an empirical study of Portugal's diesel and motor-gasoline balance from 1990 to 2024. The analysis examines how Portugal's petroleum-product system changed around three refining and supply events: the expansion of diesel conversion capability at Sines in 2013, the discontinuation of refining at Matosinhos in May 2021, and the European energy stress episode in 2022. The repository combines Eurostat annual oil-balance data, JODI monthly physical-flow series, DGEG national statistics, European Commission Weekly Oil Bulletin prices, and refinery-event metadata. The workflow estimates physical import-dependence ratios, refinery-output coverage, annual structural-break and interrupted-trend diagnostics, monthly segmented event models, Portugal-Spain balance comparisons, source-reconciliation checks, and retail pre-tax price models. Model family for the price arm is selected from stationarity and cointegration diagnostics run on log prices, the scale the models are estimated on, and both products are fitted as two-step Engle-Granger error-correction models. This release corrects the price sample, which had run past the stated 2024 window, and reports the monthly event models both with and without a control for the 2013 hydrocracker, which is the specification the estimates should be read from. It adds placebo tests against neighbouring countries and against false break dates, tests for cointegration under a regime shift and for a second break at the December 2022 embargo, a joint multiple-break search, and confidence intervals throughout. Estimates published in 0.4.0 are superseded. The release is intended to support transparent review of the report's empirical claims: generated report inputs are checksum-manifested, tables and prose statistics are checked against the evidence bundle, and source disagreements are recorded with sensitivity analyses.",
   "keywords": [
     "Portugal",
     "energy economics",
@@ -39,7 +39,7 @@
       "resource_type": "software"
     },
     {
-      "identifier": "https://github.com/DiogoRibeiro7/portugal-refining-resilience/releases/tag/v0.4.0",
+      "identifier": "https://github.com/DiogoRibeiro7/portugal-refining-resilience/releases/tag/v0.5.0",
       "relation": "isIdenticalTo",
       "scheme": "url",
       "resource_type": "software"
