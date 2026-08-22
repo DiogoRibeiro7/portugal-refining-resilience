@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller, coint, kpss
+from statsmodels.tsa.vector_ar.vecm import coint_johansen
 
 #: Weekly Oil Bulletin product tokens mapped to this project's canonical products.
 _BULLETIN_PRODUCTS: dict[str, str] = {"euro95": "gasoline", "diesel": "diesel"}
@@ -897,4 +898,153 @@ def second_break_test(
                 float(np.ravel(wald.pvalue)[0]),
             )
         )
+    return pd.DataFrame(rows)
+
+
+#: Neighbours priced in the same bulletin that closed no refinery in May 2021. They are
+#: the comparison for asking whether the Portuguese adjustment change is Portuguese.
+PLACEBO_COUNTRIES: tuple[str, ...] = ("FR", "IT", "DE", "BE")
+
+
+def _adjustment_speeds(
+    prices: pd.DataFrame, *, home: str, product: str, cutoff: str, end: str | None = None
+) -> dict[str, float]:
+    """Fit the error-correction model for one country pair and return its two speeds."""
+    work = prices.loc[prices["country"].isin([home, "ES"])].copy()
+    work["country"] = work["country"].replace({home: "PT"})
+    if end is not None:
+        work = work.loc[pd.to_datetime(work["date"]) < pd.Timestamp(end)]
+    design = price_comovement_design(work, product=product, cutoff=cutoff)
+    model = cast(Any, fit_error_correction_model(design)["model"])
+    pre = float(model.params["disequilibrium_lag"])
+    post = pre + float(model.params["disequilibrium_lag_x_post"])
+    return {
+        "pre_adjustment_speed": pre,
+        "post_adjustment_speed": post,
+        "speed_ratio": post / pre if pre else float("nan"),
+        "interaction_p_value": float(model.pvalues["disequilibrium_lag_x_post"]),
+        "n_obs": float(model.nobs),
+    }
+
+
+def cross_country_placebo(
+    prices: pd.DataFrame,
+    *,
+    product: str = "diesel",
+    cutoff: str = "2021-05-01",
+    countries: tuple[str, ...] = PLACEBO_COUNTRIES,
+) -> pd.DataFrame:
+    """Run the same break on countries that closed no refinery.
+
+    The paper reads a faster adjustment speed after May 2021 as a loss of domestic price
+    insulation. An alternative reading is that the disequilibrium term simply became more
+    volatile everywhere after 2021, in which case every European pair priced against Spain
+    would show the same thing and the Portuguese result would be a date effect. Running the
+    identical specification on neighbours that closed nothing separates the two, and it is
+    the cheapest test available because the bulletin already prices every member state.
+    """
+    rows: list[dict[str, object]] = []
+    for home in ("PT", *countries):
+        available = set(prices["country"].unique())
+        if home not in available or "ES" not in available:
+            continue
+        speeds = _adjustment_speeds(prices, home=home, product=product, cutoff=cutoff)
+        rows.append(
+            {
+                "pair": f"{home}-ES",
+                "product": product,
+                "break_date": cutoff,
+                "closed_a_refinery": home == "PT",
+                **speeds,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def false_break_placebo(
+    prices: pd.DataFrame,
+    *,
+    product: str = "diesel",
+    dates: tuple[str, ...] = (
+        "2011-05-01",
+        "2013-05-01",
+        "2015-05-01",
+        "2017-05-01",
+        "2019-05-01",
+    ),
+    real_break: str = "2021-05-01",
+) -> pd.DataFrame:
+    """Test breaks at dates where nothing happened, on data that cannot contain the real one.
+
+    A false break placed on the full sample is not a placebo: everything after a 2018 date
+    includes the 2021 closure, so it recovers a diluted version of the real effect and looks
+    like a finding. Each false break here is estimated on the pre-closure sample only, which
+    is the only way the test can come out negative when it should.
+    """
+    rows: list[dict[str, object]] = []
+    for date in dates:
+        speeds = _adjustment_speeds(prices, home="PT", product=product, cutoff=date, end=real_break)
+        rows.append(
+            {
+                "break_date": date,
+                "product": product,
+                "sample_ends": real_break,
+                "is_real_break": False,
+                **speeds,
+            }
+        )
+    speeds = _adjustment_speeds(prices, home="PT", product=product, cutoff=real_break)
+    rows.append(
+        {
+            "break_date": real_break,
+            "product": product,
+            "sample_ends": "",
+            "is_real_break": True,
+            **speeds,
+        }
+    )
+    return pd.DataFrame(rows)
+
+
+def johansen_rank_test(
+    design: pd.DataFrame, *, product: str, lag_orders: tuple[int, ...] = (1, 2, 4)
+) -> pd.DataFrame:
+    """Cross-check the single-equation cointegration verdict with a system estimator.
+
+    Engle--Granger picks one variable as the dependent one and conditions the second
+    stage on a first-stage residual. Johansen treats the two series symmetrically and
+    estimates the cointegrating rank instead of assuming it, so it can disagree in two
+    ways that matter: it can fail to find a relation the two-step estimator claimed, and
+    it can find full rank, which would mean the levels were stationary all along and the
+    error-correction form was never needed.
+    """
+    required = {"log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    if len(levels) < 30:
+        raise ValueError("Need at least 30 paired levels for a rank test")
+
+    rows: list[dict[str, float | int | str | bool]] = []
+    for lags in lag_orders:
+        result = coint_johansen(levels.to_numpy(dtype=float), det_order=0, k_ar_diff=int(lags))
+        vector = np.real(result.evec[:, 0])
+        normalised = float(-vector[1] / vector[0]) if vector[0] else float("nan")
+        for rank, label in enumerate(("r = 0", "r <= 1")):
+            trace = float(result.lr1[rank])
+            critical = float(result.cvt[rank][1])
+            rows.append(
+                {
+                    "product": product,
+                    "lags": int(lags),
+                    "nobs": int(len(levels)),
+                    "null_hypothesis": label,
+                    "trace_statistic": trace,
+                    "critical_value_5pct": critical,
+                    "rejected_5pct": bool(trace > critical),
+                    "normalised_slope": normalised,
+                }
+            )
     return pd.DataFrame(rows)

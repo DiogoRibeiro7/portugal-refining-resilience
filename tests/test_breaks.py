@@ -7,6 +7,7 @@ from portugal_refining_resilience.breaks import (
     andrews_sup_wald,
     chow_test,
     coefficient_table,
+    global_break_search,
     interrupted_time_series,
     residual_diagnostics,
 )
@@ -121,3 +122,47 @@ def test_coefficient_table_brackets_the_estimate() -> None:
     assert (table["estimate"] < table["ci_high"]).all()
     assert (table["ci_level"] == 0.95).all()
     assert (table["outcome"] == "value").all()
+
+
+def test_global_break_search_finds_a_planted_break() -> None:
+    rng = np.random.default_rng(31)
+    years = np.arange(1990, 2025)
+    values = 100.0 + 2.0 * (years - 1990) + 150.0 * (years >= 2008) + rng.normal(0, 4.0, len(years))
+    frame = pd.DataFrame({"year": years, "value": values})
+
+    table = global_break_search(frame, value_column="value", max_breaks=2)
+
+    chosen = table.loc[table["selected_by_bic"]].iloc[0]
+    assert chosen["n_breaks"] >= 1
+    assert "2008" in str(chosen["break_years"])
+
+
+def test_global_break_search_prefers_no_break_in_a_clean_trend() -> None:
+    """BIC has to be able to return zero, or the search always finds structure."""
+    rng = np.random.default_rng(32)
+    years = np.arange(1990, 2025)
+    values = 100.0 + 2.0 * (years - 1990) + rng.normal(0, 4.0, len(years))
+    frame = pd.DataFrame({"year": years, "value": values})
+
+    table = global_break_search(frame, value_column="value", max_breaks=2)
+
+    assert int(table.loc[table["selected_by_bic"], "n_breaks"].iloc[0]) == 0
+
+
+def test_global_break_search_reports_the_years_it_could_not_reach() -> None:
+    """A date inside the trimmed region cannot be selected, and the caller must be told."""
+    rng = np.random.default_rng(33)
+    years = np.arange(1990, 2025)
+    frame = pd.DataFrame({"year": years, "value": 100.0 + rng.normal(0, 4.0, len(years))})
+
+    table = global_break_search(frame, value_column="value", max_breaks=1, min_segment=5)
+
+    assert int(table["earliest_candidate"].iloc[0]) == 1995
+    assert int(table["latest_candidate"].iloc[0]) == 2019
+
+
+def test_global_break_search_needs_enough_observations() -> None:
+    frame = pd.DataFrame({"year": np.arange(2000, 2012), "value": np.arange(12.0)})
+
+    with pytest.raises(ValueError, match="at least 20 observations"):
+        global_break_search(frame, value_column="value", min_segment=5)
