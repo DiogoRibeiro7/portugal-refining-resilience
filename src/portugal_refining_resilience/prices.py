@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller, coint, kpss
+from statsmodels.tsa.vector_ar.vecm import coint_johansen
 
 #: Weekly Oil Bulletin product tokens mapped to this project's canonical products.
 _BULLETIN_PRODUCTS: dict[str, str] = {"euro95": "gasoline", "diesel": "diesel"}
@@ -1002,4 +1003,48 @@ def false_break_placebo(
             **speeds,
         }
     )
+    return pd.DataFrame(rows)
+
+
+def johansen_rank_test(
+    design: pd.DataFrame, *, product: str, lag_orders: tuple[int, ...] = (1, 2, 4)
+) -> pd.DataFrame:
+    """Cross-check the single-equation cointegration verdict with a system estimator.
+
+    Engle--Granger picks one variable as the dependent one and conditions the second
+    stage on a first-stage residual. Johansen treats the two series symmetrically and
+    estimates the cointegrating rank instead of assuming it, so it can disagree in two
+    ways that matter: it can fail to find a relation the two-step estimator claimed, and
+    it can find full rank, which would mean the levels were stationary all along and the
+    error-correction form was never needed.
+    """
+    required = {"log_PT", "log_ES"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    if len(levels) < 30:
+        raise ValueError("Need at least 30 paired levels for a rank test")
+
+    rows: list[dict[str, float | int | str | bool]] = []
+    for lags in lag_orders:
+        result = coint_johansen(levels.to_numpy(dtype=float), det_order=0, k_ar_diff=int(lags))
+        vector = np.real(result.evec[:, 0])
+        normalised = float(-vector[1] / vector[0]) if vector[0] else float("nan")
+        for rank, label in enumerate(("r = 0", "r <= 1")):
+            trace = float(result.lr1[rank])
+            critical = float(result.cvt[rank][1])
+            rows.append(
+                {
+                    "product": product,
+                    "lags": int(lags),
+                    "nobs": int(len(levels)),
+                    "null_hypothesis": label,
+                    "trace_statistic": trace,
+                    "critical_value_5pct": critical,
+                    "rejected_5pct": bool(trace > critical),
+                    "normalised_slope": normalised,
+                }
+            )
     return pd.DataFrame(rows)

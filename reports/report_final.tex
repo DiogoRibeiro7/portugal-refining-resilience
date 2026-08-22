@@ -726,8 +726,7 @@ refinery-output series do reject, decisively, but the search does not put their 
 it selects 2007 for diesel and 1995 for gasoline. What the exploratory evidence supports is that
 something happened in the 1990s and early 2000s, not that 2000 is when it happened. Nothing in
 the paper's conclusions rests on it. A joint multiple-break estimator \citep{bai1998estimating,
-bai2003computation} would locate all the breaks at once instead of testing candidates one at a
-time, and is the natural next step for this panel.
+bai2003computation} locates all the breaks at once instead of testing candidates one at a time.
 
 \begin{table}[htbp]
 \centering
@@ -747,6 +746,22 @@ diesel & imports & 2000 & 5.81 & 0.0108 & 0.0431 & 10/13 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+A joint estimator answers a different question from the one the Chow tests ask, and it is worth
+asking. Testing candidate years separately asks whether a given year is a break on the
+assumption that no other break exists, which is false for any series with more than one.
+Minimising the residual sum of squares over every admissible combination of up to three breaks
+and selecting the number by BIC \citep{bai1998estimating, bai2003computation} gives a different
+kind of answer: across the eight product-outcome series, 2013 is selected in four, more than any
+other year. The 2000 candidate is selected in one. Whatever happened around 2000 is not what a
+joint search finds when it is free to place breaks anywhere.
+
+Two limits on that comparison. The search trims five observations from each end and between
+breaks, so the candidate years run 1995 to 2019 and 2022 lies outside what it can see; nothing
+in it bears on the closure or the stress episode. And BIC selects three breaks for five of the
+eight series, several at years this paper does not discuss, which is a reminder that these are
+short annual series with a good deal of movement in them and that a break-selection procedure
+will find structure in most of it.
 
 \subsection{Interrupted trends, and why they disagree about 2022}
 \label{sec:its}
@@ -1335,9 +1350,22 @@ hydrocracker, but it is a reason not to claim the closure as the date at which t
 relation changed. What the paper claims is a change in adjustment speed after the closure, which
 is the second stage and is estimated at an imposed date, not a change in the relation itself.
 
-A system estimator \citep{johansen1988statistical, johansen1991estimation} would go further
-and replace the single-equation verdict with one that does not condition on a first stage. That
-is not run here.
+A system estimator asks the same question without choosing a dependent variable
+\citep{johansen1988statistical, johansen1991estimation}, and it agrees on the part that matters
+here. The trace statistic rejects no cointegration for both products at every lag order tried,
+by a wide margin, and the cointegrating vector it recovers is close to the one the two-step
+estimator uses: a normalised slope between $0.970$ and $0.974$ for diesel against the
+Engle--Granger $0.970$, and between $0.958$ and $0.967$ for gasoline against $0.978$. The
+long-run relation is not an artefact of which series was placed on the left.
+
+It does not agree about everything. The same test also rejects a rank of one, which in a
+two-variable system means full rank, and full rank means the levels were stationary and no
+error-correction form was needed. That contradicts the unit-root evidence in
+Section~\ref{sec:pricediag}, where neither ADF nor KPSS supports stationary levels for either
+product. The trace test is known to over-reject at high frequencies with strongly autocorrelated
+data, and a thousand weekly observations is where that bites, so the univariate evidence is
+given precedence here. The disagreement is recorded because it is the kind of thing a reader
+should be told about rather than have to find.
 
 \subsection{Placebo tests}
 \label{sec:placebo}

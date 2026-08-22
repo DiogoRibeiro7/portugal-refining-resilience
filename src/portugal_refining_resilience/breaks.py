@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import itertools
 from dataclasses import dataclass
 from typing import Any, cast
 
@@ -245,3 +246,77 @@ def coefficient_table(model: object, *, alpha: float = 0.05, **context: object) 
             }
         )
     return pd.DataFrame(rows)
+
+
+def global_break_search(
+    df: pd.DataFrame,
+    *,
+    value_column: str,
+    max_breaks: int = 3,
+    min_segment: int = 5,
+) -> pd.DataFrame:
+    """Locate multiple breaks jointly instead of testing candidate dates one at a time.
+
+    Testing candidates separately asks whether a particular year is a break given that no
+    other break exists, which is false whenever the series has more than one. Minimising
+    the residual sum of squares over every admissible combination and selecting the number
+    of breaks by BIC asks the question the panel actually poses, and it can decline to
+    place a break where a single-date test found one.
+
+    ``min_segment`` trims the ends and the interval between breaks. Any year inside the
+    trimmed region cannot be selected however strong the evidence for it, so a date near
+    the end of a short panel is outside what this search can see.
+    """
+    required = {"year", value_column}
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"Break search missing columns: {sorted(missing)}")
+
+    frame = df[["year", value_column]].dropna().sort_values("year")
+    years = frame["year"].to_numpy(dtype=float)
+    values = frame[value_column].to_numpy(dtype=float)
+    n = len(years)
+    if n < 4 * min_segment:
+        raise ValueError(f"Need at least {4 * min_segment} observations for this search")
+
+    candidates = [int(year) for year in years[min_segment : n - min_segment]]
+
+    def fit(breaks: tuple[int, ...]) -> tuple[float, int]:
+        columns = [np.ones(n), years - years.min()]
+        for cut in breaks:
+            columns.append((years >= cut).astype(float))
+            columns.append(np.clip(years - cut, 0.0, None))
+        matrix = np.column_stack(columns)
+        return float(sm.OLS(values, matrix).fit().ssr), int(matrix.shape[1])
+
+    rows: list[dict[str, object]] = []
+    for count in range(max_breaks + 1):
+        best_bic: float = float("inf")
+        best_set: tuple[int, ...] = ()
+        best_ssr: float = float("nan")
+        for combo in itertools.combinations(candidates, count):
+            if any(
+                later - earlier < min_segment
+                for earlier, later in zip(combo, combo[1:], strict=False)
+            ):
+                continue
+            residual, parameters = fit(combo)
+            bic = n * np.log(residual / n) + parameters * np.log(n)
+            if bic < best_bic:
+                best_bic, best_set, best_ssr = bic, combo, residual
+        rows.append(
+            {
+                "outcome": value_column,
+                "n_breaks": count,
+                "break_years": ",".join(str(int(year)) for year in best_set),
+                "ssr": best_ssr,
+                "bic": best_bic,
+                "n_obs": n,
+                "min_segment": min_segment,
+                "earliest_candidate": candidates[0],
+                "latest_candidate": candidates[-1],
+            }
+        )
+    table = pd.DataFrame(rows)
+    table["selected_by_bic"] = table["bic"] == table["bic"].min()
+    return table

@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-22T07:59:52.727518+00:00",
+  "rows": 12,
+  "columns": [
+    "product",
+    "lags",
+    "nobs",
+    "null_hypothesis",
+    "trace_statistic",
+    "critical_value_5pct",
+    "rejected_5pct",
+    "normalised_slope"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_johansen_rank_tests.csv",
+  "csv_sha256": "a4e244fe40fff1798929e1a2250d8dcc17de79627e43af65950ac0a583faf4ca",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_johansen_rank_tests.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

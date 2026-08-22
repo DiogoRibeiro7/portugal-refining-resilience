@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-22T01:45:44.894696+00:00",
+  "created_at_utc": "2026-08-22T08:00:10.026655+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -49,6 +49,20 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\exploratory_break_sup_wald.csv",
       "sha256": "846e4f0403379802c58b8c0a24e427661ecd0c620d15205f100a41ac93874de5",
       "bytes": 1201
+    },
+    {
+      "file": "joint_break_search.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\joint_break_search.csv",
+      "sha256": "f2553c490e66347c689a38a8857cfcd1c634024739499f19b3a131d780a702e5",
+      "bytes": 3156
+    },
+    {
+      "file": "price_johansen_rank_tests.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_johansen_rank_tests.csv",
+      "sha256": "a4e244fe40fff1798929e1a2250d8dcc17de79627e43af65950ac0a583faf4ca",
+      "bytes": 952
     },
     {
       "file": "annual_model_residual_diagnostics.csv",
