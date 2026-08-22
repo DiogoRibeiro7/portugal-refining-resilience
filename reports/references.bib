@@ -76,17 +76,20 @@
 }
 
 % =====================================================================
-% Literature. Verification status carried from the compilation notes:
-%   [V] checked against publisher metadata during compilation
-%   [U] canonical reference from working knowledge; author, year, title
-%       and journal are right, but volume, issue and pages are NOT
-%       verified and must be checked against the original before
-%       submission.
+% Literature. Verification status, checked against Crossref on 2026-08-22 by
+% querying api.crossref.org for each DOI and comparing volume, issue, pages and year:
+%   [V] every field the source carries was compared and matched. Where Crossref holds
+%       only an opening page, or no page range at all, the entry says so, and the
+%       closing page there comes from the printed article.
+%   [U] not settled. Three remain: one has no DOI to query, and two disagree with
+%       Crossref on a field in a way that needs the printed issue to resolve. Each
+%       says which field and why.
+% Entries without a status mark are primary sources, cited by URL.
 % =====================================================================
 
 % ---------------------------------------------------------------- resilience
 
-% [U] The standard review of energy security indicators.
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{kruyt2009indicators,
   author  = {Kruyt, Bert and van Vuuren, Detlef P. and de Vries, H. J. M.
              and Groenenberg, Heleen},
@@ -99,7 +102,7 @@
   doi     = {10.1016/j.enpol.2009.02.006}
 }
 
-% [U] Definitions, dimensions and indexes -- the taxonomy paper.
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{ang2015energysecurity,
   author  = {Ang, B. W. and Choong, W. L. and Ng, T. S.},
   title   = {Energy security: Definitions, dimensions and indexes},
@@ -147,7 +150,9 @@
 
 % ------------------------------------------------------------ breaks
 
-% [U]
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{chow1960tests,
   author  = {Chow, Gregory C.},
   title   = {Tests of Equality Between Sets of Coefficients in Two
@@ -160,7 +165,9 @@
   doi     = {10.2307/1910133}
 }
 
-% [U] The correct distribution for a break chosen after seeing the series.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{andrews1993tests,
   author  = {Andrews, Donald W. K.},
   title   = {Tests for Parameter Instability and Structural Change with
@@ -173,7 +180,9 @@
   doi     = {10.2307/2951764}
 }
 
-% [U] Multiple breaks estimated jointly. Not run here; named as a limitation.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{bai1998estimating,
   author  = {Bai, Jushan and Perron, Pierre},
   title   = {Estimating and Testing Linear Models with Multiple
@@ -186,7 +195,9 @@
   doi     = {10.2307/2998540}
 }
 
-% [U] The computational companion to the above.
+% [U] Volume, issue and pages confirmed against Crossref. YEAR DISPUTED: Crossref
+% records 2002, this entry says 2003. Journal of Applied Econometrics 18(1) is a
+% 2003 issue and 2002 is likely the online-first date. Check the printed issue.
 @article{bai2003computation,
   author  = {Bai, Jushan and Perron, Pierre},
   title   = {Computation and analysis of multiple structural change
@@ -199,7 +210,9 @@
   doi     = {10.1002/jae.659}
 }
 
-% [U] Unit roots when a break is present.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{perron1989great,
   author  = {Perron, Pierre},
   title   = {The Great Crash, the Oil Price Shock, and the Unit Root
@@ -212,7 +225,7 @@
   doi     = {10.2307/1913712}
 }
 
-% [U] Break date treated as unknown rather than imposed.
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{zivot1992further,
   author  = {Zivot, Eric and Andrews, Donald W. K.},
   title   = {Further Evidence on the Great Crash, the Oil-Price Shock,
@@ -227,7 +240,7 @@
 
 % -------------------------------------------------------- multiplicity
 
-% [U]
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{benjamini1995controlling,
   author  = {Benjamini, Yoav and Hochberg, Yosef},
   title   = {Controlling the False Discovery Rate: A Practical and
@@ -240,7 +253,8 @@
   doi     = {10.1111/j.2517-6161.1995.tb02031.x}
 }
 
-% [U] The dependence case; run in this paper at m = 24.
+% [V] Volume, issue and year confirmed against Crossref. Crossref carries no page
+% range for this article; 1165--1188 is the printed pagination.
 @article{benjamini2001control,
   author  = {Benjamini, Yoav and Yekutieli, Daniel},
   title   = {The control of the false discovery rate in multiple testing
@@ -255,7 +269,7 @@
 
 % ------------------------------------------- interrupted time series
 
-% [U]
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{wagner2002segmented,
   author  = {Wagner, A. K. and Soumerai, S. B. and Zhang, F. and
              Ross-Degnan, D.},
@@ -269,7 +283,10 @@
   doi     = {10.1046/j.1365-2710.2002.00430.x}
 }
 
-% [U]
+% [U] Volume and issue confirmed against Crossref. PAGES AND YEAR DISPUTED:
+% Crossref gives the article ID dyw098 and the year 2016, this entry gives the
+% printed pagination 348--355 and 2017. Both are plausible for an issue that
+% appeared online ahead of print. Check the printed issue.
 @article{bernal2017interrupted,
   author  = {Bernal, James Lopez and Cummins, Steven and
              Gasparrini, Antonio},
@@ -285,7 +302,7 @@
 
 % -------------------------------------------------- time-series methods
 
-% [U] The spurious-regression result behind discarding the levels model.
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{granger1974spurious,
   author  = {Granger, C. W. J. and Newbold, P.},
   title   = {Spurious regressions in econometrics},
@@ -310,7 +327,8 @@
   doi     = {10.2307/1913236}
 }
 
-% [U] The cross-check the single-specification result lacks.
+% [V] Volume, issue, pages and year confirmed against Crossref. The issue range
+% is written with a BibTeX en-dash, which is why it reads differently there.
 @article{johansen1988statistical,
   author  = {Johansen, S{\o}ren},
   title   = {Statistical analysis of cointegration vectors},
@@ -322,7 +340,9 @@
   doi     = {10.1016/0165-1889(88)90041-3}
 }
 
-% [U]
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{johansen1991estimation,
   author  = {Johansen, S{\o}ren},
   title   = {Estimation and Hypothesis Testing of Cointegration Vectors
@@ -350,7 +370,9 @@
   doi     = {10.1016/0304-4076(69)41685-7}
 }
 
-% [U] The original ADF distribution.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{dickey1979distribution,
   author  = {Dickey, David A. and Fuller, Wayne A.},
   title   = {Distribution of the Estimators for Autoregressive Time
@@ -363,7 +385,7 @@
   doi     = {10.2307/2286348}
 }
 
-% [U] The augmented version actually run.
+% [V] Volume, issue, pages and year confirmed against Crossref.
 @article{said1984testing,
   author  = {Said, Said E. and Dickey, David A.},
   title   = {Testing for unit roots in autoregressive-moving average
@@ -376,7 +398,8 @@
   doi     = {10.1093/biomet/71.3.599}
 }
 
-% [U] Null of stationarity; run in this paper.
+% [V] Volume, issue, pages and year confirmed against Crossref. The issue range
+% is written with a BibTeX en-dash, which is why it reads differently there.
 @article{kwiatkowski1992testing,
   author  = {Kwiatkowski, Denis and Phillips, Peter C. B. and
              Schmidt, Peter and Shin, Yongcheol},
@@ -390,7 +413,9 @@
   doi     = {10.1016/0304-4076(92)90104-Y}
 }
 
-% [U] HAC covariance.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{newey1987simple,
   author  = {Newey, Whitney K. and West, Kenneth D.},
   title   = {A Simple, Positive Semi-Definite, Heteroskedasticity and
@@ -403,7 +428,9 @@
   doi     = {10.2307/1913610}
 }
 
-% [U] A citable bandwidth rule for the HAC lag choices.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{andrews1991heteroskedasticity,
   author  = {Andrews, Donald W. K.},
   title   = {Heteroskedasticity and Autocorrelation Consistent
@@ -416,7 +443,9 @@
   doi     = {10.2307/2938229}
 }
 
-% [U] The generated-regressor problem.
+% [V] Volume, issue, year and first page confirmed against Crossref. Crossref
+% carries only the opening page for this record, so the closing page is from the
+% printed article and is not independently confirmed.
 @article{pagan1984econometric,
   author  = {Pagan, Adrian},
   title   = {Econometric Issues in the Analysis of Regressions with
@@ -508,8 +537,8 @@
   doi     = {10.1016/j.eneco.2009.07.002}
 }
 
-% [U] Volume 27(2), 2006 and DOI verified. LAST PAGE UNRESOLVED: secondary
-% sources split between 55-71 and 55-72. Settle against the publisher PDF.
+% [V] RESOLVED. Crossref gives 55-71, which settles the split between 55-71 and
+% 55-72 in the secondary sources. Volume, issue, year and DOI confirmed.
 @article{bachmeier2006testing,
   author  = {Bachmeier, Lance J. and Griffin, James M.},
   title   = {Testing for Market Integration: Crude Oil, Coal, and
@@ -519,8 +548,7 @@
   volume  = {27},
   number  = {2},
   pages   = {55--71},
-  doi     = {10.5547/ISSN0195-6574-EJ-Vol27-No2-4},
-  note    = {Last page unresolved: sources give 71 or 72. Check the publisher PDF.}
+  doi     = {10.5547/ISSN0195-6574-EJ-Vol27-No2-4}
 }
 
 % ------------------------------- refining, dieselisation, Portugal-Spain
