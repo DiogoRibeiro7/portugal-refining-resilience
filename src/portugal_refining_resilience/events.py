@@ -73,6 +73,7 @@ def fit_monthly_event_model(
     *,
     value_column: str,
     min_observations: int = 24,
+    control_year: int | None = None,
 ) -> object:
     """Fit a segmented monthly event model with month fixed effects and HAC errors.
 
@@ -83,6 +84,13 @@ def fit_monthly_event_model(
     phase indicator is therefore the level shift at the phase boundary, measured against
     the extrapolated pre-closure trend, rather than an intercept at ``trend == 0``. Read
     together with its ``*_trend`` term it gives the level and slope change for the phase.
+
+    ``control_year`` adds a level and slope term at an earlier documented event. The
+    monthly panel begins in 2002 and the 2013 hydrocracker raises diesel refinery output
+    and exports by a large step inside it, so without such a term the pre-closure trend
+    every phase coefficient is measured against is fitted through that step. The annual
+    models carry the same control for the same reason, and there it moved a headline
+    estimate materially.
     """
     required = {"date", "month", "event_phase", value_column}
     missing = required - set(df.columns)
@@ -95,13 +103,21 @@ def fit_monthly_event_model(
     frame = frame.sort_values("date")
     elapsed_months = frame["date"].dt.year * 12 + frame["date"].dt.month
     frame["trend"] = (elapsed_months - elapsed_months.min()).astype(float)
+    control_columns: list[str] = []
+    if control_year is not None:
+        indicator = frame["date"].dt.year >= int(control_year)
+        name = f"control_{int(control_year)}"
+        frame[name] = indicator.astype(int)
+        boundary = float(frame.loc[indicator, "trend"].min()) if indicator.any() else 0.0
+        frame[f"{name}_trend"] = frame[name] * (frame["trend"] - boundary)
+        control_columns = [name, f"{name}_trend"]
     for phase in EVENT_PHASES:
         indicator = frame["event_phase"].eq(phase)
         frame[phase] = indicator.astype(int)
         boundary = float(frame.loc[indicator, "trend"].min()) if indicator.any() else 0.0
         frame[f"{phase}_trend"] = frame[phase] * (frame["trend"] - boundary)
     month_dummies = pd.get_dummies(frame["month"].astype(int), prefix="month", drop_first=True)
-    design_columns = ["trend"]
+    design_columns = ["trend", *control_columns]
     for phase in EVENT_PHASES:
         design_columns.extend([phase, f"{phase}_trend"])
     x = pd.concat([frame[design_columns], month_dummies], axis=1).astype(float)

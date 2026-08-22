@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-22T01:45:31.886897+00:00",
+  "rows": 11934,
+  "columns": [
+    "date",
+    "country",
+    "product",
+    "price_with_tax_eur_per_1000l",
+    "price_without_tax_eur_per_1000l"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\weekly_oil_prices_placebo_panel.csv",
+  "csv_sha256": "abdb843637631019245668eeebbdec691f039cb965e313d1373d8585b28548d1",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\interim\\weekly_oil_prices_placebo_panel.parquet",
+  "parquet_error": null,
+  "metadata": {
+    "unit": "EUR per 1000 litres",
+    "role": "placebo comparison only; the reported models use PT and ES"
+  }
+}

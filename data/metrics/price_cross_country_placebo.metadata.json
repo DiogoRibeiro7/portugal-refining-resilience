@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-22T01:45:32.015232+00:00",
+  "rows": 5,
+  "columns": [
+    "pair",
+    "product",
+    "break_date",
+    "closed_a_refinery",
+    "pre_adjustment_speed",
+    "post_adjustment_speed",
+    "speed_ratio",
+    "interaction_p_value",
+    "n_obs"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_cross_country_placebo.csv",
+  "csv_sha256": "a533823a6c1b5693bb2c1e0c86f20a55f15856de776c3ee736e5a5388e9bf544",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_cross_country_placebo.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

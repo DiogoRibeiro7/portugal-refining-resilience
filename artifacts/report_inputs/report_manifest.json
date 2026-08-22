@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-22T00:13:44.048289+00:00",
+  "created_at_utc": "2026-08-22T01:45:44.894696+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -89,8 +89,8 @@
       "file": "monthly_event_models.csv",
       "kind": "data",
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_models.csv",
-      "sha256": "b2f509df51a935b0a99130ec192520215f34165996857f9dce46ad39251c600a",
-      "bytes": 26959
+      "sha256": "2fd079467e044baf92dd4fbf14f3dc2bd3a4613c21952a01b03993eb5764d6cb",
+      "bytes": 65211
     },
     {
       "file": "event_window_sensitivity.csv",
@@ -266,6 +266,20 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_second_break_tests.csv",
       "sha256": "57415afed53349303132294e5f361560c953a49738145f0a08a3855e5ebc97b5",
       "bytes": 2844
+    },
+    {
+      "file": "price_cross_country_placebo.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_cross_country_placebo.csv",
+      "sha256": "a533823a6c1b5693bb2c1e0c86f20a55f15856de776c3ee736e5a5388e9bf544",
+      "bytes": 711
+    },
+    {
+      "file": "price_false_break_placebo.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_false_break_placebo.csv",
+      "sha256": "574d9fa0759fbf07d68bc9043b594473524c4b9b451034be993c1c2f432e46f6",
+      "bytes": 853
     },
     {
       "file": "pt_es_price_spread_summary.csv",

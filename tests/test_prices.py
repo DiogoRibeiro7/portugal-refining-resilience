@@ -8,8 +8,10 @@ from portugal_refining_resilience import prices as prices_module
 from portugal_refining_resilience.prices import (
     choose_price_model,
     cointegrating_slope_test,
+    cross_country_placebo,
     elasticity_unit_tests,
     extract_weekly_prices,
+    false_break_placebo,
     fit_error_correction_model,
     gregory_hansen_test,
     kpss_levels_diagnostics,
@@ -432,3 +434,80 @@ def test_second_break_test_requires_the_design_columns() -> None:
 
     with pytest.raises(ValueError, match="Price design missing columns"):
         second_break_test(frame, product="diesel")
+
+
+def _placebo_panel(seed: int = 21) -> pd.DataFrame:
+    """A long panel of several countries priced against Spain, only one of which breaks."""
+    rng = np.random.default_rng(seed)
+    dates = pd.date_range("2015-01-04", periods=400, freq="7D")
+    post = (dates >= pd.Timestamp("2021-05-01")).astype(float)
+    log_es = np.cumsum(rng.normal(0, 0.02, len(dates))) + np.log(1000.0)
+    frames = []
+    for country, gamma_pre, gamma_post in (
+        ("PT", -0.15, -0.60),
+        ("FR", -0.20, -0.20),
+        ("IT", -0.25, -0.25),
+    ):
+        log_home = np.empty(len(dates))
+        log_home[0] = 0.2 + log_es[0]
+        for t in range(1, len(dates)):
+            gamma = gamma_post if post[t] else gamma_pre
+            gap = log_home[t - 1] - (0.2 + log_es[t - 1])
+            log_home[t] = (
+                log_home[t - 1]
+                + gamma * gap
+                + 0.7 * (log_es[t] - log_es[t - 1])
+                + rng.normal(0, 0.004)
+            )
+        frames.append(
+            pd.DataFrame(
+                {
+                    "date": dates,
+                    "country": country,
+                    "product": "diesel",
+                    "price_without_tax_eur_per_1000l": np.exp(log_home),
+                }
+            )
+        )
+    frames.append(
+        pd.DataFrame(
+            {
+                "date": dates,
+                "country": "ES",
+                "product": "diesel",
+                "price_without_tax_eur_per_1000l": np.exp(log_es),
+            }
+        )
+    )
+    return pd.concat(frames, ignore_index=True)
+
+
+def test_cross_country_placebo_separates_the_pair_that_broke() -> None:
+    result = cross_country_placebo(_placebo_panel(), countries=("FR", "IT"))
+
+    assert set(result["pair"]) == {"PT-ES", "FR-ES", "IT-ES"}
+    portugal = result.loc[result["pair"] == "PT-ES"].iloc[0]
+    controls = result.loc[result["pair"] != "PT-ES"]
+
+    assert bool(portugal["closed_a_refinery"])
+    assert not controls["closed_a_refinery"].any()
+    assert portugal["speed_ratio"] > 2.0
+    assert (controls["speed_ratio"] < 2.0).all()
+    assert portugal["interaction_p_value"] < 0.01
+
+
+def test_false_break_placebo_marks_the_real_break_and_ends_the_others_early() -> None:
+    """A false break tested on the full sample would recover the real one and prove nothing."""
+    result = false_break_placebo(
+        _placebo_panel(), dates=("2017-05-01", "2019-05-01"), real_break="2021-05-01"
+    )
+
+    assert len(result) == 3
+    real = result.loc[result["is_real_break"]].iloc[0]
+    false = result.loc[~result["is_real_break"]]
+
+    assert real["break_date"] == "2021-05-01"
+    assert (false["sample_ends"] == "2021-05-01").all()
+    # the false breaks see fewer observations precisely because the sample is cut short
+    assert (false["n_obs"] < real["n_obs"]).all()
+    assert real["speed_ratio"] > false["speed_ratio"].max()
