@@ -61,3 +61,30 @@ model_family_scope:
     - sec:pricediag
     - sec:levels
     - sec:shortrun
+
+# A licensed model family can still be fitted two ways, and persisting both leaves the
+# superseded estimates in the bundle where every numeric check will keep accepting them.
+# The monthly models are refitted holding the 2013 hydrocracker step constant; quoting
+# the uncorrected fit outside the sections that compare the two is the error this catches.
+specification_scope:
+  file: monthly_event_models.csv
+  column: specification
+  current: 2013 held constant
+  # Only sentences about the monthly physical model can trip this. Bare words like
+  # "transition" appear throughout the price sections and collide with them.
+  subject_pattern: "kt per month|refinery output|net-import-to-demand ratio"
+  # A paragraph quoting the uncorrected fit has to say so.
+  attribution_pattern: "2013|uncorrected|held constant|corrected|specification"
+  # The terms the prose ever quotes. Constants, the global trend and month fixed
+  # effects are nuisance parameters and only add collisions.
+  terms:
+    - matosinhos_transition
+    - matosinhos_transition_trend
+    - energy_stress_2022
+    - energy_stress_2022_trend
+    - post_stress
+    - post_stress_trend
+  # Sections whose subject is the comparison between the two fits.
+  may_cite_superseded:
+    - sec:monthly
+    - sec:its

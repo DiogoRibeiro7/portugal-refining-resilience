@@ -13,6 +13,7 @@ from .claims import (
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
     check_prose_statistics,
+    check_prose_uses_current_specification,
     check_prose_uses_licensed_models,
     check_quantities_are_checkable,
     check_sensitivity_survival,
@@ -514,5 +515,30 @@ def build_report_claim_checks(
             may_cite_superseded=set(scope.get("may_cite_superseded", [])),
         )
         checks.append(_check_record("prose_uses_licensed_model_family", passed, detail))
+
+    # 10. a claim must quote the specification a later one did not correct
+    spec_scope = load_yaml_block(mapping_path, "specification_scope")
+    if spec_scope:
+        frame = _read_if_present(paths.report_inputs / str(spec_scope["file"]))
+        column = str(spec_scope["column"])
+        current_name = str(spec_scope["current"])
+        if not frame.empty and column in frame.columns and "estimate" in frame.columns:
+            # Constants, the global trend and the month fixed effects are nuisance
+            # parameters. Nothing quotes them, and leaving them in the pool made a
+            # regression constant of 0.1833 collide with an annual ratio of 0.18 and a
+            # month effect of 2.6575 with a coverage ratio of 2.66.
+            reported = frame["term"].astype(str).isin(list(spec_scope["terms"]))
+            frame = frame.loc[reported]
+            is_current = frame[column].astype(str) == current_name
+            passed, detail = check_prose_uses_current_specification(
+                tex,
+                superseded_estimates=[
+                    float(v) for v in frame.loc[~is_current, "estimate"].dropna()
+                ],
+                subject_pattern=str(spec_scope["subject_pattern"]),
+                attribution_pattern=str(spec_scope["attribution_pattern"]),
+                may_cite_superseded=set(spec_scope.get("may_cite_superseded", [])),
+            )
+            checks.append(_check_record("prose_uses_current_specification", passed, detail))
 
     return pd.DataFrame(checks)

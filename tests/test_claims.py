@@ -16,6 +16,7 @@ from portugal_refining_resilience.claims import (
     check_flagged_cells_have_sensitivity,
     check_prose_numbers,
     check_prose_statistics,
+    check_prose_uses_current_specification,
     check_prose_uses_licensed_models,
     check_quantities_are_checkable,
     check_sensitivity_survival,
@@ -628,3 +629,81 @@ def test_quantity_lint_honours_the_allow_list() -> None:
 
     assert check_quantities_are_checkable(threshold)[0] is False
     assert check_quantities_are_checkable(threshold, allow={25.0})[0] is True
+
+
+SPEC_SUPERSEDED = [-102.8882, 0.1923, 0.0382, 25.4297]
+SPEC_SUBJECT = r"kt per month|refinery output|net-import-to-demand ratio"
+SPEC_ATTRIBUTION = r"2013|uncorrected|held constant|corrected|specification"
+
+
+def test_superseded_estimate_without_attribution_is_flagged() -> None:
+    """The failure the article ran with: the old fit stated as the result."""
+    tex = (
+        "\\section{Monthly}\n\\label{sec:x}\n\n"
+        "Diesel refinery output sits $-102.8882$ kt per month below the counterfactual.\n"
+    )
+
+    passed, detail = check_prose_uses_current_specification(
+        tex,
+        superseded_estimates=SPEC_SUPERSEDED,
+        subject_pattern=SPEC_SUBJECT,
+        attribution_pattern=SPEC_ATTRIBUTION,
+        may_cite_superseded=set(),
+    )
+
+    assert not passed
+    assert "102.8882" in detail
+
+
+def test_superseded_estimate_with_attribution_passes() -> None:
+    """Quoting the old figure in order to correct it is the point of reporting both."""
+    tex = (
+        "\\section{Monthly}\n\\label{sec:x}\n\n"
+        "Holding 2013 constant moves refinery output from $-102.8882$ to $-70.5218$ "
+        "kt per month.\n"
+    )
+
+    passed, _ = check_prose_uses_current_specification(
+        tex,
+        superseded_estimates=SPEC_SUPERSEDED,
+        subject_pattern=SPEC_SUBJECT,
+        attribution_pattern=SPEC_ATTRIBUTION,
+        may_cite_superseded=set(),
+    )
+
+    assert passed
+
+
+def test_paragraph_off_subject_is_not_flagged() -> None:
+    """A price elasticity that collides numerically is not a monthly phase estimate."""
+    tex = (
+        "\\section{Prices}\n\\label{sec:y}\n\n"
+        "The post-transition elasticity is $0.1923$ on the weekly series.\n"
+    )
+
+    passed, _ = check_prose_uses_current_specification(
+        tex,
+        superseded_estimates=SPEC_SUPERSEDED,
+        subject_pattern=SPEC_SUBJECT,
+        attribution_pattern=SPEC_ATTRIBUTION,
+        may_cite_superseded=set(),
+    )
+
+    assert passed
+
+
+def test_exempt_sections_may_state_the_superseded_fit() -> None:
+    tex = (
+        "\\section{Monthly}\n\\label{sec:monthly}\n\n"
+        "Refinery output sits $-102.8882$ kt per month below the counterfactual.\n"
+    )
+
+    passed, _ = check_prose_uses_current_specification(
+        tex,
+        superseded_estimates=SPEC_SUPERSEDED,
+        subject_pattern=SPEC_SUBJECT,
+        attribution_pattern=SPEC_ATTRIBUTION,
+        may_cite_superseded={"sec:monthly"},
+    )
+
+    assert passed
