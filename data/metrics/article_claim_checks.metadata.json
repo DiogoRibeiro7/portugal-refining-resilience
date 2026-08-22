@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T22:27:32.261150+00:00",
+  "created_at_utc": "2026-08-22T00:13:53.992822+00:00",
   "rows": 11,
   "columns": [
     "check",
@@ -7,7 +7,7 @@
     "detail"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\article_claim_checks.csv",
-  "csv_sha256": "9fcfc2ce8c5497e92ba003209b253d761143eb723f5de12bc1ce61535394fb66",
+  "csv_sha256": "9123b0ccea02376e900ca9b37c85907433df50e90b629b4db10e15a6126cd854",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\article_claim_checks.parquet",
   "parquet_error": null,
   "metadata": {}

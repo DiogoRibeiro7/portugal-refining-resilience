@@ -707,3 +707,194 @@ def weekly_coverage(prices: pd.DataFrame) -> pd.DataFrame:
             }
         )
     return pd.DataFrame(rows)
+
+
+def gregory_hansen_test(
+    design: pd.DataFrame,
+    *,
+    product: str,
+    trim: float = 0.15,
+    step: int = 5,
+    lags: int = 4,
+    n_simulations: int = 300,
+    seed: int = 20260822,
+) -> pd.DataFrame:
+    """Test for cointegration when the long-run relation itself may shift.
+
+    The two-step estimator holds one cointegrating vector across the whole sample while
+    the second stage lets the adjustment speed break at the transition. That is an
+    assumption, and it is the one a reader is most entitled to challenge, because the
+    paper argues elsewhere that the transition changed the system. This test searches
+    over break dates for the relation that best fits a shift in level and slope, and
+    compares the resulting statistic with the distribution it would have under no
+    cointegration at all.
+
+    The null is simulated from independent random walks rather than read from a
+    critical-value table, so the verdict can be reproduced without one. A fixed lag is
+    used in the unit-root step because the statistic is a minimum over hundreds of
+    candidate dates and an information criterion at each would change what is being
+    minimised over.
+    """
+    required = {"log_PT", "log_ES", "date"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    frame = design[["date", "log_PT", "log_ES"]].dropna().reset_index(drop=True)
+    n = len(frame)
+    if n < 60:
+        raise ValueError("Need at least 60 paired observations to search for a shift")
+
+    y = frame["log_PT"].to_numpy(dtype=float)
+    x = frame["log_ES"].to_numpy(dtype=float)
+    lower, upper = int(np.floor(n * trim)), int(np.ceil(n * (1.0 - trim)))
+    candidates = range(lower, upper, max(1, step))
+
+    def min_adf(target: np.ndarray, regressor: np.ndarray) -> tuple[float, int]:
+        best, best_index = np.inf, lower
+        for index in candidates:
+            shift = np.zeros(n)
+            shift[index:] = 1.0
+            columns = np.column_stack([np.ones(n), shift, regressor, regressor * shift])
+            residuals = sm.OLS(target, columns).fit().resid
+            statistic = adfuller(residuals, maxlag=lags, autolag=None)[0]
+            if statistic < best:
+                best, best_index = float(statistic), index
+        return best, best_index
+
+    observed, break_index = min_adf(y, x)
+
+    rng = np.random.default_rng(seed)
+    simulated = np.empty(n_simulations)
+    for draw in range(n_simulations):
+        walk_y = np.cumsum(rng.normal(0.0, 1.0, n))
+        walk_x = np.cumsum(rng.normal(0.0, 1.0, n))
+        simulated[draw] = min_adf(walk_y, walk_x)[0]
+
+    # the statistic is a minimum, so rejection is in the left tail
+    p_value = float(np.mean(simulated <= observed))
+    return pd.DataFrame(
+        [
+            {
+                "product": product,
+                "model": "regime shift in level and slope",
+                "nobs": int(n),
+                "adf_statistic": observed,
+                "break_date": str(pd.Timestamp(frame["date"].iloc[break_index]).date()),
+                "break_fraction": float(break_index / n),
+                "p_value": p_value,
+                "null_5th_percentile": float(np.percentile(simulated, 5)),
+                "cointegrated_with_shift_5pct": bool(p_value < 0.05),
+                "n_candidates": int(len(list(candidates))),
+                "n_simulations": int(n_simulations),
+                "unit_root_lags": int(lags),
+            }
+        ]
+    )
+
+
+def second_break_test(
+    design: pd.DataFrame,
+    *,
+    product: str,
+    second_cutoff: str | pd.Timestamp = "2022-03-01",
+    maxlags: int = 8,
+) -> pd.DataFrame:
+    """Ask whether the price relation breaks again when the supply shock arrives.
+
+    The physical arm partitions the period into four phases; the price arm imposes one
+    break, at the closure. If the March 2022 disruption moved the price relation as well,
+    the single-break model attributes that movement to the closure, because everything
+    after May 2021 is one regime by construction. Adding the second date and testing its
+    terms is the only way to find out, and a null result is as informative as a positive
+    one here.
+    """
+    required = {"log_PT", "log_ES", "diff_log_PT", "diff_log_ES", "post", "date"}
+    missing = required - set(design.columns)
+    if missing:
+        raise ValueError(f"Price design missing columns: {sorted(missing)}")
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    long_run = sm.OLS(
+        levels["log_PT"], sm.add_constant(levels[["log_ES"]], has_constant="add")
+    ).fit()
+
+    frame = design.copy()
+    frame["disequilibrium"] = np.nan
+    frame.loc[levels.index, "disequilibrium"] = np.asarray(long_run.resid, dtype=float)
+    frame["disequilibrium_lag"] = frame["disequilibrium"].shift(1)
+    frame["stress"] = (pd.to_datetime(frame["date"]) >= pd.Timestamp(second_cutoff)).astype(float)
+    frame = frame.dropna(
+        subset=["diff_log_PT", "diff_log_ES", "disequilibrium_lag", "post", "stress"]
+    ).copy()
+
+    frame["diff_log_ES_x_post"] = frame["diff_log_ES"] * frame["post"]
+    frame["disequilibrium_lag_x_post"] = frame["disequilibrium_lag"] * frame["post"]
+    frame["diff_log_ES_x_stress"] = frame["diff_log_ES"] * frame["stress"]
+    frame["disequilibrium_lag_x_stress"] = frame["disequilibrium_lag"] * frame["stress"]
+
+    regressors = [
+        "disequilibrium_lag",
+        "disequilibrium_lag_x_post",
+        "disequilibrium_lag_x_stress",
+        "diff_log_ES",
+        "diff_log_ES_x_post",
+        "diff_log_ES_x_stress",
+        "post",
+        "stress",
+    ]
+    x = sm.add_constant(frame[regressors], has_constant="add")
+    model = sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": maxlags})
+
+    joint = model.f_test("disequilibrium_lag_x_stress = 0, diff_log_ES_x_stress = 0, stress = 0")
+    joint_f = float(np.ravel(joint.fvalue)[0])
+    joint_p = float(np.ravel(joint.pvalue)[0])
+
+    def record(term: str, estimate: float, std_error: float, p_value: float) -> dict[str, object]:
+        return {
+            "product": product,
+            "second_break": str(pd.Timestamp(second_cutoff).date()),
+            "term": term,
+            "estimate": estimate,
+            "std_error": std_error,
+            "p_value": p_value,
+            "nobs": int(model.nobs),
+            "joint_f_statistic": joint_f,
+            "joint_p_value": joint_p,
+            "second_break_detected_5pct": bool(joint_p < 0.05),
+        }
+
+    rows: list[dict[str, object]] = [
+        record(
+            term,
+            float(model.params[term]),
+            float(model.bse[term]),
+            float(model.pvalues[term]),
+        )
+        for term in ("disequilibrium_lag_x_stress", "diff_log_ES_x_stress", "stress")
+    ]
+
+    # The interaction terms are differences. What the paper quotes is the level in each
+    # regime, and a level that exists only as arithmetic on three coefficients cannot be
+    # checked against the evidence, so each is recorded here with its own standard error.
+    levels = {
+        "elasticity_pre_closure": "diff_log_ES = 0",
+        "elasticity_transition": "diff_log_ES + diff_log_ES_x_post = 0",
+        "elasticity_stress_onward": ("diff_log_ES + diff_log_ES_x_post + diff_log_ES_x_stress = 0"),
+        "adjustment_pre_closure": "disequilibrium_lag = 0",
+        "adjustment_transition": "disequilibrium_lag + disequilibrium_lag_x_post = 0",
+        "adjustment_stress_onward": (
+            "disequilibrium_lag + disequilibrium_lag_x_post + disequilibrium_lag_x_stress = 0"
+        ),
+    }
+    for name, specification in levels.items():
+        wald = model.t_test(specification)
+        rows.append(
+            record(
+                name,
+                float(np.ravel(wald.effect)[0]),
+                float(np.ravel(wald.sd)[0]),
+                float(np.ravel(wald.pvalue)[0]),
+            )
+        )
+    return pd.DataFrame(rows)

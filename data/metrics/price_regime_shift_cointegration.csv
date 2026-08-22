@@ -1,0 +1,3 @@
+product,model,nobs,adf_statistic,break_date,break_fraction,p_value,null_5th_percentile,cointegrated_with_shift_5pct,n_candidates,n_simulations,unit_root_lags
+diesel,regime shift in level and slope,994,-7.911096296734869,2013-08-19,0.42655935613682094,0.0,-4.882764480625868,True,140,300,4
+gasoline,regime shift in level and slope,994,-9.097486902348153,2013-03-25,0.40643863179074446,0.0,-4.882764480625868,True,140,300,4

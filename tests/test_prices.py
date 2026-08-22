@@ -11,9 +11,11 @@ from portugal_refining_resilience.prices import (
     elasticity_unit_tests,
     extract_weekly_prices,
     fit_error_correction_model,
+    gregory_hansen_test,
     kpss_levels_diagnostics,
     post_period_adjustment_stability,
     price_comovement_design,
+    second_break_test,
     spread_stationarity,
     spread_stationarity_by_regime,
     stationarity_diagnostics,
@@ -349,3 +351,84 @@ def test_spread_stationarity_by_regime_requires_the_price_columns() -> None:
 
     with pytest.raises(ValueError, match="Price design missing columns"):
         spread_stationarity_by_regime(frame, product="diesel")
+
+
+def _dated(frame: pd.DataFrame) -> pd.DataFrame:
+    """The regime tests key on real dates, so give a synthetic design some."""
+    out = frame.copy()
+    if "date" not in out.columns:
+        out["date"] = pd.date_range("2015-01-04", periods=len(out), freq="7D")
+    out["PT"] = np.exp(out["log_PT"])
+    out["ES"] = np.exp(out["log_ES"])
+    return out
+
+
+def test_gregory_hansen_finds_cointegration_when_it_is_there() -> None:
+    design = _dated(_cointegrated_design(n=400))
+
+    result = gregory_hansen_test(design, product="diesel", step=10, n_simulations=60, seed=1)
+
+    assert len(result) == 1
+    assert bool(result["cointegrated_with_shift_5pct"].iloc[0])
+    assert result["adf_statistic"].iloc[0] < result["null_5th_percentile"].iloc[0]
+
+
+def test_gregory_hansen_does_not_find_cointegration_between_independent_walks() -> None:
+    """A test that rejected for any pair of trending series would establish nothing."""
+    rng = np.random.default_rng(4)
+    n = 200
+    frame = pd.DataFrame(
+        {
+            "log_PT": np.cumsum(rng.normal(0, 0.02, n)) + np.log(1000.0),
+            "log_ES": np.cumsum(rng.normal(0, 0.02, n)) + np.log(1000.0),
+        }
+    )
+    frame["post"] = 0
+    design = _dated(frame)
+
+    result = gregory_hansen_test(design, product="diesel", step=10, n_simulations=40, seed=2)
+
+    assert not bool(result["cointegrated_with_shift_5pct"].iloc[0])
+
+
+def test_gregory_hansen_requires_enough_observations() -> None:
+    design = _dated(_cointegrated_design(n=200)).head(40)
+
+    with pytest.raises(ValueError, match="at least 60 paired observations"):
+        gregory_hansen_test(design, product="diesel", n_simulations=5)
+
+
+def test_second_break_test_reports_no_break_when_there_is_none() -> None:
+    design = _dated(_cointegrated_design(n=600))
+
+    result = second_break_test(design, product="diesel", second_cutoff="2022-03-01")
+
+    assert not bool(result["second_break_detected_5pct"].iloc[0])
+    assert float(result["joint_p_value"].iloc[0]) > 0.05
+
+
+def test_second_break_test_records_each_regime_level() -> None:
+    """The paper quotes regime levels, so they have to exist as rows, not as arithmetic."""
+    design = _dated(_cointegrated_design(n=600))
+
+    result = second_break_test(design, product="diesel", second_cutoff="2022-03-01")
+    terms = set(result["term"])
+
+    for name in (
+        "elasticity_pre_closure",
+        "elasticity_transition",
+        "elasticity_stress_onward",
+        "adjustment_pre_closure",
+        "adjustment_transition",
+        "adjustment_stress_onward",
+    ):
+        assert name in terms
+    pre = result.loc[result["term"] == "elasticity_pre_closure", "estimate"].iloc[0]
+    assert pre == pytest.approx(0.6, abs=0.08)
+
+
+def test_second_break_test_requires_the_design_columns() -> None:
+    frame = pd.DataFrame({"log_PT": [1.0] * 40, "log_ES": [1.0] * 40})
+
+    with pytest.raises(ValueError, match="Price design missing columns"):
+        second_break_test(frame, product="diesel")

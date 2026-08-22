@@ -625,6 +625,16 @@ contracting rather than chemistry would fit the same series.
 
 \subsection{Dependence ratios}
 
+Figures~\ref{fig:dieselratios} and \ref{fig:gasratios} put the three ratios of
+Section~\ref{sec:resilience} on the same axis for each product, and the contrast between them is
+the physical result this paper rests on. Diesel coverage crosses one repeatedly: it sits above
+one in sixteen of thirty-five years, rises through it in 2013 and falls back below it after 2021,
+reaching $0.678$ in 2023. Gross import dependence moves with it, from $0.026$ in 1990 to $0.317$
+in 2023. Gasoline coverage crosses one once in thirty-five years, dipping to $0.94$ in 1993, and
+otherwise runs between there and $2.663$. The two products are therefore not two instances of the
+same series with different noise. One spends the window near a threshold and the other spends it
+far above one, and every asymmetry reported below follows from that.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{diesel_dependence_ratios.png}
@@ -756,24 +766,24 @@ dispute; see Table~\ref{tab:sourcesens}.}
 \toprule
 & & \multicolumn{3}{c}{Level change} & Slope change \\
 \cmidrule(lr){3-5}\cmidrule(lr){6-6}
-Product & Outcome, event & Estimate & 95\% interval & $p$ & Estimate \\
+Product & Outcome, event & Estimate & 95\% interval & $p$ & Estimate ($p$) \\
 \midrule
-diesel & exports, 2013 & $+$2{,}005.5 & [1{,}417.8, 2{,}593.3] & $<0.001$ & $-$117.1 \\
-diesel & net imp./dem., 2013 & $-$0.540 & [$-$0.671, $-$0.408] & $<0.001$ & $+$0.029 \\
-gasoline & exports, 2013 & $+$411.1 & [21.6, 800.7] & 0.039 & $-$22.4 \\
-gasoline & net imp./dem., 2013 & $-$0.713 & [$-$1.133, $-$0.294] & $<0.001$ & $+$0.038 \\
+diesel & exports, 2013 & $+$2{,}005.5 & [1{,}417.8, 2{,}593.3] & $<0.001$ & $-$117.1 (0.001) \\
+diesel & net imp./dem., 2013 & $-$0.540 & [$-$0.671, $-$0.408] & $<0.001$ & $+$0.029 (0.001) \\
+gasoline & exports, 2013 & $+$411.1 & [21.6, 800.7] & 0.039 & $-$22.4 (0.355) \\
+gasoline & net imp./dem., 2013 & $-$0.713 & [$-$1.133, $-$0.294] & $<0.001$ & $+$0.038 (0.157) \\
 \midrule
 \multicolumn{6}{l}{\emph{2022, single-event model}} \\
-diesel & exports, 2022 & $-$781.7 & [$-$1{,}453.0, $-$110.4] & 0.022 & $+$15.0 \\
-diesel & net imp./dem., 2022 & $+$0.201 & [0.019, 0.383] & 0.031 & $-$0.017 \\
-gasoline & exports, 2022 & $-$270.9 & [$-$612.9, 71.1] & 0.121 & $+$69.3 \\
-gasoline & net imp./dem., 2022 & $+$0.307 & [$-$0.053, 0.667] & 0.095 & $+$0.070 \\
+diesel & exports, 2022 & $-$781.7 & [$-$1{,}453.0, $-$110.4] & 0.022 & $+$15.0 (0.872) \\
+diesel & net imp./dem., 2022 & $+$0.201 & [0.019, 0.383] & 0.031 & $-$0.017 (0.616) \\
+gasoline & exports, 2022 & $-$270.9 & [$-$612.9, 71.1] & 0.121 & $+$69.3 (0.413) \\
+gasoline & net imp./dem., 2022 & $+$0.307 & [$-$0.053, 0.667] & 0.095 & $+$0.070 (0.457) \\
 \midrule
 \multicolumn{6}{l}{\emph{2022, holding the 2013 break constant}} \\
-diesel & exports, 2022 & $-$570.0 & [$-$1{,}203.5, 63.6] & 0.078 & $+$150.1 \\
-diesel & net imp./dem., 2022 & $+$0.152 & [0.008, 0.295] & 0.038 & $-$0.052 \\
-gasoline & exports, 2022 & $-$312.2 & [$-$923.0, 298.6] & 0.316 & $+$82.1 \\
-gasoline & net imp./dem., 2022 & $+$0.480 & [$-$0.068, 1.027] & 0.086 & $+$0.066 \\
+diesel & exports, 2022 & $-$570.0 & [$-$1{,}203.5, 63.6] & 0.078 & $+$150.1 (0.166) \\
+diesel & net imp./dem., 2022 & $+$0.152 & [0.008, 0.295] & 0.038 & $-$0.052 (0.149) \\
+gasoline & exports, 2022 & $-$312.2 & [$-$923.0, 298.6] & 0.316 & $+$82.1 (0.339) \\
+gasoline & net imp./dem., 2022 & $+$0.480 & [$-$0.068, 1.027] & 0.086 & $+$0.066 (0.486) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1059,7 +1069,14 @@ the warning that the field has been driven by technique rather than by theory
 what follows runs stationarity, cointegration and stability diagnostics on euro-area consumer
 fuel prices from this same bulletin before choosing a specification \citep{meyler2009passthrough},
 and the practice of testing a long-run coefficient against a value implied in advance rather
-than against zero follows \citet{bachmeier2006testing}. The bulletin does not publish in every week: of
+than against zero follows \citet{bachmeier2006testing}. One difference from
+\citet{meyler2009passthrough} should be stated rather than left for a reader to find. He
+models these prices in raw levels and reports that the choice of scale mattered to his
+results; the diagnostics in Section~\ref{sec:pricediag} lead the other way here, and
+Section~\ref{sec:levels} sets out the evidence for preferring logs, including a sign
+reversal on the levels specification that the log models do not produce. The disagreement is
+about which scale the long-run relation lives on, not about the procedure, and the procedure
+is the same in both papers. The bulletin does not publish in every week: of
 the $1{,}044$ weeks between the first and last observation, $995$ are present for Portugal and
 $994$ for Spain, and the gaps appear as $25$ intervals of a fortnight and $12$ of three weeks.
 Missing weeks are dropped rather than interpolated, so a differenced observation spanning a gap
@@ -1248,16 +1265,49 @@ with its unit in mind: it is shorter than the interval between observations, so 
 deviation is largely gone by the next weekly reading rather than resolving a duration the data
 can see.
 
+One regime boundary is imposed on the price arm where the physical arm uses three, and whether
+that matters is testable. Adding a second break at March 2022 and testing its three terms
+jointly leaves diesel unaffected ($p=0.223$): the single-break model is adequate for it, and the
+transition and stress regimes are not distinguishable in the diesel price relation. Gasoline
+rejects ($p=0.020$), and the reason is worth setting out, because it qualifies the paragraph
+above.
+
+Split at both dates, the gasoline contemporaneous elasticity runs $0.789$ before the closure,
+$1.679$ during the ten-month transition and $1.051$ from March 2022. The middle figure is $3.8$
+standard errors above one. So gasoline's elasticity does move, sharply, in the window between
+the closure and the shock, and then returns to about one. The single-break model averages those
+two post-closure regimes into $1.074$ and reports no change, which is arithmetically right and
+substantively misleading. What the two-break model shows is that gasoline behaved like diesel
+while the system was adjusting to one refinery, and unlike it once the supply shock had arrived.
+Diesel, by contrast, goes to $1.478$ and stays at $1.375$. The claim that survives is narrower
+than the one the single-break model supports: gasoline's elasticity is not permanently higher,
+not that it never moved.
+
 Two caveats belong with these estimates. The disequilibrium term is a generated regressor, so the
 second-stage standard errors are conditional on the first-stage cointegrating estimate. HAC
 covariance \citep{newey1987simple, andrews1991heteroskedasticity} mitigates but does not remove
 this \citep{pagan1984econometric}. And the cointegrating vector is estimated over
 the whole sample while the adjustment speed is allowed to break at the transition, so the
-long-run relation is held fixed across a date the rest of the model treats as a break. A
-residual-based test allowing the cointegrating relation itself to shift
-\citep{gregory1996residual} would relax that assumption, and a system estimator
-\citep{johansen1988statistical, johansen1991estimation} would replace the single-equation
-verdict with one that does not condition on a first stage. Neither is run here.
+long-run relation is held fixed across a date the rest of the model treats as a break.
+
+That assumption is testable rather than merely stated \citep{gregory1996residual}. Allowing the
+long-run relation itself to shift in level and slope at an unknown date, and comparing the
+resulting statistic with a null simulated from independent random walks rather than read from a
+table, both pairs remain cointegrated: the diesel
+statistic is $-7.911$ and the gasoline statistic $-9.097$, against a fifth percentile of
+$-4.883$ under no cointegration. The verdict does not depend on holding the vector fixed.
+
+The date the search selects is not the one the model imposes. It falls in 2013 for both
+products, near the middle of the sample, rather than at the May 2021 closure. Break searches
+favour central dates and this one should not be read as evidence that the price relation shifted
+at the hydrocracker, but it is a reason not to claim the closure as the date at which the
+long-run relation changed. What the paper claims is a change in adjustment speed after the
+closure, which is the second stage and is estimated at an imposed date, not a change in the
+relation itself.
+
+A system estimator \citep{johansen1988statistical, johansen1991estimation} would go further
+and replace the single-equation verdict with one that does not condition on a first stage. That
+is not run here.
 
 \subsection{Price spreads}
 \label{sec:spreads}
@@ -1484,9 +1534,10 @@ period leaves the direction intact and moves the multiple of the pre-transition 
 speed between $2.96$ and $4.40$. A longer post period is the only thing that would settle it.
 \item \textbf{Generated regressor in both error-correction models.} The disequilibrium term is
 estimated in a first stage, so the reported second-stage standard errors are conditional on it. A
-single-step or maximum-likelihood estimator would price that uncertainty properly. It bears on
-both products, as does the assumption that one cointegrating vector, estimated over the whole
-sample, holds on both sides of the transition.
+single-step or maximum-likelihood estimator would price that uncertainty properly. The related
+worry, that one cointegrating vector is assumed to hold across the transition, is tested in
+Section~\ref{sec:ecm} and survives: both pairs remain cointegrated when the relation is allowed
+to shift at an unknown date.
 \item \textbf{JODI assessment codes unverified.} All Portuguese observations carry assessment code
 1, whose exact semantics have not been confirmed against JODI documentation.
 \item \textbf{Retail, not wholesale, prices.} The Weekly Oil Bulletin reports consumer prices.
@@ -1651,16 +1702,16 @@ In the stress phase it sits $-148.25$ kt/month below the same counterfactual & T
 Monthly models cover 276 months, 2002--2024 & Section~\ref{sec:coverage} & descriptive & JODI begins in 2002, later than the annual window \\
 2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
 Diesel log prices are non-stationary; gasoline rejects only marginally & Section~\ref{sec:pricediag} & descriptive & ADF only; the gasoline verdict changes with the specification \\
-Both pairs are cointegrated in logs, diesel $p<0.001$ and gasoline $p=0.0026$ & Section~\ref{sec:pricediag} & descriptive & Engle--Granger, single specification; the vector is estimated over the whole sample \\
+Both pairs are cointegrated in logs, diesel $p<0.001$ and gasoline $p=0.0026$ & Section~\ref{sec:pricediag} & descriptive & Engle--Granger; survives allowing the relation to shift at an unknown date \\
 EUR-levels model gives the opposite sign and is not used & Section~\ref{sec:levels} & --- & Retained as a specification warning only \\
 Diesel contemporaneous elasticity rises $0.7129$ to $1.3753$ & Tables~\ref{tab:ecm}, \ref{tab:price} & association & Retail, not wholesale, prices; $1.00$ in the difference-only model \\
-Gasoline contemporaneous elasticity unchanged & Table~\ref{tab:ecm} & association & Interaction $p=0.227$; not the whole picture, see the adjustment speed \\
-Both adjustment speeds more than quadruple & Table~\ref{tab:ecm} & association & Full sample; the multiple varies across post-period subsets \\
+Gasoline contemporaneous elasticity not permanently higher & Table~\ref{tab:ecm} & association & Interaction $p=0.227$ on one break; it does move in the transition window, see Section~\ref{sec:ecm} \\
+Both adjustment speeds increase several-fold & Table~\ref{tab:ecm} & association & Quadruple on the full sample; the multiple falls on every post-period subset, see Section~\ref{sec:ecm} \\
 2022 diesel export level shift of $-781.7$~kt & Table~\ref{tab:its} & association & Falls to $-570.0$ and $p=0.078$ once the 2013 break is held constant \\
 2000 break in diesel imports & Section~\ref{sec:chow} & descriptive & Exploratory; sup-Wald over searched break dates gives $p=0.088$ \\
 PT--ES diesel spread moves $-30.8$ EUR/1000L & Section~\ref{sec:spreads} & descriptive & Descriptive; the spread is not the modelled residual \\
 Both spreads mean-revert within each regime & Section~\ref{sec:spreads} & descriptive & Pooled ADF is attenuated by the level shift; within-regime $p\le 0.011$ \\
-Spanish diesel balance is flat while Portugal's falls & Table~\ref{tab:spain} & descriptive & Spanish flatness is smaller than the Spanish balance residual; qualitative only \\
+Portugal's diesel balance falls; Spain's shows no comparable move & Table~\ref{tab:spain} & descriptive & Spanish flatness is smaller than the Spanish balance residual, so only the Portuguese side is measurable \\
 Eurostat balance residuals are not closed & Section~\ref{sec:residuals} & descriptive & Stock changes not modelled \\
 Pre/post differences hold across three windows & Table~\ref{tab:windows} & descriptive & Magnitudes vary with baseline length \\
 Headline pre/post dependence change & Section~\ref{sec:windows} & descriptive & Not an effect estimate \\

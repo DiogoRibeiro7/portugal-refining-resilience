@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-21T22:27:18.533458+00:00",
+  "created_at_utc": "2026-08-22T00:13:44.048289+00:00",
   "files": [
     {
       "file": "fuel_annual_analytical_panel.csv",
@@ -252,6 +252,20 @@
       "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_post_period_stability.csv",
       "sha256": "7eacd01666ec9e28a2d819213d4e528bfe4e0ea0dfbf2106f2ebf32930adc7c3",
       "bytes": 998
+    },
+    {
+      "file": "price_regime_shift_cointegration.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_regime_shift_cointegration.csv",
+      "sha256": "5d15a37093512042f0f9a96a35e956214f137a72cc31b66971a12e678dbedb12",
+      "bytes": 425
+    },
+    {
+      "file": "price_second_break_tests.csv",
+      "kind": "data",
+      "source_path": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_second_break_tests.csv",
+      "sha256": "57415afed53349303132294e5f361560c953a49738145f0a08a3855e5ebc97b5",
+      "bytes": 2844
     },
     {
       "file": "pt_es_price_spread_summary.csv",
