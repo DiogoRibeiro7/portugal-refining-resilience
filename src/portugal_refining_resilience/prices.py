@@ -1048,3 +1048,117 @@ def johansen_rank_test(
                 }
             )
     return pd.DataFrame(rows)
+
+
+#: The seaborne crude embargo bites on 5 December 2022 for every member state at once,
+#: which makes it the natural second date to run the cross-country comparison at.
+EMBARGO_DATE: str = "2022-12-05"
+
+
+def placebo_by_break_date(
+    prices: pd.DataFrame,
+    *,
+    product: str = "diesel",
+    break_dates: tuple[str, ...] = ("2021-05-01", EMBARGO_DATE),
+    countries: tuple[str, ...] = PLACEBO_COUNTRIES,
+) -> pd.DataFrame:
+    """Run the cross-country comparison at more than one candidate date.
+
+    A single date cannot tell a country-specific event from a common one. The Portuguese
+    closure falls in May 2021 and the seaborne crude embargo in December 2022, and the
+    two dates are nineteen months apart, so running both separates a response that only
+    Portugal shows from one that every pair priced against Spain shows. Which countries
+    move at which date is the whole content of the test.
+    """
+    rows: list[dict[str, object]] = []
+    available = set(prices["country"].unique())
+    for cutoff in break_dates:
+        for home in ("PT", *countries):
+            if home not in available or "ES" not in available:
+                continue
+            speeds = _adjustment_speeds(prices, home=home, product=product, cutoff=cutoff)
+            rows.append(
+                {
+                    "pair": f"{home}-ES",
+                    "product": product,
+                    "break_date": cutoff,
+                    "closed_a_refinery_in_may_2021": home == "PT",
+                    **speeds,
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def phase_adjustment_speeds(
+    prices: pd.DataFrame,
+    *,
+    home: str,
+    product: str = "diesel",
+    first_break: str = "2021-05-01",
+    second_break: str = EMBARGO_DATE,
+    maxlags: int = 8,
+) -> pd.DataFrame:
+    """Split the post period at the embargo and report the speed in each of three phases.
+
+    A ratio computed against a single break date averages whatever happened after it. If
+    the Portuguese change belongs to the closure it should appear between May 2021 and the
+    embargo; if it belongs to the embargo it should appear only afterwards, and so should
+    every other country's.
+    """
+    work = prices.loc[prices["country"].isin([home, "ES"])].copy()
+    work["country"] = work["country"].replace({home: "PT"})
+    design = price_comovement_design(work, product=product, cutoff=first_break)
+
+    levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    long_run = sm.OLS(
+        levels["log_PT"], sm.add_constant(levels[["log_ES"]], has_constant="add")
+    ).fit()
+    frame = design.copy()
+    frame["disequilibrium"] = np.nan
+    frame.loc[levels.index, "disequilibrium"] = np.asarray(long_run.resid, dtype=float)
+    frame["disequilibrium_lag"] = frame["disequilibrium"].shift(1)
+    frame["late"] = (pd.to_datetime(frame["date"]) >= pd.Timestamp(second_break)).astype(float)
+    frame = frame.dropna(
+        subset=["diff_log_PT", "diff_log_ES", "disequilibrium_lag", "post", "late"]
+    ).copy()
+    frame["d_x_post"] = frame["disequilibrium_lag"] * frame["post"]
+    frame["d_x_late"] = frame["disequilibrium_lag"] * frame["late"]
+    frame["e_x_post"] = frame["diff_log_ES"] * frame["post"]
+    frame["e_x_late"] = frame["diff_log_ES"] * frame["late"]
+    columns = [
+        "disequilibrium_lag",
+        "d_x_post",
+        "d_x_late",
+        "diff_log_ES",
+        "e_x_post",
+        "e_x_late",
+        "post",
+        "late",
+    ]
+    model = sm.OLS(frame["diff_log_PT"], sm.add_constant(frame[columns], has_constant="add")).fit(
+        cov_type="HAC", cov_kwds={"maxlags": maxlags}
+    )
+    embargo_test = model.t_test("d_x_late = 0")
+    embargo_p = float(np.ravel(embargo_test.pvalue)[0])
+
+    phases = {
+        "before_closure": "disequilibrium_lag = 0",
+        "closure_to_embargo": "disequilibrium_lag + d_x_post = 0",
+        "embargo_onward": "disequilibrium_lag + d_x_post + d_x_late = 0",
+    }
+    rows: list[dict[str, object]] = []
+    for phase, specification in phases.items():
+        test = model.t_test(specification)
+        rows.append(
+            {
+                "pair": f"{home}-ES",
+                "product": product,
+                "phase": phase,
+                "adjustment_speed": float(np.ravel(test.effect)[0]),
+                "std_error": float(np.ravel(test.sd)[0]),
+                "p_value": float(np.ravel(test.pvalue)[0]),
+                "embargo_interaction_p_value": embargo_p,
+                "n_obs": int(model.nobs),
+            }
+        )
+    return pd.DataFrame(rows)
