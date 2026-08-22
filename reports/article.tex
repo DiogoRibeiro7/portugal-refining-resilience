@@ -53,8 +53,8 @@ of the 1990s, a net importer for the fourteen years from 1999, an exporter again
 every year but 2019, and an importer in every year since 2021. The 2013 hydrocracker therefore restored a position the
 country had held before rather than creating a new one, and the 2021 closure carried the system
 past the dependence it had run in the 2000s. By 2023 domestic manufacturing covers $0.678$ of
-diesel demand and the net-import-to-demand ratio reaches $0.262$, the weakest coverage and the heaviest
-dependence in the window. Gasoline, which entered each event with output far above domestic
+diesel demand and the net-import-to-demand ratio reaches $0.262$, which is the dependence
+Portugal ran in 2009--2011 on half the manufacturing base it had then. Gasoline, which entered each event with output far above domestic
 demand, moves as far on both ratios but crosses neither threshold. On prices, both
 Portugal--Spain pairs are cointegrated in
 log levels and both error-correction speeds increase several-fold after May 2021.
@@ -202,15 +202,19 @@ single vulnerable feedstock route, and nothing here distinguishes those cases.
 
 \subsection{Designs}
 
-Annual breaks are tested by Chow tests on a linear trend at candidate break years, of which 2013 and
+Annual breaks are tested by Chow tests \citep{chow1960tests} on a linear trend at candidate
+break years, of which 2013 and
 2022 were pre-specified and 2000 is exploratory, with 2021 excluded as a transition year so that
-it is assigned to neither side, and Benjamini--Hochberg adjustment across all twenty-four tests.
+it is assigned to neither side, and Benjamini--Hochberg adjustment \citep{benjamini1995controlling} across all twenty-four
+tests. Because the outcomes are mechanically linked, the dependence-robust Benjamini--Yekutieli
+form \citep{benjamini2001control} is reported beside it, and it costs two of the six survivors.
 
 The annual interrupted trends are ordinary least squares with a common trend, a post-event
 level term and a post-event slope term, HAC(1) covariance, 2021 again excluded. This retains all
 annual observations rather than splitting the series.
 
-Monthly event timing comes from a segmented regression on $276$ monthly observations with month
+Monthly event timing comes from a segmented regression \citep{wagner2002segmented,
+bernal2017interrupted} on $276$ monthly observations with month
 fixed effects, a calendar-month trend and HAC(3) errors. Each phase-trend interaction is centred
 on its phase boundary, so a phase coefficient is the level shift at that boundary measured
 against the extrapolated pre-closure trend, and the companion trend term is the change in slope
@@ -235,7 +239,9 @@ A levels regression is admitted only on rejection at one per cent rather
 than five, because regressing one near-integrated series on another is the spurious-regression
 case while an unnecessary error-correction model still nests the difference specification.
 Neither product clears that bar, and both pairs are cointegrated in logs, so both are fitted as
-two-step Engle--Granger error-correction models, estimated with HAC(8) covariance throughout and
+two-step Engle--Granger error-correction models \citep{engle1987cointegration}, estimated with
+heteroskedasticity- and autocorrelation-consistent covariance throughout
+\citep{newey1987simple, andrews1991heteroskedasticity} and
 on pre-tax prices as the primary measure.
 
 \section{Results}
@@ -441,36 +447,58 @@ effects, HAC(3).
 A phase coefficient is the level shift at that phase boundary against the extrapolated
 pre-closure trend.}
 \label{tab:monthly}
-\begin{tabular}{llrrr}
+\small
+\begin{tabular}{llrrrr}
 \toprule
-Outcome & Term & Estimate & Std.\ error & $p$ \\
+& & \multicolumn{2}{c}{No 2013 term} & \multicolumn{2}{c}{2013 held constant} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Outcome & Term & Estimate & $p$ & Estimate & $p$ \\
 \midrule
-Refinery output (kt/month) & Matosinhos transition & $-$102.89 & 36.53 & 0.005 \\
- & \quad phase trend & $-$4.04 & 6.80 & 0.553 \\
- & Energy stress 2022 & $-$148.25 & 23.41 & $<0.001$ \\
- & \quad phase trend & $+$5.16 & 3.51 & 0.142 \\
+Refinery output (kt/month) & 2013 control & --- & --- & $+$167.92 & $<0.001$ \\
+ & Matosinhos transition & $-$102.89 & 0.005 & $-$70.52 & 0.084 \\
+ & Energy stress 2022 & $-$148.25 & $<0.001$ & $-$101.10 & $<0.001$ \\
+ & Post-stress & $-$168.45 & $<0.001$ & $-$110.52 & 0.001 \\
+ & \quad phase trend & $+$2.72 & 0.022 & $+$3.67 & 0.004 \\
 \midrule
-Imports (kt/month) & Matosinhos transition & $+$40.34 & 23.15 & 0.081 \\
- & \quad phase trend & $+$3.27 & 6.16 & 0.595 \\
- & Energy stress 2022 & $+$25.43 & 10.49 & 0.015 \\
- & \quad phase trend & $+$1.63 & 2.35 & 0.488 \\
+Imports (kt/month) & 2013 control & --- & --- & $-$47.65 & $<0.001$ \\
+ & Matosinhos transition & $+$40.34 & 0.081 & $+$33.80 & 0.154 \\
+ & Energy stress 2022 & $+$25.43 & 0.015 & $+$15.08 & 0.188 \\
+ & Post-stress & $+$56.74 & $<0.001$ & $+$43.81 & 0.008 \\
 \midrule
-Net imports / demand & Matosinhos transition & $+$0.1923 & 0.0711 & 0.007 \\
- & \quad phase trend & $+$0.0382 & 0.0152 & 0.012 \\
- & Energy stress 2022 & $+$0.3658 & 0.0551 & $<0.001$ \\
- & \quad phase trend & $+$0.0098 & 0.0072 & 0.171 \\
+Net imports / demand & 2013 control & --- & --- & $-$0.4379 & $<0.001$ \\
+ & Matosinhos transition & $+$0.1923 & 0.007 & $+$0.0878 & 0.307 \\
+ & Energy stress 2022 & $+$0.3658 & $<0.001$ & $+$0.2198 & 0.005 \\
+ & Post-stress & $+$0.4951 & $<0.001$ & $+$0.3174 & 0.001 \\
+ & \quad phase trend & $-$0.0057 & 0.097 & $-$0.0086 & 0.020 \\
+\midrule
+\multicolumn{2}{l}{Adjusted $R^2$, refinery output} & 0.2163 & & 0.4046 & \\
+\multicolumn{2}{l}{Adjusted $R^2$, net imports / demand} & 0.2931 & & 0.4982 & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The monthly design separates the May 2021 closure from the March 2022 shock and finds both. Each
-phase is measured against the same counterfactual, the pre-closure trend extrapolated forward,
-rather than against the phase before it, so the two coefficients do not add. Diesel refinery
-output sits about $103$~kt per month below that counterfactual during the transition and about
-$148$~kt per month below it during the stress period, with the net-import-to-demand ratio $0.19$
-and $0.37$ above it. The closure phase also carries a significant upward slope of $0.038$ per
-month on the ratio, so dependence continued to widen within that phase rather than stepping once
-and holding.
+The monthly panel opens in 2002, so the 2013 hydrocracker sits inside it and the pre-closure
+trend each phase is measured against was fitted through a step of $+167.92$~kt per month in
+refinery output. Table~\ref{tab:monthly} reports both fits, and holding that step constant
+raises the adjusted $R^2$ from $0.2163$ to $0.4046$ on output and from $0.2931$ to $0.4982$ on
+the ratio. I read the results off the corrected column.
+
+Each phase is measured against the same counterfactual, the pre-closure trend extrapolated
+forward, never against the phase before it, so the coefficients do not add. On the corrected
+fit, diesel refinery output sits $-101.10$~kt per month below that counterfactual during the
+2022 stress phase and $-110.52$~kt below it from January 2023, with the net-import-to-demand
+ratio $0.2198$ and $0.3174$ above it. What does not survive the correction is the Matosinhos
+transition, at $-70.52$ ($p=0.084$) on output and $+0.0878$ ($p=0.307$) on the ratio. The
+monthly design therefore identifies the 2022 stress and the level that followed clearly, and the
+ten-month transition only weakly. The import rows weaken the same way, the energy-stress term
+falling from $+25.43$ ($p=0.015$) to $+15.08$ ($p=0.188$), so I do not rely on the import channel
+for either event.
+
+The post-stress phase carries the evidence on whether 2023 was a trough or a level. Its terms
+are large and firmly estimated, so 2023--2024 does not return to the pre-closure counterfactual,
+while its phase trends run back towards it at $+3.67$~kt per month ($p=0.004$) on output and
+$-0.0086$ ($p=0.020$) on the ratio. The system is displaced and recovering within the
+displacement.
 
 \subsection{The 2022 episode}
 
@@ -482,19 +510,27 @@ diesel feedstock and not on running the plant. Domestic demand still has to be m
 should give way first and imports rise second. And because Portugal had been a one-refinery
 system for ten months, none of that adjustment can be taken up domestically.
 
-Each link holds. Against a 2013--2019 baseline, 2022 diesel exports sit at the zeroth percentile
-and diesel imports of $1{,}316$~kt sit $2.10$ standard deviations above the mean, at the
-hundredth percentile. On the median-and-MAD form, which is less sensitive to the spread of a
-seven-year baseline, the same figure stands at $2.94$. Diesel refinery output sits at $z=-2.04$
-and at the zeroth percentile. Gasoline exports are unremarkable at $z=-0.18$, and gasoline
-refinery output is low but well inside its range at $z=-0.76$. Diesel demand is close to baseline
-at $z=0.58$, so the import surge is not demand-driven.
+Each link holds in direction. Against a 2013--2019 baseline, 2022 diesel exports sit at the
+zeroth percentile, diesel imports of $1{,}316$~kt sit $2.10$ standard deviations above the mean,
+and diesel refinery output sits at $z=-2.04$. Gasoline exports are unremarkable at $z=-0.18$ and
+gasoline refinery output is low but well inside its range at $z=-0.76$. Diesel demand is close to
+its baseline mean at $z=0.58$, so the import surge is not demand-driven.
 
-Robust statistics agree. Against the baseline median and median absolute deviation, diesel
-imports score $2.94$ and diesel net imports $3.14$, both firmly outside the baseline range.
-The percentile, which assumes nothing about the shape of the baseline, is the statistic to
-lean on, and it places 2022 diesel exports at the bottom and diesel imports at the top of
-seven years of history. The ranking is unchanged across three baseline windows.
+None of those scores places 2022, and the reason is the baseline rather than the statistic. A
+score against a level mean measures the baseline trend whenever the baseline has one, and these
+baselines trend: diesel imports rise across 2013--2019 at $88.05$~kt a year at $t=4.11$, and
+diesel demand at $t=16.83$. Correcting for that means extrapolating a 2013--2019 trend across
+2020 and 2021, which is not credible for any of these series; done for demand it puts 2022
+roughly fifteen residual standard deviations below expectation. The median-and-MAD form does not
+help, because it is robustness to spread and the defect is trend. The prediction interval the
+baseline supports for diesel imports runs from $295$ to $1{,}427$~kt and contains $1{,}316$, as
+it does for exports, net imports and refinery output. A percentile of zero or of one hundred out
+of seven observations is a statement about seven numbers.
+
+This section therefore describes the 2022 episode and does not carry it. The instrument for 2022
+is the monthly segmented model, which fits a trend and measures each phase against its
+extrapolation. What the balance shows is that its four terms move together in the pattern a
+feedstock constraint implies, and that pattern is the argument.
 
 Read as a whole rather than statistic by statistic, the four terms of the balance identify where
 the constraint bound. Refinery output falls to the bottom of its baseline range while gasoline
@@ -666,6 +702,31 @@ post-transition elasticity, because omitting the disequilibrium term loads part 
 adjustment onto the contemporaneous coefficient. That gap is the reason the model family is
 selected from diagnostics rather than assumed.
 
+\subsection{Placebo tests}
+
+Two objections to the price result are testable, because the bulletin prices every member state
+on the same definition. If the disequilibrium term simply became more volatile after 2021, every
+pair priced against Spain would show a faster adjustment speed at that date. Running the
+identical specification on four neighbours that closed no refinery gives ratios of $0.99$ for
+France ($p=0.990$), $1.11$ for Belgium ($p=0.624$), $0.15$ for Germany ($p<0.001$, in the
+opposite direction) and $4.17$ for Italy ($p=0.064$), against $4.24$ for Portugal ($p<0.001$).
+
+A single break at May 2021 attributes to that date everything after it, including the seaborne
+crude embargo of 5 December 2022 \citep{eu2022embargo}, which falls on every member state at
+once. Splitting the post-closure period at the embargo separates the two. Between the closure
+and the embargo the Portuguese speed moves from $-0.1415$ to $-0.8294$ ($p<0.001$) and no other
+pair moves comparably: Italy reaches $-0.0562$ ($p=0.240$) and Germany $-0.0945$ ($p=0.357$).
+From the embargo onward the pattern reverses, Belgium rising to $-0.6223$ with its embargo
+interaction at $p=0.028$ and Italy to $-0.2443$ at $p=0.103$. The Italian result therefore
+belongs to the embargo response and not to the Portuguese mechanism.
+
+The second objection is that the date is arbitrary. Estimated on the pre-closure sample only, so
+that they cannot recover a diluted version of the real effect, false breaks at May 2011, 2013,
+2015, 2017 and 2019 give ratios of $0.25$, $0.34$, $0.60$, $1.12$ and $1.60$, the two
+significant ones running the wrong way. The sequence is monotone in the date, so the two nearest
+the closure are the weakest placebos and a tightening that began before May 2021 and accelerated
+at it cannot be separated from a step.
+
 \subsection{Robustness}
 
 Three checks bound how much the results depend on choices made in setting them up.
@@ -823,7 +884,7 @@ observed at all.
 
 \subsection{Limitations}
 
-Eight limitations bound the results, in rough order of how much they matter.
+Eleven limitations bound the results, in rough order of how much they matter.
 
 \begin{enumerate}
 \item \textbf{2022 confounds the post-closure window.} The transition and the European energy
@@ -896,8 +957,10 @@ Over thirty-five years Portugal's diesel system crossed the same line three time
 further from self-coverage than it began. It was a net exporter through most of the 1990s, a net
 importer for the fourteen years from 1999, an exporter again from 2013 after the hydrocracker
 in every year but 2019, and an importer in every year since 2021. By 2023 domestic manufacturing covered $0.678$ of
-diesel demand and the net-import-to-demand ratio stood at $0.262$: the weakest coverage and the heaviest
-dependence anywhere in the window.
+diesel demand and the net-import-to-demand ratio stood at $0.262$. Those are the window's
+extremes, but narrowly: 2009 reaches $0.2534$ and $0.6982$ on a system with two refineries, and
+the gap is a fraction of the $0.1487$ standard deviation of the annual change in that ratio.
+What distinguishes 2023 is that the level was reached on half the manufacturing base.
 
 Measured against the four senses of resilience defined in Section~\ref{sec:design}, the profile
 changed on all four and in the same direction. The domestic buffer thinned, import exposure rose
