@@ -714,3 +714,58 @@ def check_quantities_are_checkable(
             f"{len(bare)} quantit(y/ies) outside math mode, so no check can see them: {bare[:5]}"
         )
     return True, "every quantity carrying a unit is written where the checks can read it"
+
+
+def check_prose_uses_current_specification(
+    tex: str,
+    *,
+    superseded_estimates: list[float],
+    subject_pattern: str,
+    attribution_pattern: str,
+    may_cite_superseded: set[str],
+) -> tuple[bool, str]:
+    """Require a superseded estimate to say which specification it came from.
+
+    The obvious check is to match quoted numbers against the superseded estimates and
+    flag any that reproduce from those alone. That does not work here, for the reason
+    recorded against the percentage check that was removed: at two or three significant
+    figures a bundle holding hundreds of estimates collides constantly, and a passage
+    that quotes the uncorrected figure in order to correct it is numerically identical
+    to one that quotes it as the result. Both were observed while tuning this.
+
+    What is enforceable is the form. A paragraph that quotes an estimate only the
+    superseded fit produces must also name the specification, which is what tells a
+    reader the number is being reported rather than relied on. The check cannot confirm
+    that a number is right; it can require that a superseded one is labelled, and that is
+    the failure the article went several revisions with.
+    """
+    body_of = re.compile(r"\\begin\{(table|longtable)\}.*?\\end\{\1\}", re.DOTALL)
+    subject = re.compile(subject_pattern, re.IGNORECASE)
+    attribution = re.compile(attribution_pattern, re.IGNORECASE)
+
+    bad: list[str] = []
+    for label, section in document_sections(tex):
+        if label in may_cite_superseded:
+            continue
+        prose = body_of.sub(" ", section)
+        for paragraph in prose.split("\n\n"):
+            if not subject.search(paragraph) or attribution.search(paragraph):
+                continue
+            for span in _MATH.findall(paragraph):
+                cleaned = span.replace("{,}", "").replace("\\%", "")
+                for token in _NUMBER.findall(cleaned):
+                    try:
+                        value = float(token)
+                    except ValueError:  # pragma: no cover - regex guarantees a number
+                        continue
+                    if 1900.0 <= value <= 2100.0 and value.is_integer():
+                        continue
+                    decimals = len(token.split(".")[1]) if "." in token else 0
+                    if decimals >= 3 and _matches_estimate(value, decimals, superseded_estimates):
+                        bad.append(f"{label or 'body'}: {token}")
+    if bad:
+        return False, (
+            f"{len(bad)} superseded estimate(s) quoted without naming the "
+            f"specification: {sorted(set(bad))[:6]}"
+        )
+    return True, "every superseded estimate quoted names the specification it came from"
