@@ -780,8 +780,8 @@ monthly design of Section~\ref{sec:monthly} remains the stronger instrument for 
 
 \begin{table}[htbp]
 \centering
-\caption{Interrupted-trend models, annual series, HAC(1), $n=34$, 2021 excluded, with 95 per
-cent intervals. The 2022 rows are reported twice: once as a single-event model and once holding
+\caption{Interrupted-trend models, annual series, HAC(1), $n=34$, 2021 excluded. Intervals are ninety-five per
+cent. The 2022 rows are reported twice: once as a single-event model and once holding
 the 2013 break constant. The 2022 export rows also depend on trade cells the two sources
 dispute; see Table~\ref{tab:sourcesens}.}
 \label{tab:its}
@@ -790,7 +790,7 @@ dispute; see Table~\ref{tab:sourcesens}.}
 \toprule
 & & \multicolumn{3}{c}{Level change} & Slope change \\
 \cmidrule(lr){3-5}\cmidrule(lr){6-6}
-Product & Outcome, event & Estimate & 95\% interval & $p$ & Estimate ($p$) \\
+Product & Outcome, event & Estimate & Interval & $p$ & Estimate ($p$) \\
 \midrule
 diesel & exports, 2013 & $+$2{,}005.5 & [1{,}417.8, 2{,}593.3] & $<0.001$ & $-$117.1 (0.001) \\
 diesel & net imp./dem., 2013 & $-$0.540 & [$-$0.671, $-$0.408] & $<0.001$ & $+$0.029 (0.001) \\
@@ -899,10 +899,10 @@ pre-closure trend.}
 \toprule
 & & \multicolumn{2}{c}{No 2013 term} & \multicolumn{2}{c}{2013 held constant} \\
 \cmidrule(lr){3-4}\cmidrule(lr){5-6}
-Outcome & Term & Estimate & $p$ & Estimate & $p$ \\
+Outcome & Term & Estimate & $p$ & Estimate & Interval \\
 \midrule
-Refinery output (kt/month) & 2013 control & --- & --- & $+$167.92 & $<0.001$ \\
- & Matosinhos transition & $-$102.89 & 0.005 & $-$70.52 & 0.084 \\
+Refinery output (kt/month) & 2013 control & --- & --- & $+$167.92 & [121.3, 214.5] \\
+ & Matosinhos transition & $-$102.89 & 0.005 & $-$70.52 & [$-$150.4, 9.4] \\
  & \quad phase trend & $-$4.04 & 0.553 & $-$2.88 & 0.678 \\
  & Energy stress 2022 & $-$148.25 & $<0.001$ & $-$101.10 & $<0.001$ \\
  & \quad phase trend & $+$5.16 & 0.142 & $+$5.50 & 0.082 \\
@@ -1244,27 +1244,28 @@ established either.
 
 \begin{table}[htbp]
 \centering
-\caption{Error-correction models, two-step Engle--Granger, HAC(8), $n=993$ weeks.}
+\caption{Error-correction models, two-step Engle--Granger, HAC(8), $n=993$ weeks. Intervals
+are ninety-five per cent.}
 \label{tab:ecm}
-\begin{tabular}{llrrr}
+\begin{tabular}{llrlr}
 \toprule
-Product & Term & Estimate & Std.\ error & $p$ \\
+Product & Term & Estimate & Interval & $p$ \\
 \midrule
-diesel & Disequilibrium (lagged) & $-$0.1415 & 0.0266 & $<0.001$ \\
- & \quad $\times$ post & $-$0.4580 & 0.0845 & $<0.001$ \\
- & \quad post-period level & $-$0.5995 & 0.0802 & $<0.001$ \\
- & $\Delta \log$ ES & 0.7129 & 0.0397 & $<0.001$ \\
- & \quad $\times$ post & 0.6624 & 0.0946 & $<0.001$ \\
- & \quad post-period level & 1.3753 & 0.0859 & $<0.001$ \\
- & post & $-$0.0090 & 0.0021 & $<0.001$ \\
+diesel & Disequilibrium (lagged) & $-$0.1415 & [$-$0.194, $-$0.089] & $<0.001$ \\
+ & \quad $\times$ post & $-$0.4580 & [$-$0.624, $-$0.292] & $<0.001$ \\
+ & \quad post-period level & $-$0.5995 & [$-$0.757, $-$0.442] & $<0.001$ \\
+ & $\Delta \log$ ES & 0.7129 & [0.635, 0.791] & $<0.001$ \\
+ & \quad $\times$ post & 0.6624 & [0.477, 0.848] & $<0.001$ \\
+ & \quad post-period level & 1.3753 & [1.207, 1.544] & $<0.001$ \\
+ & post & $-$0.0090 & [$-$0.013, $-$0.005] & $<0.001$ \\
 \midrule
-gasoline & Disequilibrium (lagged) & $-$0.0911 & 0.0355 & 0.010 \\
- & \quad $\times$ post & $-$0.2767 & 0.0859 & 0.001 \\
- & \quad post-period level & $-$0.3678 & 0.0782 & $<0.001$ \\
- & $\Delta \log$ ES & 0.7891 & 0.0719 & $<0.001$ \\
- & \quad $\times$ post & 0.2846 & 0.2356 & 0.227 \\
- & \quad post-period level & 1.0738 & 0.2244 & $<0.001$ \\
- & post & $-$0.0029 & 0.0017 & 0.092 \\
+gasoline & Disequilibrium (lagged) & $-$0.0911 & [$-$0.161, $-$0.022] & 0.010 \\
+ & \quad $\times$ post & $-$0.2767 & [$-$0.445, $-$0.108] & 0.001 \\
+ & \quad post-period level & $-$0.3678 & [$-$0.521, $-$0.215] & $<0.001$ \\
+ & $\Delta \log$ ES & 0.7891 & [0.648, 0.930] & $<0.001$ \\
+ & \quad $\times$ post & 0.2846 & [$-$0.177, 0.746] & 0.227 \\
+ & \quad post-period level & 1.0738 & [0.634, 1.514] & $<0.001$ \\
+ & post & $-$0.0029 & [$-$0.006, 0.001] & 0.092 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1310,6 +1311,13 @@ not that it became precisely four times faster. A half-life of $0.8$ weeks shoul
 with its unit in mind: it is shorter than the interval between observations, so it says that a
 deviation is largely gone by the next weekly reading, not that the data can resolve a duration
 that short.
+
+Two tables now carry intervals where they previously carried standard errors, and one point is
+easier to see in that form. The gasoline post-period elasticity of $1.074$ has an interval of
+$[0.634, 1.514]$, which is wide enough to contain both the pre-closure value of $0.789$ and the
+diesel post-period value of $1.375$. The gasoline estimate is not evidence of no change so much
+as an estimate too imprecise to distinguish the two, and the second-break test in this section
+is what resolves it.
 
 One regime boundary is imposed on the price arm where the physical arm uses three, and whether
 that matters is testable. Adding a second break at March 2022 and testing its three terms

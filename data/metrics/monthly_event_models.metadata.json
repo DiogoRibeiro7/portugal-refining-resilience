@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-22T07:58:20.676004+00:00",
+  "created_at_utc": "2026-08-22T08:56:12.280244+00:00",
   "rows": 480,
   "columns": [
     "product",
@@ -9,11 +9,13 @@
     "estimate",
     "std_error",
     "p_value",
+    "ci_low",
+    "ci_high",
     "n_obs",
     "r2_adj"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_models.csv",
-  "csv_sha256": "2fd079467e044baf92dd4fbf14f3dc2bd3a4613c21952a01b03993eb5764d6cb",
+  "csv_sha256": "85013228e60bf39e2c7703b2a6f393643c52084f8634889d5010b75745787cd3",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\monthly_event_models.parquet",
   "parquet_error": null,
   "metadata": {}
