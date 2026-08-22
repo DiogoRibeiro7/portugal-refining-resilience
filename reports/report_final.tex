@@ -155,11 +155,16 @@ diversification and security is itself contested \citep{vivoda2009diversificatio
 definition used here is narrower than any of these and is narrower deliberately: it is the part
 of the concept a national product balance and a bilateral price relation can actually measure.
 
-Two things follow. The first is that nothing below should be read as a security assessment in
-the sense those literatures use. The second is that the caveat in
-Section~\ref{sec:conclusions}, that rising import dependence is not by itself evidence of
-reduced security, is not this paper's invention but a standing result in that work
-\citep{vivoda2009diversification}.
+Nothing below should be read as a security assessment in the sense those literatures use. The
+narrower measure also lets me supply something the diversification literature argues for without
+a case to hang it on. \citet{vivoda2009diversification} holds that import dependence is a poor
+proxy for insecurity because it says nothing about what stands behind the imports; Portugal in
+2009 and in 2023 gives that argument a clean instance. The net-import-to-demand ratio reads
+$0.2534$ and $0.2622$, which for practical purposes is the same number, and the systems
+producing it are not the same system: two refineries in the first case and one in the second. An
+indicator that returns the same value for a two-refinery and a one-refinery configuration is
+underdetermining what it is meant to measure, and it does so here in a case where both
+configurations are documented.
 
 The definition is deliberately narrow, and the narrowness is the reason it can be tested. It
 asks about the observable response of a physical balance and a price relation. Four quantities
@@ -177,12 +182,13 @@ net-import-to-demand ratio gives the country's position, negative for a net sell
 for a net buyer. A system can move on one of these while the other holds, and Portugal does
 exactly that around 2000.
 
-Concentration is cruder and harder to argue with: Portugal manufactured in two places until May
-2021 and in one afterwards, one of a great many such closures. Of close to a hundred European
-refineries, twenty-eight above thirty thousand barrels a day were shut or converted after 2009
-\citep{concawe2025statistical}. That is a documented event, and Section~\ref{sec:closure} sets
-out why a shock to a single-site system is not the same object as the same shock to a
-distributed one.
+Concentration is cruder and harder to argue with, and because Portugal's move from two
+manufacturing sites to one in May 2021 is a documented event rather than an estimated quantity
+\textemdash{} one of twenty-eight closures or conversions above thirty thousand barrels a day
+among close to a hundred European refineries since 2009 \citep{concawe2025statistical}
+\textemdash{} it enters the analysis as a fact about the system rather than as a parameter,
+which is why Section~\ref{sec:closure} treats a shock to a single-site system as a different
+object from the same shock to a distributed one.
 
 Price integration is how closely, and how quickly, domestic pre-tax prices track a
 neighbouring market's. A system meeting more of its demand through imports has less room for
@@ -587,8 +593,15 @@ twice gasoline demand in the early 1990s and at around four times by its end. Th
 system was left producing more gasoline than the country could burn and less diesel than it
 needed, so gasoline became a structural export and diesel a structural import. This is the
 European pattern: the continent's refineries over-produce gasoline and under-produce diesel
-because national fiscal policy favoured diesel, and a system with few sites is hit harder when
-one of them closes \citep{deboncourt2013refining}.
+because national fiscal policy favoured diesel, and \citet{deboncourt2013refining} reads
+severity off concentration, a system with few sites being hit harder when one of them closes.
+The Portuguese case refines that. Gasoline went through the same closure at the same plant as
+diesel and moved further on both ratios, by $+0.393$ against diesel's $+0.277$ on net imports to
+demand and by $-0.424$ against $-0.283$ on coverage, and crossed neither threshold.
+Concentration was identical for the two products because it is a property of the system rather
+than of the product. What differed was the margin each carried into the event. On this evidence
+concentration determines whether an adjustment has anywhere domestic to go, and the pre-event
+margin determines whether it needs to.
 
 That difference in starting position is what makes the two products respond differently to the
 same events. A hydrocracker converts heavy gasoil into middle distillates, so the 2013 unit
@@ -1079,9 +1092,8 @@ This is what the trade channel absorbing a shock looks like, and it is the first
 observation in this paper of resilience in the sense of Section~\ref{sec:resilience} being
 tested. The domestic buffer contributed nothing, because output moved the wrong way, as a
 feedstock disruption makes it do. The whole adjustment ran through imports. Whether that counts
-as a system coping or a system exposed depends on a judgement I cannot make, because the terms
-on which those imports were obtained, and whether they would have been available in a tighter
-market, are not in the data.
+as a system coping or a system exposed is not something I can settle. I do not observe the terms
+those imports were obtained on.
 
 The export figure needs care, because 2022 diesel exports is the single largest disagreement
 between the two independent trade sources, and the reconciliation identifies the monthly source
@@ -1109,29 +1121,38 @@ I use weekly pre-tax prices as the primary measure. The retail fuel price litera
 concerned with asymmetry in how quickly prices rise and fall \citep{bacon1991rockets,
 borenstein1997gasoline, peltzman2000prices}, a finding whose robustness has itself been
 questioned \citep{bachmeier2003new} and whose methods have been surveyed with the warning that
-the field has been driven by technique \citep{meyer2004asymmetric}. No asymmetry is estimated
-here. The closest published relative to what follows runs stationarity, cointegration and
-stability diagnostics on euro-area consumer fuel prices from this same bulletin before choosing
-a specification \citep{meyler2009passthrough}, and the practice of testing a long-run
-coefficient against a value implied in advance rather than against zero follows
-\citet{bachmeier2006testing}. One difference from \citet{meyler2009passthrough} is better stated
-here than left for a reader to find. He models these prices in raw levels and reports that the
-choice of scale mattered to his results; the diagnostics in Section~\ref{sec:pricediag} lead the
-other way here, and Section~\ref{sec:levels} sets out the evidence for preferring logs,
-including a sign reversal on the levels specification that the log models do not produce. The
-disagreement is about which scale the long-run relation lives on. The procedure is the same in
-both papers. The bulletin does not publish in every week: of the $1{,}044$ weeks between the
-first and last observation, $995$ are present for Portugal and $994$ for Spain, and the gaps
-appear as $25$ intervals of a fortnight and $12$ of three weeks. Missing weeks are dropped, so a
-differenced observation spanning a gap is a two- or three-week change entered as one. The unit-
-root and HAC lag structures both assume even spacing and neither is adjusted for this. The
-limitation belongs to the price arm. The diagnostics are run on log levels, which is the scale
-the models are estimated on, since the short-run specification regresses $\Delta \log$ PT on
-$\Delta \log$ ES, and the error-correction model takes its long-run residual from $\log$ PT on
-$\log$ ES. An earlier version of this analysis ran them on the EUR per 1000~litres levels, and
-the two scales do not agree where it matters: diesel Engle--Granger is $0.057$ on the EUR levels
-and below $0.001$ on logs, which is the difference between fitting an error- correction model
-and declaring the pair not cointegrated. I report the log-scale result.
+the field has been driven by technique \citep{meyer2004asymmetric}. That literature and this one
+meet at a point worth naming. Asymmetry is normally estimated over long samples on the
+assumption that the adjustment speed is a fixed parameter of the market. The speeds here move by
+a factor of three to four inside a twenty-year window, and they move at a date with a documented
+physical cause. If speeds shift that much across regimes, an asymmetry estimate fitted across a
+regime boundary is measuring the boundary as well as the asymmetry, which is one reading of why
+the finding has proved fragile to specification \citep{bachmeier2003new}. I do not test that: it
+needs rise-and-fall decompositions I do not estimate, on more countries than two. It is a
+conjecture this design raises and cannot settle, and it is the only point at which these results
+bear on the largest literature I cite. No asymmetry is estimated here. The closest published
+relative to what follows runs stationarity, cointegration and stability diagnostics on euro-area
+consumer fuel prices from this same bulletin before choosing a specification
+\citep{meyler2009passthrough}, and the practice of testing a long-run coefficient against a
+value implied in advance rather than against zero follows \citet{bachmeier2006testing}. One
+difference from \citet{meyler2009passthrough} is better stated here than left for a reader to
+find. He models these prices in raw levels and reports that the choice of scale mattered to his
+results; the diagnostics in Section~\ref{sec:pricediag} lead the other way here, and
+Section~\ref{sec:levels} sets out the evidence for preferring logs, including a sign reversal on
+the levels specification that the log models do not produce. The disagreement is about which
+scale the long-run relation lives on. The procedure is the same in both papers. The bulletin
+does not publish in every week: of the $1{,}044$ weeks between the first and last observation,
+$995$ are present for Portugal and $994$ for Spain, and the gaps appear as $25$ intervals of a
+fortnight and $12$ of three weeks. Missing weeks are dropped, so a differenced observation
+spanning a gap is a two- or three-week change entered as one. The unit- root and HAC lag
+structures both assume even spacing and neither is adjusted for this. The limitation belongs to
+the price arm. The diagnostics are run on log levels, which is the scale the models are
+estimated on, since the short-run specification regresses $\Delta \log$ PT on $\Delta \log$ ES,
+and the error-correction model takes its long-run residual from $\log$ PT on $\log$ ES. An
+earlier version of this analysis ran them on the EUR per 1000~litres levels, and the two scales
+do not agree where it matters: diesel Engle--Granger is $0.057$ on the EUR levels and below
+$0.001$ on logs, which is the difference between fitting an error- correction model and
+declaring the pair not cointegrated. I report the log-scale result.
 
 Each test licenses a different model, which is why they run in this order. A series with a unit
 root wanders without returning to a fixed level, and regressing one such series on another
@@ -1265,11 +1286,11 @@ gasoline & Disequilibrium (lagged) & $-$0.0911 & [$-$0.161, $-$0.022] & 0.010 \\
 \end{tabular}
 \end{table}
 
-Linkage to Spain therefore tightened for both fuels, and for both it tightened in the long-run
-adjustment channel, which a difference-only model cannot observe by construction. For diesel the
-contemporaneous channel tightened as well. Reporting only the short-run coefficient would have
-supported the conclusion that gasoline was unaffected, and that conclusion would have been an
-artefact of the specification.
+Linkage to Spain therefore tightened for both fuels in the long-run adjustment channel, which a
+difference-only model cannot observe by construction, and for diesel in the contemporaneous
+channel as well. Reporting only the short-run coefficient would have supported the conclusion
+that gasoline was unaffected, and that conclusion would have been an artefact of the
+specification.
 
 What this amounts to is a loss of domestic price insulation. Before the transition a gap
 between the Portuguese and Spanish pre-tax diesel price took about four and a half weeks to
@@ -1443,15 +1464,16 @@ The mean Portugal-minus-Spain pre-tax diesel spread moves from $+4.12$ to $-26.7
 These are descriptive.
 
 The pooled unit-root test on these spreads is the wrong one to quote. The spread mean shifts
-across the transition, and an unmodelled level shift biases a unit-root test towards not
-rejecting \citep{perron1989great}, so a pooled verdict understates mean reversion by
-construction. Treating the break date as unknown, not imposed, is the other standard response
-\citep{zivot1992further}; here the date is documented, so the regimes are split at it. Run
-within regimes, both spreads reject in both periods: diesel at $p=0.0025$ before and below
-$0.001$ after, gasoline at $p=0.0104$ and below $0.001$. The pooled diesel figure of $p=0.043$
-is the attenuated version of that, and reads as a weaker finding only because the break is
-unmodelled. Each spread fluctuates around a level within a regime, and the level itself moves
-between them.
+across the transition. Quoting a pooled unit-root test on a series with a documented mean shift
+is a default worth arguing with rather than following, because an unmodelled level shift biases
+such a test towards not rejecting \citep{perron1989great}, so a pooled verdict understates mean
+reversion by construction. Treating the break date as unknown, not imposed, is the other
+standard response \citep{zivot1992further}; here the date is documented, so the regimes are
+split at it. Run within regimes, both spreads reject in both periods: diesel at $p=0.0025$
+before and below $0.001$ after, gasoline at $p=0.0104$ and below $0.001$. The pooled diesel
+figure of $p=0.043$ is the attenuated version of that, and reads as a weaker finding only
+because the break is unmodelled. Each spread fluctuates around a level within a regime, and the
+level itself moves between them.
 
 None of this is a second opinion on Section~\ref{sec:pricediag}. The raw difference
 $\text{PT}-\text{ES}$ is the cointegrating combination only if the long-run coefficient is one
@@ -1743,9 +1765,8 @@ is the observation least favourable to the account given here.
 
 The causal question is open and this design cannot close it. The monthly model finds both phases
 independently associated with lower refinery output and higher net import dependence, with the
-2022 shift the larger of the two. It is worth being clear that no better estimator would close
-the gap either, for the reason given above: the decomposition being asked for is not a property
-the physical system has.
+2022 shift the larger of the two. No better estimator closes the gap, because the decomposition
+being asked for is not a property the physical system has.
 
 Nor can the paper say how much of the post-2021 level is permanent. The monthly model bears on this more than the annual series do. The post-stress phase sits
 $-110.52$~kt per month below the pre-closure counterfactual in refinery output and $+0.3174$
