@@ -1,0 +1,5 @@
+product,specification,hypothesis,terms,f_statistic,df_num,df_denom,p_value,rejected_5pct,nobs
+diesel,fixed long-run vector,"no change at the transition in level, pass-through or adjustment",3,23.895144180681342,3,987,6.2189416326160645e-15,True,993
+diesel,long-run vector shifts at the estimated date,"no change at the transition in level, pass-through or adjustment",3,24.316934340359435,3,987,3.4765015885536583e-15,True,993
+gasoline,fixed long-run vector,"no change at the transition in level, pass-through or adjustment",3,3.797422073709225,3,987,0.01005614844634904,True,993
+gasoline,long-run vector shifts at the estimated date,"no change at the transition in level, pass-through or adjustment",3,1.336495119398439,3,987,0.26109841348373586,False,993
