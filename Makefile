@@ -24,7 +24,7 @@ notebooks:
 	poetry run python scripts/run_notebooks.py
 
 report-inputs:
-	poetry run jupyter execute notebooks/19_export_report_inputs.ipynb
+	poetry run python scripts/run_notebooks.py --only 19,20
 
 report-pdf:
 	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd reports/report_final.tex
