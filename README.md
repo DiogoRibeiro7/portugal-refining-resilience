@@ -3,6 +3,7 @@
 [![CI](https://github.com/DiogoRibeiro7/portugal-refining-resilience/actions/workflows/ci.yml/badge.svg)](https://github.com/DiogoRibeiro7/portugal-refining-resilience/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21986527.svg)](https://doi.org/10.5281/zenodo.21986527)
 
 A notebook-first data-analysis repository studying how Portugal's petroleum-product system changed around two major refining events:
 
@@ -27,10 +28,16 @@ The empirical question is:
 
 ## Repository status
 
-This project is public research software. The committed code, notebooks, seed data, and
-provenance files are structured for transparent review, but the empirical results should be
-treated as work in progress until the acquisition notebooks have replaced or cross-validated
-the provisional seed series.
+Public research software with a released, archived analysis. Each release is deposited on
+Zenodo and built through the same gate: eight readiness checks on the data, then twelve claim
+checks tying each number the report prints to the file it came from.
+
+The results are not provisional, but they are versioned, and the version matters. Estimates
+published in 0.4.0 are superseded rather than extended; see [Citation](#citation) for which DOI
+resolves to what.
+
+The public sources revise. A rerun after a revision should be expected to differ, and the
+property worth rechecking is that the gates still pass, not that the numbers are unchanged.
 
 ## Quick start
 
@@ -148,9 +155,15 @@ Cross-source comparisons must pass the tested readiness checks in
 are audited through `data/reference/product_definition_crosswalk.csv` before DGEG/JODI/Eurostat
 values are interpreted as comparable.
 
-## Preliminary seed series
+## The provisional seed series
 
-`data/processed/jodi_portugal_fuel_exports_2005_2024_seed.csv` contains the 20-year export series already pulled during the project scoping discussion. It exists so the descriptive notebooks have an auditable starting point. It is marked **seed / provisional** and should be replaced or cross-validated by the acquisition notebooks before publication.
+`data/processed/jodi_portugal_fuel_exports_2005_2024_seed.csv` is a 20-year export series pulled
+during project scoping. It is a development fallback: notebook 07 falls back to it only when the
+raw JODI download is absent, so the descriptive notebooks can be run without network access.
+
+No published result rests on it. The `trade_not_seed_only` readiness check fails the build if the
+analysis is standing on the seed series, and domestic demand has no seed fallback at all, because
+a demand series should not be fabricated to let a notebook run.
 
 ## Main metrics
 
@@ -222,6 +235,14 @@ and data provenance rules. Security-sensitive reports should follow [SECURITY.md
 ## Citation
 
 If you use this repository, cite it using the metadata in [CITATION.cff](CITATION.cff).
+
+Each release is archived on Zenodo, and the version matters here: the estimates published
+in 0.4.0 are superseded rather than extended. Cite the version you actually used.
+
+| DOI | Resolves to |
+|---|---|
+| [10.5281/zenodo.21986527](https://doi.org/10.5281/zenodo.21986527) | whichever version is latest |
+| [10.5281/zenodo.22062293](https://doi.org/10.5281/zenodo.22062293) | 0.5.0, released 22 August 2026 |
 
 ## License
 

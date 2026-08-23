@@ -1,5 +1,9 @@
 # Interpretation Memo
 
+> **Superseded.** This is a staged artifact from the report-writing chain, written when the
+> evidence bundle was empty. It does not describe current findings. The canonical report is
+> [`report_final.tex`](../report_final.tex).
+
 ## Evidence Boundary
 
 This memo uses only the allowed evidence:

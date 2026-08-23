@@ -1,9 +1,10 @@
 # From Refining Capacity to Import Dependence: Portugal's Diesel and Gasoline Market, 1990-2024
 
 **The canonical report is [`report_final.tex`](report_final.tex)**, built with `make report-pdf`.
-This file is a summary; where the two differ, the LaTeX source is authoritative. Every figure below
-is verified against the evidence bundle by the claim checks described in
-[`data_provenance.md`](data_provenance.md).
+This file is a summary; where the two differ, the LaTeX source is authoritative. The claim checks
+described in [`data_provenance.md`](data_provenance.md) run against the canonical report, not
+against this file. What guards this one is narrower: a test requires every figure quoted here to
+appear in the canonical report, so the two cannot drift apart unnoticed.
 
 ## Windows
 
@@ -13,7 +14,7 @@ Each arm runs over the study window intersected with what its own source provide
 | --- | --- | --- |
 | Annual physical balance | 1990-2024 | Eurostat, earliest published year |
 | Monthly event models | 2002-2024 (n = 276) | JODI, earliest published month |
-| Weekly price models | 2005-2024 (n = 1,078) | EC Weekly Oil Bulletin |
+| Weekly price models | 2005-2024 (n = 993) | EC Weekly Oil Bulletin |
 
 ## What "resilience" means here
 
@@ -47,20 +48,23 @@ exporter. Six of twenty-four Chow tests survive multiplicity adjustment.
 **After May 2021 the direction reverses.** By 2023 domestic manufacturing covered 0.68 of diesel
 demand, the lowest in the window, with imports at a series high of 1,632 kt.
 
-**The monthly design separates the closure from the 2022 shock**, which annual data cannot do with
-ten months between them:
+**The monthly design resolves the 2022 shock clearly and the closure only weakly.** Annual data
+cannot separate them at all, with ten months between them. The models below hold the 2013
+hydrocracker constant; without that control the transition terms look significant, and they do
+not survive it:
 
 Each phase is measured against the same counterfactual — the pre-closure trend extrapolated
 forward — not against the phase before it, so the second column is not an increment on the first:
 
 | Outcome, vs pre-closure counterfactual | Matosinhos transition | Energy stress 2022 |
 | --- | --- | --- |
-| Refinery output | −103 kt/month (*p* = 0.005) | −148 kt/month (*p* < 0.001) |
-| Net imports / demand | +0.19 (*p* = 0.007) | +0.37 (*p* < 0.001) |
+| Refinery output | −70.52 kt/month (*p* = 0.084) | −101.10 kt/month (*p* < 0.001) |
+| Net imports / demand | +0.0878 (*p* = 0.307) | +0.2198 (*p* = 0.005) |
 
 **The annual 2022 evidence is weaker than a short window suggests.** Fitted from 1990 against a
 trend informed by the 1990s, the diesel export level shift is −782 kt (*p* = 0.022), roughly half
-what a 2005-start window gives, and both gasoline shifts lose significance.
+what a 2005-start window gives, and both gasoline shifts lose significance. Holding the 2013 break
+constant weakens it further, to −570.0 kt (*p* = 0.078), which is the estimate I take forward.
 
 **Spain did not move the same way.** Over 2018-2024 Spanish diesel output covered 0.85-0.93 of
 Spanish demand with no trend, while Portugal's fell to 0.678 in 2023 against Spain's 0.923. That
@@ -73,13 +77,14 @@ an error-correction model, and both adjustment speeds more than triple after the
 
 | Product | Adjustment speed | Half-life of a gap | Contemporaneous elasticity |
 | --- | --- | --- | --- |
-| Diesel | −0.133 → −0.466 | 4.9 → 1.1 weeks | 0.713 → 1.242 (*p* < 0.001) |
-| Gasoline | −0.091 → −0.315 | 7.3 → 1.8 weeks | 0.789 → 0.994 (*p* = 0.218) |
+| Diesel | −0.142 → −0.600 | 4.5 → 0.8 weeks | 0.713 → 1.375 (*p* < 0.001) |
+| Gasoline | −0.091 → −0.368 | 7.3 → 1.5 weeks | 0.789 → 1.074 (*p* = 0.227) |
 
-The channels differ: diesel tightened in both, gasoline only in the speed of adjustment. The
-diagnostics are run on log prices, the scale the models are estimated on. On the EUR/1000L levels
-diesel does not appear cointegrated (*p* = 0.088 against 0.022 on logs), which would have replaced
-the diesel model with a difference-only one and put its post-transition elasticity at 1.01.
+The channels differ: diesel tightened in both, gasoline only in the speed of adjustment, where
+its elasticity ends at 1.074 but the change itself carries *p* = 0.227. The diagnostics are run on
+log prices, the scale the models are estimated on. The two scales disagree where it matters: on
+the EUR/1000L levels diesel Engle-Granger gives 0.057, against below 0.001 on logs, which is the
+difference between fitting an error-correction model and declaring the pair not cointegrated.
 
 ## What this does not claim
 

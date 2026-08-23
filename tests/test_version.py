@@ -45,3 +45,23 @@ def test_release_dates_agree() -> None:
     zenodo = json.loads((ROOT / ".zenodo.json").read_text(encoding="utf-8"))
     citation = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
     assert str(citation["date-released"]) == zenodo["publication_date"]
+
+
+def test_archive_dois_agree_between_citation_and_readme() -> None:
+    """The version DOI has to be changed by hand at each release, in two files.
+
+    The concept DOI never changes; the version DOI does, and a stale one silently cites the
+    wrong archive. That is the same failure this module already guards for version strings.
+    """
+    citation = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    version_doi = citation["doi"]
+    concept = [entry for entry in citation["identifiers"] if entry["type"] == "doi"]
+    assert len(concept) == 1, "expected exactly one concept DOI identifier"
+    concept_doi = concept[0]["value"]
+
+    assert version_doi != concept_doi, "the version DOI must not be the concept DOI"
+    for doi in (version_doi, concept_doi):
+        assert doi.startswith("10.5281/zenodo."), doi
+        assert doi in readme, f"{doi} is in CITATION.cff but not the README"

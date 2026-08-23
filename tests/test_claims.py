@@ -107,6 +107,19 @@ def test_verify_table_values_ignores_years() -> None:
     assert verify_table_values("t", rows, [frame]) == []
 
 
+def test_verify_table_values_checks_years_when_the_source_holds_them() -> None:
+    """In most tables a year indexes a row; in the Chow table the year is the finding.
+
+    Skipping every year-like value left the Break column unverified, so the report could name
+    any break year and still pass the gate. It was caught by changing a break from 2013 to
+    2007 and watching the check stay green.
+    """
+    frame = pd.DataFrame({"break_year": [2000, 2013], "f_statistic": [11.68, 8.23]})
+
+    assert verify_table_values("t", [r"2013 & 8.23 \\"], [frame]) == []
+    assert verify_table_values("t", [r"2007 & 8.23 \\"], [frame]) == [2007.0]
+
+
 def test_check_stated_sample_sizes_catches_a_window_mismatch() -> None:
     """A stated sample size may belong to a window the model no longer uses."""
     tex = r"a model on $n=293$ observations"
