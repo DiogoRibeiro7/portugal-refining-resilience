@@ -147,7 +147,7 @@ def phase_contrasts(
 
     Each row is the linear combination
 
-    .. math:: \beta_{phase} + \gamma_{phase} (t - t_{phase}),
+    contrast at t = phase level shift + phase slope * (t - phase start),
 
     tested with the same HAC covariance as the model, so the interval is directly comparable
     with the coefficients.
@@ -195,4 +195,61 @@ def phase_contrasts(
                     "specification": "2013 held constant" if control_year else "no 2013 control",
                 }
             )
+    return pd.DataFrame(rows)
+
+
+def phase_joint_tests(
+    model: object,
+    *,
+    value_column: str,
+    control_year: int | None = None,
+) -> pd.DataFrame:
+    """Test each phase as one hypothesis, and all phases together.
+
+    A phase enters through a level term and a slope term, and reading significance off
+    whichever is smaller is the same multiplicity the price family has. The joint restriction
+    that both are zero asks whether the phase differs from the counterfactual at all, which is
+    what the prose claims. The final row tests every phase at once, so a reader can see whether
+    the segmented structure earns its degrees of freedom.
+    """
+    fitted = cast(Any, model)
+    names = set(fitted.model.exog_names)
+
+    rows: list[dict[str, object]] = []
+    present: list[str] = []
+    for phase in EVENT_PHASES:
+        terms = [phase, f"{phase}_trend"]
+        if not set(terms) <= names:
+            continue
+        present.extend(terms)
+        test = fitted.f_test(", ".join(f"{term} = 0" for term in terms))
+        rows.append(
+            {
+                "outcome": value_column,
+                "hypothesis": phase,
+                "terms": len(terms),
+                "f_statistic": float(np.ravel(test.fvalue)[0]),
+                "df_num": int(test.df_num),
+                "df_denom": int(test.df_denom),
+                "p_value": float(test.pvalue),
+                "rejected_5pct": bool(float(test.pvalue) < 0.05),
+                "specification": "2013 held constant" if control_year else "no 2013 control",
+            }
+        )
+
+    if present:
+        test = fitted.f_test(", ".join(f"{term} = 0" for term in present))
+        rows.append(
+            {
+                "outcome": value_column,
+                "hypothesis": "all phases",
+                "terms": len(present),
+                "f_statistic": float(np.ravel(test.fvalue)[0]),
+                "df_num": int(test.df_num),
+                "df_denom": int(test.df_denom),
+                "p_value": float(test.pvalue),
+                "rejected_5pct": bool(float(test.pvalue) < 0.05),
+                "specification": "2013 held constant" if control_year else "no 2013 control",
+            }
+        )
     return pd.DataFrame(rows)
