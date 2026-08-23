@@ -1,4 +1,6 @@
+import math
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 import pandas as pd
@@ -6,9 +8,12 @@ import pytest
 
 from portugal_refining_resilience import prices as prices_module
 from portugal_refining_resilience.prices import (
+    _adjustment_speeds,
+    ardl_bounds_test,
     choose_price_model,
     cointegrating_slope_test,
     cross_country_placebo,
+    ecm_long_run_break_comparison,
     elasticity_unit_tests,
     extract_weekly_prices,
     false_break_placebo,
@@ -17,6 +22,7 @@ from portugal_refining_resilience.prices import (
     kpss_levels_diagnostics,
     post_period_adjustment_stability,
     price_comovement_design,
+    regular_spacing_robustness,
     second_break_test,
     spread_stationarity,
     spread_stationarity_by_regime,
@@ -511,3 +517,79 @@ def test_false_break_placebo_marks_the_real_break_and_ends_the_others_early() ->
     # the false breaks see fewer observations precisely because the sample is cut short
     assert (false["n_obs"] < real["n_obs"]).all()
     assert real["speed_ratio"] > false["speed_ratio"].max()
+
+
+def _cointegrated_pair(n: int = 400, seed: int = 7, shift_size: float = 0.05) -> pd.DataFrame:
+    """A PT-ES pair that shares a stochastic trend, with a level shift part way through."""
+    rng = np.random.default_rng(seed)
+    common = np.cumsum(rng.normal(0, 0.01, n)) + np.log(1200.0)
+    shift = np.where(np.arange(n) >= n // 2, shift_size, 0.0)
+    frame = pd.DataFrame(
+        {
+            "date": pd.date_range("2005-01-03", periods=n, freq="7D"),
+            "ES": np.exp(common),
+            "PT": np.exp(common + shift + rng.normal(0, 0.004, n)),
+        }
+    )
+    long = frame.melt("date", var_name="country", value_name="price_without_tax_eur_per_1000l")
+    long["product"] = "diesel"
+    return long
+
+
+def test_long_run_break_changes_the_disequilibrium_but_not_the_default() -> None:
+    """Passing no break must reproduce the fixed-vector fit exactly."""
+    design = price_comovement_design(_cointegrated_pair(), product="diesel", cutoff="2010-01-01")
+    plain = fit_error_correction_model(design)
+    same = fit_error_correction_model(design, long_run_break=None)
+    assert plain["cointegrating_slope"] == same["cointegrating_slope"]
+    assert math.isnan(cast(float, plain["long_run_level_shift"]))
+
+    shifted = fit_error_correction_model(design, long_run_break="2008-01-01")
+    assert shifted["long_run_break"] == "2008-01-01"
+    assert not math.isnan(cast(float, shifted["long_run_level_shift"]))
+    assert shifted["cointegrating_slope"] != plain["cointegrating_slope"]
+
+
+def test_ecm_long_run_break_comparison_reports_both_specifications() -> None:
+    design = price_comovement_design(_cointegrated_pair(), product="diesel", cutoff="2010-01-01")
+    out = ecm_long_run_break_comparison(design, product="diesel", long_run_break="2008-01-01")
+    assert list(out["specification"]) == [
+        "fixed long-run vector",
+        "long-run vector shifts at the estimated date",
+    ]
+    assert out.loc[0, "long_run_break"] == ""
+    assert out.loc[1, "long_run_break"] == "2008-01-01"
+    assert (out["post_adjustment_speed"] != out["pre_adjustment_speed"]).all()
+
+
+def test_ardl_bounds_test_finds_a_level_relationship_in_a_cointegrated_pair() -> None:
+    """No level shift here: an unmodelled shift is exactly what should defeat the test."""
+    pair = _cointegrated_pair(shift_size=0.0)
+    design = price_comovement_design(pair, product="diesel", cutoff="2010-01-01")
+    result = ardl_bounds_test(design, product="diesel")
+    assert result["level_relationship_5pct"] is True
+    assert result["p_value_upper_bound"] < 0.05
+    assert result["statistic"] > 0
+
+
+def test_regular_spacing_robustness_drops_only_irregular_differences() -> None:
+    """A gap makes one difference span two weeks; the seven-day fit must exclude it."""
+    prices = _cointegrated_pair()
+    dropped_date = prices["date"].unique()[100]
+    prices = prices.loc[prices["date"] != dropped_date]
+    design = price_comovement_design(prices, product="diesel", cutoff="2010-01-01")
+
+    out = regular_spacing_robustness(design, product="diesel")
+    assert list(out["sample"]) == ["all observations", "seven-day gaps only"]
+    assert out.loc[1, "dropped"] == 1.0
+    assert out.loc[1, "nobs"] < out.loc[0, "nobs"]
+
+
+def test_adjustment_speeds_record_whether_an_ecm_is_licensed() -> None:
+    """The placebo quoted speeds for pairs whose levels the same gate declines."""
+    prices = _cointegrated_pair()
+    prices["country"] = prices["country"].replace({"PT": "IT"})
+    speeds = _adjustment_speeds(prices, home="IT", product="diesel", cutoff="2010-01-01")
+    assert "ecm_licensed" in speeds
+    assert "cointegration_p_value" in speeds
+    assert isinstance(speeds["ecm_licensed"], bool)
