@@ -150,6 +150,26 @@ def _reproducible(value: float, decimals: int, frames: list[pd.DataFrame]) -> bo
     return False
 
 
+def _holds_years_as_data(frames: list[pd.DataFrame]) -> bool:
+    """Does some source carry a column whose values are years?
+
+    A year in a table is usually an index and asserts nothing, but not always: the Break
+    column of the Chow table is the finding. The two cases are told apart by the source. A
+    frame with a ``break_year`` or ``year`` column can be asked whether the printed year is
+    one it holds; a frame of model terms cannot, and there the year is part of a label such
+    as ``energy_stress_2022``.
+    """
+    for frame in frames:
+        numeric = frame.select_dtypes("number")
+        for column in numeric.columns:
+            series = numeric[column].dropna()
+            if series.empty:
+                continue
+            if series.between(1900, 2100).all() and (series % 1 == 0).all():
+                return True
+    return False
+
+
 def verify_table_values(
     label: str,
     rows: list[str],
@@ -160,12 +180,14 @@ def verify_table_values(
 ) -> list[float]:
     """Return the numbers in a table that no source frame reproduces.
 
-    Values that look like years are skipped: they index the data rather than assert
-    anything about it.
+    Values that look like years are skipped only when no source holds years as data. Skipping
+    them unconditionally left the Break column of the Chow table unverified, so that table
+    could name any break year and still pass.
     """
     unmatched: list[float] = []
+    years_are_data = _holds_years_as_data(frames)
     for value, decimals in printed_numbers(rows):
-        if 1900.0 <= value <= 2100.0 and float(value).is_integer():
+        if 1900.0 <= value <= 2100.0 and float(value).is_integer() and not years_are_data:
             continue
         if abs(value) < 1e-9:
             continue
