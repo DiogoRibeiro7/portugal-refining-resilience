@@ -57,11 +57,12 @@ Generated from `reports/report_final.aux` and `config/report_tables.yml` by
 | 9 | 2022 diesel exports by trade source | `stress_2022_source_sensitivity.csv` | `14_2022_stress_test.ipynb` |
 | 10 | Contemporaneous elasticity, difference-only model | `price_short_run_models.csv` | `15_price_comovement.ipynb` |
 | 11 | Error-correction models | `price_ecm_models.csv` | `15_price_comovement.ipynb` |
-| 12 | Diesel balance ratios, Portugal against Spain | `pt_es_physical_balance_comparison.csv` | `16_spain_comparison.ipynb` |
-| 13 | Pre/post difference by window | `event_window_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
-| 14 | Claim-evidence matrix | narrative; see below | written prose; every row checked against the table it cites |
-| 15 | Monthly arm against annual arm, four balance terms | `monthly_annual_agreement_summary.csv` | `17_robustness_and_sensitivity.ipynb` |
-| 16 | 2022 interrupted-trend level changes by source | `annual_source_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
+| 12 | Adjustment speed with the long-run relation fixed and shifted | `price_ecm_long_run_break.csv` | `15_price_comovement.ipynb` |
+| 13 | Diesel balance ratios, Portugal against Spain | `pt_es_physical_balance_comparison.csv` | `16_spain_comparison.ipynb` |
+| 14 | Pre/post difference by window | `event_window_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
+| 15 | Claim-evidence matrix | narrative; see below | written prose; every row checked against the table it cites |
+| 16 | Monthly arm against annual arm, four balance terms | `monthly_annual_agreement_summary.csv` | `17_robustness_and_sensitivity.ipynb` |
+| 17 | 2022 interrupted-trend level changes by source | `annual_source_sensitivity.csv` | `17_robustness_and_sensitivity.ipynb` |
 
 ## Figures
 
@@ -120,6 +121,10 @@ Generated from `reports/report_final.aux` and `config/report_tables.yml` by
 | JODI against Eurostat, cell by cell and summarised | `jodi_eurostat_trade_reconciliation.csv`, `jodi_eurostat_reconciliation_summary.csv` |
 | Dated refinery events used as metadata | `refinery_events.csv` |
 | Interpreter, library versions and platform | `software_environment.csv` |
+| Adjustment speed refitted with the long-run relation allowed to shift at its estimated break | `price_ecm_long_run_break.csv` |
+| Bounds test for a level relationship, valid whichever integration order holds | `price_ardl_bounds_tests.csv` |
+| The same models on differences spanning exactly seven days | `price_regular_spacing_robustness.csv` |
+| Fitted distance from the counterfactual at each phase boundary and end | `monthly_phase_contrasts.csv` |
 | Months reported per year, per JODI flow, and the years that fall short of twelve | `jodi_trade_annual_completeness.csv`, `jodi_refinery_output_annual_completeness.csv`, `jodi_demand_annual_completeness.csv` |
 | The Eurostat annual panel as extracted, before the analytical panel is built | `eurostat_physical_balance_panel.csv` |
 

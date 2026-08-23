@@ -57,7 +57,8 @@ covers $0.678$ of diesel demand and the net-import-to-demand ratio reaches $0.26
 dependence Portugal ran in 2009--2011 on half the manufacturing base it had then. Gasoline,
 which entered each event with output far above domestic demand, moves as far on both ratios but
 crosses neither threshold. On prices, both Portugal--Spain pairs are cointegrated in log levels
-and both error-correction speeds increase several-fold after May 2021.
+and the diesel error-correction speed increases several-fold after May 2021. The gasoline
+change does not survive allowing the long-run relation to shift at its estimated 2013 break.
 
 No causal effect is claimed. The closure and the March 2022 European supply shock fall ten
 months apart, and no design here separates their contributions.
@@ -664,10 +665,21 @@ gasoline & Disequilibrium (lagged) & $-$0.0911 & 0.0355 & 0.010 \\
 Both long-run relations are close to unit elastic:
 $\log \text{PT} = 0.193 + 0.970 \log \text{ES}$ for diesel and
 $\log \text{PT} = 0.123 + 0.978 \log \text{ES}$ for gasoline. The adjustment speed, the share of
-a gap against that relation closed each week, more than quadruples for both products after the
+a gap against that relation closed each week, more than quadruples for both products on that
+specification after the
 transition. For diesel it moves from $-0.142$ to $-0.600$, shortening the half-life of a
 deviation from $4.5$ to $0.8$ weeks. For gasoline it moves from $-0.091$ to $-0.368$, a
-half-life of $7.3$ weeks falling to $1.5$. Both changes are precisely estimated.
+half-life of $7.3$ weeks falling to $1.5$. Both are precisely estimated on that specification.
+
+That specification holds the cointegrating vector fixed across the sample while letting the
+adjustment speed break, and a regime-shift search puts a break in the vector itself at 2013,
+eight years earlier. Whatever part of that shift is unmodelled sits in the disequilibrium term,
+where the post-2021 interaction can absorb it. Refitting to allow the shift separates the
+products: the diesel interaction holds at $-0.4055$ ($p<0.001$), a speed ratio of $2.9648$,
+while the gasoline interaction falls to $-0.1878$ on an interval of $[-0.388, 0.013]$ with
+$p=0.0664$. The contemporaneous elasticities move by less than a hundredth under the same
+refit. I carry the diesel result forward and treat the gasoline adjustment change as not
+established.
 
 The two products differ in the other channel. The diesel contemporaneous elasticity rises from
 $0.713$ to $1.375$, precisely estimated ($p<0.001$). The gasoline contemporaneous elasticity does
@@ -708,19 +720,21 @@ diagnostics.
 
 Two objections to the price result are testable, because the bulletin prices every member state
 on the same definition. If the disequilibrium term simply became more volatile after 2021, every
-pair priced against Spain would show a faster adjustment speed at that date. Running the
-identical specification on four neighbours that closed no refinery gives ratios of $0.99$ for
-France ($p=0.990$), $1.11$ for Belgium ($p=0.624$), $0.15$ for Germany ($p<0.001$, in the
-opposite direction) and $4.17$ for Italy ($p=0.064$), against $4.24$ for Portugal ($p<0.001$).
+pair priced against Spain would show a faster adjustment speed at that date. An adjustment
+speed is only defined against an equilibrium the pair has, and on diesel log levels the same
+diagnostic that licenses an error-correction model for Portugal declines it for Italy
+($p=0.4213$) and Germany ($p=0.0727$), so neither is relied on. Among the pairs it does license,
+Portugal gives a ratio of $4.24$ ($p<0.001$) against France at $0.99$ ($p=0.990$) and Belgium at
+$1.11$ ($p=0.624$).
 
 A single break at May 2021 attributes to that date everything after it, including the seaborne
 crude embargo of 5 December 2022 \citep{eu2022embargo}, which falls on every member state at
 once. Splitting the post-closure period at the embargo separates the two. Between the closure
-and the embargo the Portuguese speed moves from $-0.1415$ to $-0.8294$ ($p<0.001$) and no other
-pair moves comparably: Italy reaches $-0.0562$ ($p=0.240$) and Germany $-0.0945$ ($p=0.357$).
-From the embargo onward the pattern reverses, Belgium rising to $-0.6223$ with its embargo
-interaction at $p=0.028$ and Italy to $-0.2443$ at $p=0.103$. The Italian result therefore
-belongs to the embargo response and not to the Portuguese mechanism.
+and the embargo the Portuguese speed moves from $-0.1415$ to $-0.8294$ ($p<0.001$) and neither
+licensed neighbour moves comparably. From the embargo onward the pattern reverses, Belgium
+rising to $-0.6223$ with its embargo interaction at $p=0.028$. The movement among the
+neighbours belongs to the embargo, and the Portuguese movement to the window that contains the
+closure.
 
 The second objection is that the date is arbitrary. Estimated on the pre-closure sample only, so
 that they cannot recover a diluted version of the real effect, false breaks at May 2011, 2013,
@@ -841,8 +855,9 @@ The consequence that matters most is the concentration of the feedstock exposure
 disruption was specific to vacuum gas oil, a diesel feedstock at Sines. Before May 2021 a
 VGO-specific problem at Sines would have left Matosinhos unaffected. After it, Sines was the whole
 of Portuguese refining, so a shock to one feedstock at one plant was a shock to national diesel
-manufacturing. The closure did not merely reduce capacity. It concentrated the capacity and its
-feedstock vulnerability in the same place, ten months before that vulnerability was tested.
+manufacturing. The closure concentrated the capacity and its feedstock vulnerability in the same place,
+ten months before that vulnerability was tested. How a two-site system would have met the same
+disruption is not estimated here.
 
 \subsection{What can and cannot be inferred}
 
@@ -916,9 +931,12 @@ transmission, and are not pass-through in the causal sense.
 \item \textbf{DGEG trade covers only 2019--2024.} The 2013 break is corroborated against
 Eurostat, which is compiled from the DGEG submission rather than independent of it.
 \item \textbf{One cointegrating vector across a break.} The long-run relation is estimated over
-the whole sample while the adjustment speed is allowed to break. Allowing the relation itself
-to shift at an unknown date leaves both pairs cointegrated, so the verdict does not depend on
-the assumption, though the date such a search selects is 2013 rather than 2021.
+the whole sample while the adjustment speed is allowed to break, and the date a regime-shift
+search selects for the relation itself is 2013 rather than 2021. Refitting with the relation
+allowed to shift at that date is reported in the price results above: the diesel adjustment
+change survives it and the gasoline change does not, at $p=0.0664$. The contemporaneous
+elasticities are unaffected. This is the assumption that costs the paper a result, and it is
+reported rather than relegated.
 \item \textbf{The Spanish comparison is smaller than its own measurement error.} The Spanish
 diesel balance residual reaches $15$ per cent of demand, against Spanish net imports staying
 within $0.052$ of balance. Spanish flatness is therefore qualitative. The Portuguese movement,
@@ -961,16 +979,20 @@ extremes, but narrowly: 2009 reaches $0.2534$ and $0.6982$ on a system with two 
 the gap is a fraction of the $0.1487$ standard deviation of the annual change in that ratio.
 What distinguishes 2023 is that the level was reached on half the manufacturing base.
 
-Measured against the four senses of resilience defined in Section~\ref{sec:design}, the profile
-changed on all four and in the same direction. The domestic buffer thinned, import exposure rose
-on both measures, manufacturing concentrated from two sites to one, and price integration
-tightened on both channels. Nothing moved the other way.
+Measured against the four quantities defined in Section~\ref{sec:design}, all four
+moved, and none moved back. The domestic buffer thinned, import exposure rose on both measures,
+and manufacturing concentrated from two sites to one; those three run the same way for
+resilience as defined here. Price integration tightened on both channels, which is a different
+kind of fact: closer coupling to a larger market raises exposure to prices formed elsewhere and
+can equally widen access during a domestic interruption. The physical results carry the
+resilience reading; the price result measures external price exposure and is reported as that.
 
 Gasoline crossed none of them, which is not the same as saying it did not move. On the annual
 ratios it moves at least as far as diesel: across the 2021 closure its net-import-to-demand
 ratio shifts by $+0.393$ against diesel's $+0.277$, and its refinery-output-to-demand ratio by
 $-0.424$ against diesel's $-0.283$. Its price adjustment speed quadruples much as diesel's
-does. What separates them is where they started: gasoline entered every one of these events
+does on the fixed-vector specification, though unlike diesel's it does not survive letting the
+long-run relation shift at 2013. What separates them is where they started: gasoline entered every one of these events
 manufacturing roughly twice its domestic demand and left still manufacturing well above it, so
 a movement of that size crossed no threshold, while diesel entered with a ratio near one and
 the same proportional loss carried it across. What determined exposure was not the size of the

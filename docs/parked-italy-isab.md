@@ -1,7 +1,12 @@
 # Parked: the Italian ISAB reading of the price placebo
 
-**Dated 2026-08-22. Parked, not rejected — but do not revive it without re-reading the
-timing objection below, which is what killed it the first time.**
+**Dated 2026-08-22. Superseded 2026-08-23: the Italian numbers below come from a model the
+diagnostics do not license.** On diesel log levels the Engle-Granger p-value for IT-ES is
+0.4213, so the pair is not cointegrated and no adjustment speed of theirs is interpretable.
+Every Italian figure in this document was produced by fitting an error-correction model
+regardless, which the placebo code no longer does. The timing objection below still stands
+and was the original reason for parking it; the licensing problem is the stronger one and
+would have been sufficient on its own.
 
 ## The idea
 

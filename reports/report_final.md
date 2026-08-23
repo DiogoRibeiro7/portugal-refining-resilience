@@ -72,13 +72,20 @@ weakens a purely common-shock account without disposing of it. The comparison is
 those years on purpose: across the full 1990-2024 panel the Spanish ratio is not flat either,
 falling to 0.667 in 2007 before recovering.
 
-**Price linkage tightened for both fuels.** Both pairs are cointegrated in log prices, so both get
-an error-correction model, and both adjustment speeds more than triple after the transition:
+**Price linkage tightened, firmly for diesel.** Both pairs are cointegrated in log prices, so both
+get an error-correction model, and on the specification that holds the long-run relation fixed
+across the sample both adjustment speeds more than triple after the transition:
 
 | Product | Adjustment speed | Half-life of a gap | Contemporaneous elasticity |
 | --- | --- | --- | --- |
 | Diesel | −0.142 → −0.600 | 4.5 → 0.8 weeks | 0.713 → 1.375 (*p* < 0.001) |
 | Gasoline | −0.091 → −0.368 | 7.3 → 1.5 weeks | 0.789 → 1.074 (*p* = 0.227) |
+
+That specification is the weaker of the two available. The regime-shift test puts a break in the
+long-run relation itself at 2013, and refitting to allow it separates the products: the diesel
+change survives, at a speed ratio of 2.9648 and below 0.001, while the gasoline change falls to
+2.2388 and *p* = 0.0664. The diesel result is taken forward and the gasoline adjustment change is
+treated as not established.
 
 The channels differ: diesel tightened in both, gasoline only in the speed of adjustment, where
 its elasticity ends at 1.074 but the change itself carries *p* = 0.227. The diagnostics are run on
