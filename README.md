@@ -243,6 +243,7 @@ in 0.4.0 are superseded rather than extended. Cite the version you actually used
 |---|---|
 | [10.5281/zenodo.21986527](https://doi.org/10.5281/zenodo.21986527) | whichever version is latest |
 | [10.5281/zenodo.22062293](https://doi.org/10.5281/zenodo.22062293) | 0.5.0, released 22 August 2026 |
+| [10.5281/zenodo.22070662](https://doi.org/10.5281/zenodo.22070662) | 0.5.1, released 23 August 2026 |
 
 ## License
 
