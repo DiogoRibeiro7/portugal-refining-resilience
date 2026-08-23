@@ -6,15 +6,15 @@ authors:
     given-names: "Diogo"
     affiliation: "School of Media Arts and Design, Polytechnic of Porto"
     orcid: "https://orcid.org/0009-0001-2022-7072"
-version: "0.5.0"
-date-released: "2026-08-22"
+version: "0.5.1"
+date-released: "2026-08-23"
 license: MIT
 repository-code: "https://github.com/DiogoRibeiro7/portugal-refining-resilience"
-doi: "10.5281/zenodo.22062293"
+doi: "10.5281/zenodo.21986527"
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.21986527"
-    description: "Concept DOI, resolving to the latest version"
+    value: "10.5281/zenodo.22062293"
+    description: "Version DOI for 0.5.0"
 abstract: "Reproducible research software, derived evidence tables, figures, provenance records, and final report for an empirical analysis of Portugal's diesel and motor-gasoline balance from 1990 to 2024, covering refinery-output coverage, import dependence, structural breaks, monthly event timing, Portugal-Spain comparisons, and retail pre-tax price co-movement."
 keywords:
   - Portugal

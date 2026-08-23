@@ -5,6 +5,7 @@ v0.1.1 was tagged and released while ``pyproject.toml``, ``__init__.py`` and
 """
 
 import json
+import re
 import tomllib
 from pathlib import Path
 
@@ -47,21 +48,27 @@ def test_release_dates_agree() -> None:
     assert str(citation["date-released"]) == zenodo["publication_date"]
 
 
-def test_archive_dois_agree_between_citation_and_readme() -> None:
-    """The version DOI has to be changed by hand at each release, in two files.
+def test_citation_carries_the_concept_doi() -> None:
+    """``doi`` must be the concept DOI, not a version DOI.
 
-    The concept DOI never changes; the version DOI does, and a stale one silently cites the
-    wrong archive. That is the same failure this module already guards for version strings.
+    Zenodo mints a version DOI at deposit, which is after the release is tagged, so a version
+    DOI written here is wrong from the moment it is written: 0.5.1 would have shipped carrying
+    the DOI of 0.5.0. The concept DOI resolves to whichever version is latest and never goes
+    stale. Version DOIs are listed in the README, where each is labelled by version.
     """
     citation = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
-    version_doi = citation["doi"]
-    concept = [entry for entry in citation["identifiers"] if entry["type"] == "doi"]
-    assert len(concept) == 1, "expected exactly one concept DOI identifier"
-    concept_doi = concept[0]["value"]
+    concept_row = re.search(
+        r"\[(10\.5281/zenodo\.\d+)\]\([^)]*\)\s*\|\s*whichever version is latest", readme
+    )
+    assert concept_row, "the README table has no row for the concept DOI"
+    assert citation["doi"] == concept_row.group(1), (
+        "CITATION.cff doi is not the concept DOI the README designates"
+    )
 
-    assert version_doi != concept_doi, "the version DOI must not be the concept DOI"
-    for doi in (version_doi, concept_doi):
-        assert doi.startswith("10.5281/zenodo."), doi
-        assert doi in readme, f"{doi} is in CITATION.cff but not the README"
+    for entry in citation.get("identifiers", []):
+        if entry["type"] != "doi":
+            continue
+        assert entry["value"].startswith("10.5281/zenodo."), entry
+        assert entry["value"] in readme, f"{entry['value']} is in CITATION.cff but not the README"
