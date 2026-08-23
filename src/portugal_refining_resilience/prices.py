@@ -7,6 +7,7 @@ from typing import Any, cast
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
+from statsmodels.tsa.ardl import ARDL, UECM, ardl_select_order
 from statsmodels.tsa.stattools import adfuller, coint, kpss
 from statsmodels.tsa.vector_ar.vecm import coint_johansen
 
@@ -328,8 +329,17 @@ def fit_short_run_price_transmission(design: pd.DataFrame) -> object:
     return sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": 8})
 
 
-def fit_error_correction_model(design: pd.DataFrame, *, maxlags: int = 8) -> dict[str, object]:
+def fit_error_correction_model(
+    design: pd.DataFrame, *, maxlags: int = 8, long_run_break: str | pd.Timestamp | None = None
+) -> dict[str, object]:
     """Fit a two-step Engle-Granger ECM for cointegrated PT-ES price levels.
+
+    ``long_run_break`` allows the cointegrating relation itself to shift in level and slope
+    at a given date, which matters here: the regime-shift test selects a break in the long-run
+    relation in 2013, eight years before the transition whose adjustment speed is the object of
+    interest. Holding the vector fixed across that break leaves any of it that is unmodelled
+    inside the disequilibrium term, where the post-2021 interaction can absorb it. The default
+    is the fixed-vector specification, so an unqualified call is unchanged.
 
     When ``choose_price_model`` returns ``ecm_required`` the levels are non-stationary
     but move together, so neither a levels regression nor a pure difference model is
@@ -357,9 +367,16 @@ def fit_error_correction_model(design: pd.DataFrame, *, maxlags: int = 8) -> dic
     levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
     if len(levels) < 20:
         raise ValueError("Need at least 20 paired price levels to estimate a cointegrating vector")
-    long_run = sm.OLS(
-        levels["log_PT"], sm.add_constant(levels[["log_ES"]], has_constant="add")
-    ).fit()
+
+    regressors = levels[["log_ES"]].copy()
+    if long_run_break is not None:
+        shifted = (
+            pd.to_datetime(design.loc[levels.index, "date"]) >= pd.Timestamp(long_run_break)
+        ).astype(float)
+        regressors["long_run_shift"] = shifted.to_numpy()
+        regressors["log_ES_x_shift"] = regressors["log_ES"].to_numpy() * shifted.to_numpy()
+
+    long_run = sm.OLS(levels["log_PT"], sm.add_constant(regressors, has_constant="add")).fit()
 
     frame = design.copy()
     frame["disequilibrium"] = np.nan
@@ -385,8 +402,18 @@ def fit_error_correction_model(design: pd.DataFrame, *, maxlags: int = 8) -> dic
     model = sm.OLS(frame["diff_log_PT"], x).fit(cov_type="HAC", cov_kwds={"maxlags": maxlags})
     return {
         "model": model,
+        "long_run_model": long_run,
         "cointegrating_constant": float(long_run.params.iloc[0]),
         "cointegrating_slope": float(long_run.params.iloc[1]),
+        "long_run_break": None
+        if long_run_break is None
+        else str(pd.Timestamp(long_run_break).date()),
+        "long_run_level_shift": (
+            float(long_run.params["long_run_shift"]) if long_run_break is not None else float("nan")
+        ),
+        "long_run_slope_shift": (
+            float(long_run.params["log_ES_x_shift"]) if long_run_break is not None else float("nan")
+        ),
         "n_obs": int(model.nobs),
     }
 
@@ -710,6 +737,156 @@ def weekly_coverage(prices: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def regular_spacing_robustness(
+    design: pd.DataFrame, *, product: str, maxlags: int = 8
+) -> pd.DataFrame:
+    """Refit the ECM on consecutive observations exactly seven days apart.
+
+    The bulletin does not publish every week. Around fifty weeks are missing per series, and
+    a differenced model treats the observation after a gap as a one-week change when it spans
+    two or three. Those differences are mechanically larger, and they are not evenly spread
+    over the sample.
+
+    Dropping any difference that does not span exactly seven days costs observations but
+    removes the mismeasurement. If the adjustment speeds survive it, the gaps were not
+    driving them.
+    """
+    frame = design.copy()
+    frame["date"] = pd.to_datetime(frame["date"])
+    gap = frame["date"].diff().dt.days
+    regular = frame.loc[(gap == 7) | gap.isna()].copy()
+
+    rows: list[dict[str, object]] = []
+    for label, subset in (("all observations", frame), ("seven-day gaps only", regular)):
+        fitted = fit_error_correction_model(subset, maxlags=maxlags)
+        model = cast(Any, fitted["model"])
+        pre = float(model.params["disequilibrium_lag"])
+        interaction = float(model.params["disequilibrium_lag_x_post"])
+        rows.append(
+            {
+                "product": product,
+                "sample": label,
+                "nobs": float(model.nobs),
+                "dropped": float(len(frame) - len(subset)),
+                "pre_adjustment_speed": pre,
+                "post_adjustment_speed": pre + interaction,
+                "adjustment_interaction": interaction,
+                "interaction_p_value": float(model.pvalues["disequilibrium_lag_x_post"]),
+                "speed_ratio": (pre + interaction) / pre if pre else float("nan"),
+                "short_run_elasticity": float(model.params["diff_log_ES"]),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def ardl_bounds_test(
+    design: pd.DataFrame,
+    *,
+    product: str,
+    max_lags: int = 4,
+    case: int = 3,
+) -> dict[str, object]:
+    """Test for a level relationship without first settling the integration order.
+
+    The univariate diagnostics and the Johansen trace test do not agree here. ADF reads the
+    log levels as non-stationary and Engle-Granger finds them cointegrated; the trace test
+    rejects both a rank of zero and a rank of one at every lag tried, which is full rank, and
+    full rank means the levels were stationary and no error-correction model was needed.
+
+    The bounds test of Pesaran, Shin and Smith is the natural way out, because it is valid
+    whether the regressors are I(0) or I(1). Rejection on the upper bound licenses the level
+    relationship without requiring the pretests to agree, which is a weaker thing to have to
+    assume than either of them being right.
+    """
+    frame = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+    frame = frame.reset_index(drop=True)
+    order = ardl_select_order(
+        frame["log_PT"], max_lags, frame[["log_ES"]], max_lags, trend="c", ic="aic"
+    )
+    selected = order.model.ardl_order
+    # A bounds test needs at least one lag on each side: the criterion will happily select
+    # none, and UECM then has no level relationship to test and raises. One is the floor.
+    ar_order = max(1, int(selected[0]))
+    dl_order = max(1, int(selected[1]) if len(selected) > 1 else 0)
+    model = ARDL(frame["log_PT"], ar_order, frame[["log_ES"]], dl_order, trend="c")
+    fitted = UECM.from_ardl(model).fit()
+    bounds = fitted.bounds_test(case=case)
+    return {
+        "product": product,
+        "ar_lags": ar_order,
+        "dl_lags": dl_order,
+        "case": case,
+        "statistic": float(bounds.stat),
+        "p_value_lower_bound": float(bounds.p_values["lower"]),
+        "p_value_upper_bound": float(bounds.p_values["upper"]),
+        "level_relationship_5pct": bool(bounds.p_values["upper"] < 0.05),
+        "nobs": int(fitted.nobs),
+    }
+
+
+def _half_life(speed: float) -> float:
+    """Weeks for half a deviation to close at a given adjustment speed."""
+    if not -2.0 < speed < 0.0:
+        return float("nan")
+    return float(np.log(0.5) / np.log(1.0 + speed))
+
+
+def ecm_long_run_break_comparison(
+    design: pd.DataFrame,
+    *,
+    product: str,
+    long_run_break: str | pd.Timestamp,
+    maxlags: int = 8,
+) -> pd.DataFrame:
+    """Refit the ECM allowing the cointegrating vector to shift, and compare the two.
+
+    The adjustment speed is allowed to break in May 2021 while the long-run relation is held
+    fixed over the whole sample. The regime-shift test selects a break in that relation in
+    2013. If the vector really shifts then, the residual from a fixed-sample vector is
+    misspecified on one side of 2013, and the post-2021 interaction is free to absorb some of
+    that misspecification rather than measuring a change in adjustment.
+
+    Both fits are returned so the estimates can be read side by side, as the monthly event
+    models are. The question the table answers is narrow: does the change in adjustment speed
+    at May 2021 survive letting the long-run relation shift at its estimated date?
+    """
+    rows: list[dict[str, object]] = []
+    specifications = {
+        "fixed long-run vector": None,
+        "long-run vector shifts at the estimated date": long_run_break,
+    }
+    for label, break_date in specifications.items():
+        fitted = fit_error_correction_model(design, maxlags=maxlags, long_run_break=break_date)
+        model = cast(Any, fitted["model"])
+        pre = float(model.params["disequilibrium_lag"])
+        interaction = float(model.params["disequilibrium_lag_x_post"])
+        elasticity_pre = float(model.params["diff_log_ES"])
+        elasticity_post = elasticity_pre + float(model.params["diff_log_ES_x_post"])
+        rows.append(
+            {
+                "product": product,
+                "specification": label,
+                "short_run_elasticity_pre": elasticity_pre,
+                "short_run_elasticity_post": elasticity_post,
+                "half_life_pre_weeks": _half_life(pre),
+                "half_life_post_weeks": _half_life(pre + interaction),
+                "long_run_break": fitted["long_run_break"] or "",
+                "cointegrating_slope": fitted["cointegrating_slope"],
+                "long_run_level_shift": fitted["long_run_level_shift"],
+                "long_run_slope_shift": fitted["long_run_slope_shift"],
+                "pre_adjustment_speed": pre,
+                "adjustment_interaction": interaction,
+                "post_adjustment_speed": pre + interaction,
+                "interaction_p_value": float(model.pvalues["disequilibrium_lag_x_post"]),
+                "interaction_ci_low": float(model.conf_int().loc["disequilibrium_lag_x_post", 0]),
+                "interaction_ci_high": float(model.conf_int().loc["disequilibrium_lag_x_post", 1]),
+                "speed_ratio": (pre + interaction) / pre if pre else float("nan"),
+                "nobs": float(model.nobs),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def gregory_hansen_test(
     design: pd.DataFrame,
     *,
@@ -908,13 +1085,17 @@ PLACEBO_COUNTRIES: tuple[str, ...] = ("FR", "IT", "DE", "BE")
 
 def _adjustment_speeds(
     prices: pd.DataFrame, *, home: str, product: str, cutoff: str, end: str | None = None
-) -> dict[str, float]:
+) -> dict[str, object]:
     """Fit the error-correction model for one country pair and return its two speeds."""
     work = prices.loc[prices["country"].isin([home, "ES"])].copy()
     work["country"] = work["country"].replace({home: "PT"})
     if end is not None:
         work = work.loc[pd.to_datetime(work["date"]) < pd.Timestamp(end)]
     design = price_comovement_design(work, product=product, cutoff=cutoff)
+    # An adjustment speed is only defined against an equilibrium the pair actually has.
+    # Fitting one regardless produced quoted speeds for Italy and Germany, whose levels
+    # this same gate declines to call cointegrated.
+    choice = choose_price_model(design, product=product)
     model = cast(Any, fit_error_correction_model(design)["model"])
     pre = float(model.params["disequilibrium_lag"])
     post = pre + float(model.params["disequilibrium_lag_x_post"])
@@ -923,6 +1104,9 @@ def _adjustment_speeds(
         "post_adjustment_speed": post,
         "speed_ratio": post / pre if pre else float("nan"),
         "interaction_p_value": float(model.pvalues["disequilibrium_lag_x_post"]),
+        "cointegration_p_value": float(cast(float, choice["cointegration_p_value"])),
+        "model_family": str(choice["model_family"]),
+        "ecm_licensed": bool(choice["model_family"] == "ecm_required"),
         "n_obs": float(model.nobs),
     }
 

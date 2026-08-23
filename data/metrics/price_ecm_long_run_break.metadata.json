@@ -1,0 +1,29 @@
+{
+  "created_at_utc": "2026-08-23T20:54:52.018122+00:00",
+  "rows": 4,
+  "columns": [
+    "product",
+    "specification",
+    "short_run_elasticity_pre",
+    "short_run_elasticity_post",
+    "half_life_pre_weeks",
+    "half_life_post_weeks",
+    "long_run_break",
+    "cointegrating_slope",
+    "long_run_level_shift",
+    "long_run_slope_shift",
+    "pre_adjustment_speed",
+    "adjustment_interaction",
+    "post_adjustment_speed",
+    "interaction_p_value",
+    "interaction_ci_low",
+    "interaction_ci_high",
+    "speed_ratio",
+    "nobs"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_long_run_break.csv",
+  "csv_sha256": "13f9b7d40dec45a8558db70746121a2abbaa8a6968f8bd522344492b68bc3b47",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ecm_long_run_break.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

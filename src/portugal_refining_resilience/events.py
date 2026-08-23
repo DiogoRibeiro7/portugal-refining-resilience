@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import Any, cast
+
+import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
@@ -123,3 +126,73 @@ def fit_monthly_event_model(
     x = pd.concat([frame[design_columns], month_dummies], axis=1).astype(float)
     x = sm.add_constant(x, has_constant="add")
     return sm.OLS(frame[value_column].astype(float), x).fit(cov_type="HAC", cov_kwds={"maxlags": 3})
+
+
+def phase_contrasts(
+    model: object,
+    df: pd.DataFrame,
+    *,
+    value_column: str,
+    control_year: int | None = None,
+) -> pd.DataFrame:
+    """Fitted distance from the pre-closure counterfactual, at each phase boundary and end.
+
+    The phase indicator is the level shift where the phase begins and the ``*_trend`` term is
+    the slope within it, both measured against the extrapolated pre-closure trend. Quoting the
+    indicator alone therefore describes the path only at its first month. For the diesel
+    net-import ratio with 2013 held constant the level term is $0.088$ ($p=0.307$) while the
+    slope is $0.035$ a month ($p=0.024$): the phase begins indistinguishable from the
+    counterfactual and ends well above it, and the level term alone says the first thing and
+    not the second.
+
+    Each row is the linear combination
+
+    .. math:: \beta_{phase} + \gamma_{phase} (t - t_{phase}),
+
+    tested with the same HAC covariance as the model, so the interval is directly comparable
+    with the coefficients.
+    """
+    fitted = cast(Any, model)
+    names = list(fitted.model.exog_names)
+
+    frame = df[["date", "month", "event_phase", value_column]].dropna().copy()
+    frame["date"] = pd.to_datetime(frame["date"])
+    frame = frame.sort_values("date")
+    elapsed = frame["date"].dt.year * 12 + frame["date"].dt.month
+    frame["trend"] = (elapsed - elapsed.min()).astype(float)
+
+    rows: list[dict[str, object]] = []
+    for phase in EVENT_PHASES:
+        block = frame.loc[frame["event_phase"].eq(phase)]
+        if block.empty or phase not in names or f"{phase}_trend" not in names:
+            continue
+        boundary = float(block["trend"].min())
+        for label, moment in (
+            ("first month", block["trend"].min()),
+            ("last month", block["trend"].max()),
+        ):
+            restriction = np.zeros(len(names))
+            restriction[names.index(phase)] = 1.0
+            restriction[names.index(f"{phase}_trend")] = float(moment) - boundary
+            test = fitted.t_test(restriction)
+            interval = np.asarray(test.conf_int()).ravel()
+            rows.append(
+                {
+                    "outcome": value_column,
+                    "phase": phase,
+                    "at": label,
+                    "date": str(
+                        block["date"].min().date()
+                        if label == "first month"
+                        else block["date"].max().date()
+                    ),
+                    "months_into_phase": float(moment) - boundary,
+                    "contrast": float(np.ravel(test.effect)[0]),
+                    "std_error": float(np.ravel(test.sd)[0]),
+                    "p_value": float(np.ravel(test.pvalue)[0]),
+                    "ci_low": float(interval[0]),
+                    "ci_high": float(interval[1]),
+                    "specification": "2013 held constant" if control_year else "no 2013 control",
+                }
+            )
+    return pd.DataFrame(rows)

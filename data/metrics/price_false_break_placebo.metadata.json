@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-22T18:51:39.554824+00:00",
+  "created_at_utc": "2026-08-23T20:54:50.147433+00:00",
   "rows": 6,
   "columns": [
     "break_date",
@@ -10,10 +10,13 @@
     "post_adjustment_speed",
     "speed_ratio",
     "interaction_p_value",
+    "cointegration_p_value",
+    "model_family",
+    "ecm_licensed",
     "n_obs"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_false_break_placebo.csv",
-  "csv_sha256": "574d9fa0759fbf07d68bc9043b594473524c4b9b451034be993c1c2f432e46f6",
+  "csv_sha256": "1a656e0aae753318eabffae8185fc077fd1fe85fc88c93001731347df3d58796",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_false_break_placebo.parquet",
   "parquet_error": null,
   "metadata": {}

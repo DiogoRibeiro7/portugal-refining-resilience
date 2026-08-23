@@ -4,8 +4,11 @@ sources:
     role: primary_portugal_trade_crosscheck
     landing_page: https://www.dgeg.gov.pt/pt/estatistica/energia/petroleo-e-derivados/importacoes-exportacoes/
     current_2024_xlsx: https://www.dgeg.gov.pt/media/50hhvvxj/dgeg-oie-2024.xlsx
-    coverage: "2000-2024p annual workbooks"
-    notes: "Crude imports and petroleum-product imports/exports. Scrape annual xlsx links from landing page rather than assuming stable media IDs."
+    coverage: "2019-2024 product-level annual workbooks"
+    notes: "Crude imports and petroleum-product imports/exports. The landing page reaches
+      further back, but the product-level breakdown this analysis needs begins in 2019, and
+      that is the range the report states. Scrape annual xlsx links from the landing page
+      rather than assuming stable media IDs."
   dgeg_sales:
     organisation: DGEG
     role: primary_portugal_domestic_sales_crosscheck

@@ -31,6 +31,8 @@ tables:
     - price_short_run_models.csv
   tab:ecm:
     - price_ecm_models.csv
+  tab:ecmbreak:
+    - price_ecm_long_run_break.csv
   tab:spain:
     - pt_es_physical_balance_comparison.csv
   tab:sourcesens:

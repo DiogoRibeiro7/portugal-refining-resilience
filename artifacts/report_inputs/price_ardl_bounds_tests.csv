@@ -1,0 +1,3 @@
+product,ar_lags,dl_lags,case,statistic,p_value_lower_bound,p_value_upper_bound,level_relationship_5pct,nobs
+diesel,4,4,3,21.631510860388378,7.331446560954191e-11,3.0820945795539956e-10,True,990
+gasoline,3,3,3,21.93012534970915,5.4035664831530994e-11,2.2385537867819494e-10,True,991

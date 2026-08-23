@@ -46,6 +46,10 @@ TABLES: dict[str, tuple[str, str]] = {
         "`15_price_comovement.ipynb`",
     ),
     "tab:ecm": ("Error-correction models", "`15_price_comovement.ipynb`"),
+    "tab:ecmbreak": (
+        "Adjustment speed with the long-run relation fixed and shifted",
+        "`15_price_comovement.ipynb`",
+    ),
     "tab:spain": ("Diesel balance ratios, Portugal against Spain", "`16_spain_comparison.ipynb`"),
     "tab:windows": ("Pre/post difference by window", "`17_robustness_and_sensitivity.ipynb`"),
     "tab:claims": (

@@ -7,6 +7,7 @@ from portugal_refining_resilience.events import (
     assign_monthly_event_phase,
     fit_monthly_event_model,
     monthly_phase_summary,
+    phase_contrasts,
 )
 
 
@@ -170,3 +171,43 @@ def test_trend_is_measured_in_months_not_observations() -> None:
 
     assert complete.params["trend"] == pytest.approx(0.5)
     assert with_gap.params["trend"] == pytest.approx(0.5)
+
+
+def _phased_panel(slope: float = 0.05) -> pd.DataFrame:
+    """A monthly series that opens a phase at the counterfactual and drifts up within it."""
+    dates = pd.date_range("2015-01-01", "2024-12-01", freq="MS")
+    frame = pd.DataFrame({"date": dates})
+    frame["month"] = frame["date"].dt.month
+    frame["event_phase"] = assign_monthly_event_phase(frame["date"])
+    elapsed = np.arange(len(frame), dtype=float)
+    within = frame["event_phase"].eq("matosinhos_transition")
+    months_in = np.where(within, elapsed - elapsed[within.to_numpy()].min(), 0.0)
+    frame["value"] = 10.0 + 0.01 * elapsed + slope * months_in
+    return frame
+
+
+def test_phase_contrasts_report_the_path_not_only_its_first_month() -> None:
+    """The level term is the contrast where the phase opens, which is not where it ends.
+
+    The diesel ratio opens the transition at 0.088 with p=0.307 and closes it at 0.402 with
+    p=0.002, so quoting the level term alone describes only the first of those.
+    """
+    panel = _phased_panel()
+    model = fit_monthly_event_model(panel, value_column="value")
+    out = phase_contrasts(model, panel, value_column="value")
+
+    transition = out[out["phase"] == "matosinhos_transition"].set_index("at")
+    assert transition.loc["first month", "months_into_phase"] == 0.0
+    assert transition.loc["last month", "months_into_phase"] > 0.0
+    # the series drifts upward inside the phase, so the contrast must grow across it
+    assert transition.loc["last month", "contrast"] > transition.loc["first month", "contrast"]
+    assert (transition["ci_low"] < transition["contrast"]).all()
+    assert (transition["contrast"] < transition["ci_high"]).all()
+
+
+def test_phase_contrasts_label_the_specification() -> None:
+    panel = _phased_panel()
+    without = phase_contrasts(
+        fit_monthly_event_model(panel, value_column="value"), panel, value_column="value"
+    )
+    assert set(without["specification"]) == {"no 2013 control"}
