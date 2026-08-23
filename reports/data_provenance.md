@@ -125,6 +125,9 @@ Generated from `reports/report_final.aux` and `config/report_tables.yml` by
 | Bounds test for a level relationship, valid whichever integration order holds | `price_ardl_bounds_tests.csv` |
 | The same models on differences spanning exactly seven days | `price_regular_spacing_robustness.csv` |
 | Fitted distance from the counterfactual at each phase boundary and end | `monthly_phase_contrasts.csv` |
+| The transition tested as one hypothesis rather than three coefficients | `price_joint_transition_tests.csv` |
+| Licensed placebo pairs stacked and tested together, clustered on the date | `price_placebo_joint_tests.csv` |
+| Each monthly phase tested as its level and slope at once, and all phases together | `monthly_phase_joint_tests.csv` |
 | Months reported per year, per JODI flow, and the years that fall short of twelve | `jodi_trade_annual_completeness.csv`, `jodi_refinery_output_annual_completeness.csv`, `jodi_demand_annual_completeness.csv` |
 | The Eurostat annual panel as extracted, before the analytical panel is built | `eurostat_physical_balance_panel.csv` |
 
