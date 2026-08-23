@@ -10,6 +10,11 @@ version: "0.5.0"
 date-released: "2026-08-22"
 license: MIT
 repository-code: "https://github.com/DiogoRibeiro7/portugal-refining-resilience"
+doi: "10.5281/zenodo.22062293"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21986527"
+    description: "Concept DOI, resolving to the latest version"
 abstract: "Reproducible research software, derived evidence tables, figures, provenance records, and final report for an empirical analysis of Portugal's diesel and motor-gasoline balance from 1990 to 2024, covering refinery-output coverage, import dependence, structural breaks, monthly event timing, Portugal-Spain comparisons, and retail pre-tax price co-movement."
 keywords:
   - Portugal

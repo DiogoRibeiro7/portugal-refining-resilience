@@ -1,5 +1,9 @@
 # From Refining Capacity to Import Dependence: Portugal's Diesel and Gasoline Market, 2005-2024
 
+> **Superseded.** This is a staged artifact from the report-writing chain, written when the
+> evidence bundle was empty. It does not describe current findings. The canonical report is
+> [`report_final.tex`](../report_final.tex).
+
 ## 1. Executive Summary
 
 This draft evaluates what can be written from the repository's stored reporting
