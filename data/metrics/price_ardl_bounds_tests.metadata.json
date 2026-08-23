@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-23T20:54:52.045562+00:00",
+  "rows": 2,
+  "columns": [
+    "product",
+    "ar_lags",
+    "dl_lags",
+    "case",
+    "statistic",
+    "p_value_lower_bound",
+    "p_value_upper_bound",
+    "level_relationship_5pct",
+    "nobs"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ardl_bounds_tests.csv",
+  "csv_sha256": "b89599827a677217676c52bd6c549ba1dfcd67b581d19f68dc8159e954322a64",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_ardl_bounds_tests.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

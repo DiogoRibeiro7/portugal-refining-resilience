@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-08-22T18:51:39.446986+00:00",
+  "created_at_utc": "2026-08-23T20:54:49.474345+00:00",
   "rows": 5,
   "columns": [
     "pair",
@@ -10,10 +10,13 @@
     "post_adjustment_speed",
     "speed_ratio",
     "interaction_p_value",
+    "cointegration_p_value",
+    "model_family",
+    "ecm_licensed",
     "n_obs"
   ],
   "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_cross_country_placebo.csv",
-  "csv_sha256": "a533823a6c1b5693bb2c1e0c86f20a55f15856de776c3ee736e5a5388e9bf544",
+  "csv_sha256": "750fa9e169c67c32aff8dd6130e6ca1805b8db0d602c4a6d838fca2e3b5ac9f1",
   "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_cross_country_placebo.parquet",
   "parquet_error": null,
   "metadata": {}

@@ -1,0 +1,21 @@
+{
+  "created_at_utc": "2026-08-23T20:54:52.059445+00:00",
+  "rows": 4,
+  "columns": [
+    "product",
+    "sample",
+    "nobs",
+    "dropped",
+    "pre_adjustment_speed",
+    "post_adjustment_speed",
+    "adjustment_interaction",
+    "interaction_p_value",
+    "speed_ratio",
+    "short_run_elasticity"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_regular_spacing_robustness.csv",
+  "csv_sha256": "b01320be6b6eef0207bdb108cedd00cfaa7ff97c03e26179f69092e88b591b04",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_regular_spacing_robustness.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

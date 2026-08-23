@@ -1,10 +1,10 @@
 check,passed,detail
-report_tables_match_bundle,True,"all mapped tables verified; not checkable: ['tab:armrecon', 'tab:coverage', 'tab:diesel', 'tab:gasoline', 'tab:price', 'tab:stresssens']"
+report_tables_match_bundle,True,"all mapped tables verified; not checkable: ['tab:armrecon', 'tab:coverage', 'tab:diesel', 'tab:ecmbreak', 'tab:gasoline', 'tab:price', 'tab:stresssens']"
 report_sample_sizes_match,True,"stated sample sizes [34, 276, 993] match the fitted models"
 report_event_interval_correct,True,stated interval matches the configured 10-month gap
 disputed_cells_have_sensitivity,True,"8 disputed cell(s), all covered by a sensitivity"
 report_prose_matches_bundle,True,every quantity stated in the prose reproduces from the bundle
-prose_statistics_match_bundle,True,every quoted statistic reproduces from a recorded one (915 available)
+prose_statistics_match_bundle,True,every quoted statistic reproduces from a recorded one (1092 available)
 quantities_written_where_checked,True,every quantity carrying a unit is written where the checks can read it
 claim_matrix_matches_cited_source,True,all 0 claim-matrix rows check out
 source_swap_survival_reported,True,every result keeps its significance under the source swap
