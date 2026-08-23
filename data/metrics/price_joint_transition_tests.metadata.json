@@ -1,0 +1,21 @@
+{
+  "created_at_utc": "2026-08-23T22:05:09.600164+00:00",
+  "rows": 4,
+  "columns": [
+    "product",
+    "specification",
+    "hypothesis",
+    "terms",
+    "f_statistic",
+    "df_num",
+    "df_denom",
+    "p_value",
+    "rejected_5pct",
+    "nobs"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_joint_transition_tests.csv",
+  "csv_sha256": "57b82224caaa71ed15e503c925a742a9d1dabb5eb3f717d32784592fe0182e30",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_joint_transition_tests.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-08-23T22:05:10.881826+00:00",
+  "rows": 2,
+  "columns": [
+    "product",
+    "pairs",
+    "hypothesis",
+    "f_statistic",
+    "df_num",
+    "df_denom",
+    "p_value",
+    "rejected_5pct",
+    "nobs"
+  ],
+  "csv": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_placebo_joint_tests.csv",
+  "csv_sha256": "c96a96eb88f4713e9c5154986fb12b8b349c535468407739cb4b86ba10e99a9c",
+  "parquet": "C:\\Users\\diogo\\work_code\\portugal-refining-resilience\\data\\metrics\\price_placebo_joint_tests.parquet",
+  "parquet_error": null,
+  "metadata": {}
+}

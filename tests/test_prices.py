@@ -19,7 +19,9 @@ from portugal_refining_resilience.prices import (
     false_break_placebo,
     fit_error_correction_model,
     gregory_hansen_test,
+    joint_transition_wald_test,
     kpss_levels_diagnostics,
+    placebo_joint_wald_test,
     post_period_adjustment_stability,
     price_comovement_design,
     regular_spacing_robustness,
@@ -593,3 +595,54 @@ def test_adjustment_speeds_record_whether_an_ecm_is_licensed() -> None:
     assert "ecm_licensed" in speeds
     assert "cointegration_p_value" in speeds
     assert isinstance(speeds["ecm_licensed"], bool)
+
+
+def test_joint_transition_test_uses_every_transition_term() -> None:
+    """One hypothesis with three restrictions, not three hypotheses."""
+    design = price_comovement_design(_cointegrated_pair(), product="diesel", cutoff="2010-01-01")
+    result = joint_transition_wald_test(design, product="diesel")
+
+    assert result["df_num"] == len(prices_module.TRANSITION_TERMS) == 3
+    assert result["specification"] == "fixed long-run vector"
+    assert 0.0 <= float(cast(float, result["p_value"])) <= 1.0
+    assert float(cast(float, result["f_statistic"])) >= 0.0
+
+
+def test_joint_transition_test_reports_the_specification_it_used() -> None:
+    design = price_comovement_design(_cointegrated_pair(), product="diesel", cutoff="2010-01-01")
+    shifted = joint_transition_wald_test(design, product="diesel", long_run_break="2008-01-01")
+    assert shifted["specification"] == "long-run vector shifts at the estimated date"
+
+
+def test_placebo_joint_test_covers_only_licensed_pairs() -> None:
+    """A pair the diagnostics decline must not enter the joint restriction."""
+    rng = np.random.default_rng(11)
+    frames = []
+    for country, cointegrated in (("FR", True), ("IT", False)):
+        pair = _cointegrated_pair(seed=3, shift_size=0.0)
+        if not cointegrated:
+            # give this one an independent walk, so it shares no equilibrium with ES
+            wandering = pair["country"].eq("PT")
+            pair.loc[wandering, "price_without_tax_eur_per_1000l"] = np.exp(
+                np.cumsum(rng.normal(0, 0.02, int(wandering.sum()))) + np.log(1200.0)
+            )
+        pair = pair.loc[pair["country"] != "ES"] if country != "FR" else pair
+        pair["country"] = pair["country"].replace({"PT": country})
+        frames.append(pair)
+
+    panel = pd.concat(frames, ignore_index=True)
+    result = placebo_joint_wald_test(
+        panel, product="diesel", cutoff="2010-01-01", countries=("FR", "IT")
+    )
+    assert "IT-ES" not in str(result["pairs"])
+    assert result["df_num"] == len(str(result["pairs"]).split(",")) if result["pairs"] else True
+
+
+def test_placebo_joint_test_returns_an_empty_verdict_without_licensed_pairs() -> None:
+    panel = _cointegrated_pair()
+    result = placebo_joint_wald_test(
+        panel, product="diesel", cutoff="2010-01-01", countries=("XX",)
+    )
+    assert result["pairs"] == ""
+    assert result["nobs"] == 0
+    assert result["rejected_5pct"] is False

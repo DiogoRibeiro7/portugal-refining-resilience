@@ -1,0 +1,3 @@
+product,pairs,hypothesis,f_statistic,df_num,df_denom,p_value,rejected_5pct,nobs
+diesel,"FR-ES, BE-ES",no licensed control adjusts differently after the date,0.20584672374653354,2,992,0.8139925861291244,False,1986
+gasoline,"FR-ES, DE-ES, BE-ES",no licensed control adjusts differently after the date,13.718473702935013,3,992,9.00430596388672e-09,True,2979

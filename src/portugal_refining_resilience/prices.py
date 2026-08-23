@@ -737,6 +737,52 @@ def weekly_coverage(prices: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+#: The terms that carry the May 2021 transition in the error-correction model. Testing them
+#: one at a time asks three questions; the paper asks one.
+TRANSITION_TERMS: tuple[str, ...] = (
+    "disequilibrium_lag_x_post",
+    "diff_log_ES_x_post",
+    "post",
+)
+
+
+def joint_transition_wald_test(
+    design: pd.DataFrame,
+    *,
+    product: str,
+    maxlags: int = 8,
+    long_run_break: str | pd.Timestamp | None = None,
+) -> dict[str, object]:
+    """Test the whole May 2021 transition at once, rather than coefficient by coefficient.
+
+    The transition enters through an adjustment-speed interaction, a pass-through interaction
+    and a level term. Reading significance off whichever of the three is smallest is the
+    multiplicity problem in miniature. The joint restriction that all three are zero is one
+    hypothesis with the right number of degrees of freedom, and it is the hypothesis the
+    paper's claim corresponds to.
+    """
+    fitted = fit_error_correction_model(design, maxlags=maxlags, long_run_break=long_run_break)
+    model = cast(Any, fitted["model"])
+    restrictions = ", ".join(f"{term} = 0" for term in TRANSITION_TERMS)
+    test = model.f_test(restrictions)
+    return {
+        "product": product,
+        "specification": (
+            "fixed long-run vector"
+            if long_run_break is None
+            else "long-run vector shifts at the estimated date"
+        ),
+        "hypothesis": "no change at the transition in level, pass-through or adjustment",
+        "terms": len(TRANSITION_TERMS),
+        "f_statistic": float(np.ravel(test.fvalue)[0]),
+        "df_num": int(test.df_num),
+        "df_denom": int(test.df_denom),
+        "p_value": float(test.pvalue),
+        "rejected_5pct": bool(float(test.pvalue) < 0.05),
+        "nobs": int(model.nobs),
+    }
+
+
 def regular_spacing_robustness(
     design: pd.DataFrame, *, product: str, maxlags: int = 8
 ) -> pd.DataFrame:
@@ -1108,6 +1154,95 @@ def _adjustment_speeds(
         "model_family": str(choice["model_family"]),
         "ecm_licensed": bool(choice["model_family"] == "ecm_required"),
         "n_obs": float(model.nobs),
+    }
+
+
+def placebo_joint_wald_test(
+    prices: pd.DataFrame,
+    *,
+    product: str = "diesel",
+    cutoff: str = "2021-05-01",
+    countries: tuple[str, ...] = PLACEBO_COUNTRIES,
+) -> dict[str, object]:
+    """Test jointly whether any licensed control moves at the Portuguese date.
+
+    The placebo currently reports one interaction per neighbour, and a reader comparing four
+    p-values against a threshold is running an uncontrolled family. Stacking the pairs that the
+    diagnostics licence into a single regression with pair-specific coefficients allows the one
+    restriction that matters: every control interaction is zero. Standard errors are clustered
+    on the date, because all pairs are priced against the same Spanish series and their
+    disturbances are correlated within a week.
+    """
+    blocks: list[pd.DataFrame] = []
+    licensed: list[str] = []
+    for home in countries:
+        available = set(prices["country"].unique())
+        if home not in available or "ES" not in available:
+            continue
+        work = prices.loc[prices["country"].isin([home, "ES"])].copy()
+        work["country"] = work["country"].replace({home: "PT"})
+        design = price_comovement_design(work, product=product, cutoff=cutoff)
+        if choose_price_model(design, product=product)["model_family"] != "ecm_required":
+            continue
+        licensed.append(home)
+
+        levels = design[["log_PT", "log_ES"]].apply(pd.to_numeric, errors="coerce").dropna()
+        long_run = sm.OLS(
+            levels["log_PT"], sm.add_constant(levels[["log_ES"]], has_constant="add")
+        ).fit()
+        block = design.copy()
+        block["disequilibrium"] = np.nan
+        block.loc[levels.index, "disequilibrium"] = np.asarray(long_run.resid, dtype=float)
+        block["disequilibrium_lag"] = block["disequilibrium"].shift(1)
+        block["pair"] = home
+        blocks.append(
+            block.dropna(subset=["diff_log_PT", "diff_log_ES", "disequilibrium_lag", "post"])
+        )
+
+    if not blocks:
+        return {
+            "product": product,
+            "pairs": "",
+            "hypothesis": "no licensed control adjusts differently after the date",
+            "f_statistic": float("nan"),
+            "df_num": 0,
+            "df_denom": 0,
+            "p_value": float("nan"),
+            "rejected_5pct": False,
+            "nobs": 0,
+        }
+
+    stacked = pd.concat(blocks, ignore_index=True)
+    columns: dict[str, np.ndarray] = {}
+    for home in licensed:
+        member = (stacked["pair"] == home).to_numpy(dtype=float)
+        columns[f"{home}_const"] = member
+        columns[f"{home}_diseq"] = member * stacked["disequilibrium_lag"].to_numpy()
+        columns[f"{home}_diseq_x_post"] = (
+            member * stacked["disequilibrium_lag"].to_numpy() * stacked["post"].to_numpy()
+        )
+        columns[f"{home}_dES"] = member * stacked["diff_log_ES"].to_numpy()
+        columns[f"{home}_dES_x_post"] = (
+            member * stacked["diff_log_ES"].to_numpy() * stacked["post"].to_numpy()
+        )
+        columns[f"{home}_post"] = member * stacked["post"].to_numpy()
+
+    exog = pd.DataFrame(columns, index=stacked.index)
+    model = sm.OLS(stacked["diff_log_PT"].astype(float), exog).fit(
+        cov_type="cluster", cov_kwds={"groups": stacked["date"].to_numpy()}
+    )
+    restrictions = ", ".join(f"{home}_diseq_x_post = 0" for home in licensed)
+    test = model.f_test(restrictions)
+    return {
+        "product": product,
+        "pairs": ", ".join(f"{home}-ES" for home in licensed),
+        "hypothesis": "no licensed control adjusts differently after the date",
+        "f_statistic": float(np.ravel(test.fvalue)[0]),
+        "df_num": int(test.df_num),
+        "df_denom": int(test.df_denom),
+        "p_value": float(test.pvalue),
+        "rejected_5pct": bool(float(test.pvalue) < 0.05),
+        "nobs": int(model.nobs),
     }
 
 

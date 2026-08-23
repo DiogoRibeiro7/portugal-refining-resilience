@@ -678,7 +678,10 @@ where the post-2021 interaction can absorb it. Refitting to allow the shift sepa
 products: the diesel interaction holds at $-0.4055$ ($p<0.001$), a speed ratio of $2.9648$,
 while the gasoline interaction falls to $-0.1878$ on an interval of $[-0.388, 0.013]$ with
 $p=0.0664$. The contemporaneous elasticities move by less than a hundredth under the same
-refit. I carry the diesel result forward and treat the gasoline adjustment change as not
+refit. Tested as one hypothesis rather than three, the separation is starker: the joint restriction
+that the transition changed nothing in level, pass-through or adjustment gives $F=24.3169$ for
+diesel and $F=1.3365$ for gasoline under the corrected specification, at $p<0.001$ and
+$p=0.2611$. I carry the diesel result forward and treat the gasoline adjustment change as not
 established.
 
 The two products differ in the other channel. The diesel contemporaneous elasticity rises from
@@ -725,7 +728,15 @@ speed is only defined against an equilibrium the pair has, and on diesel log lev
 diagnostic that licenses an error-correction model for Portugal declines it for Italy
 ($p=0.4213$) and Germany ($p=0.0727$), so neither is relied on. Among the pairs it does license,
 Portugal gives a ratio of $4.24$ ($p<0.001$) against France at $0.99$ ($p=0.990$) and Belgium at
-$1.11$ ($p=0.624$).
+$1.11$ ($p=0.624$). Comparing per-pair $p$-values against a threshold is itself an uncontrolled
+family, so the licensed pairs are also stacked into one regression and the restriction that
+every control interaction is zero is tested at once, clustered on the date. For diesel it does
+not reject, at $F=0.2058$ and $p=0.8140$.
+
+For gasoline it does. Three pairs are licensed there and the same restriction rejects at
+$F=13.7185$ ($p<0.001$), with France and Germany both slowing at the same date. The gasoline
+movement in May 2021 is not Portugal-specific, so that result fails the placebo as well as the
+specification test of Section~\ref{sec:results}.
 
 A single break at May 2021 attributes to that date everything after it, including the seaborne
 crude embargo of 5 December 2022 \citep{eu2022embargo}, which falls on every member state at
@@ -930,6 +941,10 @@ The price results describe retail co-movement, not refinery-gate or internationa
 transmission, and are not pass-through in the causal sense.
 \item \textbf{DGEG trade covers only 2019--2024.} The 2013 break is corroborated against
 Eurostat, which is compiled from the DGEG submission rather than independent of it.
+\item \textbf{The gasoline price result fails two independent checks.} It does not survive
+letting the cointegrating vector shift at 2013, and the licensed controls move jointly at the
+same date. Neither on its own would be decisive; together they are why no gasoline adjustment
+claim is made.
 \item \textbf{One cointegrating vector across a break.} The long-run relation is estimated over
 the whole sample while the adjustment speed is allowed to break, and the date a regime-shift
 search selects for the relation itself is 2013 rather than 2021. Refitting with the relation

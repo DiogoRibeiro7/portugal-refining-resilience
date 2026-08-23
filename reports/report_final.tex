@@ -961,6 +961,14 @@ $+0.1923$ ($p=0.007$) to $+0.0878$ ($p=0.307$). The monthly design identifies th
 and the post-stress level clearly and the ten-month transition only weakly, which is a narrower
 reading than the uncorrected model supports and the one I take forward.
 
+That reading needs one qualification, and it runs the other way. A phase enters through a level
+term and a slope term, and testing the level alone asks whether the phase opens away from the
+counterfactual, not whether it differs from it at all. The joint restriction that both terms are
+zero rejects for the transition on the corrected fit, at $F=3.2107$ ($p=0.0420$) on output and
+$F=4.7392$ ($p=0.0095$) on the ratio. The transition is therefore distinguishable from the
+counterfactual; what it is not is a step at the boundary. It is carried by its slope, which is
+the same fact the contrasts below report as a path.
+
 A level term is the fitted distance from the counterfactual at the month the phase opens, and
 reading it alone describes the path at one point. The transition phase runs ten months, and its
 slope is $+0.0349$ a month ($p=0.024$), so the fitted contrast for the ratio grows from
@@ -1276,7 +1284,12 @@ Refitting with the long-run relation allowed to shift in level and slope at thos
 separates the two products, as Table~\ref{tab:ecmbreak} sets out. The diesel interaction survives at $-0.4055$ against $-0.4580$,
 still below $0.001$, with the speed ratio falling from $4.2362$ to $2.9648$. The gasoline
 interaction does not: it falls from $-0.2767$ to $-0.1878$ and from $p=0.0013$ to $p=0.0664$,
-a ratio of $2.2388$. The pre-transition speeds rise on both, which is what a misspecified
+a ratio of $2.2388$. Tested as one hypothesis rather than three, the difference is starker:
+the joint restriction that the transition changed nothing in level, pass-through or adjustment
+gives $F=24.3169$ for diesel and $F=1.3365$ for gasoline under the corrected specification, at
+$p<0.001$ and $p=0.2611$. On the fixed vector the gasoline joint test rejects, at $F=3.7974$
+and $p=0.0101$, so the specification and not the multiplicity is what moves it. The
+pre-transition speeds rise on both, which is what a misspecified
 equilibrium relation would produce, and the pre-transition half-life shortens with them, from
 $4.5424$ to $2.9987$ weeks for diesel and from $7.2541$ to $4.2171$ for gasoline. I take the
 diesel result forward and treat the gasoline adjustment change as not established.
@@ -1486,7 +1499,17 @@ of this section fitted and discussed both.
 Among the pairs the diagnostics do license, the comparison is clean. Portugal gives a ratio of
 $4.24$ ($p<0.001$) against France at $0.99$ ($p=0.990$) and Belgium at $1.11$ ($p=0.624$).
 Neither neighbour with an estimable equilibrium relation moves at the Portuguese date, which is
-what the objection requires and does not find.
+what the objection requires and does not find. Comparing two $p$-values against a threshold is
+itself an uncontrolled family, so the pairs are also stacked into one regression with
+pair-specific coefficients and the restriction that every control interaction is zero is tested
+at once, clustering on the date because all pairs are priced against the same Spanish series.
+For diesel it does not reject, at $F=0.2058$ on two restrictions and $p=0.8140$.
+
+Gasoline does not behave that way, and the difference is worth stating plainly. Three pairs are
+licensed there, and the same joint restriction rejects decisively, at $F=13.7185$ and $p<0.001$:
+France and Germany both slow markedly at the same date. Whatever moved the gasoline pairs in May
+2021 moved the neighbours too, so the gasoline price result fails the placebo as well as the
+specification test. The two failures are independent and point the same way.
 
 A single break at May 2021 still attributes to that date everything that happens afterwards,
 and what happens afterwards includes the seaborne crude embargo of 5 December 2022
@@ -1926,7 +1949,7 @@ Interrupted trends do detect 2022 & Table~\ref{tab:its} & association & Imposes 
 Diesel 2022 annual results do not depend on the disputed cell & Table~\ref{tab:sourcesens} & association & Annual panel uses the corroborated source throughout \\
 No 2022 gasoline annual result reaches significance & Table~\ref{tab:sourcesens} & --- & Weak on either source; not relied on \\
 Monthly phase means shift after May 2021 & Table~\ref{tab:phases} & descriptive & No seasonality control \\
-Refinery output sits $-70.52$ kt/month below the pre-closure counterfactual in the transition & Table~\ref{tab:monthly} & association & Not distinguishable from zero ($p=0.084$); quote with its phase-trend term \\
+Refinery output sits $-70.52$ kt/month below the pre-closure counterfactual in the transition & Table~\ref{tab:monthly} & association & The level term alone is not distinguishable from zero ($p=0.084$); tested jointly with its phase trend the transition is, see Section~\ref{sec:monthly} \\
 In the stress phase it sits $-101.10$ kt/month below the same counterfactual & Table~\ref{tab:monthly} & association & Not incremental to the transition shift; confounded with demand recovery \\
 Monthly models cover 276 months, 2002--2024 & Section~\ref{sec:coverage} & descriptive & JODI begins in 2002, later than the annual window \\
 2022 diesel exports at the 0th baseline percentile & Table~\ref{tab:stresssens} & descriptive & Sources disagree on this cell; both reported \\
@@ -2112,9 +2135,16 @@ inside any reasonable correction for the twelve terms reported. The import-level
 weaker and are not relied on: the Matosinhos import shift is significant only at the ten per
 cent level.
 
-The price arm is a third family and is reported unadjusted. It contains the two adjustment-speed
-interactions, the placebo pairs at the closure date, the false-break dates estimated on
-pre-closure data, and the three-phase split at the embargo. No correction is applied across it,
+The price arm is a third family. Where its restrictions sit in one model they are now tested
+jointly rather than one at a time: the transition as a single three-restriction hypothesis per
+product, the licensed placebo pairs stacked into one regression and tested together, and each
+monthly phase as its level and slope at once. A joint test is the better answer to multiplicity
+than a correction, because it asks the question the claim corresponds to rather than adjusting a
+threshold after the fact.
+
+What remains of the family is reported unadjusted: the false-break dates estimated on
+pre-closure data, and the three-phase split at the embargo. No correction is applied across
+those,
 for a reason worth stating rather than hiding: the tests are not exchangeable, since the placebo
 and false-break tests exist to fail, and a procedure that controls a false-discovery rate over a
 set designed to contain mostly true nulls would make the placebos look stronger than they are.

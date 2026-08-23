@@ -8,6 +8,7 @@ from portugal_refining_resilience.events import (
     fit_monthly_event_model,
     monthly_phase_summary,
     phase_contrasts,
+    phase_joint_tests,
 )
 
 
@@ -211,3 +212,30 @@ def test_phase_contrasts_label_the_specification() -> None:
         fit_monthly_event_model(panel, value_column="value"), panel, value_column="value"
     )
     assert set(without["specification"]) == {"no 2013 control"}
+
+
+def test_phase_joint_tests_test_level_and_slope_together() -> None:
+    """A phase enters through two terms; the question is whether the phase differs at all."""
+    panel = _phased_panel()
+    model = fit_monthly_event_model(panel, value_column="value")
+    out = phase_joint_tests(model, value_column="value")
+
+    per_phase = out[out["hypothesis"] != "all phases"]
+    assert (per_phase["terms"] == 2).all()
+    assert (per_phase["df_num"] == 2).all()
+
+    combined = out[out["hypothesis"] == "all phases"]
+    assert len(combined) == 1
+    assert int(combined["terms"].iloc[0]) == 2 * len(per_phase)
+
+
+def test_phase_joint_test_detects_a_phase_carried_by_its_slope() -> None:
+    """The transition level term is small and its slope is not, which is the real case.
+
+    Testing the level alone reports nothing; testing the phase reports the drift.
+    """
+    panel = _phased_panel(slope=0.4)
+    model = fit_monthly_event_model(panel, value_column="value")
+    out = phase_joint_tests(model, value_column="value")
+    transition = out[out["hypothesis"] == "matosinhos_transition"].iloc[0]
+    assert transition["p_value"] < 0.05

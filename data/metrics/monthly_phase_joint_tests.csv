@@ -1,0 +1,97 @@
+product,outcome,hypothesis,terms,f_statistic,df_num,df_denom,p_value,rejected_5pct,specification
+diesel,imports_kt,matosinhos_transition,2,4.674825515284633,2,257,0.010134617721588246,True,no 2013 control
+diesel,imports_kt,energy_stress_2022,2,7.775675078927076,2,257,0.0005263746251583524,True,no 2013 control
+diesel,imports_kt,post_stress,2,9.883274080365581,2,257,7.325024840240014e-05,True,no 2013 control
+diesel,imports_kt,all phases,6,4.818666467064393,6,257,0.00011130423890043338,True,no 2013 control
+diesel,imports_kt,matosinhos_transition,2,3.141604656204262,2,255,0.044890715113221534,True,2013 held constant
+diesel,imports_kt,energy_stress_2022,2,2.4403955422330403,2,255,0.08915896997621266,False,2013 held constant
+diesel,imports_kt,post_stress,2,3.4996617330012953,2,255,0.031666593325645406,True,2013 held constant
+diesel,imports_kt,all phases,6,2.1643154753353517,6,255,0.04692804087269418,True,2013 held constant
+diesel,exports_kt,matosinhos_transition,2,27.7174253682554,2,257,1.2583870889599204e-11,True,no 2013 control
+diesel,exports_kt,energy_stress_2022,2,29.75092224283987,2,257,2.388134737217344e-12,True,no 2013 control
+diesel,exports_kt,post_stress,2,29.266686146482566,2,257,3.5406697616410763e-12,True,no 2013 control
+diesel,exports_kt,all phases,6,17.315978626498108,6,257,8.216718462668087e-17,True,no 2013 control
+diesel,exports_kt,matosinhos_transition,2,14.668365822071223,2,255,9.336190561331992e-07,True,2013 held constant
+diesel,exports_kt,energy_stress_2022,2,4.765723542495514,2,255,0.009290011998922721,True,2013 held constant
+diesel,exports_kt,post_stress,2,4.817807338545406,2,255,0.00883518977014363,True,2013 held constant
+diesel,exports_kt,all phases,6,8.641869824980956,6,255,1.4440410888306426e-08,True,2013 held constant
+diesel,demand_kt,matosinhos_transition,2,3.643220906376037,2,257,0.02752857715463588,True,no 2013 control
+diesel,demand_kt,energy_stress_2022,2,6.17444609417621,2,257,0.0024038311688996342,True,no 2013 control
+diesel,demand_kt,post_stress,2,12.222710403673627,2,257,8.49675944546129e-06,True,no 2013 control
+diesel,demand_kt,all phases,6,4.9895371266340325,6,257,7.445455753281564e-05,True,no 2013 control
+diesel,demand_kt,matosinhos_transition,2,0.7944894109731652,2,255,0.45292700676081965,False,2013 held constant
+diesel,demand_kt,energy_stress_2022,2,0.43130631762517146,2,255,0.6501329176532533,False,2013 held constant
+diesel,demand_kt,post_stress,2,4.548301240783366,2,255,0.011458141917088988,True,2013 held constant
+diesel,demand_kt,all phases,6,2.136247348665641,6,255,0.04978852083464564,True,2013 held constant
+diesel,refinery_output_kt,matosinhos_transition,2,9.782613854264573,2,257,8.042996188261478e-05,True,no 2013 control
+diesel,refinery_output_kt,energy_stress_2022,2,22.67252566206441,2,257,8.546498957828356e-10,True,no 2013 control
+diesel,refinery_output_kt,post_stress,2,21.844449886277143,2,257,1.7310952461172598e-09,True,no 2013 control
+diesel,refinery_output_kt,all phases,6,9.316138665002105,6,257,3.01290034660988e-09,True,no 2013 control
+diesel,refinery_output_kt,matosinhos_transition,2,3.2107072901076723,2,255,0.0419638244759205,True,2013 held constant
+diesel,refinery_output_kt,energy_stress_2022,2,6.7756696233590485,2,255,0.0013579675273192756,True,2013 held constant
+diesel,refinery_output_kt,post_stress,2,8.310462061508977,2,255,0.0003188321747959388,True,2013 held constant
+diesel,refinery_output_kt,all phases,6,4.973632915998974,6,255,7.763617732675522e-05,True,2013 held constant
+diesel,net_imports_kt,matosinhos_transition,2,14.448773477744272,2,257,1.1307490035721352e-06,True,no 2013 control
+diesel,net_imports_kt,energy_stress_2022,2,37.42741115120143,2,257,5.427143045536093e-15,True,no 2013 control
+diesel,net_imports_kt,post_stress,2,31.34290082679606,2,257,6.598665383124475e-13,True,no 2013 control
+diesel,net_imports_kt,all phases,6,15.271776940775425,6,257,5.8537405132594986e-15,True,no 2013 control
+diesel,net_imports_kt,matosinhos_transition,2,4.42782427502897,2,255,0.012872340872020493,True,2013 held constant
+diesel,net_imports_kt,energy_stress_2022,2,6.160495757682492,2,255,0.0024386947092434733,True,2013 held constant
+diesel,net_imports_kt,post_stress,2,7.24296179741358,2,255,0.0008720113970781092,True,2013 held constant
+diesel,net_imports_kt,all phases,6,5.6607261433404545,6,255,1.5394007389136248e-05,True,2013 held constant
+diesel,net_import_to_demand_ratio,matosinhos_transition,2,16.25126003068419,2,257,2.2598497351981568e-07,True,no 2013 control
+diesel,net_import_to_demand_ratio,energy_stress_2022,2,35.19075529023921,2,257,3.104190008395153e-14,True,no 2013 control
+diesel,net_import_to_demand_ratio,post_stress,2,30.318483535132568,2,257,1.507535813207833e-12,True,no 2013 control
+diesel,net_import_to_demand_ratio,all phases,6,14.66832181319946,6,257,2.1128713498778164e-14,True,no 2013 control
+diesel,net_import_to_demand_ratio,matosinhos_transition,2,4.739166537051407,2,255,0.009530932228698146,True,2013 held constant
+diesel,net_import_to_demand_ratio,energy_stress_2022,2,5.107529005628258,2,255,0.006685059619870965,True,2013 held constant
+diesel,net_import_to_demand_ratio,post_stress,2,6.807862918755339,2,255,0.0013170889858245016,True,2013 held constant
+diesel,net_import_to_demand_ratio,all phases,6,5.39303275430215,6,255,2.8923682634176515e-05,True,2013 held constant
+gasoline,imports_kt,matosinhos_transition,2,3.682066080644838,2,257,0.02650824938422271,True,no 2013 control
+gasoline,imports_kt,energy_stress_2022,2,2.164586948078816,2,257,0.11688580313492097,False,no 2013 control
+gasoline,imports_kt,post_stress,2,7.808085165400436,2,257,0.0005105333634002997,True,no 2013 control
+gasoline,imports_kt,all phases,6,3.379379404047602,6,257,0.003174065540369534,True,no 2013 control
+gasoline,imports_kt,matosinhos_transition,2,3.016988186011149,2,255,0.05069913149969068,False,2013 held constant
+gasoline,imports_kt,energy_stress_2022,2,0.6313592442283418,2,255,0.5326976953127909,False,2013 held constant
+gasoline,imports_kt,post_stress,2,3.04409670139169,2,255,0.04937428026850466,True,2013 held constant
+gasoline,imports_kt,all phases,6,1.7133032891370865,6,255,0.11821036469074205,False,2013 held constant
+gasoline,exports_kt,matosinhos_transition,2,2.4515039159647825,2,257,0.0881767081700942,False,no 2013 control
+gasoline,exports_kt,energy_stress_2022,2,5.751334684323968,2,257,0.0036017226066309966,True,no 2013 control
+gasoline,exports_kt,post_stress,2,1.6398137621702502,2,257,0.19603953331984525,False,no 2013 control
+gasoline,exports_kt,all phases,6,4.768140109147521,6,257,0.00012534526908455286,True,no 2013 control
+gasoline,exports_kt,matosinhos_transition,2,2.0465807892145795,2,255,0.13129231786512124,False,2013 held constant
+gasoline,exports_kt,energy_stress_2022,2,4.224910498284997,2,255,0.01566353413409945,True,2013 held constant
+gasoline,exports_kt,post_stress,2,1.1296346861026736,2,255,0.3247629215248336,False,2013 held constant
+gasoline,exports_kt,all phases,6,4.506074258910947,6,255,0.00023275776312044392,True,2013 held constant
+gasoline,demand_kt,matosinhos_transition,2,42.13802323334793,2,257,1.4869971822347645e-16,True,no 2013 control
+gasoline,demand_kt,energy_stress_2022,2,79.93528141340768,2,257,1.014491625468624e-27,True,no 2013 control
+gasoline,demand_kt,post_stress,2,142.89926699519557,2,257,1.885114626265245e-42,True,no 2013 control
+gasoline,demand_kt,all phases,6,59.34754059193489,6,257,8.704273201858621e-46,True,no 2013 control
+gasoline,demand_kt,matosinhos_transition,2,5.700467360169161,2,255,0.0037849975780162013,True,2013 held constant
+gasoline,demand_kt,energy_stress_2022,2,15.515786098253336,2,255,4.376142104868265e-07,True,2013 held constant
+gasoline,demand_kt,post_stress,2,28.735609120153672,2,255,5.566668735439238e-12,True,2013 held constant
+gasoline,demand_kt,all phases,6,16.963060363589065,6,255,1.7809383928726784e-16,True,2013 held constant
+gasoline,refinery_output_kt,matosinhos_transition,2,0.6291325010209157,2,257,0.533872943570513,False,no 2013 control
+gasoline,refinery_output_kt,energy_stress_2022,2,2.1502577541066783,2,257,0.11854468832432784,False,no 2013 control
+gasoline,refinery_output_kt,post_stress,2,4.435114038367672,2,257,0.012774645404859876,True,no 2013 control
+gasoline,refinery_output_kt,all phases,6,2.873321771732844,6,257,0.009987216248134801,True,no 2013 control
+gasoline,refinery_output_kt,matosinhos_transition,2,1.2095704213441416,2,255,0.30003115503490607,False,2013 held constant
+gasoline,refinery_output_kt,energy_stress_2022,2,2.5050697651117946,2,255,0.08367808870439138,False,2013 held constant
+gasoline,refinery_output_kt,post_stress,2,1.2779216985207753,2,255,0.2803938879202534,False,2013 held constant
+gasoline,refinery_output_kt,all phases,6,2.969000602436575,6,255,0.008069007246025134,True,2013 held constant
+gasoline,net_imports_kt,matosinhos_transition,2,2.0270812513397503,2,257,0.1338201053410699,False,no 2013 control
+gasoline,net_imports_kt,energy_stress_2022,2,7.242644278116253,2,257,0.0008709770443133638,True,no 2013 control
+gasoline,net_imports_kt,post_stress,2,2.3965716649511863,2,257,0.09306126487157008,False,no 2013 control
+gasoline,net_imports_kt,all phases,6,4.043795963550909,6,257,0.0006834631569619711,True,no 2013 control
+gasoline,net_imports_kt,matosinhos_transition,2,1.3706063633877517,2,255,0.2558172829558143,False,2013 held constant
+gasoline,net_imports_kt,energy_stress_2022,2,4.91837429835585,2,255,0.008019484664896092,True,2013 held constant
+gasoline,net_imports_kt,post_stress,2,1.2528254447255514,2,255,0.2874488671205407,False,2013 held constant
+gasoline,net_imports_kt,all phases,6,3.495862421686254,6,255,0.002434783443970931,True,2013 held constant
+gasoline,net_import_to_demand_ratio,matosinhos_transition,2,3.7189148061438524,2,257,0.025575598352382125,True,no 2013 control
+gasoline,net_import_to_demand_ratio,energy_stress_2022,2,16.217406978976207,2,257,2.3288025259584426e-07,True,no 2013 control
+gasoline,net_import_to_demand_ratio,post_stress,2,12.896552970434469,2,257,4.598998389897096e-06,True,no 2013 control
+gasoline,net_import_to_demand_ratio,all phases,6,7.986171525443591,6,257,6.523068508431782e-08,True,no 2013 control
+gasoline,net_import_to_demand_ratio,matosinhos_transition,2,2.575287002827764,2,255,0.07811104978576155,False,2013 held constant
+gasoline,net_import_to_demand_ratio,energy_stress_2022,2,9.267547794124434,2,255,0.0001302292027449875,True,2013 held constant
+gasoline,net_import_to_demand_ratio,post_stress,2,5.026090823796845,2,255,0.007229722694298213,True,2013 held constant
+gasoline,net_import_to_demand_ratio,all phases,6,5.021688607056542,6,255,6.933720237576036e-05,True,2013 held constant
