@@ -2,6 +2,8 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+import requests
+from dataexcept import DataLoadingError, FileWriteError
 
 from portugal_refining_resilience.sources import download_file
 
@@ -48,3 +50,41 @@ def test_download_file_records_metadata(tmp_path: Path, monkeypatch: pytest.Monk
     assert destination.read_bytes() == b"new"
     metadata = destination.with_suffix(".csv.metadata.json")
     assert metadata.exists()
+
+
+def test_download_network_failure_retains_url_and_cause(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    url = "https://example.test/source.csv"
+    cause = requests.Timeout("timed out")
+
+    def fail_get(*args: object, **kwargs: object) -> None:
+        raise cause
+
+    monkeypatch.setattr("portugal_refining_resilience.sources.requests.get", fail_get)
+    with pytest.raises(DataLoadingError) as caught:
+        download_file(url, tmp_path / "source.csv")
+
+    assert caught.value.source == url
+    assert caught.value.original is cause
+    assert caught.value.__cause__ is cause
+
+
+def test_download_write_failure_retains_destination_and_cause(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "source.csv"
+    cause = OSError("disk full")
+    monkeypatch.setattr(
+        "portugal_refining_resilience.sources.requests.get", _fake_get_factory(b"new")
+    )
+
+    def fail_write(self: Path, data: bytes) -> int:
+        raise cause
+
+    monkeypatch.setattr(Path, "write_bytes", fail_write)
+    with pytest.raises(FileWriteError) as caught:
+        download_file("https://example.test/source.csv", path)
+
+    assert caught.value.path == str(path)
+    assert caught.value.__cause__ is cause

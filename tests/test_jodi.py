@@ -1,7 +1,25 @@
+from pathlib import Path
+
 import pandas as pd
 import pytest
+from dataexcept import DataLoadingError
 
-from portugal_refining_resilience.jodi import annualise, build_monthly_panel, filter_portugal_fuels
+from portugal_refining_resilience.jodi import (
+    annualise,
+    build_monthly_panel,
+    filter_portugal_fuels,
+    read_secondary_zip,
+)
+
+
+def test_invalid_jodi_zip_retains_source_and_cause(tmp_path: Path) -> None:
+    path = tmp_path / "secondary.zip"
+    path.write_bytes(b"not a ZIP archive")
+    with pytest.raises(DataLoadingError) as caught:
+        read_secondary_zip(path)
+
+    assert caught.value.source == str(path)
+    assert caught.value.original is caught.value.__cause__
 
 
 def _monthly_frame(months: range) -> pd.DataFrame:

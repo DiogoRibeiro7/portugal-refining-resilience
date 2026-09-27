@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from dataexcept import FileReadError, FileWriteError, wrapping
 
 try:  # pragma: no cover - depends on the optional parquet engine
     from pyarrow.lib import ArrowException as pa_error
@@ -15,10 +16,43 @@ except ImportError:  # pragma: no cover
     pa_error = ValueError
 
 
+def read_text(path: Path) -> str:
+    """Read UTF-8 text and retain the failing path and original exception."""
+    with wrapping((OSError, UnicodeError), FileReadError, path=str(path)):
+        return path.read_text(encoding="utf-8")
+
+
+def read_bytes(path: Path) -> bytes:
+    """Read source bytes without changing their content or provenance."""
+    with wrapping(OSError, FileReadError, path=str(path)):
+        return path.read_bytes()
+
+
+def ensure_parent(path: Path) -> None:
+    """Create the parent directory for an output artifact."""
+    with wrapping(OSError, FileWriteError, path=str(path.parent)):
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+
+def write_text(path: Path, content: str) -> None:
+    """Write UTF-8 text and retain the failing path and original exception."""
+    with wrapping((OSError, UnicodeError), FileWriteError, path=str(path)):
+        path.write_text(content, encoding="utf-8")
+
+
+def write_bytes(path: Path, content: bytes) -> None:
+    """Write exact source bytes and retain filesystem failures."""
+    with wrapping(OSError, FileWriteError, path=str(path)):
+        path.write_bytes(content)
+
+
 def sha256_file(path: Path) -> str:
     """Return a SHA-256 checksum for a file."""
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
+    with (
+        wrapping(OSError, FileReadError, path=str(path)),
+        path.open("rb") as handle,
+    ):
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
@@ -48,8 +82,9 @@ def persist_dataframe(
             examples = df.loc[duplicated, key_columns].head(10).to_dict("records")
             raise ValueError(f"Duplicate keys detected: {examples}")
 
-    csv_path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(csv_path, index=False)
+    ensure_parent(csv_path)
+    with wrapping(OSError, FileWriteError, path=str(csv_path)):
+        df.to_csv(csv_path, index=False)
 
     # CSV is the mandatory audit artifact and is already on disk. Parquet is a typed
     # convenience, so a column pyarrow cannot encode is recorded rather than allowed to
@@ -58,17 +93,18 @@ def persist_dataframe(
     parquet_error: str | None = None
     if write_parquet:
         candidate = csv_path.with_suffix(".parquet")
-        try:
-            df.to_parquet(candidate, index=False)
-        except (ValueError, TypeError, ImportError, pa_error) as error:
-            parquet_error = f"{type(error).__name__}: {error}"
-            warnings.warn(
-                f"Parquet not written for {csv_path.name}: {parquet_error}",
-                RuntimeWarning,
-                stacklevel=2,
-            )
-        else:
-            parquet_path = candidate
+        with wrapping(OSError, FileWriteError, path=str(candidate)):
+            try:
+                df.to_parquet(candidate, index=False)
+            except (ValueError, TypeError, ImportError, pa_error) as error:
+                parquet_error = f"{type(error).__name__}: {error}"
+                warnings.warn(
+                    f"Parquet not written for {csv_path.name}: {parquet_error}",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+            else:
+                parquet_path = candidate
 
     sidecar = {
         "created_at_utc": datetime.now(UTC).isoformat(),
@@ -81,11 +117,11 @@ def persist_dataframe(
         "metadata": metadata or {},
     }
     sidecar_path = csv_path.with_suffix(".metadata.json")
-    sidecar_path.write_text(json.dumps(sidecar, indent=2, default=str) + "\n", encoding="utf-8")
+    write_text(sidecar_path, json.dumps(sidecar, indent=2, default=str) + "\n")
     return sidecar
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     """Write an indented UTF-8 JSON document."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, default=str) + "\n", encoding="utf-8")
+    ensure_parent(path)
+    write_text(path, json.dumps(payload, indent=2, default=str) + "\n")

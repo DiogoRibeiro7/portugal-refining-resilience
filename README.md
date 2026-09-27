@@ -129,6 +129,12 @@ This repository intentionally stores transformed outputs. Do not make the final 
 - `data/provenance/`: source snapshots, hashes, extraction timestamps and processing metadata.
 - `artifacts/report_inputs/`: only the files the report-writing prompts are allowed to treat as empirical evidence.
 
+Source downloads, Eurostat requests, JODI ZIP reads, and persisted artifacts use
+DataExcept for operational failures. `DataLoadingError`, `FileReadError`, and
+`FileWriteError` include the source or path and preserve the underlying error
+as `original` and `__cause__`. Validation rules and the explicit overwrite
+guard retain their existing exception types.
+
 CSV is always written for human inspection. Parquet is written where available for typed reuse.
 
 Raw downloaded files are excluded from version control by default because they can be large or

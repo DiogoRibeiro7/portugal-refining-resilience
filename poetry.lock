@@ -726,6 +726,18 @@ docs = ["ipython", "matplotlib", "numpydoc", "sphinx"]
 tests = ["pytest", "pytest-cov", "pytest-xdist"]
 
 [[package]]
+name = "dataexcept"
+version = "1.7.0"
+description = "A Python package providing structured, easily-extendable custom exception types."
+optional = false
+python-versions = "<3.15,>=3.10"
+groups = ["main"]
+files = [
+    {file = "dataexcept-1.7.0-py3-none-any.whl", hash = "sha256:2032f07de4305e638e16227ae421fc85cd53ab30aec3433d8362ddb8e327bb39"},
+    {file = "dataexcept-1.7.0.tar.gz", hash = "sha256:62f15f59b2d41d873a6f6260be4d75baf9ba730da53626080590095cc7579ef6"},
+]
+
+[[package]]
 name = "debugpy"
 version = "1.8.21"
 description = "An implementation of the Debug Adapter Protocol for Python"
@@ -3942,4 +3954,4 @@ test = ["pytest", "websockets"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.14"
-content-hash = "0e1ff4a8614fb73853400f8daccda8fbefee36cc06bf65f8750f80eb79775132"
+content-hash = "d537c456f4104b2e3a4174c37aa2fe0e101bef738e74a7df410112b19a95a146"

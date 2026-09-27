@@ -6,6 +6,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 import requests
+from dataexcept import DataLoadingError, wrapping
 
 from .metrics import add_supply_metrics
 
@@ -73,9 +74,10 @@ def fetch_jsonstat(
     if not dataset.replace("_", "").isalnum():
         raise ValueError(f"Unsafe Eurostat dataset code: {dataset}")
     url = f"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}"
-    response = requests.get(url, params=params or {}, timeout=timeout)
-    response.raise_for_status()
-    payload: dict[str, Any] = response.json()
+    with wrapping(requests.RequestException, DataLoadingError, source=url):
+        response = requests.get(url, params=params or {}, timeout=timeout)
+        response.raise_for_status()
+        payload: dict[str, Any] = response.json()
     return payload
 
 
