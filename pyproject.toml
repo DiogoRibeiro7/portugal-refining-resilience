@@ -48,7 +48,7 @@ ruff = "^0.16"
 mypy = "^2.3"
 pandas-stubs = "^3.0"
 types-PyYAML = "^6.0"
-types-requests = "^2.32"
+types-requests = "^2.33"
 pre-commit = "^4.0"
 
 [tool.ruff]
