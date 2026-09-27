@@ -11,11 +11,15 @@ from urllib.parse import urljoin
 import requests
 import yaml
 from bs4 import BeautifulSoup
+from dataexcept import DataLoadingError, wrapping
+
+from .io import ensure_parent, read_bytes, read_text, write_bytes, write_text
 
 
 def load_source_manifest(path: Path) -> dict[str, dict[str, str]]:
     """Load and type-check the source manifest."""
-    payload: Any = yaml.safe_load(path.read_text(encoding="utf-8"))
+    with wrapping(yaml.YAMLError, DataLoadingError, source=str(path)):
+        payload: Any = yaml.safe_load(read_text(path))
     if not isinstance(payload, dict):
         raise ValueError("sources.yml must contain a top-level 'sources' mapping")
     sources = payload.get("sources")
@@ -43,7 +47,7 @@ def _write_download_metadata(
         "source_vintage_status": status,
     }
     sidecar = destination.with_suffix(destination.suffix + ".metadata.json")
-    sidecar.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    write_text(sidecar, json.dumps(metadata, indent=2) + "\n")
 
 
 def download_file(
@@ -61,14 +65,15 @@ def download_file(
     """
     if not isinstance(url, str) or not url.startswith(("http://", "https://")):
         raise ValueError(f"Invalid URL: {url!r}")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    response = requests.get(url, timeout=timeout)
-    response.raise_for_status()
+    ensure_parent(destination)
+    with wrapping(requests.RequestException, DataLoadingError, source=url):
+        response = requests.get(url, timeout=timeout)
+        response.raise_for_status()
     payload = response.content
     payload_sha256 = _sha256_bytes(payload)
     status = "new_snapshot"
     if destination.exists():
-        existing_sha256 = _sha256_bytes(destination.read_bytes())
+        existing_sha256 = _sha256_bytes(read_bytes(destination))
         if existing_sha256 != payload_sha256 and not overwrite:
             raise FileExistsError(
                 f"{destination} already exists with a different SHA-256. "
@@ -76,7 +81,7 @@ def download_file(
             )
         status = "unchanged_snapshot" if existing_sha256 == payload_sha256 else "overwritten"
     if not destination.exists() or overwrite:
-        destination.write_bytes(payload)
+        write_bytes(destination, payload)
     if record_metadata:
         _write_download_metadata(destination, url=url, payload_sha256=payload_sha256, status=status)
     return destination
@@ -89,8 +94,9 @@ def discover_download_links(
     timeout: int = 60,
 ) -> list[str]:
     """Discover downloadable files from a statistical landing page."""
-    response = requests.get(landing_page, timeout=timeout)
-    response.raise_for_status()
+    with wrapping(requests.RequestException, DataLoadingError, source=landing_page):
+        response = requests.get(landing_page, timeout=timeout)
+        response.raise_for_status()
     soup = BeautifulSoup(response.text, "lxml")
     links: list[str] = []
     for anchor in soup.find_all("a", href=True):

@@ -10,8 +10,14 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+from dataexcept import FileReadError, FileWriteError
 
-from portugal_refining_resilience.io import persist_dataframe, sha256_file, write_json
+from portugal_refining_resilience.io import (
+    persist_dataframe,
+    read_bytes,
+    sha256_file,
+    write_json,
+)
 
 
 def test_sha256_file_matches_hashlib(tmp_path: Path) -> None:
@@ -101,3 +107,76 @@ def test_write_json_creates_parent_directories(tmp_path: Path) -> None:
     write_json(target, {"complete": True})
 
     assert json.loads(target.read_text(encoding="utf-8")) == {"complete": True}
+
+
+def test_read_failure_retains_path_and_cause(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "source.csv"
+    cause = PermissionError("cannot read source")
+
+    def fail_read(self: Path) -> bytes:
+        raise cause
+
+    monkeypatch.setattr(Path, "read_bytes", fail_read)
+    with pytest.raises(FileReadError) as caught:
+        read_bytes(path)
+
+    assert caught.value.path == str(path)
+    assert caught.value.original is cause
+    assert caught.value.__cause__ is cause
+
+
+def test_csv_write_failure_retains_path_and_cause(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "panel.csv"
+    frame = pd.DataFrame({"year": [2024]})
+    cause = OSError("disk full")
+
+    def fail_csv(*args: object, **kwargs: object) -> None:
+        raise cause
+
+    monkeypatch.setattr(frame, "to_csv", fail_csv)
+    with pytest.raises(FileWriteError) as caught:
+        persist_dataframe(frame, path, write_parquet=False)
+
+    assert caught.value.path == str(path)
+    assert caught.value.original is cause
+    assert caught.value.__cause__ is cause
+
+
+def test_parquet_filesystem_failure_is_not_suppressed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "panel.csv"
+    frame = pd.DataFrame({"year": [2024]})
+    cause = OSError("disk full")
+
+    def fail_parquet(*args: object, **kwargs: object) -> None:
+        raise cause
+
+    monkeypatch.setattr(frame, "to_parquet", fail_parquet)
+    with pytest.raises(FileWriteError) as caught:
+        persist_dataframe(frame, path)
+
+    assert path.exists()  # The mandatory CSV was written before optional Parquet.
+    assert caught.value.path == str(path.with_suffix(".parquet"))
+    assert caught.value.__cause__ is cause
+
+
+def test_json_write_failure_retains_path_and_cause(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "results.json"
+    cause = PermissionError("read-only directory")
+
+    def fail_write(self: Path, *args: object, **kwargs: object) -> None:
+        raise cause
+
+    monkeypatch.setattr(Path, "write_text", fail_write)
+    with pytest.raises(FileWriteError) as caught:
+        write_json(path, {"complete": True})
+
+    assert caught.value.path == str(path)
+    assert caught.value.__cause__ is cause

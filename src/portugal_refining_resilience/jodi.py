@@ -6,6 +6,7 @@ from typing import cast
 
 import numpy as np
 import pandas as pd
+from dataexcept import DataLoadingError, FileReadError, wrapping
 
 from .events import assign_monthly_event_phase
 from .metrics import add_supply_metrics
@@ -84,7 +85,11 @@ def read_secondary_zip(path: Path) -> pd.DataFrame:
     """Read the CSV payload from the JODI secondary-products ZIP."""
     if not path.exists():
         raise FileNotFoundError(path)
-    with zipfile.ZipFile(path) as archive:
+    with (
+        wrapping(OSError, FileReadError, path=str(path)),
+        wrapping((zipfile.BadZipFile, pd.errors.ParserError), DataLoadingError, source=str(path)),
+        zipfile.ZipFile(path) as archive,
+    ):
         csv_names = [name for name in archive.namelist() if name.lower().endswith(".csv")]
         if not csv_names:
             raise ValueError("No CSV found in JODI ZIP")
