@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/project-avatar.png" alt="portugal-refining-resilience project logo" width="160" height="160">
+</p>
+
 # Portugal Refining Resilience
 
 [![CI](https://github.com/DiogoRibeiro7/portugal-refining-resilience/actions/workflows/ci.yml/badge.svg)](https://github.com/DiogoRibeiro7/portugal-refining-resilience/actions/workflows/ci.yml)
