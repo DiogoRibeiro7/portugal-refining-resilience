@@ -1,0 +1,7 @@
+Tool: built-in image generation
+
+Use case: logo-brand.
+Asset type: square project logo for portugal-refining-resilience.
+Project purpose: Notebook-first analysis of Portugal refining capacity, fuel trade dependence, resilience and price transmission.
+Design direction: A coastal infrastructure emblem: a stylized long Portuguese Atlantic coastline becomes the outer contour of a terracotta fuel-storage vessel, while three petrol-blue wave bands wrap protectively around its base like a breakwater. Flat travel-poster illustration, sandy white background, sun-baked colors and subtle lithographic grain. Simple bold Portuguese coastal identity, no flags, no refinery towers, no arrows, no words.
+Composition: one finished square image, visually distinctive and readable at 160 pixels, with enough margin for README display. Produce the actual artwork, not a mockup sheet or brand presentation. No watermark. Do not use a navy-and-gold metallic badge aesthetic.
